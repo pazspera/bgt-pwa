@@ -9,6 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^7.1.0",
+    "@fortawesome/vue-fontawesome": "^3.1.2",
     "@vuepic/vue-datepicker": "^7.0.0",
     "@vueuse/core": "^13.9.0",
     "bootstrap": "^5.2.3",
