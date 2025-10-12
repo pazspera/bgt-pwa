@@ -10,6 +10,10 @@ import * as components from "vuetify/components";
 import * as directives from "vuetify/directives";
 import { aliases, fa } from "vuetify/iconsets/fa";
 import { mdi } from "vuetify/iconsets/mdi";
+/* FontAwesome, only icons to be used */
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faDice, faUsers, faBoxArchive } from "@fortawesome/free-solid-svg-icons";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.js";
@@ -60,9 +64,13 @@ const vuetify = createVuetify({
 
 let app = createApp(App);
 
+// Font Awesome
+library.add(faDice, faUsers, faBoxArchive);
+
 app.use(vuetify);
 app.use(router);
 app.use(createPinia());
 app.use(VueSweetalert2);
 app.component("VueDatePicker", VueDatePicker);
+app.component("font-awesome-icon", FontAwesomeIcon);
 app.mount("#app");
