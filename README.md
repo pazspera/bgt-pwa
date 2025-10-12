@@ -1,5 +1,12 @@
-# Vue 3 + Vite
+# BGT PWA
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+## Estructura de componentes
 
-Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://vuejs.org/guide/scaling-up/tooling.html#ide-support).
+La estructura del proyecto utiliza Atomic Design para la organización de componentes y vistas. Carpetas a utilizar 
+
+- atoms: Elementos básicos como Button.vue, Icon.vue
+- molecules: Combinaciones de elementos básicos como FormField.vue, PlayerCard.vue
+- organisms: Bloques más complejos con funcionalidad avanzada como Header.vue, ContactForm.vue
+- sections: Componentes que sean secciones de contenido reutilizables, como HeroSection.vue. Este proyecto no va a trabajar con templates. 
+- pages: Vistas completas como Home.vue, Boardgames.vue
+
