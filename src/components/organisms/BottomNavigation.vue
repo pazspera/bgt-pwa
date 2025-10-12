@@ -1,5 +1,5 @@
 <template>
-  <v-bottom-navigation class="bg-neutral-800 bottom-nav" color="primary-300">
+  <v-bottom-navigation tag="div" class="bg-neutral-800 bottom-nav" color="primary-300">
     <router-link class="nav-link" :to="{ name: 'BoardGames' }">
       <v-btn value="ludoteca" class="bottom-nav__button">
         <i class="fa-solid fa-dice bottom-nav__icon"></i>
@@ -30,11 +30,11 @@ defineOptions({ name: "BottomNavigation" });
 <style scoped>
 
 .bottom-nav {
-  height: 100%;
+  height: 72px !important;
   max-width: 100%;
-  height: var(--bottom-nav-height) !important;
   padding: 0 !important;
-  z-index: 999;
+  z-index: 1;
+  position: static !important;
 }
 
 .bottom-nav__icon {

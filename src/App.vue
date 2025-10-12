@@ -32,5 +32,13 @@ defineOptions({ name: "App" });
   min-height: calc(100dvh - 72px);
 }
 
+.v-footer {
+  height: 72px !important;
+  padding: 0 !important;
+  overflow: hidden;
+  display: flex;
+  align-items: flex;
+  justify-content: flex;
+}
 
 </style>
