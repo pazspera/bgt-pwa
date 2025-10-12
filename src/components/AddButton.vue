@@ -6,20 +6,19 @@
   </router-link>
 </template>
 
-<script>
-export default {
-  name: "AddGameButton",
-  props: {
-    text: {
-      type: String,
-      required: true,
-    },
-    route: {
-      type: String,
-      required: true,
-    },
+<script setup>
+const props = defineProps({
+  text: {
+    type: String,
+    required: true,
   },
-};
+  route: {
+    type: String,
+    required: true,
+  },
+});
+
+defineOptions({ name: "AddGameButton" });
 </script>
 
 <style lang="scss" scoped>

@@ -23,10 +23,8 @@
   </v-bottom-navigation>
 </template>
 
-<script>
-export default {
-  name: "BottomNavigation",
-};
+<script setup>
+defineOptions({ name: "BottomNavigation" });
 </script>
 
 <style lang="scss" scoped>

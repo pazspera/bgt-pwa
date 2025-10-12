@@ -5,10 +5,8 @@
   </section>
 </template>
 
-<script>
-export default {
-  name: "BoardGamesView",
-};
+<script setup>
+defineOptions({ name: "BoardGamesView" });
 </script>
 
 <style scoped></style>

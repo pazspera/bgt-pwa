@@ -11,10 +11,8 @@
   </v-toolbar>
 </template>
 
-<script>
-export default {
-  name: "ToolBar",
-};
+<script setup>
+defineOptions({ name: "ToolBar" });
 </script>
 
 <style></style>

@@ -4,10 +4,8 @@
   </section>
 </template>
 
-<script>
-export default {
-  name: "AddGameView",
-};
+<script setup>
+defineOptions({ name: "AddGameView" });
 </script>
 
 <style scoped></style>

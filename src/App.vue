@@ -10,21 +10,13 @@
   </v-app>
 </template>
 
-<script>
+<script setup>
 import BottomNavigation from "./components/BottomNavigation.vue";
 /* import ToolBar from "./components/ToolBar.vue"; */
 /* import NavBar from "@/components/NavBar.vue"; */
 import NavBar2 from "@/components/NavBar2.vue";
 
-export default {
-  name: "App",
-  components: {
-    /* NavBar, */
-    BottomNavigation,
-    /* ToolBar, */
-    NavBar2,
-  },
-};
+defineOptions({ name: "App" });
 </script>
 
 <style lang="scss">

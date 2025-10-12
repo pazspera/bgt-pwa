@@ -11,24 +11,19 @@
   </section>
 </template>
 
-<script>
+<script setup>
 import { usePlayerStore } from "@/stores/PlayerStore";
 import { ref } from "vue";
 
-export default {
-  name: "AddPlayerView",
-  setup() {
-    const store = usePlayerStore();
-    const name = ref("");
+defineOptions({ name: "AddPlayerView" });
 
-    function submit() {
-      store.add({ name: name.value });
-      name.value = "";
-    }
+const store = usePlayerStore();
+const name = ref("");
 
-    return { name, submit };
-  },
-};
+function submit() {
+  store.add({ name: name.value });
+  name.value = "";
+}
 </script>
 
 <style scoped></style>

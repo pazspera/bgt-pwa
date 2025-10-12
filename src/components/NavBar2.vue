@@ -34,10 +34,8 @@
   </header>
 </template>
 
-<script>
-export default {
-  name: "NavBar2",
-};
+<script setup>
+defineOptions({ name: "NavBar2" });
 </script>
 
 <style scoped>
