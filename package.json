@@ -1,0 +1,28 @@
+{
+  "name": "mi-pwa-vite",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@vuepic/vue-datepicker": "^7.0.0",
+    "bootstrap": "^5.2.3",
+    "core-js": "^3.8.3",
+    "pinia": "^2.0.34",
+    "vue": "^3.2.13",
+    "vue-router": "^4.0.3",
+    "vue-sweetalert2": "^5.0.5",
+    "vuetify": "^3.3.13"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^6.0.1",
+    "vite": "^7.1.7",
+    "vite-plugin-pwa": "^0.18.0",
+    "sass": "^1.32.7",
+    "@mdi/font": "^7.0.96"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "BGT PWA",
+  "short_name": "BGT",
+  "description": "Board games tracker migrated to Vite PWA",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#9A67BD",
+  "background_color": "#E8EDEB",
+  "icons": [
+    {
+      "src": "/vite.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    }
+  ]
+}
