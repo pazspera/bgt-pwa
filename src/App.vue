@@ -1,8 +1,6 @@
 <template>
   <v-app>
-    <!-- <NavBar /> -->
-    <!-- <ToolBar /> -->
-    <NavBar2 />
+    <NavBar />
     <v-main>
       <router-view />
     </v-main>
@@ -11,10 +9,8 @@
 </template>
 
 <script setup>
-import BottomNavigation from "./components/BottomNavigation.vue";
-/* import ToolBar from "./components/ToolBar.vue"; */
-/* import NavBar from "@/components/NavBar.vue"; */
-import NavBar2 from "@/components/NavBar2.vue";
+import BottomNavigation from "./components/organisms/BottomNavigation.vue";
+import NavBar from "@/components/organisms/NavBar.vue";
 
 defineOptions({ name: "App" });
 </script>
