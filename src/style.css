@@ -23,8 +23,9 @@
   --size8: 0.64rem;
   --size9: 0.512rem;
   --size10: 0.41rem;
-
   --sizeXL: 3.815rem;
+
+  --bottom-nav-height: 72px;
 }
 
 /* Resets */

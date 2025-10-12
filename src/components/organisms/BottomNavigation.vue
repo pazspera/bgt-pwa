@@ -30,8 +30,11 @@ defineOptions({ name: "BottomNavigation" });
 <style scoped>
 
 .bottom-nav {
-  height: 72px !important;
-  padding-bottom: var(--size8);
+  height: 100%;
+  width: 100%;
+  height: var(--bottom-nav-height) !important;
+  padding: 0 !important;
+  z-index: 999;
 }
 
 .bottom-nav__icon {
