@@ -16,9 +16,8 @@ defineOptions({ name: "App" });
 </script>
 
 <style lang="scss">
-@import "@/assets/scss/main.scss";
 #app {
   text-align: center;
-  background-color: $gray-light;
+  background-color: var(--gray-light);
 }
 </style>

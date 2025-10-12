@@ -27,20 +27,19 @@
 defineOptions({ name: "BottomNavigation" });
 </script>
 
-<style lang="scss" scoped>
-@import "@/assets/scss/main.scss";
+<style scoped>
 
 .bottom-nav {
   height: 72px !important;
-  padding-bottom: $size8;
+  padding-bottom: var(--size8);
 }
 
 .bottom-nav__icon {
-  font-size: $size5;
-  margin-bottom: $size10;
+  font-size: var(--size5);
+  margin-bottom: var(--size10);
 }
 
 .nav-link {
-  margin-bottom: $size9;
+  margin-bottom: var(--size9);
 }
 </style>

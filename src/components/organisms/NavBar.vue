@@ -35,7 +35,7 @@
 </template>
 
 <script setup>
-defineOptions({ name: "NavBar2" });
+defineOptions({ name: "NavBar" });
 </script>
 
 <style scoped>

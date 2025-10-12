@@ -21,9 +21,7 @@ const props = defineProps({
 defineOptions({ name: "AddGameButton" });
 </script>
 
-<style lang="scss" scoped>
-@import "@/assets/scss/main.scss";
-
+<style scoped>
 .btn-add {
   position: fixed;
   bottom: 70px;
