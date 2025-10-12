@@ -33,7 +33,7 @@ export default {
 @import "@/assets/scss/main.scss";
 
 .bottom-nav {
-  height: 80px;
+  height: 72px !important;
   padding-bottom: $size8;
 }
 
