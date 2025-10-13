@@ -20,41 +20,74 @@ import VueSweetalert2 from "vue-sweetalert2";
 import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 
+const COLOR = {
+  TEXT_DARK: "#2D153D",
+  TEXT_LIGHT: "#fcfffe",
+
+  PRIMARY_100: "#EDE2F3",
+  PRIMARY_300: "#BD9CD3",
+  PRIMARY_400: "#9A67BD",
+  PRIMARY_600: "#633183",
+
+  NEUTRAL_200: "#CFDDD5",
+  NEUTRAL_800: "#36453D",
+  NEUTRAL_900: "#242E28",
+
+  ACCENT_400: "#B5E853",
+  ACCENT_600: "#96D71D",
+
+  ERROR_LIGHT: "#881212",
+  SUCCESS_LIGHT: "#1B5E20",
+  INFO_LIGHT: "#0D47A1",
+  WARNING_LIGHT: "#FFC107",
+  ERROR_DARK: "#FF8A80",
+  SUCCESS_DARK: "#81C784",
+  INFO_DARK: "#64B5F6",
+  WARNING_DARK: "#FFD740", 
+}
+
 const lightTheme = {
-  primary: ;
-  secondary: ;
-  background: ;
-  surface: ;
-  'on-primary': ;
-  'on-secondary': ;
-  'on-background': ;
-  'on-surface': ;
-  error: ;
-  info: ;
-  success: ;
-  warning: ;
+  dark: false,
+  colors: {
+    primary: COLOR.PRIMARY_400,
+    secondary: COLOR.ACCENT_400,
+    background: COLOR.NEUTRAL_200,
+    surface: COLOR.TEXT_LIGHT,
+    'on-primary': COLOR.TEXT_LIGHT,
+    'on-secondary': COLOR.TEXT_DARK,
+    'on-background': COLOR.TEXT_DARK,
+    'on-surface': COLOR.TEXT_DARK,
+    error: COLOR.ERROR_LIGHT,
+    info: COLOR.INFO_LIGHT,
+    success: COLOR.SUCCESS_LIGHT,
+    warning: COLOR.WARNING_LIGHT,
+    'on-error': COLOR.TEXT_LIGHT,
+    'on-info': COLOR.TEXT_LIGHT,
+    'on-success': COLOR.TEXT_LIGHT,
+    'on-warning': COLOR.TEXT_DARK,
+  }
 };
 
-const darkTheme = {};
-
-const customTheme = {
-	dark: false,
-	colors: {
-		background: "#E8EDEB",
-		surface: "#E8EDEB",
-		primary: "#9A67BD",
-		"primary-300": "#C7AADA",
-		"primary-darken-1": "#633880",
-		secondary: "#8FA79B",
-		"secondary-darken-1": "#292929",
-		"neutral-800": "#292929",
-		darkBG: "#6E3E8E",
-		white: "#ffffff",
-		error: "#DD1C1A",
-		info: "#FFD23F",
-		success: "#43AA8B",
-		warning: "#FFD23F",
-	},
+const darkTheme = {
+  dark: true,
+  colors: {
+    primary: COLOR.PRIMARY_300,
+    secondary: COLOR.ACCENT_600,
+    background: COLOR.NEUTRAL_900,
+    surface: COLOR.NEUTRAL_800,
+    'on-primary': COLOR.TEXT_LIGHT,
+    'on-secondary': COLOR.TEXT_DARK,
+    'on-background': COLOR.TEXT_DARK,
+    'on-surface': COLOR.TEXT_DARK,
+    error: COLOR.ERROR_DARK,
+    info: COLOR.INFO_DARK,
+    success: COLOR.SUCCESS_DARK,
+    warning: COLOR.WARNING_DARK,
+    'on-error': COLOR.TEXT_DARK,
+    'on-info': COLOR.TEXT_DARK,
+    'on-success': COLOR.TEXT_DARK,
+    'on-warning': COLOR.TEXT_DARK,
+  }
 };
 
 const vuetify = createVuetify({
@@ -69,9 +102,10 @@ const vuetify = createVuetify({
 		},
 	},
 	theme: {
-		defaultTheme: "customTheme",
+		defaultTheme: "lightTheme",
 		themes: {
-			customTheme,
+			darkTheme,
+      lightTheme,
 		},
 	},
 });
