@@ -1,15 +1,16 @@
-<template>
-  <!--
-    NavBar responsive implementation using Vuetify components.
-    Behavior:
-      - >=1025px: show full nav links inline (no drawer)
-      - 768px-1024px: hide inline links, show nav-icon that opens a temporary drawer
-      - <768px: same as tablet (drawer)
-    Implementation notes:
-      - We use a small media-query-based helper (.show-desktop / .show-mobile)
-        to get the exact breakpoints requested (Vuetify's breakpoints differ).
-  -->
+<script setup lang="ts">
+import { ref } from 'vue';
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
+import NavigationLink from '../atoms/NavigationLink.vue';
 
+// drawer state controlled via v-model on v-navigation-drawer
+const drawer = ref(false);
+
+defineOptions({ name: 'NavBar' });
+</script>
+
+<template>
   <v-app-bar app color="neutral-800" dark flat>
     <v-container>
       <v-row align="center" justify="space-between" class="px-0">
@@ -21,9 +22,9 @@
 
         <!-- Desktop links: visible >=1025px -->
         <div class="nav-links show-desktop">
-          <router-link class="nav-link" :to="{ name: 'BoardGames' }">Ludoteca</router-link>
-          <router-link class="nav-link" :to="{ name: 'Players' }">Jugadores</router-link>
-          <router-link class="nav-link" :to="{ name: 'Games' }">Partidas</router-link>
+          <NavigationLink :to="{ name: 'BoardGames' }">Ludoteca</NavigationLink>
+          <NavigationLink :to="{ name: 'Players' }">Jugadores</NavigationLink>
+          <NavigationLink :to="{ name: 'Games' }">Partidas</NavigationLink>
         </div>
 
         <!-- Mobile / Tablet toggle: visible <1025px -->
@@ -49,18 +50,6 @@
     </v-list>
   </v-navigation-drawer>
 </template>
-
-<script setup lang="ts">
-import { ref } from 'vue';
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
-import NavigationLink from '../atoms/NavigationLink.vue';
-
-// drawer state controlled via v-model on v-navigation-drawer
-const drawer = ref(false);
-
-defineOptions({ name: 'NavBar' });
-</script>
 
 <style scoped>
 /* preserve previous icon sizing */
@@ -90,10 +79,10 @@ defineOptions({ name: 'NavBar' });
   margin-left: 12px;
   text-decoration: none;
 }
-
-</style>
-
 /* ensure drawer overlays above app-bar content when opened */
 .nav-drawer {
   z-index: 2000;
 }
+
+</style>
+
