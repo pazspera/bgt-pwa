@@ -11,7 +11,7 @@
 <style scoped>
 .caption-text {
   font-family: var(--font-text);
-  font-size: var(--size1);
+  font-size: var(--font-size-xs);
   font-weight: 400;
   line-height: 1.2;
   color: var(--text-color-default);

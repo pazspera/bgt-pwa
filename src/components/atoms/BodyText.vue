@@ -11,7 +11,7 @@
 <style scoped>
 .body-text {
   font-family: var(--font-text);
-  font-size: var(--size3);
+  font-size: var(--font-size-md);
   font-weight: 400;
   line-height: 1.6;
   color: var(--text-color-default);

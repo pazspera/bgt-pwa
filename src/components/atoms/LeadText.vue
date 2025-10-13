@@ -11,7 +11,7 @@
 <style scoped>
 .lead-text {
   font-family: var(--font-text);
-  font-size: var(--size5);
+  font-size: var(--font-size-xl);
   font-weight: 400;
   line-height: 1.4;
   color: var(--text-color-default);

@@ -11,7 +11,7 @@
 <style scoped>
 .card-heading {
   font-family: var(--font-title);
-  font-size: var(--size7);
+  font-size: var(--font-size-3xl);
   font-weight: 600;
   line-height: 1.2;
   color: var(--text-color-default);

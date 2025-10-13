@@ -11,7 +11,7 @@
 <style scoped>
 .subsection-title {
   font-family: var(--font-title);
-  font-size: var(--size9);
+  font-size: var(--font-size-5xl);
   font-weight: 600;
   line-height: 1.2;
   color: var(--text-color-default);

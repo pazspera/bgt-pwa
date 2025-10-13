@@ -41,12 +41,12 @@ defineOptions({ name: "BottomNavigation" });
 }
 
 .bottom-nav__icon {
-  font-size: var(--size5);
-  margin-bottom: var(--size10);
+  font-size: var(--font-size-xl);
+  margin-bottom: var(--font-size-6xl);
 }
 
 .nav-link {
-  margin-bottom: var(--size9);
+  margin-bottom: var(--font-size-5xl);
 }
 
 .bottom-nav__button {

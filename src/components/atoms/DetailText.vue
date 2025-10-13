@@ -11,7 +11,7 @@
 <style scoped>
 .detail-text {
   font-family: var(--font-text);
-  font-size: var(--size2);
+  font-size: var(--font-size-sm);
   font-weight: 400;
   line-height: 1.4;
   color: var(--text-color-default);
