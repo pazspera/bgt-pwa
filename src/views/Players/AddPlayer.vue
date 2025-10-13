@@ -1,14 +1,15 @@
 <template>
-  <section class="container mt-4">
+  <v-container class="mt-4">
     <h1>Agregar jugador</h1>
     <form @submit.prevent="submit">
-      <div class="mb-3">
-        <label class="form-label">Nombre</label>
-        <input v-model="name" class="form-control" />
-      </div>
-      <button class="btn btn-primary">Guardar</button>
+      <v-row>
+        <v-col cols="12" md="6">
+          <v-text-field v-model="name" label="Nombre" />
+        </v-col>
+      </v-row>
+      <v-btn type="submit" color="primary">Guardar</v-btn>
     </form>
-  </section>
+  </v-container>
 </template>
 
 <script setup>

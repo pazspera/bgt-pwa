@@ -1,8 +1,8 @@
 <template>
-  <section class="container mt-4">
+  <v-container class="mt-4">
     <h1>Editar jugador</h1>
     <p>ID: {{ $route.params.id }}</p>
-  </section>
+  </v-container>
 </template>
 
 <script setup>

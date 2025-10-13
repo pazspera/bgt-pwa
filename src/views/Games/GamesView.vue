@@ -1,7 +1,7 @@
 <template>
-  <section class="container mt-4">
+  <v-container class="mt-4">
     <h1>Partidas</h1>
-  </section>
+  </v-container>
 </template>
 
 <script setup>

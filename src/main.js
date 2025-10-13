@@ -15,8 +15,7 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faDice, faUsers, faBoxArchive } from "@fortawesome/free-solid-svg-icons";
 
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.bundle.js";
+// Bootstrap removed: using Vuetify components for layout instead
 
 import VueSweetalert2 from "vue-sweetalert2";
 

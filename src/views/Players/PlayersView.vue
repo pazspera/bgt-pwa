@@ -1,8 +1,10 @@
 <template>
-  <section class="container mt-4">
+  <v-container class="mt-4">
     <h1>Jugadores</h1>
-    <router-link :to="{ name: 'AddPlayer' }" class="btn btn-primary">Agregar jugador</router-link>
-  </section>
+    <router-link :to="{ name: 'AddPlayer' }">
+      <v-btn color="primary">Agregar jugador</v-btn>
+    </router-link>
+  </v-container>
 </template>
 
 <script setup>
