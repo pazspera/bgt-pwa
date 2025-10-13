@@ -1,6 +1,41 @@
 @import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Ruda:wght@600&display=swap");
 
 :root {
+  /* Primary */
+  --primary-100: #EDE2F3;
+  --primary-200: #D9C7E5;
+  --primary-300: #BD9CD3;
+  --primary-400: #9A67BD;
+  --primary-500: #7C3DA4;
+  --primary-600: #633183;
+  --primary-700: #5A2D76;
+  --primary-800: #431F5B;
+  --primary-900: #2D153D;
+
+  /* Neutral  */
+  --neutral-100: #E7EEEA;
+  --neutral-200: #CFDDD5;
+  --neutral-300: #B8CCC0;
+  --neutral-400: #95B2A2;
+  --neutral-500: #7DA18E;
+  --neutral-600: #6C897B;
+  --neutral-700: #51675C;
+  --neutral-800: #36453D;
+  --neutral-900: #242E28;
+  --white: #FCFFFE;
+  --black: #1F1E1F;
+
+  /* Accent */
+  --accent-100: #E7F8C9;
+  --accent-200: #D8F3A5;
+  --accent-300: #C8EE81;
+  --accent-400: #B5E853;
+  --accent-500: #A8E43A;
+  --accent-600: #96D71D;
+  --accent-700: #8AC51B;
+  --accent-800: #7DB418;
+  --accent-900: #71A216;
+
   --primary-light: #9a67bd;
   --primary-medium: #633183;
   --primary-dark: #381a4c;
@@ -10,21 +45,27 @@
   --gray-darker: #36453d;
   --white: #fcfffe;
   --black: #1f1e1f;
+
+  /* Typography */
   --font-title: "Ruda", sans-serif;
   --font-text: "Lato", sans-serif;
 
-  --size1: 3.052rem;
-  --size2: 2.441rem;
-  --size3: 1.953rem;
-  --size4: 1.563rem;
-  --size5: 1.25rem;
-  --size6: 1rem;
-  --size7: 0.8rem;
-  --size8: 0.64rem;
-  --size9: 0.512rem;
-  --size10: 0.41rem;
-  --sizeXL: 3.815rem;
+  /* Font size */
+  --size1: 14px;
+  --size2: 16px;
+  --size3: 18px;
+  --size4: 20px;
+  --size5: 24px;
+  --size6: 28px;
+  --size7: 32px;
+  --size8: 36px;
+  --size9: 40px;
+  --size10: 44px;
+  --size11: 48px;
+  --size12: 56px;
+  --size13: 68px;
 
+  /* General utilities */
   --bottom-nav-height: 72px;
 }
 
