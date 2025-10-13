@@ -26,8 +26,10 @@
           <router-link class="nav-link" :to="{ name: 'Games' }">Partidas</router-link>
         </div>
 
-  <!-- Mobile / Tablet toggle: visible <1025px -->
-  <v-app-bar-nav-icon class="show-mobile" color="white" @click="drawer = true" />
+        <!-- Mobile / Tablet toggle: visible <1025px -->
+        <v-btn icon class="show-mobile" @click="drawer = true">
+          <FontAwesomeIcon :icon="faBars" style="color: white;" />
+        </v-btn>
       </v-row>
     </v-container>
   </v-app-bar>
@@ -35,9 +37,6 @@
   <!-- Drawer for mobile/tablet -->
   <v-navigation-drawer v-model="drawer" temporary location="right" class="nav-drawer">
     <v-list nav>
-      <v-list-item :to="{ name: 'Home' }" link @click="drawer = false">
-        <v-list-item-title>Home</v-list-item-title>
-      </v-list-item>
       <v-list-item :to="{ name: 'BoardGames' }" link @click="drawer = false">
         <v-list-item-title>Ludoteca</v-list-item-title>
       </v-list-item>
@@ -53,6 +52,8 @@
 
 <script setup>
 import { ref } from 'vue';
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 
 // drawer state controlled via v-model on v-navigation-drawer
 const drawer = ref(false);
