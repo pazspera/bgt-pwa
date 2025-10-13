@@ -2,7 +2,7 @@
 
 :root {
   --text-color-primary: #1F1E1F;
-  /* Default text color (alias for theme switching) */
+  /* Default text color (alias for  theme switching) */
   --text-color-default: var(--text-color-primary);
 
   /* Primary */
@@ -28,6 +28,16 @@
   --neutral-900: #242E28;
   --white: #FCFFFE;
   --black: #1F1E1F;
+
+  /* System */
+  --error-light: #881212;
+  --error-dark: #FF8A80;
+  --success-light: #1B5E20;
+  --success-dark: #81C784;
+  --info-light: #0D47A1;
+  --info-dark: #64B5F6;
+  --warning-light: #FFC107;
+  --warning-dark: #FFD740;
 
   /* Accent */
   --accent-100: #E7F8C9;

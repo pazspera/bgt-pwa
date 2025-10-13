@@ -5,7 +5,7 @@ import router from "./router";
 
 import "./style.css";
 import "vuetify/styles";
-import { createVuetify } from "vuetify";
+import { createVuetify, useTheme } from "vuetify";
 import * as components from "vuetify/components";
 import * as directives from "vuetify/directives";
 import { aliases, fa } from "vuetify/iconsets/fa";
@@ -15,12 +15,27 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faDice, faUsers, faBoxArchive, faBars } from "@fortawesome/free-solid-svg-icons";
 
-// Bootstrap removed: using Vuetify components for layout instead
-
 import VueSweetalert2 from "vue-sweetalert2";
 
 import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
+
+const lightTheme = {
+  primary: ;
+  secondary: ;
+  background: ;
+  surface: ;
+  'on-primary': ;
+  'on-secondary': ;
+  'on-background': ;
+  'on-surface': ;
+  error: ;
+  info: ;
+  success: ;
+  warning: ;
+};
+
+const darkTheme = {};
 
 const customTheme = {
 	dark: false,
