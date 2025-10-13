@@ -1,8 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar app v-if="width > 768">
-      <NavBar />
-    </v-app-bar> 
+    <NavBar v-if="width > 768" />
     <v-main>
       <router-view />
     </v-main>
