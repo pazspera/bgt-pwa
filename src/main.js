@@ -77,8 +77,8 @@ const darkTheme = {
     surface: COLOR.NEUTRAL_800,
     'on-primary': COLOR.TEXT_LIGHT,
     'on-secondary': COLOR.TEXT_DARK,
-    'on-background': COLOR.TEXT_DARK,
-    'on-surface': COLOR.TEXT_DARK,
+    'on-background': COLOR.TEXT_LIGHT,
+    'on-surface': COLOR.TEXT_LIGHT,
     error: COLOR.ERROR_DARK,
     info: COLOR.INFO_DARK,
     success: COLOR.SUCCESS_DARK,
@@ -102,7 +102,7 @@ const vuetify = createVuetify({
 		},
 	},
 	theme: {
-		defaultTheme: "lightTheme",
+		defaultTheme: "darkTheme",
 		themes: {
 			darkTheme,
       lightTheme,
