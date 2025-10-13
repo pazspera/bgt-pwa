@@ -1,13 +1,15 @@
 <template>
   <v-app-bar color="neutral-800"  dark>
     <v-container>
-      <v-row align="center" justfy="space-between">
+      <v-row align="center" justify="space-between">
         <router-link class="navbar-brand" :to="{ name: 'Home' }">
           <img src="/favicon.ico" class="navbar-icon" />
         </router-link>
-        <router-link class="nav-link" :to="{ name: 'BoardGames' }">Ludoteca</router-link>
-        <router-link class="nav-link" :to="{ name: 'Players' }">Jugadores</router-link>
-        <router-link class="nav-link" :to="{ name: 'Games' }">Partidas</router-link>
+        <div>
+          <router-link class="nav-link" :to="{ name: 'BoardGames' }">Ludoteca</router-link>
+          <router-link class="nav-link" :to="{ name: 'Players' }">Jugadores</router-link>
+          <router-link class="nav-link" :to="{ name: 'Games' }">Partidas</router-link>
+        </div>
       </v-row>
     </v-container>
   </v-app-bar>
