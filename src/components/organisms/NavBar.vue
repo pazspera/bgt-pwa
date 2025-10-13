@@ -37,16 +37,16 @@ defineOptions({ name: 'NavBar' });
 
   <!-- Drawer for mobile/tablet -->
   <v-navigation-drawer v-model="drawer" temporary location="right" class="nav-drawer">
-    <v-list nav>
-      <v-list-item :to="{ name: 'BoardGames' }" link @click="drawer = false">
-        <v-list-item-title>Ludoteca</v-list-item-title>
-      </v-list-item>
-      <v-list-item :to="{ name: 'Players' }" link @click="drawer = false">
-        <v-list-item-title>Jugadores</v-list-item-title>
-      </v-list-item>
-      <v-list-item :to="{ name: 'Games' }" link @click="drawer = false">
-        <v-list-item-title>Partidas</v-list-item-title>
-      </v-list-item>
+    <v-list nav class="nav-drawer-list">
+      <NavigationLink :to="{ name: 'BoardGames' }" link @click="drawer = false">
+        Ludoteca
+      </NavigationLink>
+      <NavigationLink :to="{ name: 'Players' }" link @click="drawer = false">
+        Jugadores
+      </NavigationLink>
+      <NavigationLink :to="{ name: 'Games' }" link @click="drawer = false">
+        Partidas 
+      </NavigationLink>
     </v-list>
   </v-navigation-drawer>
 </template>
@@ -82,7 +82,14 @@ defineOptions({ name: 'NavBar' });
 /* ensure drawer overlays above app-bar content when opened */
 .nav-drawer {
   z-index: 2000;
+  background-color: var(--black);
 }
 
+.nav-drawer-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--font-size-md);
+  padding: var(--font-size-sm); 
+}
 </style>
 
