@@ -1,0 +1,19 @@
+<template>
+  <h2 class="section-title">
+    <slot />
+  </h2>
+</template>
+
+<script setup lang="ts">
+// No logic required
+</script>
+
+<style scoped>
+.section-title {
+  font-family: var(--font-title);
+  font-size: var(--size10);
+  font-weight: 600;
+  line-height: 1.15;
+  color: var(--text-color-default);
+}
+</style>

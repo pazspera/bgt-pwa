@@ -1,0 +1,19 @@
+<template>
+  <h4 class="block-heading">
+    <slot />
+  </h4>
+</template>
+
+<script setup lang="ts">
+// No logic required
+</script>
+
+<style scoped>
+.block-heading {
+  font-family: var(--font-title);
+  font-size: var(--size8);
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--text-color-default);
+}
+</style>

@@ -2,6 +2,8 @@
 
 :root {
   --text-color-primary: #1F1E1F;
+  /* Default text color (alias for theme switching) */
+  --text-color-default: var(--text-color-primary);
 
   /* Primary */
   --primary-100: #EDE2F3;
