@@ -50,10 +50,11 @@
   </v-navigation-drawer>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue';
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
+import NavigationLink from '../atoms/NavigationLink.vue';
 
 // drawer state controlled via v-model on v-navigation-drawer
 const drawer = ref(false);
