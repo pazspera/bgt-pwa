@@ -69,6 +69,21 @@
   --size12: 56px;
   --size13: 68px;
 
+  --font-size-xxs: clamp(0.7rem, 0.8vw, 12px);
+  --font-size-xs:  clamp(0.8rem, 0.9vw, 14px);
+  --font-size-sm:  clamp(0.9rem, 1vw, 16px);
+  --font-size-md:  clamp(1rem, 1.2vw, 18px);
+  --font-size-lg:  clamp(1.125rem, 1.4vw, 20px);
+  --font-size-xl:  clamp(1.25rem, 1.6vw, 24px);
+  --font-size-2xl: clamp(1.5rem, 2vw, 28px);
+  --font-size-3xl: clamp(1.75rem, 2.4vw, 32px);
+  --font-size-4xl: clamp(2rem, 2.8vw, 36px);
+  --font-size-5xl: clamp(2.25rem, 3.2vw, 40px);
+  --font-size-6xl: clamp(2.5rem, 3.6vw, 44px);
+  --font-size-7xl: clamp(2.75rem, 4vw, 48px);
+  --font-size-8xl: clamp(3.5rem, 5vw, 56px);
+  --font-size-9xl: clamp(4.25rem, 6vw, 68px);
+
   /* General utilities */
   --bottom-nav-height: 72px;
 }
