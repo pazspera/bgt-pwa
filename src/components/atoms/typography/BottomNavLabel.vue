@@ -11,11 +11,11 @@
 
 <style scoped>
 .bottom-nav-label {
-  font-family: var(--font-title);
-  font-size: var(--font-size-xxs); /* clamp(0.7rem, 0.8vw, 12px) */
+  font-family: var(--font-text);
+  font-size: var(--font-size-xxs); 
   font-weight: 500;
   line-height: 1;
-  color: var(--text-color-default);
+  text-transform: uppercase;
   text-align: center;
   display: block;
 }

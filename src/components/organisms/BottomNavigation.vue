@@ -29,7 +29,7 @@ const BottomNav: NavButton[] = [
 </script>
 
 <template>
-  <v-bottom-navigation tag="div" class="bottom-nav" color="surface" grow>
+  <v-bottom-navigation tag="div" class="bottom-nav" grow>
     <BottomNavButton v-for="button in BottomNav" v-bind="button" :key="button.value" />
   </v-bottom-navigation>
 </template>
