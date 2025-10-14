@@ -1,41 +1,36 @@
 <script setup lang="ts">
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faDice, faUsers, faBoxArchive } from "@fortawesome/free-solid-svg-icons";
+import { NavButton } from "../../types/navigation";
+import BottomNavButton from "../atoms/buttons/BottomNavButton.vue";
 
 defineOptions({ name: "BottomNavigation" });
 
-const BottomNav = [
+const BottomNav: NavButton[] = [
   {
     value: "ludoteca",
     label: "Ludoteca",
-
-  }
+    to: { name: 'BoardGames' },
+    icon: faDice
+  },
+  {
+    value: "jugadores",
+    label: "Jugadores",
+    to: { name: 'Players' },
+    icon: faUsers
+  },
+  {
+    value: "partidas",
+    label: "Partidas",
+    to: { name: 'Games' },
+    icon: faBoxArchive
+  },
 ]
 
 </script>
 
 <template>
   <v-bottom-navigation tag="div" class="bottom-nav" color="surface" grow>
-    <router-link class="nav-link" :to="{ name: 'BoardGames' }">
-      <v-btn value="ludoteca" class="bottom-nav__button">
-        <FontAwesomeIcon :icon="faDice" class="bottom-nav__icon" />
-        <span class="mb-2">Ludoteca</span>
-      </v-btn>
-    </router-link>
-
-    <router-link class="nav-link" :to="{ name: 'Players' }">
-      <v-btn value="jugadores" class="bottom-nav__button">
-        <FontAwesomeIcon :icon="faUsers" class="bottom-nav__icon" />
-        <span class="mb-2">Jugadores</span>
-      </v-btn>
-    </router-link>
-
-    <router-link class="nav-link" :to="{ name: 'Games' }">
-      <v-btn value="partidas" class="bottom-nav__button">
-        <FontAwesomeIcon :icon="faBoxArchive" class="bottom-nav__icon" />
-        <span class="mb-2">Partidas</span>
-      </v-btn>
-    </router-link>
+    <BottomNavButton v-for="button in BottomNav" v-bind="button" :key="button.value" />
   </v-bottom-navigation>
 </template>
 
