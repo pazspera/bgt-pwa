@@ -14,7 +14,6 @@ const props = defineProps<{ to: any }>();
   font-family: var(--font-text);
   font-size: var(--font-size-md);
   font-weight: 500;
-  color: var(--white);
   text-decoration: none;
 }
 </style>

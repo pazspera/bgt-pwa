@@ -90,15 +90,15 @@ defineOptions({ name: 'NavBar' });
 /* small adjustments to remove extra toolbar content spacing */
 /* Note: v-main spacing should be handled by Vuetify when v-app-bar uses `app` prop. */
 
-.nav-links .nav-link, 
-.nav-drawer-list .nav-link {
+.nav-links .navigation-link, 
+.nav-drawer-list .navigation-link {
   margin-left: 12px;
   text-decoration: none;
   color: rgb(var(--v-theme-on-surface));
 }
 /* Estilo para el hover de los enlaces (opcional, pero mejora UX) */
-.nav-links .nav-link:hover, 
-.nav-drawer-list .nav-link:hover {
+.nav-links .navigation-link:hover, 
+.nav-drawer-list .navigation-link:hover {
   color: rgb(var(--v-theme-primary));
 }
 /* ensure drawer overlays above app-bar content when opened */
