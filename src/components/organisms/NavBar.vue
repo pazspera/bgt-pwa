@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
-import NavigationLink from '../atoms/NavigationLink.vue';
+import NavigationLink from '../atoms/typography/NavigationLink.vue';
 import ThemeToggler from '../molecules/ThemeToggler.vue';
 
 // drawer state controlled via v-model on v-navigation-drawer
