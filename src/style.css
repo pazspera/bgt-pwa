@@ -50,16 +50,6 @@
   --accent-800: #7DB418;
   --accent-900: #71A216;
 
-  --primary-light: #9a67bd;
-  --primary-medium: #633183;
-  --primary-dark: #381a4c;
-  --gray-light: #e7eeea;
-  --gray-medium: #c1d2c8;
-  --gray-dark: #8fa79b;
-  --gray-darker: #36453d;
-  --white: #fcfffe;
-  --black: #1f1e1f;
-
   /* Typography */
   --font-title: "Ruda", sans-serif;
   --font-text: "Lato", sans-serif;
