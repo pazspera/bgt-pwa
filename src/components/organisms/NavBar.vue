@@ -9,10 +9,11 @@ import ThemeToggler from '../molecules/ThemeToggler.vue';
 const drawer = ref(false);
 
 defineOptions({ name: 'NavBar' });
+
 </script>
 
 <template>
-  <v-app-bar app color="neutral-800" dark flat>
+  <v-app-bar app color="surface" flat>
     <v-container>
       <v-row align="center" justify="space-between" class="px-0">
         <div class="d-flex align-center">
@@ -30,10 +31,10 @@ defineOptions({ name: 'NavBar' });
         </div>
 
         <!-- Mobile / Tablet toggle: visible <1025px -->
-        <div class="nav-drawer-icons">
-          <ThemeToggler/>
+        <div class="nav-drawer-icons show-mobile">
+          <ThemeToggler class="show-mobile" />
           <v-btn icon class="show-mobile" @click="drawer = true">
-            <FontAwesomeIcon :icon="faBars" style="color: white;" />
+            <FontAwesomeIcon :icon="faBars" color="on-surface" />
           </v-btn>
         </div>
       </v-row>
@@ -64,7 +65,6 @@ defineOptions({ name: 'NavBar' });
 }
 
 .nav-drawer-icons {
-  display: flex;
   flex-direction: row;
 }
 /*
@@ -76,22 +76,35 @@ defineOptions({ name: 'NavBar' });
 .show-mobile { display: flex; }
 
 @media (min-width: 1025px) {
-  .show-desktop { display: flex; gap: 1rem; align-items: center; }
-  .show-mobile { display: none; }
+  .show-desktop { 
+    display: flex; 
+    gap: 1rem; 
+    align-items: center;
+  }
+
+  .show-mobile { 
+    display: none; 
+  }
 }
 
 /* small adjustments to remove extra toolbar content spacing */
 /* Note: v-main spacing should be handled by Vuetify when v-app-bar uses `app` prop. */
 
-.nav-link {
-  color: white;
+.nav-links .nav-link, 
+.nav-drawer-list .nav-link {
   margin-left: 12px;
   text-decoration: none;
+  color: rgb(var(--v-theme-on-surface));
+}
+/* Estilo para el hover de los enlaces (opcional, pero mejora UX) */
+.nav-links .nav-link:hover, 
+.nav-drawer-list .nav-link:hover {
+  color: rgb(var(--v-theme-primary));
 }
 /* ensure drawer overlays above app-bar content when opened */
 .nav-drawer {
   z-index: 2000;
-  background-color: var(--black);
+  background-color: rgb(var(--v-theme-surface));
 }
 
 .nav-drawer-list {
