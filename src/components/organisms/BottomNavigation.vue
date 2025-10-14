@@ -3,6 +3,15 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faDice, faUsers, faBoxArchive } from "@fortawesome/free-solid-svg-icons";
 
 defineOptions({ name: "BottomNavigation" });
+
+const BottomNav = [
+  {
+    value: "ludoteca",
+    label: "Ludoteca",
+
+  }
+]
+
 </script>
 
 <template>

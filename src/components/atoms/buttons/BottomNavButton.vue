@@ -1,18 +1,9 @@
 <script setup lang="ts">
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
+import { NavButton } from "../../../types/navigation";
 import BottomNavLabel from "../typography/BottomNavLabel.vue";
-/* 
-- agregar componente tipografía para el span
-*/
-interface BottomNavButton {
-  to: string | object;
-  icon: IconDefinition;
-  label: string;
-  value: string;
-}
 
-defineProps<BottomNavButton>();
+defineProps<NavButton>();
 
 </script>
 
