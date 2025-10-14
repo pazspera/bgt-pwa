@@ -13,7 +13,7 @@ import { mdi } from "vuetify/iconsets/mdi";
 /* FontAwesome, only icons to be used */
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faDice, faUsers, faBoxArchive, faBars } from "@fortawesome/free-solid-svg-icons";
+import { faDice, faUsers, faBoxArchive, faBars, faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
 
 import VueSweetalert2 from "vue-sweetalert2";
 
@@ -113,7 +113,7 @@ const vuetify = createVuetify({
 let app = createApp(App);
 
 // Font Awesome
-library.add(faDice, faUsers, faBoxArchive, faBars);
+library.add(faDice, faUsers, faBoxArchive, faBars, faSun, faMoon);
 
 app.use(vuetify);
 app.use(router);

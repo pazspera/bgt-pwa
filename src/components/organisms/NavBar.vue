@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import NavigationLink from '../atoms/NavigationLink.vue';
+import ThemeToggler from '../molecules/ThemeToggler.vue';
 
 // drawer state controlled via v-model on v-navigation-drawer
 const drawer = ref(false);
@@ -25,12 +26,16 @@ defineOptions({ name: 'NavBar' });
           <NavigationLink :to="{ name: 'BoardGames' }">Ludoteca</NavigationLink>
           <NavigationLink :to="{ name: 'Players' }">Jugadores</NavigationLink>
           <NavigationLink :to="{ name: 'Games' }">Partidas</NavigationLink>
+          <ThemeToggler/>
         </div>
 
         <!-- Mobile / Tablet toggle: visible <1025px -->
-        <v-btn icon class="show-mobile" @click="drawer = true">
-          <FontAwesomeIcon :icon="faBars" style="color: white;" />
-        </v-btn>
+        <div class="nav-drawer-icons">
+          <ThemeToggler/>
+          <v-btn icon class="show-mobile" @click="drawer = true">
+            <FontAwesomeIcon :icon="faBars" style="color: white;" />
+          </v-btn>
+        </div>
       </v-row>
     </v-container>
   </v-app-bar>
@@ -58,6 +63,10 @@ defineOptions({ name: 'NavBar' });
   height: 42px;
 }
 
+.nav-drawer-icons {
+  display: flex;
+  flex-direction: row;
+}
 /*
   Visibility helpers to match requested breakpoints exactly.
   - .show-desktop: visible at >=1025px
