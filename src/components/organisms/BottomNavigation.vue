@@ -42,7 +42,7 @@ defineOptions({ name: "BottomNavigation" });
 
 .bottom-nav__icon {
   font-size: var(--font-size-xl);
-  margin-bottom: var(--font-size-6xl);
+  margin-bottom: var(--font-size-xxs);
 }
 
 .nav-link {
