@@ -32,7 +32,7 @@ const BottomNav: NavButton[] = [
 <template>
   <v-bottom-navigation tag="div" class="bottom-nav" grow>
     <BottomNavButton v-for="button in BottomNav" v-bind="button" :key="button.value" />
-    <ThemeToggler/>
+    <ThemeToggler icon-size="var(--font-size-xl)" />
   </v-bottom-navigation>
 </template>
 

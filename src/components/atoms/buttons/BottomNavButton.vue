@@ -38,7 +38,7 @@ defineProps<NavButton>();
 }
 
 .bottom-nav__button.v-btn--active .bottom-nav__label {
-  font-weight: bold;
+  font-weight: 900;
   font-size: var(--font-size-xs) !important;
 }
 

@@ -27,12 +27,12 @@ defineOptions({ name: 'NavBar' });
           <NavigationLink :to="{ name: 'BoardGames' }">Ludoteca</NavigationLink>
           <NavigationLink :to="{ name: 'Players' }">Jugadores</NavigationLink>
           <NavigationLink :to="{ name: 'Games' }">Partidas</NavigationLink>
-          <ThemeToggler/>
+          <ThemeToggler icon-size="var(--font-size-lg)"/>
         </div>
 
         <!-- Mobile / Tablet toggle: visible <1025px -->
         <div class="nav-drawer-icons show-mobile">
-          <ThemeToggler class="show-mobile" />
+          <ThemeToggler class="show-mobile" icon-size="var(--font-size-lg)" />
           <v-btn icon class="show-mobile" @click="drawer = true">
             <FontAwesomeIcon :icon="faBars" color="on-surface" />
           </v-btn>

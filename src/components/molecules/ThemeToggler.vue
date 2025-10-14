@@ -4,6 +4,10 @@ import { computed } from 'vue';
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
 
+defineProps<{
+  iconSize?: string;
+}>();
+
 const theme = useTheme();
 const isDark = computed(() => theme.global.current.value.dark);
 const icon = computed(() => isDark.value ? "faSun" : "faMoon");
@@ -25,7 +29,10 @@ const toggleTheme = () => {
         icon
         variant="text"
       >
-        <FontAwesomeIcon :icon="isDark ? faSun : faMoon"></FontAwesomeIcon>
+        <FontAwesomeIcon 
+          :icon="isDark ? faSun : faMoon"
+          :style="{ fontSize: iconSize }"
+        ></FontAwesomeIcon>
       </v-btn>
     </template>
   </v-tooltip>
