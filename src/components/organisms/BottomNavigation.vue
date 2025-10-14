@@ -1,5 +1,12 @@
+<script setup lang="ts">
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faDice, faUsers, faBoxArchive } from "@fortawesome/free-solid-svg-icons";
+
+defineOptions({ name: "BottomNavigation" });
+</script>
+
 <template>
-  <v-bottom-navigation tag="div" class="bg-neutral-800 bottom-nav" color="primary-300">
+  <v-bottom-navigation tag="div" class="bottom-nav" color="surface" grow>
     <router-link class="nav-link" :to="{ name: 'BoardGames' }">
       <v-btn value="ludoteca" class="bottom-nav__button">
         <FontAwesomeIcon :icon="faDice" class="bottom-nav__icon" />
@@ -22,13 +29,6 @@
     </router-link>
   </v-bottom-navigation>
 </template>
-
-<script setup>
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faDice, faUsers, faBoxArchive } from "@fortawesome/free-solid-svg-icons";
-
-defineOptions({ name: "BottomNavigation" });
-</script>
 
 <style scoped>
 
