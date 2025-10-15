@@ -5,7 +5,6 @@ import { faBars } from "@fortawesome/free-solid-svg-icons";
 import NavigationLink from '../atoms/typography/NavigationLink.vue';
 import ThemeToggler from '../molecules/ThemeToggler.vue';
 
-// drawer state controlled via v-model on v-navigation-drawer
 const drawer = ref(false);
 
 defineOptions({ name: 'NavBar' });
@@ -13,7 +12,7 @@ defineOptions({ name: 'NavBar' });
 </script>
 
 <template>
-  <v-app-bar app color="surface" flat>
+  <v-app-bar app color="surface">
     <v-container>
       <v-row align="center" justify="space-between" class="px-0">
         <div class="d-flex align-center">
@@ -58,7 +57,7 @@ defineOptions({ name: 'NavBar' });
 </template>
 
 <style scoped>
-/* preserve previous icon sizing */
+
 .navbar-icon {
   width: 42px;
   height: 42px;
@@ -87,19 +86,44 @@ defineOptions({ name: 'NavBar' });
   }
 }
 
-/* small adjustments to remove extra toolbar content spacing */
-/* Note: v-main spacing should be handled by Vuetify when v-app-bar uses `app` prop. */
-
 .nav-links .navigation-link, 
 .nav-drawer-list .navigation-link {
   margin-left: 12px;
   text-decoration: none;
   color: rgb(var(--v-theme-on-surface));
+  transition: all 0.15s ease-in-out;
 }
-/* Estilo para el hover de los enlaces (opcional, pero mejora UX) */
+
 .nav-links .navigation-link:hover, 
 .nav-drawer-list .navigation-link:hover {
   color: rgb(var(--v-theme-primary));
+}
+
+.nav-links .router-link-active,
+.nav-drawer-list .router-link-active {
+  color: rgb(var(--v-theme-primary));
+  font-weight: 700;
+  position: relative; 
+  display: inline-block;
+}
+
+.nav-links .router-link-active::after,
+.nav-drawer-list .router-link-active::after {
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: rgb(var(--v-theme-primary));
+  transition: all 0.1s ease-in-out;
+  transform-origin: center;
+}
+
+.nav-links .router-link-active:hover::after,
+.nav-drawer-list .router-link-active:hover::after {
+  bottom: -4px;
+  transition: all 0.1s ease-in-out;
 }
 /* ensure drawer overlays above app-bar content when opened */
 .nav-drawer {
