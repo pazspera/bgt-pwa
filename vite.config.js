@@ -34,5 +34,9 @@ export default defineConfig({
     host: '0.0.0.0',
     port: 5173,
     // permite probar en mobile
+  },
+  test: {
+    globals: true,
+    environment: "happy-dom"
   }
 })
