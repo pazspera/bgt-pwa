@@ -1,7 +1,34 @@
 # BGT PWA
 
-## Estructura de componentes
+## Scripts disponibles: 
+Estos comandos se ejecutan con `npm run <script>` para desarrollo, build, preview y testing:
+- `dev`: Levanta el servidor de desarrollo en Vite
+- `build`: Compila la app para producción
+- `preview`: Sirve la app compilada para verificar el resultado final
+- `test`: Ejecuta los tests con Vitest
 
+> Para debugging en VS Code es necesario tener `.vscode/launch.json`
+
+## Testing
+- Framework: [Vitest](https://vitest.dev/)
+- Utilidades: [Vue Test Utils](https://test-utils.vuejs.org/), [happy-dom](https://github.com/capricorn86/happy-dom)
+
+Los test unitarios se ubican junto al archivo que testean, siguiendo esta convención:
+
+src/
+  components/
+    Button.vue
+    Button.spec.ts
+  composables/
+    useTimer.ts
+    useTimer.spec.ts
+  stores/
+    gameStore.ts
+    gameStore.spec.ts
+
+## Sistema de diseño 
+
+### Estructura de componentes
 La estructura del proyecto utiliza Atomic Design para la organización de componentes y vistas. Carpetas a utilizar 
 
 - atoms: Elementos básicos como Button.vue, Icon.vue
@@ -10,8 +37,7 @@ La estructura del proyecto utiliza Atomic Design para la organización de compon
 - sections: Componentes que sean secciones de contenido reutilizables, como HeroSection.vue. Este proyecto no va a trabajar con templates. 
 - views: Vistas completas como Home.vue, Boardgames.vue. Cumple la funcionalidad de pages en el sistema de Atomic Design tradicional.
 
-## Componentes tipografía
-
+### Componentes tipografía
 - H1: DisplayTitle
 - H2: SectionTitle
 - H3: SubsectionTitle
