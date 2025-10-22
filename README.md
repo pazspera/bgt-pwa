@@ -15,16 +15,8 @@ Estos comandos se ejecutan con `npm run <script>` para desarrollo, build, previe
 
 Los test unitarios se ubican junto al archivo que testean, siguiendo esta convención:
 
-src/
-  components/
-    Button.vue
-    Button.spec.ts
-  composables/
-    useTimer.ts
-    useTimer.spec.ts
-  stores/
-    gameStore.ts
-    gameStore.spec.ts
+src/ ├── components/ │   ├── Button.vue │   └── Button.spec.ts ├── composables/ │   ├── useTimer.ts │   └── useTimer.spec.ts ├── stores/ │   ├── gameStore.ts │   └── gameStore.spec.ts
+
 
 ## Sistema de diseño 
 
