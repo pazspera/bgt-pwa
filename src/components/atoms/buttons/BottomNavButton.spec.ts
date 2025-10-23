@@ -1,8 +1,20 @@
+import 'vuetify/styles';
 import { it, expect } from "vitest";
 import { mount } from "@vue/test-utils";
-import BottomNavButton from "./BottomNavButton.vue";
+import { createVuetify } from "vuetify";
+import * as components from "vuetify/components";
+import * as directives from "vuetify/directives";
 import { faDice, faVial } from "@fortawesome/free-solid-svg-icons";
 import { NavButton } from "../../../types/navigation";
+import BottomNavButton from "./BottomNavButton.vue";
+import ResizeObserver from "resize-observer-polyfill";
+
+const vuetify = createVuetify({
+  components,
+  directives
+})
+
+globalThis.ResizeObserver = ResizeObserver;
 
 const mountButton = ( props: Partial<NavButton> = {} ) => {
   return mount(BottomNavButton, {

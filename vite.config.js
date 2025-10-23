@@ -39,8 +39,13 @@ export default defineConfig({
     globals: true,
     environment: "jsdom",
     server: {
-      deps: {
-        inline: ["vuetify"]
+      exclude: ["vuetify"]
+    },
+    deps: {
+      optimizer: {
+        web: {
+          include: ["vuetify"],
+        }
       }
     }
   }
