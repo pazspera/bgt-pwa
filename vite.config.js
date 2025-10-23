@@ -30,6 +30,10 @@ export default defineConfig({
       {
         find: '@',
         replacement: path.resolve(__dirname, './src')
+      },
+      {
+        find: 'vuetify/styles',
+        replacement: path.resolve(__dirname, '__mocks__/styleMock.js'),
       }
     ]
   },
@@ -44,7 +48,7 @@ export default defineConfig({
     setupFiles: './src/tests/setup.ts',
     server: {
      deps: {
-      inline: ["vuetify"],
+      inline: ["vuetify"]
      } 
     }
   }
