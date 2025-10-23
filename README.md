@@ -32,6 +32,10 @@ Dentro del directorio src/test hay funciones utilitarias para el setup y para cr
 
 > ⚠️​ Al usar Vuetify y Vitest, es necesario cargar la instacia completa de Vuetify para cada test. Esto genera demoras significativas en la ejecución de los tests (entre 16 y 19 segundos por test).
 
+El problema principal está en vite.config.js:
+```server: { deps: { inline: ["vuetify"] }```  
+Esto genera la demora porque carga todo Vuetify pero sin esta configuración, el test continuamente tira conflictos con la carga de archivos css y no pueden ejecutarse.
+
 Esta demora solamente va a incrementarse a medida que se sigan implementando tests y puede generar costos elevados en la implementación de Github Actions (a menos que se pase el repositorio a público).
 
 Opciones:
