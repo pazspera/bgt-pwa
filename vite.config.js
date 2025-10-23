@@ -26,9 +26,16 @@ export default defineConfig({
     })
   ],
   resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src')
-    }
+    alias: [
+      {
+        find: '@',
+        replacement: path.resolve(__dirname, './src')
+      },
+      {
+        find: 'vuetify/styles',
+        replacement: path.resolve(__dirname, '__mocks__/styleMock.js'),
+      }
+    ]
   },
   server: {
     host: '0.0.0.0',
@@ -37,6 +44,17 @@ export default defineConfig({
   },
   test: {
     globals: true,
-    environment: "happy-dom"
+    environment: "jsdom",
+    setupFiles: './src/tests/setup.ts',
+    poolOptions: {
+      threads: {
+        singleThread: true,
+      }
+    },
+    server: {
+     deps: {
+      inline: ["vuetify"]
+     } 
+    }
   }
 })

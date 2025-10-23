@@ -12,7 +12,7 @@ defineOptions({ name: 'NavBar' });
 </script>
 
 <template>
-  <v-app-bar app color="surface">
+  <v-app-bar app color="surface" role="navigation" aria-label="Navegación principal">
     <v-container>
       <v-row align="center" justify="space-between" class="px-0">
         <div class="d-flex align-center">

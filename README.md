@@ -11,7 +11,7 @@ Estos comandos se ejecutan con `npm run <script>` para desarrollo, build, previe
 
 ## Testing
 - Framework: [Vitest](https://vitest.dev/)
-- Utilidades: [Vue Test Utils](https://test-utils.vuejs.org/), [happy-dom](https://github.com/capricorn86/happy-dom)
+- Utilidades: [Vue Test Utils](https://test-utils.vuejs.org/), [jsdom](https://github.com/jsdom/jsdom)
 
 Los test unitarios se ubican junto al archivo que testean, siguiendo esta convención:
 
@@ -28,6 +28,15 @@ src/
 │   └── gameStore.spec.ts
 ```
 
+Dentro del directorio src/test hay funciones utilitarias para el setup y para crear una instancia de Vuetify en cada test.
+
+> ⚠️​ Al usar Vuetify y Vitest, es necesario cargar la instacia completa de Vuetify para cada test. Esto genera demoras significativas en la ejecución de los tests (entre 16 y 19 segundos por test).
+
+Esta demora solamente va a incrementarse a medida que se sigan implementando tests y puede generar costos elevados en la implementación de Github Actions (a menos que se pase el repositorio a público).
+
+Opciones:
+- Avanzar con el proyecto como está y aceptar que los tests van a demorar mucho tiempo.
+- La ventaja de usar Vuetify es que tenía componentes UI ya funcionales. Como todavía se rehicieron solo los componentes de NavBar y BottomNavigation, se puede abandonar Vuetify y reemplazarlo por un framework más liviano. Esto llevaría más tiempo de desarrollo de la UI pero ahorraría mucho más tiempo en la implementación de tests.
 
 ## Sistema de diseño 
 
