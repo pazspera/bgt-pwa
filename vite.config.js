@@ -26,9 +26,12 @@ export default defineConfig({
     })
   ],
   resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src')
-    }
+    alias: [
+      {
+        find: '@',
+        replacement: path.resolve(__dirname, './src')
+      }
+    ]
   },
   server: {
     host: '0.0.0.0',
@@ -38,15 +41,11 @@ export default defineConfig({
   test: {
     globals: true,
     environment: "jsdom",
+    setupFiles: './src/tests/setup.ts',
     server: {
-      exclude: ["vuetify"]
-    },
-    deps: {
-      optimizer: {
-        web: {
-          include: ["vuetify"],
-        }
-      }
+     deps: {
+      inline: ["vuetify"],
+     } 
     }
   }
 })

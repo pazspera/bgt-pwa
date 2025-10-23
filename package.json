@@ -25,6 +25,7 @@
   },
   "devDependencies": {
     "@mdi/font": "^7.0.96",
+    "@types/node": "^24.9.1",
     "@vitejs/plugin-vue": "^6.0.1",
     "@vue/test-utils": "^2.4.6",
     "resize-observer-polyfill": "^1.5.1",
