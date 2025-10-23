@@ -1,16 +1,12 @@
 import { it, expect } from "vitest";
 import { mount } from "@vue/test-utils";
-import { createVuetify } from "vuetify";
-import * as components from "vuetify/components";
-import * as directives from "vuetify/directives";
+import { createVuetifyForTest } from "../../../tests/utils/createVuetifyForTest";
 import { faDice, faVial } from "@fortawesome/free-solid-svg-icons";
 import { NavButton } from "../../../types/navigation";
 import BottomNavButton from "./BottomNavButton.vue";
+import { VBtn } from "vuetify/components";
 
-const vuetify = createVuetify({
-  components,
-  directives
-})
+const vuetify = createVuetifyForTest({ VBtn });
 
 const mountButton = ( props: Partial<NavButton> = {} ) => {
   return mount(BottomNavButton, {
