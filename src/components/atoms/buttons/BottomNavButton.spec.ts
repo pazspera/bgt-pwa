@@ -7,9 +7,11 @@ import BottomNavButton from "./BottomNavButton.vue";
 import { VBtn } from "vuetify/components";
 
 const vuetify = createVuetifyForTest({ VBtn });
+const faVialText = "fa-vial";
 
-const mountButton = ( props: Partial<NavButton> = {} ) => {
+const mountButton = ( props: Partial<NavButton> = {}, shallow = false ) => {
   return mount(BottomNavButton, {
+    shallow,
     props: {
       value: props.value ?? "default-value",
       label: props.label ?? "label",
@@ -24,9 +26,7 @@ const mountButton = ( props: Partial<NavButton> = {} ) => {
 
 it.only("renders icon", ()=> {
   const wrapper = mountButton();
-  console.log(wrapper.html());
-  console.log("**");
-  console.log(wrapper.text());
+  expect(wrapper.html()).toContain(faVialText)
 });
 
 it.todo("displays label", ()=> {});
