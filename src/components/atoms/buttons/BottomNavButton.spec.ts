@@ -24,12 +24,16 @@ const mountButton = ( props: Partial<NavButton> = {}, shallow = false ) => {
   })
 }
 
-it.only("renders icon", ()=> {
+it("renders icon", ()=> {
   const wrapper = mountButton();
-  expect(wrapper.html()).toContain(faVialText)
+  expect(wrapper.html()).toContain(faVialText);
 });
 
-it.todo("displays label", ()=> {});
+it.only("displays label", ()=> {
+  const wrapper = mountButton();
+  expect(wrapper.text()).toContain("label");
+});
+
 it.todo("receives valid :to route object", ()=> {});
 it.todo("receives valid value", ()=> {});
 it.todo("displays correct classes when active", ()=> {});
