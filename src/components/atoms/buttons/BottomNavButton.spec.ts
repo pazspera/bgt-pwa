@@ -64,7 +64,6 @@ it("receives valid :to route as object and passes it to v-btn", ()=> {
   expect(vBtnObject.props("to")).toEqual(objectRoute);
 });
 
-
 it.todo("receives valid value", ()=> {});
 it.todo("displays correct classes when active", ()=> {});
 
