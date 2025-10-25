@@ -1,7 +1,7 @@
 import { it, expect } from "vitest";
 import { mount } from "@vue/test-utils";
 import { createVuetifyForTest } from "../../../tests/utils/createVuetifyForTest";
-import { faDice, faVial } from "@fortawesome/free-solid-svg-icons";
+import { faVial } from "@fortawesome/free-solid-svg-icons";
 import { NavButton } from "../../../types/navigation";
 import BottomNavButton from "./BottomNavButton.vue";
 import { VBtn } from "vuetify/components";
@@ -20,6 +20,12 @@ const mountButton = ( props: Partial<NavButton> = {}, shallow = false ) => {
     },
     global: {
       plugins: [vuetify],
+    },
+    stubs: {
+      "v-btn": {
+        // $attrs is necessary so all attributes from v-btn pass to the stub
+        template: '<div v-bind:"$attrs"></slot></div>'
+      }
     }
   })
 }
@@ -29,12 +35,36 @@ it("renders icon", ()=> {
   expect(wrapper.html()).toContain(faVialText);
 });
 
-it.only("displays label", ()=> {
+it("displays label", ()=> {
   const wrapper = mountButton();
   expect(wrapper.text()).toContain("label");
 });
 
-it.todo("receives valid :to route object", ()=> {});
+it("receives valid :to route as string and passes it to v-btn", ()=> {
+  const stringRoute = "/jugadores";
+
+  const wrapperString = mountButton({ to: stringRoute });
+
+  // need to access the v-btn inside the wrapper to check that
+  // the prop is being passed down correctly to the child
+  const vBtnString = wrapperString.getComponent({ name: "v-btn" });
+
+  expect(vBtnString.props("to")).toBe(stringRoute);
+});
+
+it("receives valid :to route as object and passes it to v-btn", ()=> {
+  const objectRoute = { name: "EditPlayer", params: { id: 36 }}; 
+
+  const wrapperObject = mountButton({ to: objectRoute });
+
+  // need to access the v-btn inside the wrapper to check that
+  // the prop is being passed down correctly to the child
+  const vBtnObject = wrapperObject.getComponent({ name: "v-btn" });
+
+  expect(vBtnObject.props("to")).toEqual(objectRoute);
+});
+
+
 it.todo("receives valid value", ()=> {});
 it.todo("displays correct classes when active", ()=> {});
 
