@@ -25,9 +25,9 @@ const toggleTheme = () => {
       <v-btn 
         v-bind="props"
         @click="toggleTheme"
-        :color="isDark ? 'white' : 'on-primary'"
+        color="on-surface"
         icon
-        variant="text"
+        variant="flat"
       >
         <FontAwesomeIcon 
           :icon="isDark ? faSun : faMoon"
@@ -37,3 +37,13 @@ const toggleTheme = () => {
     </template>
   </v-tooltip>
 </template>
+
+<style scoped>
+.v-btn {
+  background: transparent !important;
+}
+
+.v-btn :deep(.v-btn__overlay) {
+  opacity: 0 !important;
+}
+</style>
