@@ -4,7 +4,7 @@ import BoardGamesView from "@/views/BoardGames/BoardGamesView.vue";
 const routes = [
   {
     path: "/",
-    name: "Home",
+    name: "BoardGames",
     component: BoardGamesView,
   },
   {
@@ -22,11 +22,6 @@ const routes = [
     path: "/agregar-jugador",
     name: "AddPlayer",
     component: () => import(/* webpackChunkName: "AddPlayer"*/ "@/views/Players/AddPlayer.vue"),
-  },
-  {
-    path: "/ludoteca",
-    name: "BoardGames",
-    component: () => import(/*webpackChunkName: "BoardGames"*/ "@/views/BoardGames/BoardGamesView.vue"),
   },
   {
     path: "/partidas",
