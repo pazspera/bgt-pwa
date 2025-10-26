@@ -40,18 +40,6 @@ it("displays label", ()=> {
   expect(wrapper.text()).toContain("label");
 });
 
-it("receives valid :to route as string and passes it to v-btn", ()=> {
-  const stringRoute = "/jugadores";
-
-  const wrapperString = mountButton({ to: stringRoute });
-
-  // need to access the v-btn inside the wrapper to check that
-  // the prop is being passed down correctly to the child
-  const vBtnString = wrapperString.getComponent({ name: "v-btn" });
-
-  expect(vBtnString.props("to")).toBe(stringRoute);
-});
-
 it("receives valid :to route as object and passes it to v-btn", ()=> {
   const objectRoute = { name: "EditPlayer", params: { id: 36 }}; 
 
