@@ -11,7 +11,14 @@ const route = useRoute();
 </script>
 
 <template>
-  <v-btn :value="value" :to="props.to" class="bottom-nav__button" color="primary" :aria-current="route.name === props.to.name ? 'page' : undefined">
+  <v-btn 
+    :value="value" 
+    :to="props.to"
+    color="primary"
+    variant="flat" 
+    class="bottom-nav__button" 
+    :aria-current="route.name === props.to.name ? 'page' : undefined"
+  >
     <FontAwesomeIcon :icon="icon" class="bottom-nav__icon" />
     <BottomNavLabel class="bottom-nav__label">{{ label }}</BottomNavLabel>
   </v-btn>
@@ -33,11 +40,6 @@ const route = useRoute();
 .bottom-nav__icon, 
 .bottom-nav__label {
   color: var(--v-theme-on-surface); 
-}
-
-.bottom-nav__button.v-btn--active .bottom-nav__icon, 
-.bottom-nav__button.v-btn--active .bottom-nav__label {
-  color: var(--v-theme-primary) !important;
 }
 
 .bottom-nav__button.v-btn--active .bottom-nav__label {
