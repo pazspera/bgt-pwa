@@ -64,7 +64,13 @@ it("receives valid :to route as object and passes it to v-btn", ()=> {
   expect(vBtnObject.props("to")).toEqual(objectRoute);
 });
 
-it.todo("receives valid value", ()=> {});
+it.only("receives valid value", ()=> {
+  const testValue = "test-value";
+  // can be tested using shallowMount
+  const wrapper = mountButton({ value: testValue }, true );
+  expect(wrapper.html()).toContain(testValue);
+});
+
 it.todo("displays correct classes when active", ()=> {});
 
 // Later on
