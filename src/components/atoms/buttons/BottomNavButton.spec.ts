@@ -7,11 +7,10 @@ import BottomNavButton from "./BottomNavButton.vue";
 import { VBtn } from "vuetify/components";
 
 const vuetify = createVuetifyForTest({ VBtn });
-const faVialText = "fa-vial";
+const faVialText = faVial.iconName;
 
-const mountButton = ( props: Partial<NavButton> = {}, shallow = false ) => {
+const mountButton = ( props: Partial<NavButton> = {}) => {
   return mount(BottomNavButton, {
-    shallow,
     props: {
       value: props.value ?? "default-value",
       label: props.label ?? "label",
@@ -20,15 +19,10 @@ const mountButton = ( props: Partial<NavButton> = {}, shallow = false ) => {
     },
     global: {
       plugins: [vuetify],
-      mocks: {
-        $route: {
-          name: "BoardGames"
-        }
-      },
       stubs: {
         "v-btn": {
           // $attrs is necessary so all attributes from v-btn pass to the stub
-          template: '<div v-bind:"$attrs"><slot/></div>'
+          template: '<div data-test="v-btn-stub" v-bind="$attrs"><slot/></div>'
         }
       }
     },
@@ -60,7 +54,7 @@ it("receives valid :to route as object and passes it to v-btn", ()=> {
 it("receives valid value", ()=> {
   const testValue = "test-value";
   // can be tested using shallowMount
-  const wrapper = mountButton({ value: testValue }, true );
+  const wrapper = mountButton({ value: testValue } );
   expect(wrapper.html()).toContain(testValue);
 });
 
