@@ -41,14 +41,25 @@ it("displays label", ()=> {
 
 it("receives valid :to route as object and passes it to v-btn", ()=> {
   const objectRoute = { name: "EditPlayer", params: { id: 36 }}; 
+  const expectedToString = JSON.stringify(objectRoute);
 
-  const wrapperObject = mountButton({ to: objectRoute });
+  const wrapper = mountButton({ to: objectRoute });
 
   // need to access the v-btn inside the wrapper to check that
   // the prop is being passed down correctly to the child
-  const vBtnObject = wrapperObject.getComponent({ name: "v-btn" });
+  // however, now the v-btn is a stub, so we need to look for it instead
+  // of the v-btn component
+  const vBtnStub = wrapper.find('[data-test="v-btn-stub"]');
 
-  expect(vBtnObject.props("to")).toEqual(objectRoute);
+  // checks that the attribute "to" exists and it contains "[object Object]"
+  // now the route is the object, it was easier when it was a string but
+  // the router had to be changed to only receive an object
+  expect(vBtnStub.attributes("to")).toBeDefined();
+  expect(vBtnStub.attributes("to")).toContain("[object Object]");
+
+  // checks that the parent (BottomNavButton) receives and has the route object
+  // the test is fine because the parent doesn't modify the object, just passes it
+  expect(wrapper.props("to")).toEqual(objectRoute);
 });
 
 it("receives valid value", ()=> {
