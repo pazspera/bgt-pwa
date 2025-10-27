@@ -22,7 +22,7 @@ const mountButton = ( props: Partial<NavButton> = {} ) => {
   })
 }
 
-it.only("renders icon", ()=> {
+it("renders icon", ()=> {
   const wrapper = mountButton();
   console.log(wrapper.html());
   console.log("**");
