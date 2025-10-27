@@ -15,18 +15,23 @@ const mountButton = ( props: Partial<NavButton> = {}, shallow = false ) => {
     props: {
       value: props.value ?? "default-value",
       label: props.label ?? "label",
-      to: props.to ?? { name: "Boardgames" },
+      to: props.to ?? { name: "BoardGames" },
       icon: props.icon ?? faVial
     },
     global: {
       plugins: [vuetify],
-    },
-    stubs: {
-      "v-btn": {
-        // $attrs is necessary so all attributes from v-btn pass to the stub
-        template: '<div v-bind:"$attrs"></slot></div>'
+      mocks: {
+        $route: {
+          name: "BoardGames"
+        }
+      },
+      stubs: {
+        "v-btn": {
+          // $attrs is necessary so all attributes from v-btn pass to the stub
+          template: '<div v-bind:"$attrs"><slot/></div>'
+        }
       }
-    }
+    },
   })
 }
 
@@ -52,7 +57,7 @@ it("receives valid :to route as object and passes it to v-btn", ()=> {
   expect(vBtnObject.props("to")).toEqual(objectRoute);
 });
 
-it.only("receives valid value", ()=> {
+it("receives valid value", ()=> {
   const testValue = "test-value";
   // can be tested using shallowMount
   const wrapper = mountButton({ value: testValue }, true );

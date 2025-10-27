@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import BoardGamesView from "@/views/BoardGames/BoardGamesView.vue";
 
-const routes = [
+export const routes = [
   {
     path: "/",
     name: "BoardGames",
