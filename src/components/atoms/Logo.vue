@@ -2,11 +2,9 @@
 </script>
 
 <template>
-  <div class="d-flex align-center">
-    <router-link class="navbar-brand" :to="{ name: 'BoardGames' }">
-      <img src="/favicon.ico" class="navbar-icon" />
-    </router-link>
-  </div>
+  <router-link :to="{ name: 'BoardGames' }">
+    <img src="/favicon.ico" class="navbar-icon" />
+  </router-link>
 </template>
 
 <style scoped>
