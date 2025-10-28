@@ -10,7 +10,7 @@ const mountLogo = ( props = {} ) => {
       ...props,
     },
     global: {
-      plugins: [router],
+      // adding 'plugins: [router]' is not needed as createRouterMock handles it
       stubs: {
         RouterLink: {
           props: ["to"],
