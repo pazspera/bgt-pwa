@@ -1,4 +1,4 @@
-import { it, expect } from "vitest";
+import { it, expect, beforeEach, describe } from "vitest";
 import { mount } from "@vue/test-utils";
 import { createVuetifyForTest } from "../../../tests/utils/createVuetifyForTest";
 import { faVial } from "@fortawesome/free-solid-svg-icons";
@@ -70,37 +70,42 @@ it("receives valid value", ()=> {
   expect(wrapper.html()).toContain(testValue);
 });
 
-it("displays 'aria-current=page' when the current route matches the 'to' prop", async ()=> {
-  // With this, the classes corresponding to the active
-  // route will be applied
-
+describe("active button display logic", ()=> {
   // Arrange
-  const buttonRoute = { name: "BoardGames"};
-  const wrapper = mountButton({ to: buttonRoute});
+  let buttonRoute;
+  let wrapper;
 
-  // Act
-  await router.push(buttonRoute);
-  await wrapper.vm.$nextTick();
+  beforeEach(()=> {
+    buttonRoute = { name: "BoardGames"};
+    wrapper = mountButton({ to: buttonRoute});
+  })
+
+  it("displays 'aria-current=page' when the current route matches the 'to' prop", async ()=> {
+    // With this, the classes corresponding to the active
+    // route will be applied
+    
+    // Act
+    await router.push(buttonRoute);
+    await wrapper.vm.$nextTick();
+    
+    // Assert
+    const vBtnStub = wrapper.find('[data-test="v-btn-stub"]');
+    expect(vBtnStub.attributes('aria-current')).toBe("page");
+  });
   
-  // Assert
-  const vBtnStub = wrapper.find('[data-test="v-btn-stub"]');
-  expect(vBtnStub.attributes('aria-current')).toBe("page");
-});
-
-it.only("doesn't display 'aria-current=page' when the current route doesn't match the 'to' prop", async ()=> {
-  // Arrange
-  const buttonRoute = { name: "BoardGames" };
-  const wrapper = mountButton({ to: buttonRoute });
-  const testRoute = { name: "Players" };
-
-  // Act
-  await router.push(testRoute);
-  await wrapper.vm.$nextTick();
-
-  // Assert
-  const vBtnStub = wrapper.find('[data-test="v-btn-stub"]');
-  expect(vBtnStub.attributes("aria-current")).toBe(undefined);
-}); 
+  it("doesn't display 'aria-current=page' when the current route doesn't match the 'to' prop", async ()=> {
+    // Arrange
+    const testRoute = { name: "Players" };
+  
+    // Act
+    await router.push(testRoute);
+    await wrapper.vm.$nextTick();
+  
+    // Assert
+    const vBtnStub = wrapper.find('[data-test="v-btn-stub"]');
+    expect(vBtnStub.attributes("aria-current")).toBe(undefined);
+  }); 
+})
 
 // Later on
 // - test accesibility
