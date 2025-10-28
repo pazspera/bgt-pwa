@@ -16,10 +16,10 @@ defineOptions({ name: 'NavBar' });
   <v-app-bar app color="surface" role="navigation" aria-label="Navegación principal">
     <v-container>
       <v-row align="center" justify="space-between" class="px-0 navbar-row">
-        <div class="d-flex align-center">
+        <div class="d-flex align-center logo-container">
           <Logo />
         </div>
-        
+
         <div class="d-flex align-center">
           <!-- Desktop links: visible >=1025px -->
           <div class="nav-links show-desktop">
@@ -85,6 +85,11 @@ defineOptions({ name: 'NavBar' });
   .show-mobile { 
     display: none; 
   }
+}
+
+.logo-container {
+  width: 42px;
+  height: 42px;
 }
 
 .nav-links .navigation-link, 
