@@ -14,27 +14,29 @@ defineOptions({ name: 'NavBar' });
 <template>
   <v-app-bar app color="surface" role="navigation" aria-label="Navegación principal">
     <v-container>
-      <v-row align="center" justify="space-between" class="px-0">
+      <v-row align="center" justify="space-between" class="px-0 navbar-row">
         <div class="d-flex align-center">
-          <router-link class="navbar-brand" :to="{ name: 'Home' }">
+          <router-link class="navbar-brand" :to="{ name: 'BoardGames' }">
             <img src="/favicon.ico" class="navbar-icon" />
           </router-link>
         </div>
 
-        <!-- Desktop links: visible >=1025px -->
-        <div class="nav-links show-desktop">
-          <NavigationLink :to="{ name: 'BoardGames' }">Ludoteca</NavigationLink>
-          <NavigationLink :to="{ name: 'Players' }">Jugadores</NavigationLink>
-          <NavigationLink :to="{ name: 'Games' }">Partidas</NavigationLink>
-          <ThemeToggler icon-size="var(--font-size-lg)"/>
-        </div>
-
-        <!-- Mobile / Tablet toggle: visible <1025px -->
-        <div class="nav-drawer-icons show-mobile">
-          <ThemeToggler class="show-mobile" icon-size="var(--font-size-lg)" />
-          <v-btn icon class="show-mobile" @click="drawer = true">
-            <FontAwesomeIcon :icon="faBars" color="on-surface" />
-          </v-btn>
+        <div class="d-flex align-center">
+          <!-- Desktop links: visible >=1025px -->
+          <div class="nav-links show-desktop">
+            <NavigationLink :to="{ name: 'BoardGames' }">Ludoteca</NavigationLink>
+            <NavigationLink :to="{ name: 'Players' }">Jugadores</NavigationLink>
+            <NavigationLink :to="{ name: 'Games' }">Partidas</NavigationLink>
+            <ThemeToggler icon-size="var(--font-size-lg)"/>
+          </div>
+  
+          <!-- Mobile / Tablet toggle: visible <1025px -->
+          <div class="nav-drawer-icons show-mobile">
+            <ThemeToggler class="show-mobile" icon-size="var(--font-size-lg)" />
+            <v-btn icon class="show-mobile" @click="drawer = true">
+              <FontAwesomeIcon :icon="faBars" color="on-surface" />
+            </v-btn>
+          </div>
         </div>
       </v-row>
     </v-container>
@@ -58,6 +60,10 @@ defineOptions({ name: 'NavBar' });
 
 <style scoped>
 
+.navbar-row {
+  display: flex;
+  justify-content: space-between !important;
+}
 .navbar-icon {
   width: 42px;
   height: 42px;

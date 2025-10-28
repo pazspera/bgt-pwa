@@ -2,13 +2,24 @@
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { NavButton } from "../../../types/navigation";
 import BottomNavLabel from "../typography/BottomNavLabel.vue";
+import { useRoute } from "vue-router";
 
-defineProps<NavButton>();
+const props = defineProps<NavButton>();
+
+const route = useRoute();
 
 </script>
 
 <template>
-  <v-btn :value="value" :to="to" class="bottom-nav__button" color="primary">
+  <v-btn 
+    :value="value" 
+    :to="props.to"
+    color="primary"
+    variant="flat" 
+    class="bottom-nav__button" 
+    :aria-current="route.name === props.to.name ? 'page' : undefined"
+    :aria-label="label"
+  >
     <FontAwesomeIcon :icon="icon" class="bottom-nav__icon" />
     <BottomNavLabel class="bottom-nav__label">{{ label }}</BottomNavLabel>
   </v-btn>
@@ -30,11 +41,6 @@ defineProps<NavButton>();
 .bottom-nav__icon, 
 .bottom-nav__label {
   color: var(--v-theme-on-surface); 
-}
-
-.bottom-nav__button.v-btn--active .bottom-nav__icon, 
-.bottom-nav__button.v-btn--active .bottom-nav__label {
-  color: var(--v-theme-primary) !important;
 }
 
 .bottom-nav__button.v-btn--active .bottom-nav__label {

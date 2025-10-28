@@ -19,4 +19,10 @@
   text-align: center;
   display: block;
 }
+
+@media(max-width: 350px) {
+  .bottom-nav-label {
+    display: none !important;
+  }
+}
 </style>
