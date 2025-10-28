@@ -51,11 +51,21 @@ describe("image rendering", ()=> {
     expect(imgWrapper.classes()).toContain(logoClass);
   });
 
-  it.only("correct src attribute on the image", ()=>{
+  it("correct src attribute on the image", ()=>{
     // Assert
     expect(imgWrapper.attributes("src")).toBe(logoSrc);
   });
 });
 
-it.todo("renders the correct :to route on the link", ()=> {});
+it("renders the correct :to route on the link", ()=> {
+  // Arrange
+  const testRoute = { name: "EditPlayer", params: { id: 45 }};
+  const wrapper = mountLogo({ to: testRoute });
+  const logoStub = wrapper.find("[data-test='router-link-stub']");
+
+  // Assert
+  expect(logoStub.attributes("href")).toBeDefined();
+  expect(logoStub.attributes("href")).toContain("[object Object]");
+});
+
 
