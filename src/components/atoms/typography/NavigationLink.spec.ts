@@ -1,4 +1,4 @@
-import { it, expect } from "vitest";
+import { it, expect, describe, beforeEach } from "vitest";
 import { mount } from "@vue/test-utils";
 import NavigationLink from "./NavigationLink.vue";
 import { router } from "../../../tests/utils/createRouterMock";
@@ -19,11 +19,11 @@ const mountNavigationLink = (
       plugins: [router],
       stubs: {
         RouterLink: {
-          props: ["to", "aria-current"],
+          props: ["to"],
           template: `
             <a data-test="router-link-stub" 
                :href="to" 
-               :aria-current="aria-current" 
+               :aria-current="$router.currentRoute.value.name === to.name ? 'page' : undefined" 
                v-bind="$attrs"
             >
               <slot />
@@ -68,7 +68,37 @@ it("receives valid :to route as an object", ()=> {
   expect(navigationLinkStub.attributes("href")).toContain("[object Object]");
 });
 
-it.todo("displays 'aria-current=page' when the current route matches the 'to' prop", ()=> {});
+describe("active link logic", ()=> {
+  // Arrange
+  let linkRoute;
+  let wrapper;
 
-it.todo("doesn't display 'aria-current=page' when the current route doesn't match the 'to' prop", ()=> {});
+  beforeEach(()=> {
+    linkRoute = { name: "BoardGames" };
+    wrapper = mountNavigationLink({ to: linkRoute });
+  })
+
+  it("displays 'aria-current=page' when the current route matches the 'to' prop", async ()=> {
+    // Act
+    await router.push(linkRoute);
+    await wrapper.vm.$nextTick();
+  
+    // Assert
+    const navigationLinkStub = wrapper.find('[data-test="router-link-stub"]');
+    expect(navigationLinkStub.attributes("aria-current")).toBe("page"); 
+  });
+  
+  it("doesn't display 'aria-current=page' when the current route doesn't match the 'to' prop", async ()=> {
+    // Arrange
+    const testRoute = { name: "AddPlayer" };
+
+    // Act
+    await router.push(testRoute);
+    await wrapper.vm.$nextTick();
+
+    // Assert
+    const navigationLinkStub = wrapper.find('[data-test="router-link-stub"]');
+    expect(navigationLinkStub.attributes("aria-current")).toBe(undefined);
+  });
+})
 
