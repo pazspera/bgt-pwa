@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import NavigationLink from '../atoms/typography/NavigationLink.vue';
 import ThemeToggler from '../molecules/ThemeToggler.vue';
+import Logo from '../atoms/Logo.vue';
 
 const drawer = ref(false);
 
@@ -15,10 +16,8 @@ defineOptions({ name: 'NavBar' });
   <v-app-bar app color="surface" role="navigation" aria-label="Navegación principal">
     <v-container>
       <v-row align="center" justify="space-between" class="px-0 navbar-row">
-        <div class="d-flex align-center">
-          <router-link class="navbar-brand" :to="{ name: 'BoardGames' }">
-            <img src="/favicon.ico" class="navbar-icon" />
-          </router-link>
+        <div class="d-flex align-center logo-container">
+          <Logo />
         </div>
 
         <div class="d-flex align-center">
@@ -64,10 +63,6 @@ defineOptions({ name: 'NavBar' });
   display: flex;
   justify-content: space-between !important;
 }
-.navbar-icon {
-  width: 42px;
-  height: 42px;
-}
 
 .nav-drawer-icons {
   flex-direction: row;
@@ -90,6 +85,11 @@ defineOptions({ name: 'NavBar' });
   .show-mobile { 
     display: none; 
   }
+}
+
+.logo-container {
+  width: 42px;
+  height: 42px;
 }
 
 .nav-links .navigation-link, 
