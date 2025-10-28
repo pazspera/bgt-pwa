@@ -5,6 +5,7 @@ import { faVial } from "@fortawesome/free-solid-svg-icons";
 import { NavButton } from "../../../types/navigation";
 import BottomNavButton from "./BottomNavButton.vue";
 import { VBtn } from "vuetify/components";
+import { router } from "../../../tests/utils/createRouterMock";
 
 const vuetify = createVuetifyForTest({ VBtn });
 const faVialText = faVial.iconName;
@@ -69,9 +70,38 @@ it("receives valid value", ()=> {
   expect(wrapper.html()).toContain(testValue);
 });
 
-it.todo("displays correct classes when active", ()=> {});
+it("displays 'aria-current=page' when the current route matches the 'to' prop", async ()=> {
+  // With this, the classes corresponding to the active
+  // route will be applied
+
+  // Arrange
+  const buttonRoute = { name: "BoardGames"};
+  const wrapper = mountButton({ to: buttonRoute});
+
+  // Act
+  await router.push(buttonRoute);
+  await wrapper.vm.$nextTick();
+  
+  // Assert
+  const vBtnStub = wrapper.find('[data-test="v-btn-stub"]');
+  expect(vBtnStub.attributes('aria-current')).toBe("page");
+});
+
+it.only("doesn't display 'aria-current=page' when the current route doesn't match the 'to' prop", async ()=> {
+  // Arrange
+  const buttonRoute = { name: "BoardGames" };
+  const wrapper = mountButton({ to: buttonRoute });
+  const testRoute = { name: "Players" };
+
+  // Act
+  await router.push(testRoute);
+  await wrapper.vm.$nextTick();
+
+  // Assert
+  const vBtnStub = wrapper.find('[data-test="v-btn-stub"]');
+  expect(vBtnStub.attributes("aria-current")).toBe(undefined);
+}); 
 
 // Later on
 // - test accesibility
-// - navigation with router-link
 // - focus and keyboard navigation

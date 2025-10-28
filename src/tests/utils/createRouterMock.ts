@@ -26,3 +26,4 @@ beforeEach(() => {
   injectRouterMock(router)
 })
 
+export { router };
