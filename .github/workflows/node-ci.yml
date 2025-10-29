@@ -14,18 +14,18 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v4
 
-    # Configura el entorno de Node.js 
     - name: Set up Node.js
       uses: actions/setup-node@v4
       with:
         node-version: 20.x
         cache: 'npm' 
 
-    # Instala las dependencias del proyecto
     - name: Install Dependencies
       run: npm install
 
-    # Corre el comando de tests que usas localmente
+    - name: Build Project
+      run: npm run build
+
     - name: Run Unit and Integration Tests
       run: npm run test 
 
