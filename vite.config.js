@@ -55,6 +55,6 @@ export default defineConfig({
      deps: {
       inline: ["vuetify"]
      } 
-    }
+    },
   }
 })
