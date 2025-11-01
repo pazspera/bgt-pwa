@@ -1,20 +1,35 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
+import { useCheckDbHealth } from "../../composables/useCheckDbHealth";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faCircleCheck,faCircleExclamation } from "@fortawesome/free-solid-svg-icons";
 
-const snackbar = ref(true);
-const text = "Hola, vengo a flotar"
+const { statusMessage, color, icon, checkHealth, isVisible, closeSnackbar } = useCheckDbHealth();
+
+onMounted(()=> {
+  checkHealth();
+})
+
+const iconsMap = {
+  faCircleCheck: faCircleCheck,
+  faCircleExclamation: faCircleExclamation,
+}
 
 </script>
 
 <template>
-  <v-snackbar>
-    {{ text }}
+  <v-snackbar 
+    v-model="isVisible"
+    :color="color"
+    location="bottom center"
+  >
+    <FontAwesomeIcon v-if="icon" :icon="iconsMap[icon]" class="mr-3" />
+    {{ statusMessage }}
 
     <template v-slot:actions>
       <v-btn 
         variant="text"
-        location="bottom center"
-        @click="snackbar = false"
+        @click="closeSnackbar()"
       >
         Cerrar
       </v-btn>

@@ -18,6 +18,7 @@ import { useWindowSize } from "@vueuse/core";
 const { width } = useWindowSize();
 
 defineOptions({ name: "App" });
+
 </script>
 
 <style scoped>
