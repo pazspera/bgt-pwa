@@ -7,6 +7,10 @@ import { faCircleCheck,faCircleExclamation } from "@fortawesome/free-solid-svg-i
 const { statusMessage, color, icon, checkHealth, hasRun } = useCheckDbHealth();
 const snackbarVisible = ref(false);
 
+// exposed to check on test if watch changes
+// it doesn't render the component without the watch changing 
+defineExpose({ snackbarVisible });
+
 onMounted(()=> {
   checkHealth();
 })
