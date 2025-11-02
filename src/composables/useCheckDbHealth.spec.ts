@@ -14,7 +14,7 @@ describe("checkHealth()", () => {
     import.meta.env.VITE_API_BASE_URL = "http://test-api.test";
   });
 
-  it.only("check success response from fetch", async ()=> {
+  it("check success response from fetch", async ()=> {
     // Act
     // mock fetch success response
     vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
@@ -32,7 +32,7 @@ describe("checkHealth()", () => {
     expect(hasRun.value).toBe(true);
   });
   
-  it.only("check HTTP error response from fetch", async ()=> {
+  it("check HTTP error response from fetch", async ()=> {
     // Act
     // mock fetch server returns error response
     vi.stubGlobal("fetch", vi.fn().mockRejectedValue({
@@ -50,7 +50,7 @@ describe("checkHealth()", () => {
     expect(hasRun.value).toBe(true);
   });
 
-  it.only("check network error response from fetch", async ()=> {
+  it("check network error response from fetch", async ()=> {
     // Act
     // mock network error response 
     vi.stubGlobal("fetch", vi.fn().mockRejectedValue(new Error("Falló la conexión con el servidor")));
