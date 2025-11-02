@@ -4,7 +4,7 @@ import { useCheckDbHealth } from "../../composables/useCheckDbHealth";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faCircleCheck,faCircleExclamation } from "@fortawesome/free-solid-svg-icons";
 
-const { statusMessage, color, icon, checkHealth, closeSnackbar, hasRun } = useCheckDbHealth();
+const { statusMessage, color, icon, checkHealth, hasRun } = useCheckDbHealth();
 const snackbarVisible = ref(false);
 
 onMounted(()=> {
@@ -23,20 +23,22 @@ watch(hasRun, (newVal) => {
   }
 })
 
-const handleUpdate = (newValue: boolean) => {
-    // Si el nuevo valor es false (el snackbar quiere cerrarse)
-    if (newValue === false) {
-        snackbarVisible.value = false; // Cierra nuestra variable local
-        closeSnackbar();              // Notifica al composable
-    }
+const handleClose = () => {
+  snackbarVisible.value = false;
 }
 
 </script>
 
 <template>
+  <!-- 
+    The v-if in the component is used to close it once
+    the button is clicked. There was an issue where,
+    even though snackbarVisible's logic was correct,
+    the component wasn't closing 
+  -->
   <v-snackbar 
+    v-if="snackbarVisible"
     v-model="snackbarVisible"
-    @update:model-value="handleUpdate"
     :color="color"
     location="bottom center"
   >
@@ -44,7 +46,7 @@ const handleUpdate = (newValue: boolean) => {
     {{ statusMessage }}
 
     <template v-slot:actions>
-      <v-btn variant="text">
+      <v-btn variant="text" @click="handleClose()">
         Cerrar
       </v-btn>
     </template>

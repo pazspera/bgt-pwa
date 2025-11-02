@@ -17,13 +17,6 @@ export function useCheckDbHealth() {
   const icon = ref(null);
   const hasRun = ref(false);
 
-  const isVisible = ref(false);
-  
-  const closeSnackbar = () => {
-    console.log("click en función");
-    isVisible.value = false;
-  }
-
   const checkHealth = async ()=> {
     try {
       const response = await fetch(uri,{
@@ -37,15 +30,10 @@ export function useCheckDbHealth() {
 
       let data = await response.json();
   
-      console.log("ok");
-      console.log(data);
-
       statusMessage.value = "Conectado a la base de datos"
       color.value = "success";
       icon.value = "faCircleCheck";
     } catch(err) {
-      console.log("petition failed");
-      console.log(err);
       statusMessage.value = `Error de conexión: ${err.message}`;
       color.value = "error";
       icon.value = "faCircleExclamation"
@@ -54,6 +42,5 @@ export function useCheckDbHealth() {
     hasRun.value = true;
   }
 
-
-  return { statusMessage, color, icon, checkHealth, closeSnackbar, hasRun }; 
+  return { statusMessage, color, icon, checkHealth, hasRun }; 
 }
