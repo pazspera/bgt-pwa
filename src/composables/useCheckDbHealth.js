@@ -14,19 +14,17 @@ export function useCheckDbHealth() {
   
   const statusMessage = ref("");
   const color = ref("info");
-  const isVisible = ref(false);
   const icon = ref(null);
+  const hasRun = ref(false);
 
-  console.log(uri);
-
+  const isVisible = ref(false);
+  
   const closeSnackbar = () => {
     console.log("click en función");
     isVisible.value = false;
   }
 
   const checkHealth = async ()=> {
-    isVisible.value = false;
-
     try {
       const response = await fetch(uri,{
         method: "GET",
@@ -42,10 +40,6 @@ export function useCheckDbHealth() {
       console.log("ok");
       console.log(data);
 
-      // The snackbar will be always visible now,
-      // could later be changed to only be visible on error
-      isVisible.value = true;
-
       statusMessage.value = "Conectado a la base de datos"
       color.value = "success";
       icon.value = "faCircleCheck";
@@ -55,13 +49,11 @@ export function useCheckDbHealth() {
       statusMessage.value = `Error de conexión: ${err.message}`;
       color.value = "error";
       icon.value = "faCircleExclamation"
-
-      // The snackbar will be always visible now,
-      // could later be changed to only be visible on error
-      isVisible.value = true;
     }
+
+    hasRun.value = true;
   }
 
 
-  return { statusMessage, color, icon, checkHealth, isVisible, closeSnackbar }; 
+  return { statusMessage, color, icon, checkHealth, closeSnackbar, hasRun }; 
 }
