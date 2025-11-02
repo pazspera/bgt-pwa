@@ -6,5 +6,5 @@
     "allowJs": true
   },
   // le dice a VS code que mire en src
-  "include": ["src/**/*"] 
+  "include": ["src/**/*", "env.d.ts"] 
 }
