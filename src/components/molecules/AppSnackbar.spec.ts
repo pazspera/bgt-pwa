@@ -37,14 +37,32 @@ const mountAppSnackbar = ()=> {
   return mount(AppSnackbar, {
     global: {
       plugins: [vuetify],
-      stubs: {
+      stubs: {        
         "v-snackbar": {
-          template: '<div data-test="v-snackbar-stub" v-bind="$attrs"><slot/><slot name="actions"/></div>'
+          props: ["color", "modelValue"],
+          template: `
+            <div 
+              data-test="v-snackbar-stub"
+              :data-color="color"
+              :data-model-value="modelValue" 
+              v-bind="$attrs"
+            >
+              <div data-test="status-message"><slot/></div>
+              <slot name="actions"/>
+            </div>
+          `
         },
         "v-btn": {
-          template: '<button data-test="v-btn-stub" v-bind="$attrs"><slot/></button>'
+          template: `
+            <button data-test="v-btn-stub" v-bind="$attrs">
+              <slot/>
+            </button>
+          `
         },
-        FontAwesomeIcon: true,
+        FontAwesomeIcon: {
+          props: ["icon"],
+          template: `<i :data-icon="icon"></i>`
+        },
       }
     }
   });

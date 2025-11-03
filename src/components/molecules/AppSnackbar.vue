@@ -45,6 +45,7 @@ const handleClose = () => {
     v-model="snackbarVisible"
     :color="color"
     location="bottom center"
+    :timeout="-1"
   >
     <FontAwesomeIcon v-if="icon" :icon="iconsMap[icon]" class="mr-3" />
     {{ statusMessage }}
