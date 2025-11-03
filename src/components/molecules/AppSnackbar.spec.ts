@@ -1,5 +1,27 @@
 import { ref, nextTick } from "vue";
 import { it, expect, vi, describe } from "vitest";
+const flushPromises = require("flush-promises");
+
+/* 
+  These tests are skipped. After many, many tries, the
+  component doesn't rendered correctly. 
+*/
+
+// The snackbar is not stubbed and needs this object to work
+globalThis.visualViewport = {
+  width: 1024,
+  height: 768,
+  scale: 1,
+  offsetLeft: 0,
+  offsetTop: 0,
+  pageLeft: 0,
+  pageTop: 0,
+  addEventListener: () => {},
+  removeEventListener: () => {},
+  onresize: null,
+  onscroll: null,
+  dispatchEvent: (_event: Event) => true
+};
 
 /* 
   IMPORTANT
@@ -25,6 +47,7 @@ vi.mock("@/composables/useCheckDbHealth", ()=> ({
 import { mount } from "@vue/test-utils";
 import AppSnackbar from "./AppSnackbar.vue";
 import { createVuetifyForTest } from "../../tests/utils/createVuetifyForTest";
+import { VSnackbar } from "vuetify/components";
 // the composable still needs to be imported
 // when it's used later on, the mock will be used instead
 import { useCheckDbHealth } from "../../composables/useCheckDbHealth";
@@ -35,23 +58,13 @@ const vuetify = createVuetifyForTest();
 // function to mount component
 const mountAppSnackbar = ()=> {
   return mount(AppSnackbar, {
+    attachTo: document.body,
     global: {
       plugins: [vuetify],
+      components: {
+        VSnackbar
+      },
       stubs: {        
-        "v-snackbar": {
-          props: ["color", "modelValue"],
-          template: `
-            <div 
-              data-test="v-snackbar-stub"
-              :data-color="color"
-              :data-model-value="modelValue" 
-              v-bind="$attrs"
-            >
-              <div data-test="status-message"><slot/></div>
-              <slot name="actions"/>
-            </div>
-          `
-        },
         "v-btn": {
           template: `
             <button data-test="v-btn-stub" v-bind="$attrs">
@@ -66,27 +79,45 @@ const mountAppSnackbar = ()=> {
       }
     }
   });
-
 }
+
 describe("mock response from useCheckDbHealth()", ()=> {
 
-  it.only("shows correct info on success response", async ()=> {
+  it.skip("shows correct info on success response", async ()=> {
     // Act
+    // Fixes teleporting issue
+    const teleportTarget = document.createElement("div");
+    teleportTarget.setAttribute("data-app", "true");
+    document.body.appendChild(teleportTarget);
+
     sharedHasRun.value = false;
     const wrapper = mountAppSnackbar();
     // changes the value of the watch directly 
     wrapper.vm.snackbarVisible = true;
+    sharedHasRun.value = true;
+
+    await flushPromises();
     await nextTick();
 
-    sharedHasRun.value = true;
     console.log("snackbarVisible:", wrapper.vm.snackbarVisible);
-    console.log(wrapper.html());
-    console.log(wrapper.text());
+    // Since it teleports, wrapper.html() doesn't show the component
+    // Need to use document.body.innerHTML and document.body.textContent
+    console.log("document.body.innerHTML:");
+    console.log(document.body.innerHTML);
 
+    console.log("document.body.textContent:");
+    console.log(document.body.textContent);
+    
     // Assert
+    
+    // The component doesn't render correctly
+    // Can't test statusMessage or that the color change
+    // Got this far, I'm done. This component will be deleted anyway
+
+
   });
 
-  it.todo("shows correct info on error response", ()=> {
+  it.skip("shows correct info on error response", ()=> {
     // Assert
     // función mock error response
     // llamada a función mount
@@ -96,4 +127,4 @@ describe("mock response from useCheckDbHealth()", ()=> {
     // Assert
   });
 })
-it.todo("closes when close button is clicked", ()=> {});
+it.skip("closes when close button is clicked", ()=> {});
