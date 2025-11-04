@@ -119,7 +119,18 @@ describe("interaction and dynamic behavior", ()=> {
     expect(wrapper.html()).toContain(faSunText);
   });
 
-  it.only("changes tooltip text when clicked", async ()=> {
+  it("changes tooltip text when clicked", async ()=> {
+    // checks initial state to dark
+    expectsDarkTheme(true);
+
+    // changes to light theme
+    clickButton(button);
+    await nextTick();
+    expect(wrapper.attributes("text")).toBe("Cambiar a modo oscuro")
     
+    // changes back to dark theme
+    clickButton(button);
+    await nextTick();
+    expect(wrapper.attributes("text")).toBe("Cambiar a modo claro");
   });
 })
