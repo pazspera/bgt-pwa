@@ -1,9 +1,11 @@
-import { it, describe } from "vitest";
+import { it, describe, expect } from "vitest";
 import { mount } from "@vue/test-utils";
+import { nextTick } from "vue";
 import { createVuetifyForTest } from "../../tests/utils/createVuetifyForTest";
 import ThemeToggler from "./ThemeToggler.vue";
 import { VBtn, VTooltip } from "vuetify/components";
 import { faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
+import { consoleError } from "vuetify/lib/util";
 
 const vuetify = createVuetifyForTest({ VBtn });
 const faSunText = faSun.iconName;
@@ -30,14 +32,33 @@ const mountToggler = ( props = {} ) => {
 
 describe("rendering based on theme", ()=> {
 
-  it.only("renders correct icon in dark theme", ()=> {
+  it.only("renders correct icon in dark theme", async ()=> {
+    // Arrange
     const wrapper = mountToggler();
 
-    console.log(wrapper.html());
+    // Act
+    vuetify.theme.change("darkTheme");
+    await nextTick();
     
+    // Assert
+    console.log("wrapper dark theme");
+    console.log(wrapper.html());
+    expect(wrapper.html()).toContain(faSunText);
   });
 
-  it.todo("renders correct icon in light theme", ()=> {});
+  it.only("renders correct icon in light theme", async ()=> {
+    // Arrange
+    const wrapper = mountToggler();
+
+    // Act
+    vuetify.theme.change("lightTheme");
+    await nextTick();
+
+    // Assert
+    console.log("wrapper light theme");
+    console.log(wrapper.html());
+    expect(wrapper.html()).toContain(faMoonText);
+  });
 
 });
 
