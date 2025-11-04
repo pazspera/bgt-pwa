@@ -1,4 +1,4 @@
-import { it, describe, expect } from "vitest";
+import { it, describe, expect, beforeEach } from "vitest";
 import { mount } from "@vue/test-utils";
 import { nextTick } from "vue";
 import { createVuetifyForTest } from "../../tests/utils/createVuetifyForTest";
@@ -31,32 +31,34 @@ const mountToggler = ( props = {} ) => {
 }
 
 describe("rendering based on theme", ()=> {
+  // Arrange
+  let wrapper;
+
+  beforeEach(()=> {
+    wrapper = mountToggler();
+  })
 
   it.only("renders correct icon in dark theme", async ()=> {
-    // Arrange
-    const wrapper = mountToggler();
-
     // Act
     vuetify.theme.change("darkTheme");
     await nextTick();
     
     // Assert
-    console.log("wrapper dark theme");
-    console.log(wrapper.html());
+    // checks correct theme being applied
+    expect(vuetify.theme.global.current.value.dark).toBe(true);
+    // checks icon
     expect(wrapper.html()).toContain(faSunText);
   });
 
   it.only("renders correct icon in light theme", async ()=> {
-    // Arrange
-    const wrapper = mountToggler();
-
     // Act
     vuetify.theme.change("lightTheme");
     await nextTick();
 
     // Assert
-    console.log("wrapper light theme");
-    console.log(wrapper.html());
+    // checks correct theme being applied
+    expect(vuetify.theme.global.current.value.dark).toBe(false);
+    // checks icon
     expect(wrapper.html()).toContain(faMoonText);
   });
 
