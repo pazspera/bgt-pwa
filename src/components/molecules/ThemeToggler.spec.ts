@@ -16,6 +16,12 @@ const clickButton = async (button)=> {
   await nextTick();
 }
 
+const expectsDarkTheme = (expectedDarkThemeValue: boolean)=> {
+  const currentTheme = vuetify.theme.global.current.value.dark;
+  expect(currentTheme).toBe(expectedDarkThemeValue);
+}
+
+
 const mountToggler = ( props = {} ) => {
   return mount(ThemeToggler, {
     props: {},
@@ -50,7 +56,7 @@ describe("rendering based on theme", ()=> {
     
     // Assert
     // checks correct theme being applied
-    expect(vuetify.theme.global.current.value.dark).toBe(true);
+    expectsDarkTheme(true);
     // checks icon
     expect(wrapper.html()).toContain(faSunText);
   });
@@ -62,7 +68,7 @@ describe("rendering based on theme", ()=> {
 
     // Assert
     // checks correct theme being applied
-    expect(vuetify.theme.global.current.value.dark).toBe(false);
+    expectsDarkTheme(false);
     // checks icon
     expect(wrapper.html()).toContain(faMoonText);
   });
@@ -84,34 +90,36 @@ describe("interaction and dynamic behavior", ()=> {
 
   it("changes theme when clicked", async ()=> {
     // Checks initial state on dark theme
-    expect(vuetify.theme.global.current.value.dark).toBe(true);
+    expectsDarkTheme(true);
     
     // Change to light theme
     clickButton(button);
-    expect(vuetify.theme.global.current.value.dark).toBe(false);
+    expectsDarkTheme(false);
     
     // Change to dark theme
     clickButton(button);
-    expect(vuetify.theme.global.current.value.dark).toBe(true);
+    expectsDarkTheme(true);
   });
 
   it("changes icon when clicked", async ()=> {
     // Checks initial state on dark theme
-    expect(vuetify.theme.global.current.value.dark).toBe(true);
+    expectsDarkTheme(true);
     
     // Changes to light theme
     clickButton(button);
     // IMPORTANT needs a second tick to update computed isDark
     await nextTick();
-    expect(vuetify.theme.global.current.value.dark).toBe(false);
+    expectsDarkTheme(false);
     expect(wrapper.html()).toContain(faMoonText); 
 
     // Changes back to dark theme
     clickButton(button);
     await nextTick();
-    expect(vuetify.theme.global.current.value.dark).toBe(true);
+    expectsDarkTheme(true);
     expect(wrapper.html()).toContain(faSunText);
   });
 
-  it.todo("changes tooltip text when clicked", ()=> {});
+  it.only("changes tooltip text when clicked", async ()=> {
+    
+  });
 })
