@@ -14,7 +14,7 @@ const icon = computed(() => isDark.value ? "faSun" : "faMoon");
 const tooltipText = computed(() => isDark.value ? "Cambiar a modo claro" : "Cambiar a modo oscuro");
 
 const toggleTheme = () => {
-  theme.global.name.value = isDark.value ? "lightTheme" : "darkTheme";
+  theme.change(isDark.value ? "lightTheme" : "darkTheme");
 }
 
 </script>
