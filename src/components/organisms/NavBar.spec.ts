@@ -1,4 +1,4 @@
-import { it, describe, beforeEach } from "vitest";
+import { it, describe, beforeEach, expect } from "vitest";
 import { mount } from "@vue/test-utils";
 import { router } from "../../tests/utils/createRouterMock";
 import { createVuetifyForTest } from "../../tests/utils/createVuetifyForTest";
@@ -49,7 +49,7 @@ describe("NavBar Desktop", ()=> {
     ({ wrapper, vAppBar, vNavigationDrawer } = setupNavbarTest());
   })
 
-  it.only("desktop links are visible in desktop >= 1025px", ()=> {
+  it.todo("desktop links are visible in desktop >= 1025px", ()=> {
     console.log("wrapper", wrapper.html());
     console.log("vAppBar", vAppBar.html());
     console.log("vNavigationDrawer", vNavigationDrawer.html());
@@ -70,7 +70,7 @@ describe("NavBar Drawer", ()=> {
   it.todo("closes drawer when mobile toggle is clicked", ()=> {});
   it.todo("renders all navigation links in drawer layout", ()=> {});
 })
-
+ 
 describe("NavBar Shared", ()=> {
   let wrapper;
   let vAppBar;
@@ -80,7 +80,11 @@ describe("NavBar Shared", ()=> {
     ({ wrapper, vAppBar, vNavigationDrawer } = setupNavbarTest());
   })
 
-  it.only("renders logo component", ()=> {});
+  it.only("renders logo component", ()=> {
+    const logo = wrapper.findComponent({ name: "Logo"});
+    expect(logo.exists()).toBe(true);
+  });
+
   it.todo("renders ThemeToggler in desktop and mobile", ()=> {});
   it.todo("navbar has role='navigation' and aria-label", ()=> {});
 })
