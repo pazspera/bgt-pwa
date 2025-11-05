@@ -33,15 +33,20 @@ const mountNavbar = () => {
   })
 }
 
+const setupNavbarTest = () => {
+  const wrapper = mountNavbar();
+  const vAppBar = wrapper.find('[data-test="v-app-bar-stub"]');
+  const vNavigationDrawer = wrapper.find('[data-test="v-navigation-drawer"]');
+  return { wrapper, vAppBar, vNavigationDrawer };
+}
+
 describe("NavBar Desktop", ()=> {
   let wrapper;
   let vAppBar;
   let vNavigationDrawer;
 
   beforeEach(()=> {
-    wrapper = mountNavbar();
-    vAppBar = wrapper.find('[data-test="v-app-bar-stub"]');
-    vNavigationDrawer = wrapper.find('[data-test="v-navigation-drawer"]');
+    ({ wrapper, vAppBar, vNavigationDrawer } = setupNavbarTest());
   })
 
   it.only("desktop links are visible in desktop >= 1025px", ()=> {
@@ -67,7 +72,15 @@ describe("NavBar Drawer", ()=> {
 })
 
 describe("NavBar Shared", ()=> {
-  it.todo("renders logo component", ()=> {});
+  let wrapper;
+  let vAppBar;
+  let vNavigationDrawer;
+
+  beforeEach(()=> {
+    ({ wrapper, vAppBar, vNavigationDrawer } = setupNavbarTest());
+  })
+
+  it.only("renders logo component", ()=> {});
   it.todo("renders ThemeToggler in desktop and mobile", ()=> {});
   it.todo("navbar has role='navigation' and aria-label", ()=> {});
 })
