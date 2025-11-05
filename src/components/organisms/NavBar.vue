@@ -30,7 +30,7 @@ defineOptions({ name: 'NavBar' });
           </div>
   
           <!-- Mobile / Tablet toggle: visible <1025px -->
-          <div class="nav-drawer-icons show-mobile">
+          <div class="nav-drawer-icons show-mobile" data-testid="nav-drawer-icons">
             <ThemeToggler class="show-mobile" icon-size="var(--font-size-lg)" />
             <v-btn icon class="show-mobile" @click="drawer = true">
               <FontAwesomeIcon :icon="faBars" color="on-surface" />

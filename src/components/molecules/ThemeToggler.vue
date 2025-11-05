@@ -1,12 +1,16 @@
 <script setup lang="ts">
 import { useTheme } from 'vuetify/lib/composables/theme';
-import { computed } from 'vue';
+import { computed, defineComponent } from 'vue';
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
 
 defineProps<{
   iconSize?: string;
 }>();
+
+defineComponent({
+  name: "ThemeToggler"
+})
 
 const theme = useTheme();
 const isDark = computed(() => theme.global.current.value.dark);

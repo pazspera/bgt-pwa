@@ -80,13 +80,25 @@ describe("NavBar Shared", ()=> {
     ({ wrapper, vAppBar, vNavigationDrawer } = setupNavbarTest());
   })
 
-  it.only("renders logo component", ()=> {
+  it("renders logo component", ()=> {
     const logo = wrapper.findComponent({ name: "Logo"});
     expect(logo.exists()).toBe(true);
   });
 
-  it.todo("renders ThemeToggler in desktop and mobile", ()=> {});
-  it.todo("navbar has role='navigation' and aria-label", ()=> {});
+  it("renders ThemeToggler in desktop and mobile", ()=> {
+    const themeTogglerInWrapper = wrapper.findComponent({ name: "ThemeToggler"});
+    // in mobile, the ThemeToggler is on div.nav-drawer-icons
+    const navDrawerIcons = wrapper.find('[data-testid="nav-drawer-icons"]')
+    const themeTogglerInDrawer = navDrawerIcons.findComponent({ name: "ThemeToggler" });
+
+    expect(themeTogglerInWrapper.exists()).toBe(true);
+    expect(themeTogglerInDrawer.exists()).toBe(true);
+  });
+
+  it("navbar has role='navigation' and aria-label", ()=> {
+    expect(vAppBar.attributes("role")).toBe("navigation");
+    expect(vAppBar.attributes("aria-label")).toBe("Navegación principal");
+  });
 })
 
 describe("NavBar Navigation", ()=> {
