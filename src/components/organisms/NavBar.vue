@@ -22,7 +22,7 @@ defineOptions({ name: 'NavBar' });
 
         <div class="d-flex align-center">
           <!-- Desktop links: visible >=1025px -->
-          <div class="nav-links show-desktop">
+          <div class="nav-links show-desktop" data-testid="desktop-nav-links">
             <NavigationLink :to="{ name: 'BoardGames' }">Ludoteca</NavigationLink>
             <NavigationLink :to="{ name: 'Players' }">Jugadores</NavigationLink>
             <NavigationLink :to="{ name: 'Games' }">Partidas</NavigationLink>

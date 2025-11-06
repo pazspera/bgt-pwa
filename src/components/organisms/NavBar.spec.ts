@@ -33,7 +33,10 @@ const mountNavbar = () => {
   })
 }
 
-const setupNavbarTest = () => {
+const setupNavbarTest = (vieportWidth = 1200) => {
+  window.innerWidth = vieportWidth;
+  window.dispatchEvent(new Event("resize"));
+
   const wrapper = mountNavbar();
   const vAppBar = wrapper.find('[data-test="v-app-bar-stub"]');
   const vNavigationDrawer = wrapper.find('[data-test="v-navigation-drawer"]');
@@ -46,16 +49,25 @@ describe("NavBar Desktop", ()=> {
   let vNavigationDrawer;
 
   beforeEach(()=> {
-    ({ wrapper, vAppBar, vNavigationDrawer } = setupNavbarTest());
+    ({ wrapper, vAppBar, vNavigationDrawer } = setupNavbarTest(1200));
   })
 
-  it.todo("desktop links are visible in desktop >= 1025px", ()=> {
-    console.log("wrapper", wrapper.html());
-    console.log("vAppBar", vAppBar.html());
-    console.log("vNavigationDrawer", vNavigationDrawer.html());
+  it.only("shows desktop layout at >= 1025px", ()=> {
+    // checks desktop layout
+    expect(window.innerWidth).toBeGreaterThanOrEqual(1025);
+    // desktopNavLinks should be visible
+    // nav-drawer-icons and vNavigationDrawers should not
+    const desktopNavLinks = wrapper.find('[data-testid="desktop-nav-links"]');
+    const navDrawerIcons = wrapper.find('[data-testid="nav-drawer-icons"]');
+    //console.log(navDrawerIcons.html()); 
+    console.log(wrapper.html());
+    expect(desktopNavLinks.exists()).toBe(true);
+    // expect(navDrawerIcons.exists()).toBe(false);
   });
-  it.todo("shows desktop layout at >= 1025px", ()=> {});
-  it.todo("renders all navigation links in desktop layout", ()=> {});
+  it.todo("renders all navigation links in desktop layout", ()=> {
+    expect(window.innerWidth).toBeGreaterThanOrEqual(1025);
+
+  });
 })
 
 describe("NavBar Mobile", ()=> {
@@ -106,6 +118,4 @@ describe("NavBar Navigation", ()=> {
   it.todo("navigates to correct route and closes drawer when drawer link is clicked", ()=> {});
 })
 
-
-it.todo("", ()=> {});
 
