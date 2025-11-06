@@ -3,6 +3,7 @@ import { mount } from "@vue/test-utils";
 import { router } from "../../tests/utils/createRouterMock";
 import { nextTick } from "vue";
 import { createVuetifyForTest } from "../../tests/utils/createVuetifyForTest";
+import { mockViewportForVueUse } from "../../tests/utils/mockViewportForVueUse";
 import { VAppBar, VNavigationDrawer, VBtn, VRow, VContainer, VList, VTooltip } from "vuetify/components";
 import NavBar from "./NavBar.vue";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
@@ -36,8 +37,7 @@ const mountNavbar = () => {
 }
 
 const setupNavbarTest = (viewportWidth = 1200) => {
-  window.innerWidth = viewportWidth;
-  window.dispatchEvent(new Event("resize"));
+  mockViewportForVueUse(viewportWidth);
 
   const wrapper = mountNavbar();
   const vAppBar = wrapper.find('[data-test="v-app-bar-stub"]');
