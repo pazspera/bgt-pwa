@@ -8,17 +8,13 @@ sure the reactive logic of VueUse works.
 
 export function mockViewportForVueUse(width: number): void {
   window.innerWidth = width;
-  console.log(`width: ${width}`)
 
   window.matchMedia = (query: string) : MediaQueryList => {
     // variable needed to evaluate and accumulate multiple media queries
     let matches = true;
 
-    console.log(`query ${query}`)
-
     if(query.includes("min-width")) {
       const min = +(query.split("min-width:")[1].split("px")[0]);
-      console.log(`min: ${min}`)
       matches = matches && width >= min;
     }
     
