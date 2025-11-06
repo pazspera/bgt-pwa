@@ -1,10 +1,12 @@
 import { it, describe, beforeEach, expect } from "vitest";
 import { mount } from "@vue/test-utils";
 import { router } from "../../tests/utils/createRouterMock";
+import { nextTick } from "vue";
 import { createVuetifyForTest } from "../../tests/utils/createVuetifyForTest";
 import { VAppBar, VNavigationDrawer, VBtn, VRow, VContainer, VList, VTooltip } from "vuetify/components";
 import NavBar from "./NavBar.vue";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
+
 
 const vuetify = createVuetifyForTest({ VAppBar, VNavigationDrawer, VBtn, VRow, VContainer, VList, VTooltip });
 const faBarsText = faBars.iconName;
@@ -33,8 +35,8 @@ const mountNavbar = () => {
   })
 }
 
-const setupNavbarTest = (vieportWidth = 1200) => {
-  window.innerWidth = vieportWidth;
+const setupNavbarTest = (viewportWidth = 1200) => {
+  window.innerWidth = viewportWidth;
   window.dispatchEvent(new Event("resize"));
 
   const wrapper = mountNavbar();
@@ -52,9 +54,10 @@ describe("NavBar Desktop", ()=> {
     ({ wrapper, vAppBar, vNavigationDrawer } = setupNavbarTest(1200));
   })
 
-  it.only("shows desktop layout at >= 1025px", ()=> {
+  it.only("shows desktop layout at >= 1025px", async ()=> {
     // checks desktop layout
     expect(window.innerWidth).toBeGreaterThanOrEqual(1025);
+    await nextTick();
     // desktopNavLinks should be visible
     // nav-drawer-icons and vNavigationDrawers should not
     const desktopNavLinks = wrapper.find('[data-testid="desktop-nav-links"]');
