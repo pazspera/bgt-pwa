@@ -2,11 +2,18 @@
 import { ref } from 'vue';
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
+import { useBreakpoints } from '@vueuse/core';
 import NavigationLink from '../atoms/typography/NavigationLink.vue';
 import ThemeToggler from '../molecules/ThemeToggler.vue';
 import Logo from '../atoms/Logo.vue';
 
 const drawer = ref(false);
+const breakpoints = useBreakpoints({
+  mobile: 0,
+  tablet: 768,
+  desktop: 1024
+})
+const isDesktop = breakpoints.greaterOrEqual("desktop");
 
 defineOptions({ name: 'NavBar' });
 
@@ -22,7 +29,7 @@ defineOptions({ name: 'NavBar' });
 
         <div class="d-flex align-center">
           <!-- Desktop links: visible >=1025px -->
-          <div class="nav-links show-desktop" data-testid="desktop-nav-links">
+          <div v-if="isDesktop" class="nav-links show-desktop" data-testid="desktop-nav-links">
             <NavigationLink :to="{ name: 'BoardGames' }">Ludoteca</NavigationLink>
             <NavigationLink :to="{ name: 'Players' }">Jugadores</NavigationLink>
             <NavigationLink :to="{ name: 'Games' }">Partidas</NavigationLink>
@@ -30,7 +37,7 @@ defineOptions({ name: 'NavBar' });
           </div>
   
           <!-- Mobile / Tablet toggle: visible <1025px -->
-          <div class="nav-drawer-icons show-mobile" data-testid="nav-drawer-icons">
+          <div v-if="!isDesktop" class="nav-drawer-icons show-mobile" data-testid="nav-drawer-icons">
             <ThemeToggler class="show-mobile" icon-size="var(--font-size-lg)" />
             <v-btn icon class="show-mobile" @click="drawer = true">
               <FontAwesomeIcon :icon="faBars" color="on-surface" />
