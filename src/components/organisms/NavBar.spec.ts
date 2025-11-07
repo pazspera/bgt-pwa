@@ -106,8 +106,12 @@ describe("NavBar Mobile", ()=> {
     expect(vAppBar.find('[data-testid="desktop-nav-links"]').exists()).toBe(false);
   });
 
-  it.todo("mobile toggle is visible at (max-width: 768px)", ()=> {
-    // checks visibility and the icon
+  it("mobile toggle is visible between (min-width: 769px) and (max-width: 1023px)", ()=> {
+    const mobileToggler = vAppBar.find('[data-testid="mobile-toggler"]');
+    expect(mobileToggler.exists()).toBe(true);
+
+    expect(window.innerWidth).toBeLessThanOrEqual(1023);
+    expect(mobileToggler.exists()).toBe(true);
   });
 
   it("renders ThemeToggler in mobile layout", ()=> {
