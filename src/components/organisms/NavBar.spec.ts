@@ -186,12 +186,23 @@ describe("NavBar Navigation", ()=> {
     const boardGameLink = vAppBar.find('[data-to="BoardGames"]');
     
     await boardGameLink.trigger("click");
-    await nextTick();
 
     expect(pushSpy).toHaveBeenCalledWith({ name: "BoardGames" });
   });
 
-  it.todo("navigates to correct route and closes drawer when drawer link is clicked", ()=> {});
+  it("navigates to correct route and closes drawer when drawer link is clicked", async ()=> {
+    const { wrapper, vNavigationDrawer } = setupNavbarTest(800);
+    // checks if the component calls router.push()
+    const pushSpy = vi.spyOn(router, "push");
+    const boardGameLink = vNavigationDrawer.find('[data-to="BoardGames"]');
+
+    await boardGameLink.trigger("click");
+    await nextTick();
+
+    expect(pushSpy).toHaveBeenCalledWith({ name: "BoardGames" });
+    // checks if the ref drawer is false, meaning the drawer closed
+    expect(wrapper.vm.drawer).toBe(false);
+  });
 })
 
 

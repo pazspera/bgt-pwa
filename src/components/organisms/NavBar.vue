@@ -16,6 +16,7 @@ const breakpoints = useBreakpoints({
 const isDesktop = breakpoints.greaterOrEqual("desktop");
 
 defineOptions({ name: 'NavBar' });
+defineExpose({ drawer });
 
 </script>
 
