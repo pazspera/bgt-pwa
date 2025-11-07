@@ -56,6 +56,30 @@ const setupNavbarTest = (viewportWidth = 1200) => {
   return { wrapper, vAppBar, vNavigationDrawer };
 }
 
+const verifyNavigationLinks = (sectionWrapper, expectedTo, expectedText) => {
+  const navLinks = sectionWrapper.findAll('[data-test="navigation-link"]');
+
+  try {
+    // amount of link founds matches amount of expected links
+    expect(navLinks).toHaveLength(expectedTo.length);
+  
+    navLinks.forEach((link, i)=> {
+      const linkTo = link.attributes("data-to");
+      const linkText = link.text().trim(); 
+  
+      expect(linkTo).toBe(expectedTo[i]);
+      expect(linkText).toContain(expectedText[i]);
+    })
+  } catch (error) {
+    console.error("verifyNavigationLinks failed. Links found:");
+    navLinks.forEach((link, i)=> {
+      console.warn(`Link ${i}: to="${link.attributes("data-to")}" text="${link.text().trim()}"`)
+    });
+    throw error;
+  }
+
+}
+
 describe("NavBar Desktop", ()=> {
   let wrapper;
   let vAppBar;
@@ -80,18 +104,7 @@ describe("NavBar Desktop", ()=> {
   
   it.only("renders all navigation links in desktop layout (min-width: 1024px)", ()=> {
     expect(window.innerWidth).toBeGreaterThanOrEqual(1024);
-    const navLinks = vAppBar.findAll('[data-test="navigation-link"]');
-
-    // amount of link founds matches amount of expected links
-    expect(navLinks).toHaveLength(expectedTo.length);
-
-    navLinks.forEach((link, i)=> {
-      const linkTo = link.attributes("data-to");
-      const linkText = link.text().trim(); 
-
-      expect(linkTo).toBe(expectedTo[i]);
-      expect(linkText).toContain(expectedText[i]);
-    })
+    verifyNavigationLinks(vAppBar, expectedTo, expectedText);
   });
 })
 
@@ -104,9 +117,20 @@ describe("NavBar Mobile", ()=> {
 })
 
 describe("NavBar Drawer", ()=> {
+  let wrapper;
+  let vAppBar;
+  let vNavigationDrawer;
+
+  beforeEach(()=> {
+    ({ wrapper, vAppBar, vNavigationDrawer } = setupNavbarTest(768));
+  })
+
   it.todo("opens drawer when mobile toggle is clicked", ()=> {});
   it.todo("closes drawer when mobile toggle is clicked", ()=> {});
-  it.todo("renders all navigation links in drawer layout at (max-width: 768px)", ()=> {});
+  it.only("renders all navigation links in drawer layout at (max-width: 768px)", ()=> {
+    expect(window.innerWidth).toBeLessThanOrEqual(768);
+    verifyNavigationLinks(vNavigationDrawer, expectedTo, expectedText);
+  });
 })
  
 describe("NavBar Shared", ()=> {
