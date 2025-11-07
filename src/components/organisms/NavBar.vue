@@ -28,8 +28,8 @@ defineOptions({ name: 'NavBar' });
         </div>
 
         <div class="d-flex align-center">
-          <!-- Desktop links: visible >=1025px -->
-          <div v-if="isDesktop" class="nav-links show-desktop" data-testid="desktop-nav-links">
+          <!-- Desktop links: visible >=1024px -->
+          <div v-if="isDesktop" class="nav-links" data-testid="desktop-nav-links">
             <NavigationLink :to="{ name: 'BoardGames' }">Ludoteca</NavigationLink>
             <NavigationLink :to="{ name: 'Players' }">Jugadores</NavigationLink>
             <NavigationLink :to="{ name: 'Games' }">Partidas</NavigationLink>
@@ -37,7 +37,7 @@ defineOptions({ name: 'NavBar' });
           </div>
   
           <!-- Mobile / Tablet toggle: visible <1025px -->
-          <div v-if="!isDesktop" class="nav-drawer-icons show-mobile" data-testid="nav-drawer-icons">
+          <div v-if="!isDesktop" class="nav-drawer-icons" data-testid="nav-drawer-icons">
             <ThemeToggler class="show-mobile" icon-size="var(--font-size-lg)" />
             <v-btn icon class="show-mobile" @click="drawer = true">
               <FontAwesomeIcon :icon="faBars" color="on-surface" />
@@ -72,26 +72,8 @@ defineOptions({ name: 'NavBar' });
 }
 
 .nav-drawer-icons {
+  display: flex;
   flex-direction: row;
-}
-/*
-  Visibility helpers to match requested breakpoints exactly.
-  - .show-desktop: visible at >=1025px
-  - .show-mobile: visible below 1025px
-*/
-.show-desktop { display: none; }
-.show-mobile { display: flex; }
-
-@media (min-width: 1025px) {
-  .show-desktop { 
-    display: flex; 
-    gap: 1rem; 
-    align-items: center;
-  }
-
-  .show-mobile { 
-    display: none; 
-  }
 }
 
 .logo-container {
