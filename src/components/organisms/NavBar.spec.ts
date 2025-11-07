@@ -127,15 +127,29 @@ describe("NavBar Drawer", ()=> {
   let wrapper;
   let vAppBar;
   let vNavigationDrawer;
+  let mobileToggler;
 
   beforeEach(()=> {
     ({ wrapper, vAppBar, vNavigationDrawer } = setupNavbarTest(768));
+    mobileToggler = vAppBar.find('[data-testid="mobile-toggler"]');
   })
 
-  it.todo("opens drawer when mobile toggle is clicked", ()=> {});
+  it("toggles drawer open and close when mobile-toggler is clicked", async ()=> {
+    // the attributes returns a string, it was causing the test to fail
+    const isDrawerOpen = ()=> vNavigationDrawer.attributes("modelvalue") === "true"; 
 
-  it.todo("closes drawer when mobile toggle is clicked", ()=> {
-    // Test to be implemented once the mobile toggler is refactored
+    // initial state of drawer: closed
+    expect(isDrawerOpen()).toBe(false);
+
+    // click to open drawer
+    await mobileToggler.trigger("click");
+    await nextTick();
+    expect(isDrawerOpen()).toBe(true);
+
+    // click to close drawer
+    await mobileToggler.trigger("click");
+    await nextTick();
+    expect(isDrawerOpen()).toBe(false);
   });
   
   it("renders all navigation links in drawer layout at (max-width: 768px)", ()=> {
