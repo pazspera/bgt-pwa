@@ -1,4 +1,4 @@
-import { it, describe, beforeEach, expect } from "vitest";
+import { it, describe, beforeEach, expect, vi } from "vitest";
 import { mount } from "@vue/test-utils";
 import { router } from "../../tests/utils/createRouterMock";
 import { nextTick } from "vue";
@@ -96,7 +96,7 @@ describe("NavBar Mobile", ()=> {
     ({ wrapper, vAppBar, vNavigationDrawer } = setupNavbarTest(769));
   })
 
-  it("shows tablet layout between (min-width: 769px) and (max-width: 1024px)", () => {
+  it("renders mobile/tablet layout when isDesktop is false (769px)", () => {
     // nav-drawer-icons and vNavigationDrawer should render
     // desktop-nav-links shouldn't
     const navDrawerIcons = vAppBar.find('[data-testid="nav-drawer-icons"]');
@@ -106,7 +106,7 @@ describe("NavBar Mobile", ()=> {
     expect(vAppBar.find('[data-testid="desktop-nav-links"]').exists()).toBe(false);
   });
 
-  it("mobile toggle is visible between (min-width: 769px) and (max-width: 1023px)", ()=> {
+  it("mobile toggle is visible when isDesktop is false (769px))", ()=> {
     const mobileToggler = vAppBar.find('[data-testid="mobile-toggler"]');
     expect(mobileToggler.exists()).toBe(true);
 
@@ -179,7 +179,18 @@ describe("NavBar Shared", ()=> {
 })
 
 describe("NavBar Navigation", ()=> {
-  it.todo("navigates to correct route when desktop link is clicked", ()=> {});
+  it("navigates to correct route when desktop link is clicked", async ()=> {
+    const { vAppBar } = setupNavbarTest(1200);
+    // checks if the component calls router.push()
+    const pushSpy = vi.spyOn(router, "push");
+    const boardGameLink = vAppBar.find('[data-to="BoardGames"]');
+    
+    await boardGameLink.trigger("click");
+    await nextTick();
+
+    expect(pushSpy).toHaveBeenCalledWith({ name: "BoardGames" });
+  });
+
   it.todo("navigates to correct route and closes drawer when drawer link is clicked", ()=> {});
 })
 
