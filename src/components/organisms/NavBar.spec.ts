@@ -60,7 +60,7 @@ describe("NavBar Desktop", ()=> {
     ({ wrapper, vAppBar, vNavigationDrawer } = setupNavbarTest(1200));
   })
 
-  it("shows desktop layout at (min-width: 1024px)", async ()=> {
+  it("renders desktop layout at (min-width: 1024px)", async ()=> {
     // checks desktop layout
     expect(window.innerWidth).toBeGreaterThanOrEqual(1024);
     await nextTick();
@@ -91,18 +91,26 @@ describe("NavBar Mobile", ()=> {
   let vAppBar;
   let vNavigationDrawer;
 
+  // has to be set at 769px, on 768px Navbar is not rendered
   beforeEach(()=> {
-    ({ wrapper, vAppBar, vNavigationDrawer } = setupNavbarTest(768));
+    ({ wrapper, vAppBar, vNavigationDrawer } = setupNavbarTest(769));
   })
 
-  it.todo("shows mobile layout at (max-width: 768px)", ()=> {});
-  it.todo("shows tablet layout between (min-width: 768px) and (max-width: 1024px)", () => {});
+  it("shows tablet layout between (min-width: 769px) and (max-width: 1024px)", () => {
+    // nav-drawer-icons and vNavigationDrawer should render
+    // desktop-nav-links shouldn't
+    const navDrawerIcons = vAppBar.find('[data-testid="nav-drawer-icons"]');
+
+    expect(navDrawerIcons.exists()).toBe(true);
+    expect(vNavigationDrawer.exists()).toBe(true);
+    expect(vAppBar.find('[data-testid="desktop-nav-links"]').exists()).toBe(false);
+  });
+
   it.todo("mobile toggle is visible at (max-width: 768px)", ()=> {
     // checks visibility and the icon
   });
 
-  it("renders ThemeToggler in both mobile and desktop layouts", ()=> {
-    expect(window.innerWidth).toBeLessThanOrEqual(768);
+  it("renders ThemeToggler in mobile layout", ()=> {
     // in mobile, the ThemeToggler is on div.nav-drawer-icons
     const navDrawerIcons = wrapper.find('[data-testid="nav-drawer-icons"]')
     const themeTogglerInDrawer = navDrawerIcons.findComponent({ name: "ThemeToggler" });
