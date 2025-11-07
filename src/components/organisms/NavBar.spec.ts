@@ -4,6 +4,8 @@ import { router } from "../../tests/utils/createRouterMock";
 import { nextTick } from "vue";
 import { createVuetifyForTest } from "../../tests/utils/createVuetifyForTest";
 import { mockViewportForVueUse } from "../../tests/utils/mockViewportForVueUse";
+import { expectNavigationLinks } from "../../tests/utils/expectNavigationLinks";
+import { NavigationLinkStub } from "../../tests/utils/stubNavigationLink";
 import { VAppBar, VNavigationDrawer, VBtn, VRow, VContainer, VList, VTooltip } from "vuetify/components";
 import NavBar from "./NavBar.vue";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
@@ -35,14 +37,7 @@ const mountNavbar = () => {
             </div>
           `
         },
-        NavigationLink: {
-          props: ["to"],
-          template: `
-          <div data-test="navigation-link"
-            :data-to="typeof to === 'string' ? to : to?.name || to?.path ">
-            <slot/>
-          </div>`
-        }
+        NavigationLink: NavigationLinkStub
       }
     }
   })
@@ -54,30 +49,6 @@ const setupNavbarTest = (viewportWidth = 1200) => {
   const vAppBar = wrapper.find('[data-test="v-app-bar-stub"]');
   const vNavigationDrawer = wrapper.find('[data-test="v-navigation-drawer"]');
   return { wrapper, vAppBar, vNavigationDrawer };
-}
-
-const verifyNavigationLinks = (sectionWrapper, expectedTo, expectedText) => {
-  const navLinks = sectionWrapper.findAll('[data-test="navigation-link"]');
-
-  try {
-    // amount of link founds matches amount of expected links
-    expect(navLinks).toHaveLength(expectedTo.length);
-  
-    navLinks.forEach((link, i)=> {
-      const linkTo = link.attributes("data-to");
-      const linkText = link.text().trim(); 
-  
-      expect(linkTo).toBe(expectedTo[i]);
-      expect(linkText).toContain(expectedText[i]);
-    })
-  } catch (error) {
-    console.error("verifyNavigationLinks failed. Links found:");
-    navLinks.forEach((link, i)=> {
-      console.warn(`Link ${i}: to="${link.attributes("data-to")}" text="${link.text().trim()}"`)
-    });
-    throw error;
-  }
-
 }
 
 describe("NavBar Desktop", ()=> {
@@ -104,7 +75,7 @@ describe("NavBar Desktop", ()=> {
   
   it.only("renders all navigation links in desktop layout (min-width: 1024px)", ()=> {
     expect(window.innerWidth).toBeGreaterThanOrEqual(1024);
-    verifyNavigationLinks(vAppBar, expectedTo, expectedText);
+    expectNavigationLinks(vAppBar, expectedTo, expectedText);
   });
 })
 
@@ -129,7 +100,7 @@ describe("NavBar Drawer", ()=> {
   it.todo("closes drawer when mobile toggle is clicked", ()=> {});
   it.only("renders all navigation links in drawer layout at (max-width: 768px)", ()=> {
     expect(window.innerWidth).toBeLessThanOrEqual(768);
-    verifyNavigationLinks(vNavigationDrawer, expectedTo, expectedText);
+    expectNavigationLinks(vNavigationDrawer, expectedTo, expectedText);
   });
 })
  
