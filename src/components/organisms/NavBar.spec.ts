@@ -30,6 +30,14 @@ const mountNavbar = () => {
               <slot/>
             </div>
           `
+        },
+        NavigationLink: {
+          props: ["to"],
+          template: `
+          <div data-test="navigation-link"
+            :data-to="typeof to === string ? to : to?.name || to?.path ">
+            <slot/>
+          </div>`
         }
       }
     }
@@ -38,7 +46,6 @@ const mountNavbar = () => {
 
 const setupNavbarTest = (viewportWidth = 1200) => {
   mockViewportForVueUse(viewportWidth);
-
   const wrapper = mountNavbar();
   const vAppBar = wrapper.find('[data-test="v-app-bar-stub"]');
   const vNavigationDrawer = wrapper.find('[data-test="v-navigation-drawer"]');
@@ -54,28 +61,33 @@ describe("NavBar Desktop", ()=> {
     ({ wrapper, vAppBar, vNavigationDrawer } = setupNavbarTest(1200));
   })
 
-  it.only("shows desktop layout at >= 1025px", async ()=> {
+  it("shows desktop layout at (min-width: 1024px)", async ()=> {
     // checks desktop layout
-    expect(window.innerWidth).toBeGreaterThanOrEqual(1025);
+    expect(window.innerWidth).toBeGreaterThanOrEqual(1024);
     await nextTick();
     // desktopNavLinks should be visible
     // nav-drawer-icons and vNavigationDrawers should not
     const desktopNavLinks = wrapper.find('[data-testid="desktop-nav-links"]');
     const navDrawerIcons = wrapper.find('[data-testid="nav-drawer-icons"]');
-    //console.log(navDrawerIcons.html()); 
-    console.log(wrapper.html());
-    expect(desktopNavLinks.exists()).toBe(true);
-    // expect(navDrawerIcons.exists()).toBe(false);
-  });
-  it.todo("renders all navigation links in desktop layout", ()=> {
-    expect(window.innerWidth).toBeGreaterThanOrEqual(1025);
 
+    expect(desktopNavLinks.exists()).toBe(true);
+    expect(navDrawerIcons.exists()).toBe(false);
+  });
+  
+  it.only("renders all navigation links in desktop layout (min-width: 1024px)", ()=> {
+    expect(window.innerWidth).toBeGreaterThanOrEqual(1024);
+    const navLinks = vAppBar.findAll('[data-test="navigation-link"]');
+    navLinks.forEach((link)=> {
+      console.log("to:", link.attributes("data-to"))
+      console.log("text:", link.text())
+    })
   });
 })
 
 describe("NavBar Mobile", ()=> {
-  it.todo("shows mobile layout at >= 1025px", ()=> {});
-  it.todo("mobile toggle is visible in mobile/tablet < 1025px", ()=> {
+  it.todo("shows mobile layout at (max-width: 768px)", ()=> {});
+  it.todo("shows tablet layout between (min-width: 768px) and (max-width: 1024px)", () => {});
+  it.todo("mobile toggle is visible at (max-width: 768px)", ()=> {
     // checks visibility and the icon
   });
 })
@@ -83,7 +95,7 @@ describe("NavBar Mobile", ()=> {
 describe("NavBar Drawer", ()=> {
   it.todo("opens drawer when mobile toggle is clicked", ()=> {});
   it.todo("closes drawer when mobile toggle is clicked", ()=> {});
-  it.todo("renders all navigation links in drawer layout", ()=> {});
+  it.todo("renders all navigation links in drawer layout at (max-width: 768px)", ()=> {});
 })
  
 describe("NavBar Shared", ()=> {
@@ -100,7 +112,7 @@ describe("NavBar Shared", ()=> {
     expect(logo.exists()).toBe(true);
   });
 
-  it("renders ThemeToggler in desktop and mobile", ()=> {
+  it("renders ThemeToggler in both mobile and desktop layouts", ()=> {
     const themeTogglerInWrapper = wrapper.findComponent({ name: "ThemeToggler"});
     // in mobile, the ThemeToggler is on div.nav-drawer-icons
     const navDrawerIcons = wrapper.find('[data-testid="nav-drawer-icons"]')
