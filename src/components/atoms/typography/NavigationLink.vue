@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { defineProps } from 'vue';
 const props = defineProps<{ to: any }>();
+
+defineOptions({ name: "NavigationLink" });
+
 </script>
 
 <template>

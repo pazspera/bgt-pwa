@@ -2,13 +2,21 @@
 import { ref } from 'vue';
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
+import { useBreakpoints } from '@vueuse/core';
 import NavigationLink from '../atoms/typography/NavigationLink.vue';
 import ThemeToggler from '../molecules/ThemeToggler.vue';
 import Logo from '../atoms/Logo.vue';
 
 const drawer = ref(false);
+const breakpoints = useBreakpoints({
+  mobile: 0,
+  tablet: 768,
+  desktop: 1024
+})
+const isDesktop = breakpoints.greaterOrEqual("desktop");
 
 defineOptions({ name: 'NavBar' });
+defineExpose({ drawer });
 
 </script>
 
@@ -21,8 +29,8 @@ defineOptions({ name: 'NavBar' });
         </div>
 
         <div class="d-flex align-center">
-          <!-- Desktop links: visible >=1025px -->
-          <div class="nav-links show-desktop">
+          <!-- Desktop links: visible >=1024px -->
+          <div v-if="isDesktop" class="nav-links" data-testid="desktop-nav-links">
             <NavigationLink :to="{ name: 'BoardGames' }">Ludoteca</NavigationLink>
             <NavigationLink :to="{ name: 'Players' }">Jugadores</NavigationLink>
             <NavigationLink :to="{ name: 'Games' }">Partidas</NavigationLink>
@@ -30,9 +38,9 @@ defineOptions({ name: 'NavBar' });
           </div>
   
           <!-- Mobile / Tablet toggle: visible <1025px -->
-          <div class="nav-drawer-icons show-mobile">
+          <div v-if="!isDesktop" class="nav-drawer-icons" data-testid="nav-drawer-icons">
             <ThemeToggler class="show-mobile" icon-size="var(--font-size-lg)" />
-            <v-btn icon class="show-mobile" @click="drawer = true">
+            <v-btn icon class="show-mobile" @click="drawer = !drawer" data-testid="mobile-toggler">
               <FontAwesomeIcon :icon="faBars" color="on-surface" />
             </v-btn>
           </div>
@@ -65,26 +73,8 @@ defineOptions({ name: 'NavBar' });
 }
 
 .nav-drawer-icons {
+  display: flex;
   flex-direction: row;
-}
-/*
-  Visibility helpers to match requested breakpoints exactly.
-  - .show-desktop: visible at >=1025px
-  - .show-mobile: visible below 1025px
-*/
-.show-desktop { display: none; }
-.show-mobile { display: flex; }
-
-@media (min-width: 1025px) {
-  .show-desktop { 
-    display: flex; 
-    gap: 1rem; 
-    align-items: center;
-  }
-
-  .show-mobile { 
-    display: none; 
-  }
 }
 
 .logo-container {

@@ -4,7 +4,7 @@
     <v-main>
       <router-view />
     </v-main>
-    <v-footer app v-if="width < 768" height="72">
+    <v-footer app v-if="width <= 768" height="72">
       <BottomNavigation  />
     </v-footer>
   </v-app>

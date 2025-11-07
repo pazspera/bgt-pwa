@@ -2,6 +2,7 @@ import { it, expect, describe, beforeEach } from "vitest";
 import { mount } from "@vue/test-utils";
 import NavigationLink from "./NavigationLink.vue";
 import { router } from "../../../tests/utils/createRouterMock";
+import { routerLinkStub } from "../../../tests/utils/stubRouterLink";
 
 const classNavLink = "navigation-link";
 
@@ -18,18 +19,7 @@ const mountNavigationLink = (
     global: {
       // adding 'plugins: [router]' is not needed as createRouterMock handles it
       stubs: {
-        RouterLink: {
-          props: ["to"],
-          template: `
-            <a data-test="router-link-stub" 
-               :href="to" 
-               :aria-current="$router.currentRoute.value.name === to.name ? 'page' : undefined" 
-               v-bind="$attrs"
-            >
-              <slot />
-            </a>
-          `
-        }
+        RouterLink: routerLinkStub
       }
     }
   })

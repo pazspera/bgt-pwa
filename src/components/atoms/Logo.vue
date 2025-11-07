@@ -1,8 +1,14 @@
 <script setup lang="ts">
+import { defineComponent } from "vue";
+
+defineComponent({
+  name: "Logo",
+})
+
 </script>
 
 <template>
-  <router-link :to="{ name: 'BoardGames' }">
+  <router-link :to="{ name: 'BoardGames' }" data-testid="app-logo">
     <img src="/favicon.ico" class="navbar-icon" />
   </router-link>
 </template>
