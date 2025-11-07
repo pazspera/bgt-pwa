@@ -12,6 +12,10 @@ import { faBars } from "@fortawesome/free-solid-svg-icons";
 const vuetify = createVuetifyForTest({ VAppBar, VNavigationDrawer, VBtn, VRow, VContainer, VList, VTooltip });
 const faBarsText = faBars.iconName;
 
+// Data to verify NavigationLinks
+const expectedTo = ["BoardGames", "Players", "Games"];
+const expectedText = ["Ludoteca", "Jugadores", "Partidas"]; 
+
 const mountNavbar = () => {
   return mount(NavBar, {
     global: {
@@ -35,7 +39,7 @@ const mountNavbar = () => {
           props: ["to"],
           template: `
           <div data-test="navigation-link"
-            :data-to="typeof to === string ? to : to?.name || to?.path ">
+            :data-to="typeof to === 'string' ? to : to?.name || to?.path ">
             <slot/>
           </div>`
         }
@@ -77,9 +81,16 @@ describe("NavBar Desktop", ()=> {
   it.only("renders all navigation links in desktop layout (min-width: 1024px)", ()=> {
     expect(window.innerWidth).toBeGreaterThanOrEqual(1024);
     const navLinks = vAppBar.findAll('[data-test="navigation-link"]');
-    navLinks.forEach((link)=> {
-      console.log("to:", link.attributes("data-to"))
-      console.log("text:", link.text())
+
+    // amount of link founds matches amount of expected links
+    expect(navLinks).toHaveLength(expectedTo.length);
+
+    navLinks.forEach((link, i)=> {
+      const linkTo = link.attributes("data-to");
+      const linkText = link.text().trim(); 
+
+      expect(linkTo).toBe(expectedTo[i]);
+      expect(linkText).toContain(expectedText[i]);
     })
   });
 })
