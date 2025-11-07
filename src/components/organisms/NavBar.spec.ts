@@ -73,17 +73,41 @@ describe("NavBar Desktop", ()=> {
     expect(navDrawerIcons.exists()).toBe(false);
   });
   
-  it.only("renders all navigation links in desktop layout (min-width: 1024px)", ()=> {
+  it("renders all navigation links in desktop layout (min-width: 1024px)", ()=> {
     expect(window.innerWidth).toBeGreaterThanOrEqual(1024);
     expectNavigationLinks(vAppBar, expectedTo, expectedText);
+  });
+
+  it("renders ThemeToggler in desktop layout", ()=> {
+    expect(window.innerWidth).toBeGreaterThanOrEqual(1024);
+    const themeTogglerInWrapper = vAppBar.findComponent({ name: "ThemeToggler"});
+
+    expect(themeTogglerInWrapper.exists()).toBe(true);
   });
 })
 
 describe("NavBar Mobile", ()=> {
+  let wrapper;
+  let vAppBar;
+  let vNavigationDrawer;
+
+  beforeEach(()=> {
+    ({ wrapper, vAppBar, vNavigationDrawer } = setupNavbarTest(768));
+  })
+
   it.todo("shows mobile layout at (max-width: 768px)", ()=> {});
   it.todo("shows tablet layout between (min-width: 768px) and (max-width: 1024px)", () => {});
   it.todo("mobile toggle is visible at (max-width: 768px)", ()=> {
     // checks visibility and the icon
+  });
+
+  it("renders ThemeToggler in both mobile and desktop layouts", ()=> {
+    expect(window.innerWidth).toBeLessThanOrEqual(768);
+    // in mobile, the ThemeToggler is on div.nav-drawer-icons
+    const navDrawerIcons = wrapper.find('[data-testid="nav-drawer-icons"]')
+    const themeTogglerInDrawer = navDrawerIcons.findComponent({ name: "ThemeToggler" });
+
+    expect(themeTogglerInDrawer.exists()).toBe(true);
   });
 })
 
@@ -97,8 +121,12 @@ describe("NavBar Drawer", ()=> {
   })
 
   it.todo("opens drawer when mobile toggle is clicked", ()=> {});
-  it.todo("closes drawer when mobile toggle is clicked", ()=> {});
-  it.only("renders all navigation links in drawer layout at (max-width: 768px)", ()=> {
+
+  it.todo("closes drawer when mobile toggle is clicked", ()=> {
+    // Test to be implemented once the mobile toggler is refactored
+  });
+  
+  it("renders all navigation links in drawer layout at (max-width: 768px)", ()=> {
     expect(window.innerWidth).toBeLessThanOrEqual(768);
     expectNavigationLinks(vNavigationDrawer, expectedTo, expectedText);
   });
@@ -116,16 +144,6 @@ describe("NavBar Shared", ()=> {
   it("renders logo component", ()=> {
     const logo = wrapper.findComponent({ name: "Logo"});
     expect(logo.exists()).toBe(true);
-  });
-
-  it("renders ThemeToggler in both mobile and desktop layouts", ()=> {
-    const themeTogglerInWrapper = wrapper.findComponent({ name: "ThemeToggler"});
-    // in mobile, the ThemeToggler is on div.nav-drawer-icons
-    const navDrawerIcons = wrapper.find('[data-testid="nav-drawer-icons"]')
-    const themeTogglerInDrawer = navDrawerIcons.findComponent({ name: "ThemeToggler" });
-
-    expect(themeTogglerInWrapper.exists()).toBe(true);
-    expect(themeTogglerInDrawer.exists()).toBe(true);
   });
 
   it("navbar has role='navigation' and aria-label", ()=> {
