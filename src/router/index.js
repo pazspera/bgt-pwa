@@ -19,11 +19,6 @@ export const routes = [
     props: true,
   },
   {
-    path: "/agregar-jugador",
-    name: "AddPlayer",
-    component: () => import(/* webpackChunkName: "AddPlayer"*/ "@/views/Players/AddPlayer.vue"),
-  },
-  {
     path: "/partidas",
     name: "Games",
     component: () => import(/*webpackChunkName: "Games" */ "@/views/Games/GamesView.vue"),
