@@ -3,7 +3,7 @@ import { ref } from "vue";
 import AddPlayerSheet from "../../components/organisms/AddPlayerSheet.vue";
 
 const isSheetVisible = ref(false);
-const errorText = ref("aa");
+const errorText = ref("");
 defineOptions({ name: "PlayersView" });
 
 </script>

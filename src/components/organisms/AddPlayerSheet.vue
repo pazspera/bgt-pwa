@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import SubsectionTitle from '../atoms/typography/SubsectionTitle.vue';
 import { ref, defineEmits } from "vue";
+import { VExpandTransition } from 'vuetify/components';
 
 defineProps<{
   modelValue: boolean,
@@ -28,17 +29,22 @@ const name = ref("");
         <SubsectionTitle class="title">Agregar jugador</SubsectionTitle>
         <form @submit.prevent="submit">
           <v-text-field v-model="name" label="Nombre" data-testid="input-player-name"></v-text-field>
-          <v-alert
-            v-if="errorMessage"
-            color="error"
-            icont="$error"
-            :text="errorMessage"
-            data-testid="error-message"
-          >
-          </v-alert>
-          <v-btn type="submit" color="primary" data-testid="btn-add-player">Agregar</v-btn>
-          <v-btn variant="text" data-testid="btn-cancel">Cancelar</v-btn>
+          <div class="sheet-buttons">
+            <v-btn type="submit" color="primary" data-testid="btn-add-player">Agregar</v-btn>
+            <v-btn variant="text" data-testid="btn-cancel">Cancelar</v-btn>
+          </div>
         </form>
+
+        <v-expand-transition>
+          <div v-if="errorMessage">
+            <v-alert
+                color="error"
+                :text="errorMessage"
+                data-testid="error-message"
+              >
+            </v-alert>
+          </div>
+        </v-expand-transition>
       </v-container>
     </v-sheet>
   </v-bottom-sheet>
@@ -47,9 +53,16 @@ const name = ref("");
 <style scoped>
 .title {
   margin-top: 0 !important;
+  margin-bottom: 16px !important;
 }
 
 .container {
   padding: 48px 0;
+}
+
+.sheet-buttons {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px; 
 }
 </style>
