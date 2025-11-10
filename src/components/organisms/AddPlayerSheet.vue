@@ -21,8 +21,8 @@ const name = ref("");
     :model-value="modelValue"
     @update:model-value="emit('update:modelValue', $event)"
   >
-    <v-container>
-      <SubsectionTitle>Agregar jugador</SubsectionTitle>
+    <v-container class="container">
+      <SubsectionTitle class="title">Agregar jugador</SubsectionTitle>
       <form @submit.prevent="submit">
         <v-text-field v-model="name" label="Nombre"></v-text-field>
         <v-btn type="submit" color="primary">Agregar</v-btn>
@@ -31,3 +31,13 @@ const name = ref("");
     </v-container>
   </v-bottom-sheet>
 </template>
+
+<style scoped>
+.title {
+  margin-top: 0 !important;
+}
+
+.container {
+  padding: 48px 0;
+}
+</style>
