@@ -21,14 +21,16 @@ const name = ref("");
     :model-value="modelValue"
     @update:model-value="emit('update:modelValue', $event)"
   >
-    <v-container class="container">
-      <SubsectionTitle class="title">Agregar jugador</SubsectionTitle>
-      <form @submit.prevent="submit">
-        <v-text-field v-model="name" label="Nombre"></v-text-field>
-        <v-btn type="submit" color="primary">Agregar</v-btn>
-        <v-btn variant="text">Cancelar</v-btn>
-      </form>
-    </v-container>
+    <v-sheet color="surface">
+      <v-container class="container">
+        <SubsectionTitle class="title">Agregar jugador</SubsectionTitle>
+        <form @submit.prevent="submit">
+          <v-text-field v-model="name" label="Nombre"></v-text-field>
+          <v-btn type="submit" color="primary">Agregar</v-btn>
+          <v-btn variant="text">Cancelar</v-btn>
+        </form>
+      </v-container>
+    </v-sheet>
   </v-bottom-sheet>
 </template>
 
