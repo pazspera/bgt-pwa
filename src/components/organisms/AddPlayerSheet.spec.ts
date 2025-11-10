@@ -1,4 +1,41 @@
 import { it, describe, expect } from "vitest";
+import { mount } from "@vue/test-utils";
+import { createVuetifyForTest } from "../../tests/utils/createVuetifyForTest";
+import { VBottomSheet, VContainer, VTextField, VBtn } from "vuetify/components";
+import AddPlayerSheet from "./AddPlayerSheet.vue";
+
+const vuetify = createVuetifyForTest({ VBottomSheet, VContainer, VTextField, VBtn });
+
+const mountAddPlayerSheet = ()=> {
+  return mount(AddPlayerSheet, {
+    global: {
+      plugins: [vuetify],
+      stubs: {
+        "v-bottom-sheet": {
+          template: `
+            <div data-test="v-bottom-sheet" v-bind="$attrs">
+              <slot/>
+            </div>
+          `
+        },
+        "v-text-field": {
+          template: `
+            <div data-test="v-text-field" v-bind="$attrs">
+              <slot/>
+            </div>
+          `
+        },
+        "v-btn": {
+          template: `
+            <div data-test="v-btn" v-bind="$attrs">
+              <slot/>
+            </div>
+          `
+        }
+      }
+    }
+  })
+}
 
 describe("Rendering", ()=> {
   it.todo("renders input v-text-field", ()=> {});
