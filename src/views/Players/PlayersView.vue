@@ -10,13 +10,11 @@ defineOptions({ name: "PlayersView" });
 <template>
   <v-container class="mt-4">
     <h1>Jugadores</h1>
-    <router-link :to="{ name: 'AddPlayer' }">
-      <v-btn color="primary">Agregar jugador</v-btn>
-    </router-link>
     <v-btn 
       @click="isSheetVisible = !isSheetVisible"
+      color="primary"
     >
-      Toggle AddPlayerSheet
+      Agregar jugador
     </v-btn>
 
     <AddPlayerSheet v-model="isSheetVisible" />
