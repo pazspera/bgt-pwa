@@ -47,14 +47,20 @@ describe("Rendering", ()=> {
     wrapper = mountAddPlayerSheet();
   });
 
-  it.only("renders player name input field with the correct label", ()=> {
+  it("renders player name input field with the correct label", ()=> {
     const playerNameInput = wrapper.find('[data-testid="input-player-name"]');
     
     expect(playerNameInput.exists()).toBe(true);
     expect(playerNameInput.attributes("label")).toBe("Nombre");
   });
 
-  it.todo("renders 'add' button", ()=> {});
+  it.only("renders 'add' button with correct label", ()=> {
+    const btnAdd = wrapper.find('[data-testid="btn-add-player"]');
+
+    expect(btnAdd.exists()).toBe(true);
+    expect(btnAdd.text()).toContain("Agregar");
+  });
+
   it.todo("renders 'cancel' button", ()=> {});
   it.todo("shows a message error with the correct value when errorMessage is received", ()=> {});
 });
