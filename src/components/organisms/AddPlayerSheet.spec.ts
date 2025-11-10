@@ -54,14 +54,20 @@ describe("Rendering", ()=> {
     expect(playerNameInput.attributes("label")).toBe("Nombre");
   });
 
-  it.only("renders 'add' button with correct label", ()=> {
+  it("renders 'add' button with correct label", ()=> {
     const btnAdd = wrapper.find('[data-testid="btn-add-player"]');
 
     expect(btnAdd.exists()).toBe(true);
     expect(btnAdd.text()).toContain("Agregar");
   });
 
-  it.todo("renders 'cancel' button", ()=> {});
+  it("renders 'cancel' button", ()=> {
+    const btnCancel = wrapper.find('[data-testid="btn-cancel"]');
+
+    expect(btnCancel.exists()).toBe(true);
+    expect(btnCancel.text()).toContain("Cancelar");
+  });
+
   it.todo("shows a message error with the correct value when errorMessage is received", ()=> {});
 });
 
