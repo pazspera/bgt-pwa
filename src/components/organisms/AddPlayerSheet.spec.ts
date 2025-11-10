@@ -1,15 +1,17 @@
 import { it, describe, expect, beforeEach } from "vitest";
 import { mount } from "@vue/test-utils";
+import { nextTick } from "vue";
 import { createVuetifyForTest } from "../../tests/utils/createVuetifyForTest";
-import { VBottomSheet, VContainer, VTextField, VBtn, VSheet } from "vuetify/components";
+import { VBottomSheet, VContainer, VTextField, VBtn, VSheet, VAlert } from "vuetify/components";
 import AddPlayerSheet from "./AddPlayerSheet.vue";
  
-const vuetify = createVuetifyForTest({ VBottomSheet, VContainer, VTextField, VBtn, VSheet });
+const vuetify = createVuetifyForTest({ VBottomSheet, VContainer, VTextField, VBtn, VSheet, VAlert });
  
-const mountAddPlayerSheet = ()=> {
+const mountAddPlayerSheet = ( options: Record<string, any> = {})=> {
   return mount(AddPlayerSheet, {
     props: {
-      modelValue: true
+      modelValue: true,
+      ...options.props || {},
     },
     global: {
       plugins: [vuetify],
@@ -68,7 +70,18 @@ describe("Rendering", ()=> {
     expect(btnCancel.text()).toContain("Cancelar");
   });
 
-  it.todo("shows a message error with the correct value when errorMessage is received", ()=> {});
+  it("shows a message error with the correct value when errorMessage is received", async ()=> {
+    const errorText = "An error has occurred";
+
+    const wrapperError = mountAddPlayerSheet({
+      props: { errorMessage: errorText }
+    });
+
+    const errorMessage = wrapperError.find('[data-testid="error-message"]');
+
+    expect(errorMessage.exists()).toBe(true);
+    expect(errorMessage.text()).toContain(errorText);
+  });
 });
 
 describe("Logic & Events", ()=> {

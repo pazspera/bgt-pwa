@@ -3,7 +3,8 @@ import SubsectionTitle from '../atoms/typography/SubsectionTitle.vue';
 import { ref, defineEmits } from "vue";
 
 defineProps<{
-  modelValue: boolean
+  modelValue: boolean,
+  errorMessage?: string
 }>()
 
 const emit = defineEmits(['update:modelValue']);
@@ -27,6 +28,14 @@ const name = ref("");
         <SubsectionTitle class="title">Agregar jugador</SubsectionTitle>
         <form @submit.prevent="submit">
           <v-text-field v-model="name" label="Nombre" data-testid="input-player-name"></v-text-field>
+          <v-alert
+            v-if="errorMessage"
+            color="error"
+            icont="$error"
+            :text="errorMessage"
+            data-testid="error-message"
+          >
+          </v-alert>
           <v-btn type="submit" color="primary" data-testid="btn-add-player">Agregar</v-btn>
           <v-btn variant="text" data-testid="btn-cancel">Cancelar</v-btn>
         </form>
