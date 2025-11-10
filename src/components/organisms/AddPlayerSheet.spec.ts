@@ -47,9 +47,13 @@ describe("Rendering", ()=> {
     wrapper = mountAddPlayerSheet();
   });
 
-  it.only("renders input v-text-field", ()=> {
+  it.only("renders player name input field with the correct label", ()=> {
+    const playerNameInput = wrapper.find('[data-testid="input-player-name"]');
     
+    expect(playerNameInput.exists()).toBe(true);
+    expect(playerNameInput.attributes("label")).toBe("Nombre");
   });
+
   it.todo("renders 'add' button", ()=> {});
   it.todo("renders 'cancel' button", ()=> {});
   it.todo("shows a message error with the correct value when errorMessage is received", ()=> {});
