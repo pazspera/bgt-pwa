@@ -24,9 +24,15 @@ const mountAddPlayerSheet = ( options: Record<string, any> = {})=> {
           `
         },
         "v-text-field": {
+          emits: ["update:modelValue"],
           template: `
-            <div v-bind="$attrs">
-              <slot/>
+            <div class="v-text-field" :data-testid="$attrs['data-testid']">
+              <input 
+                type="text" 
+                :value="$attrs.modelValue"
+                @input="$emit('update:modelValue', $event.target.value)"
+              />
+              <label v-if="$attrs.label">{{ $attrs.label }}</label>
             </div>
           `
         },
@@ -107,9 +113,22 @@ describe("Logic & Events", ()=> {
     const emittedEvents = wrapper.emitted("playerAdded");
 
     expect(emittedEvents).toBeTruthy();
+    // add that is was called once
   });
 
-  it.todo("the emitted event matches with the string entered by the user", ()=> {});
+  it("the emitted event matches with the string entered by the user", async ()=> {
+    const playerName = "Stephen King"
+    // can't add the value directly on playerNameInput
+    // need to access the native input inside it to change it
+    const nativeInput = playerNameInput.find("input");
+    await nativeInput.setValue(playerName);
+    await btnAdd.trigger("click");
+    await nextTick();
+    
+    expect(wrapper.emitted("playerAdded")).toEqual([
+      [{ playerName: playerName }]
+    ])
+  });
 
   it("emits cancellation event that closes AppPlayerSheet", async ()=> {
     await btnCancel.trigger("click");

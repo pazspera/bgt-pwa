@@ -12,8 +12,7 @@ const emit = defineEmits(["update:modelValue", "playerAdded"]);
 const name = ref("");
 
 const submit = () => {
-  console.log(`the form was submitted with name ${name}`);
-  emit("playerAdded", { playerName: "" });
+  emit("playerAdded", { playerName: name.value });
 }
 
 const closeSheet = ()=> {
