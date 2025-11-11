@@ -78,17 +78,17 @@ describe("Rendering", ()=> {
 
   it("renders player name input field with the correct label", ()=> {
     expect(playerNameInput.exists()).toBe(true);
-    expect(playerNameInput.attributes("label")).toBe("Nombre");
+    expect(playerNameInput.attributes("label")).toBe(AddPlayerSheetText.labels.playerName);
   });
 
   it("renders 'add' button with correct label", ()=> {
     expect(btnAdd.exists()).toBe(true);
-    expect(btnAdd.text()).toContain("Agregar");
+    expect(btnAdd.text()).toContain(AddPlayerSheetText.buttons.add);
   });
 
   it("renders 'cancel' button", ()=> {
     expect(btnCancel.exists()).toBe(true);
-    expect(btnCancel.text()).toContain("Cancelar");
+    expect(btnCancel.text()).toContain(AddPlayerSheetText.buttons.cancel);
   });
 
   it("shows a message error with the correct value when errorMessage is received", async ()=> {

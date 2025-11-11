@@ -60,11 +60,11 @@ defineExpose({
   >
     <v-sheet color="surface">
       <v-container class="container">
-        <SubsectionTitle class="title">Agregar jugador</SubsectionTitle>
+        <SubsectionTitle class="title">{{ AddPlayerSheetText.title }}</SubsectionTitle>
         <form @submit.prevent="submitForm">
           <v-text-field 
             v-model="playerNameValue" 
-            label="Nombre"
+            :label="AddPlayerSheetText.labels.playerName"
             :error-messages="playerNameError" 
             data-testid="input-player-name"
           ></v-text-field>
@@ -74,12 +74,12 @@ defineExpose({
               color="primary"
               @click="submitForm"
               data-testid="btn-add-player"
-            >Agregar</v-btn>
+            >{{ AddPlayerSheetText.buttons.add }}</v-btn>
             <v-btn 
               variant="text"
               @click="closeSheet" 
               data-testid="btn-cancel"
-            >Cancelar</v-btn>
+            >{{ AddPlayerSheetText.buttons.cancel }}</v-btn>
           </div>
         </form>
 
