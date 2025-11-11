@@ -1,5 +1,5 @@
 import { it, describe, expect, beforeEach } from "vitest";
-import { mount } from "@vue/test-utils";
+import { createWrapperError, mount } from "@vue/test-utils";
 import { nextTick } from "vue";
 import { createVuetifyForTest } from "../../tests/utils/createVuetifyForTest";
 import { VBottomSheet, VContainer, VTextField, VBtn, VSheet, VAlert } from "vuetify/components";
@@ -91,7 +91,16 @@ describe("Logic & Events", ()=> {
     wrapper = mountAddPlayerSheet();
   })
 
-  it.todo("emits 'player-added' event on valid submit", ()=> {});
+  it("emits 'playerAdded' event on valid submit", async ()=> {
+    const btnSubmit = wrapper.find('[data-testid="btn-add-player"]');
+    await btnSubmit.trigger("click");
+    await nextTick();
+
+    const emittedEvents = wrapper.emitted("playerAdded");
+
+    expect(emittedEvents).toBeTruthy();
+  });
+
   it.todo("the emitted event matches with the string entered by the user", ()=> {});
 
   it("emits cancellation event that closes AppPlayerSheet", async ()=> {

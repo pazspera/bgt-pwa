@@ -8,11 +8,12 @@ defineProps<{
   errorMessage?: string
 }>()
 
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits(["update:modelValue", "playerAdded"]);
 const name = ref("");
 
 const submit = () => {
   console.log(`the form was submitted with name ${name}`);
+  emit("playerAdded", { playerName: "" });
 }
 
 const closeSheet = ()=> {
@@ -33,7 +34,12 @@ const closeSheet = ()=> {
         <form @submit.prevent="submit">
           <v-text-field v-model="name" label="Nombre" data-testid="input-player-name"></v-text-field>
           <div class="sheet-buttons">
-            <v-btn type="submit" color="primary" data-testid="btn-add-player">Agregar</v-btn>
+            <v-btn 
+              type="submit" 
+              color="primary"
+              @click="submit"
+              data-testid="btn-add-player"
+            >Agregar</v-btn>
             <v-btn 
               variant="text"
               @click="closeSheet" 
