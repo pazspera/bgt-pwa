@@ -5,6 +5,7 @@ import { nextTick } from "vue";
 import { createVuetifyForTest } from "../../tests/utils/createVuetifyForTest";
 import { VBottomSheet, VContainer, VTextField, VBtn, VSheet, VAlert } from "vuetify/components";
 import AddPlayerSheet from "./AddPlayerSheet.vue";
+import { AddPlayerSheetText } from "../../constants/ui_text/AddPlayerSheet";
  
 const vuetify = createVuetifyForTest({ VBottomSheet, VContainer, VTextField, VBtn, VSheet, VAlert });
  
@@ -210,7 +211,7 @@ describe("Validations", ()=> {
   });
 
   it("doesn't allow submission on empty input", async ()=> {
-    const errorMessageText = "El nombre del jugador es obligatorio";
+    const errorMessageText = AddPlayerSheetText.errors.required;
     await setTextInputValue(wrapper, "input-player-name", "");
 
     await btnAdd.trigger("click");
@@ -242,7 +243,7 @@ describe("Validations", ()=> {
 
   it("rejects player name shorter than 3 letters", async ()=> {
     const oneLetter = "S";
-    const errorText = "El nombre debe tener al menos 3 letras"
+    const errorText =  AddPlayerSheetText.errors.minLength;
     await setTextInputValue(wrapper, "input-player-name", oneLetter);
 
     await wrapper.vm.submitForm();

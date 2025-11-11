@@ -5,6 +5,8 @@ import { toTypedSchema } from '@vee-validate/yup';
 import { useForm, useField } from 'vee-validate';
 import { ref, defineEmits, computed } from "vue";
 import { VExpandTransition } from 'vuetify/components';
+import { AddPlayerSheetText } from '../../constants/ui_text/AddPlayerSheet';
+import AddPlayer from '../../views/Players/AddPlayer.vue';
 
 defineProps<{
   modelValue: boolean,
@@ -14,9 +16,9 @@ defineProps<{
 const validationSchema = toTypedSchema(
   object({
     playerName: string()
-      .required("El nombre del jugador es obligatorio")
+      .required(AddPlayerSheetText.errors.required)
       .trim()
-      .min(3, "El nombre debe tener al menos 3 letras")
+      .min(3, AddPlayerSheetText.errors.minLength)
   })
 )
 
