@@ -105,7 +105,7 @@ defineExpose({
 }
 
 .container {
-  padding: 48px 0;
+  padding: 36px 24px;
 }
 
 .sheet-buttons {
@@ -115,4 +115,9 @@ defineExpose({
   margin-top: 24px;
 }
 
+@media(min-width: 960px){
+  .container {
+    padding: 48px 0;
+  }
+}
 </style>
