@@ -25,6 +25,7 @@ const mountAddPlayerSheet = ( options: Record<string, any> = {})=> {
         },
         "v-text-field": {
           emits: ["update:modelValue"],
+          props: ["errorMessages"],
           template: `
             <div class="v-text-field" :data-testid="$attrs['data-testid']">
               <input 
@@ -33,6 +34,9 @@ const mountAddPlayerSheet = ( options: Record<string, any> = {})=> {
                 @input="$emit('update:modelValue', $event.target.value)"
               />
               <label v-if="$attrs.label">{{ $attrs.label }}</label>
+              <div v-if="errorMessages" class="v-messages error-message-stub">
+                {{ errorMessages }}
+            </div>
             </div>
           `
         },
@@ -182,6 +186,37 @@ describe("Logic & Events", ()=> {
 })
 
 describe("Validations", ()=> {
-  it.todo("doesn't allow submission on empty input", ()=> {});
+  let wrapper;
+  let playerNameInput;
+  let btnAdd;
+
+  beforeEach(() => {
+    ({ wrapper, playerNameInput, btnAdd } = setupAddPlayerSheetTest());
+  });
+
+  it("doesn't allow submission on empty input", async ()=> {
+    // set empty value on input
+    // trigger click
+    // check if event was emitted 
+    // messageError?
+    const errorMessageText = "El nombre del jugador es obligatorio";
+    const nativeInput = playerNameInput.find("input");
+    await nativeInput.setValue("");
+
+    await btnAdd.trigger("click");
+    await nextTick();
+
+    // checks event is not submitted
+    expect(wrapper.emitted("playerAdded")).toBeUndefined();
+    
+    // need to force validation, otherwise the error message is not displayed
+    const validationResult = await wrapper.vm.validatePlayerName();
+    await nextTick();
+    
+    expect(wrapper.html()).toContain(errorMessageText);
+  });
+
   it.todo("the input value doesn't have empty spaces at the beginning or the end", ()=> {});
+
+  it.todo("the new player name should have a min of 3 letters", ()=> {})
 });

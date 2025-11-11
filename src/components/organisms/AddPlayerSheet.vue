@@ -1,5 +1,8 @@
 <script lang="ts" setup>
 import SubsectionTitle from '../atoms/typography/SubsectionTitle.vue';
+import { object, string } from "yup";
+import { toTypedSchema } from '@vee-validate/yup';
+import { useForm, useField } from 'vee-validate';
 import { ref, defineEmits, computed } from "vue";
 import { VExpandTransition } from 'vuetify/components';
 
@@ -8,18 +11,45 @@ defineProps<{
   errorMessage?: string
 }>()
 
+const validationSchema = toTypedSchema(
+  object({
+    playerName: string()
+      .required("El nombre del jugador es obligatorio")
+      .trim()
+  })
+)
+
 const emit = defineEmits(["update:modelValue", "playerAdded"]);
-const name = ref("");
 
-const isPersistent = computed(()=> name.value.length > 0);
+const { handleSubmit, resetForm } = useForm({
+  validationSchema,
+  initialValues: { playerName: "" }
+})
 
-const submit = () => {
+// const name = ref("");
+const { 
+  value: playerNameValue, 
+  errorMessage: playerNameError,
+  validate
+} = useField<string>("playerName");
+const isPersistent = computed(()=> playerNameValue.value?.length > 0);
+
+/* const submit = () => {
   emit("playerAdded", { playerName: name.value });
-}
+} */
+
+const submitForm = handleSubmit(values => {
+  emit("playerAdded", values);
+})
 
 const closeSheet = ()=> {
   emit("update:modelValue", false );
+  resetForm();
 }
+
+defineExpose({
+  validatePlayerName: validate
+})
 
 </script>
 
@@ -33,13 +63,18 @@ const closeSheet = ()=> {
     <v-sheet color="surface">
       <v-container class="container">
         <SubsectionTitle class="title">Agregar jugador</SubsectionTitle>
-        <form @submit.prevent="submit">
-          <v-text-field v-model="name" label="Nombre" data-testid="input-player-name"></v-text-field>
+        <form @submit.prevent="submitForm">
+          <v-text-field 
+            v-model="playerNameValue" 
+            label="Nombre"
+            :error-messages="playerNameError" 
+            data-testid="input-player-name"
+          ></v-text-field>
           <div class="sheet-buttons">
             <v-btn 
               type="submit" 
               color="primary"
-              @click="submit"
+              @click="submitForm"
               data-testid="btn-add-player"
             >Agregar</v-btn>
             <v-btn 
@@ -79,5 +114,7 @@ const closeSheet = ()=> {
   display: flex;
   gap: 8px;
   margin-bottom: 16px; 
+  margin-top: 24px;
 }
+
 </style>
