@@ -118,12 +118,19 @@ describe("Logic & Events", ()=> {
   it("emits 'playerAdded' event on valid submit", async ()=> {
     const playerName = "Stephen King";
     await setTextInputValue(wrapper, "input-player-name", playerName);
+
     await btnAdd.trigger("click");
+    await nextTick();
+
+    // need to force validation so the new value is updated
+    const validationResult = await wrapper.vm.validatePlayerName();
     await nextTick();
 
     const emittedEvents = wrapper.emitted("playerAdded");
 
     expect(emittedEvents).toBeTruthy();
+    // checks it was called only once
+    expect(emittedEvents).toHaveLength(1);
     // add that is was called once
   });
 
