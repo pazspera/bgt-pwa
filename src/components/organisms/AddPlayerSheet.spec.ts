@@ -26,12 +26,12 @@ const mountAddPlayerSheet = ( options: Record<string, any> = {})=> {
         },
         "v-text-field": {
           emits: ["update:modelValue"],
-          props: ["errorMessages"],
+          props: ["errorMessages", "modelValue"],
           template: `
             <div class="v-text-field" :data-testid="$attrs['data-testid']">
               <input 
                 type="text" 
-                :value="$attrs.modelValue"
+                :value="modelValue"
                 @input="$emit('update:modelValue', $event.target.value)"
               />
               <label v-if="$attrs.label">{{ $attrs.label }}</label>
@@ -42,10 +42,11 @@ const mountAddPlayerSheet = ( options: Record<string, any> = {})=> {
           `
         },
         "v-btn": {
+          emits: ["click"],
           template: `
-            <div v-bind="$attrs">
+            <button v-bind="$attrs" @click="$emit('click')">
               <slot/>
-            </div>
+            </button>
           `
         }
       },
@@ -135,14 +136,20 @@ describe("Logic & Events", ()=> {
   });
 
   it("the emitted event matches with the string entered by the user", async ()=> {
-    const playerName = "Stephen King"
+    const playerName = "Stephen King";
+
     await setTextInputValue(wrapper, "input-player-name", playerName);
-    await btnAdd.trigger("click");
-    await nextTick();
     
-    expect(wrapper.emitted("playerAdded")).toEqual([
-      [{ playerName: playerName }]
-    ])
+    // DO NOT use the button to trigger the emit event
+    // submitForm() has to be called directly or it doesn't work
+    await wrapper.vm.submitForm();
+    await nextTick();
+
+    const emittedEvents = wrapper.emitted("playerAdded");
+    expect(emittedEvents).toEqual([
+      [{ playerName }]
+    ]);
+
   });
 
   it("emits cancellation event that closes AppPlayerSheet", async ()=> {

@@ -26,17 +26,12 @@ const { handleSubmit, resetForm } = useForm({
   initialValues: { playerName: "" }
 })
 
-// const name = ref("");
 const { 
   value: playerNameValue, 
   errorMessage: playerNameError,
   validate
 } = useField<string>("playerName");
 const isPersistent = computed(()=> playerNameValue.value?.length > 0);
-
-/* const submit = () => {
-  emit("playerAdded", { playerName: name.value });
-} */
 
 const submitForm = handleSubmit(values => {
   emit("playerAdded", values);
