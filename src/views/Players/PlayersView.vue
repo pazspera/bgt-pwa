@@ -6,6 +6,8 @@ const isSheetVisible = ref(false);
 const errorText = ref("");
 defineOptions({ name: "PlayersView" });
 
+const handlePlayerAdded = ()=> {}
+
 </script>
 
 <template>
@@ -18,7 +20,7 @@ defineOptions({ name: "PlayersView" });
       Agregar jugador
     </v-btn>
 
-    <AddPlayerSheet v-model="isSheetVisible" :errorMessage="errorText" />
+    <AddPlayerSheet v-model="isSheetVisible" :errorMessage="errorText" @playerAdded="handlePlayerAdded" />
   </v-container>
 </template>
 
