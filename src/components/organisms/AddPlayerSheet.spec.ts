@@ -227,10 +227,6 @@ describe("Validations", ()=> {
   });
 
   it("the input value doesn't have empty spaces at the beginning or the end", async ()=> {
-    // enter a value with lots of spaces before and after
-    // set the value to the input
-    // call submitForm
-    // check that the emitted event doesn't have spaces
     const nameWithSpaces = "    Bruce Wayne    ";
     const nameWithoutSpaces = "Bruce Wayne";
 
@@ -244,5 +240,27 @@ describe("Validations", ()=> {
     ])
   });
 
-  it.todo("the new player name should have a min of 3 letters", ()=> {})
+  it("rejects player name shorter than 3 letters", async ()=> {
+    const oneLetter = "S";
+    const errorText = "El nombre debe tener al menos 3 letras"
+    await setTextInputValue(wrapper, "input-player-name", oneLetter);
+
+    await wrapper.vm.submitForm();
+    await nextTick;
+
+    expect(wrapper.emitted("playerAdded")).toBeUndefined();
+    expect(wrapper.html()).toContain(errorText);
+  })
+
+  it("accepts player name with 3 or more letters", async ()=> {
+    const threeLetters = "Paz";
+    await setTextInputValue(wrapper, "input-player-name", threeLetters);
+
+    await wrapper.vm.submitForm();
+    await nextTick();
+
+    expect(wrapper.emitted("playerAdded")).toEqual([
+      [{ playerName : threeLetters }]
+    ])
+  })
 });

@@ -16,6 +16,7 @@ const validationSchema = toTypedSchema(
     playerName: string()
       .required("El nombre del jugador es obligatorio")
       .trim()
+      .min(3, "El nombre debe tener al menos 3 letras")
   })
 )
 
