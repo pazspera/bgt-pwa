@@ -85,9 +85,30 @@ describe("Rendering", ()=> {
 });
 
 describe("Logic & Events", ()=> {
+  let wrapper;
+
+  beforeEach(()=> {
+    wrapper = mountAddPlayerSheet();
+  })
+
   it.todo("emits 'player-added' event on valid submit", ()=> {});
   it.todo("the emitted event matches with the string entered by the user", ()=> {});
-  it.todo("emits cancellation event that closes AppPlayerSheet", ()=> {});
+
+  it("emits cancellation event that closes AppPlayerSheet", async ()=> {
+    const btnCancel = wrapper.find('[data-testid="btn-cancel"]');
+    await btnCancel.trigger("click");
+    await nextTick();
+
+    // this is an array
+    const emittedEvents = wrapper.emitted("update:modelValue");
+
+    // checks the event was emitted
+    expect(emittedEvents).toBeTruthy();
+    // emittedEvents is an array of arrays, have to 
+    // access the value this way
+    expect(emittedEvents).toEqual([[false]]);
+  });
+  
   it.todo("remains open after submitting 'player-added' event (awaits confirmation from parent if the player already exists or not)", ()=> {});
 });
 
