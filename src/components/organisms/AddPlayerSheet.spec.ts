@@ -42,30 +42,36 @@ const mountAddPlayerSheet = ( options: Record<string, any> = {})=> {
   })
 }
 
+const setupAddPlayerSheetTest = ()=> {
+  const wrapper = mountAddPlayerSheet();
+  const playerNameInput = wrapper.find('[data-testid="input-player-name"]'); 
+  const btnAdd = wrapper.find('[data-testid="btn-add-player"]');
+  const btnCancel = wrapper.find('[data-testid="btn-cancel"]');
+  const errorMessage = wrapper.find('[data-testid="error-message"]');
+  return { wrapper, playerNameInput, btnAdd, btnCancel, errorMessage };
+}
+
 describe("Rendering", ()=> {
-  let wrapper: ReturnType<typeof mount>;
+  let wrapper;
+  let playerNameInput;
+  let btnAdd;
+  let btnCancel;
 
   beforeEach(() => {
-    wrapper = mountAddPlayerSheet();
+    ({ wrapper, playerNameInput, btnAdd, btnCancel } = setupAddPlayerSheetTest());
   });
 
   it("renders player name input field with the correct label", ()=> {
-    const playerNameInput = wrapper.find('[data-testid="input-player-name"]');
-    
     expect(playerNameInput.exists()).toBe(true);
     expect(playerNameInput.attributes("label")).toBe("Nombre");
   });
 
   it("renders 'add' button with correct label", ()=> {
-    const btnAdd = wrapper.find('[data-testid="btn-add-player"]');
-
     expect(btnAdd.exists()).toBe(true);
     expect(btnAdd.text()).toContain("Agregar");
   });
 
   it("renders 'cancel' button", ()=> {
-    const btnCancel = wrapper.find('[data-testid="btn-cancel"]');
-
     expect(btnCancel.exists()).toBe(true);
     expect(btnCancel.text()).toContain("Cancelar");
   });
@@ -86,14 +92,16 @@ describe("Rendering", ()=> {
 
 describe("Logic & Events", ()=> {
   let wrapper;
+  let playerNameInput;
+  let btnAdd;
+  let btnCancel;
 
-  beforeEach(()=> {
-    wrapper = mountAddPlayerSheet();
-  })
+  beforeEach(() => {
+    ({ wrapper, playerNameInput, btnAdd, btnCancel } = setupAddPlayerSheetTest());
+  });
 
   it("emits 'playerAdded' event on valid submit", async ()=> {
-    const btnSubmit = wrapper.find('[data-testid="btn-add-player"]');
-    await btnSubmit.trigger("click");
+    await btnAdd.trigger("click");
     await nextTick();
 
     const emittedEvents = wrapper.emitted("playerAdded");
@@ -104,7 +112,6 @@ describe("Logic & Events", ()=> {
   it.todo("the emitted event matches with the string entered by the user", ()=> {});
 
   it("emits cancellation event that closes AppPlayerSheet", async ()=> {
-    const btnCancel = wrapper.find('[data-testid="btn-cancel"]');
     await btnCancel.trigger("click");
     await nextTick();
 
