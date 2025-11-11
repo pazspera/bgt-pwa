@@ -54,12 +54,13 @@ const mountAddPlayerSheet = ( options: Record<string, any> = {})=> {
 
 const setupAddPlayerSheetTest = ()=> {
   const wrapper = mountAddPlayerSheet();
-  const playerNameInput = wrapper.find('[data-testid="input-player-name"]'); 
+  const playerNameInput = wrapper.find('[data-testid="input-player-name"]');
+  const nativeInput = playerNameInput.find("input"); 
   const btnAdd = wrapper.find('[data-testid="btn-add-player"]');
   const btnCancel = wrapper.find('[data-testid="btn-cancel"]');
   const errorMessage = wrapper.find('[data-testid="error-message"]');
   const bottomSheetWrapper = wrapper.find('[data-testid="bottom-sheet"]')
-  return { wrapper, playerNameInput, btnAdd, btnCancel, errorMessage, bottomSheetWrapper };
+  return { wrapper, playerNameInput, nativeInput, btnAdd, btnCancel, errorMessage, bottomSheetWrapper };
 }
 
 describe("Rendering", ()=> {
@@ -107,12 +108,14 @@ describe("Logic & Events", ()=> {
   let btnAdd;
   let btnCancel;
   let bottomSheetWrapper;
+  let nativeInput;
 
   beforeEach(() => {
-    ({ wrapper, playerNameInput, btnAdd, btnCancel, bottomSheetWrapper } = setupAddPlayerSheetTest());
+    ({ wrapper, playerNameInput, btnAdd, btnCancel, bottomSheetWrapper, nativeInput } = setupAddPlayerSheetTest());
   });
 
   it("emits 'playerAdded' event on valid submit", async ()=> {
+    const playerName = "Stephen King";
     await btnAdd.trigger("click");
     await nextTick();
 
@@ -126,7 +129,6 @@ describe("Logic & Events", ()=> {
     const playerName = "Stephen King"
     // can't add the value directly on playerNameInput
     // need to access the native input inside it to change it
-    const nativeInput = playerNameInput.find("input");
     await nativeInput.setValue(playerName);
     await btnAdd.trigger("click");
     await nextTick();
@@ -152,7 +154,6 @@ describe("Logic & Events", ()=> {
   
   it("remains open after submitting 'player-added' event (awaits confirmation from parent if the player already exists or not)", async ()=> {
     const playerName = "Bruce Wayne"
-    const nativeInput = playerNameInput.find("input");
     await nativeInput.setValue(playerName);
     await btnAdd.trigger("click");
     await nextTick();
@@ -165,7 +166,6 @@ describe("Logic & Events", ()=> {
 
   it("toggles persistence based on input value to prevent data loss", async ()=> {
     const name = "Clark Kent";
-    const nativeInput = playerNameInput.find("input");
 
     // initial state, empty input
     // the component shouldn't ve persistent
@@ -189,18 +189,14 @@ describe("Validations", ()=> {
   let wrapper;
   let playerNameInput;
   let btnAdd;
+  let nativeInput
 
   beforeEach(() => {
-    ({ wrapper, playerNameInput, btnAdd } = setupAddPlayerSheetTest());
+    ({ wrapper, playerNameInput, btnAdd, nativeInput } = setupAddPlayerSheetTest());
   });
 
   it("doesn't allow submission on empty input", async ()=> {
-    // set empty value on input
-    // trigger click
-    // check if event was emitted 
-    // messageError?
     const errorMessageText = "El nombre del jugador es obligatorio";
-    const nativeInput = playerNameInput.find("input");
     await nativeInput.setValue("");
 
     await btnAdd.trigger("click");
