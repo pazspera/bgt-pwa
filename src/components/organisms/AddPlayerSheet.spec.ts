@@ -226,7 +226,23 @@ describe("Validations", ()=> {
     expect(wrapper.html()).toContain(errorMessageText);
   });
 
-  it.todo("the input value doesn't have empty spaces at the beginning or the end", ()=> {});
+  it("the input value doesn't have empty spaces at the beginning or the end", async ()=> {
+    // enter a value with lots of spaces before and after
+    // set the value to the input
+    // call submitForm
+    // check that the emitted event doesn't have spaces
+    const nameWithSpaces = "    Bruce Wayne    ";
+    const nameWithoutSpaces = "Bruce Wayne";
+
+    await setTextInputValue(wrapper, "input-player-name", nameWithSpaces);
+
+    await wrapper.vm.submitForm();
+    await nextTick();
+
+    expect(wrapper.emitted("playerAdded")).toEqual([
+      [{ playerName: nameWithoutSpaces }]
+    ])
+  });
 
   it.todo("the new player name should have a min of 3 letters", ()=> {})
 });
