@@ -1,5 +1,6 @@
 import { it, describe, expect, beforeEach } from "vitest";
 import { createWrapperError, mount } from "@vue/test-utils";
+import { setTextInputValue } from "../../tests/utils/form-helpers";
 import { nextTick } from "vue";
 import { createVuetifyForTest } from "../../tests/utils/createVuetifyForTest";
 import { VBottomSheet, VContainer, VTextField, VBtn, VSheet, VAlert } from "vuetify/components";
@@ -116,6 +117,7 @@ describe("Logic & Events", ()=> {
 
   it("emits 'playerAdded' event on valid submit", async ()=> {
     const playerName = "Stephen King";
+    await setTextInputValue(wrapper, "input-player-name", playerName);
     await btnAdd.trigger("click");
     await nextTick();
 
@@ -127,9 +129,7 @@ describe("Logic & Events", ()=> {
 
   it("the emitted event matches with the string entered by the user", async ()=> {
     const playerName = "Stephen King"
-    // can't add the value directly on playerNameInput
-    // need to access the native input inside it to change it
-    await nativeInput.setValue(playerName);
+    await setTextInputValue(wrapper, "input-player-name", playerName);
     await btnAdd.trigger("click");
     await nextTick();
     
@@ -154,7 +154,7 @@ describe("Logic & Events", ()=> {
   
   it("remains open after submitting 'player-added' event (awaits confirmation from parent if the player already exists or not)", async ()=> {
     const playerName = "Bruce Wayne"
-    await nativeInput.setValue(playerName);
+    await setTextInputValue(wrapper, "input-player-name", playerName);
     await btnAdd.trigger("click");
     await nextTick();
     
@@ -171,7 +171,7 @@ describe("Logic & Events", ()=> {
     // the component shouldn't ve persistent
     expect(bottomSheetWrapper.attributes("persistent")).toBe("false");
 
-    await nativeInput.setValue(name);
+    await setTextInputValue(wrapper, "input-player-name", name);
     await nextTick();
 
     // the component should be persistent after user interaction
@@ -197,7 +197,7 @@ describe("Validations", ()=> {
 
   it("doesn't allow submission on empty input", async ()=> {
     const errorMessageText = "El nombre del jugador es obligatorio";
-    await nativeInput.setValue("");
+    await setTextInputValue(wrapper, "input-player-name", "");
 
     await btnAdd.trigger("click");
     await nextTick();
