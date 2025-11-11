@@ -30,17 +30,17 @@ src/
 
 Dentro del directorio src/test hay funciones utilitarias para el setup y para crear una instancia de Vuetify en cada test.
 
-> ⚠️​ Al usar Vuetify y Vitest, es necesario cargar la instacia completa de Vuetify para cada test. Esto genera demoras significativas en la ejecución de los tests (entre 16 y 19 segundos por test).
+### ⚠️​ Testing eventos emitidos en formularios 
+Cuando se usa `vee-validate` con `defineEmits`, el evento no se captura si se dispara desde el botón (`@click`) o el formulario (`@submit`). Esto se debe a que `handleSubmit` encapsula la lógica y el `emit` no se registra en el wrapper.
 
-El problema principal está en vite.config.js:
-```server: { deps: { inline: ["vuetify"] }```  
-Esto genera la demora porque carga todo Vuetify pero sin esta configuración, el test continuamente tira conflictos con la carga de archivos css y no pueden ejecutarse.
+> Solución: llamar directamente al método expuesto con `defineExpose`. Ejemplo de AddPlayerSheet.spec.ts:
 
-Esta demora solamente va a incrementarse a medida que se sigan implementando tests y puede generar costos elevados en la implementación de Github Actions (a menos que se pase el repositorio a público).
-
-Opciones:
-- Avanzar con el proyecto como está y aceptar que los tests van a demorar mucho tiempo.
-- La ventaja de usar Vuetify es que tenía componentes UI ya funcionales. Como todavía se rehicieron solo los componentes de NavBar y BottomNavigation, se puede abandonar Vuetify y reemplazarlo por un framework más liviano. Esto llevaría más tiempo de desarrollo de la UI pero ahorraría mucho más tiempo en la implementación de tests.
+```typescript
+await wrapper.vm.submitForm();
+expect(wrapper.emitted("playerAdded")).toEqual([
+  [{ playerName: "Stephen King" }]
+]);
+```
 
 ## Sistema de diseño 
 
