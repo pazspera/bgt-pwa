@@ -144,7 +144,18 @@ describe("Logic & Events", ()=> {
     expect(emittedEvents).toEqual([[false]]);
   });
   
-  it.todo("remains open after submitting 'player-added' event (awaits confirmation from parent if the player already exists or not)", ()=> {});
+  it("remains open after submitting 'player-added' event (awaits confirmation from parent if the player already exists or not)", async ()=> {
+    const playerName = "Bruce Wayne"
+    const nativeInput = playerNameInput.find("input");
+    await nativeInput.setValue(playerName);
+    await btnAdd.trigger("click");
+    await nextTick();
+    
+    // checks that the event was emitted
+    expect(wrapper.emitted("playerAdded")).toBeTruthy;
+    // modelValue should remain true for the component to be open
+    expect(wrapper.props("modelValue")).toBe(true);
+  });
 });
 
 describe("Validations", ()=> {
