@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import SubsectionTitle from '../atoms/typography/SubsectionTitle.vue';
-import { ref, defineEmits } from "vue";
+import { ref, defineEmits, computed } from "vue";
 import { VExpandTransition } from 'vuetify/components';
 
 defineProps<{
@@ -10,6 +10,8 @@ defineProps<{
 
 const emit = defineEmits(["update:modelValue", "playerAdded"]);
 const name = ref("");
+
+const isPersistent = computed(()=> name.value.length > 0);
 
 const submit = () => {
   emit("playerAdded", { playerName: name.value });
@@ -25,6 +27,7 @@ const closeSheet = ()=> {
   <v-bottom-sheet
     :model-value="modelValue"
     @update:model-value="emit('update:modelValue', $event)"
+    :persistent="isPersistent"
     data-testid="bottom-sheet"
   >
     <v-sheet color="surface">

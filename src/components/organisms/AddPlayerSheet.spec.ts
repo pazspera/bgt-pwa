@@ -54,7 +54,8 @@ const setupAddPlayerSheetTest = ()=> {
   const btnAdd = wrapper.find('[data-testid="btn-add-player"]');
   const btnCancel = wrapper.find('[data-testid="btn-cancel"]');
   const errorMessage = wrapper.find('[data-testid="error-message"]');
-  return { wrapper, playerNameInput, btnAdd, btnCancel, errorMessage };
+  const bottomSheetWrapper = wrapper.find('[data-testid="bottom-sheet"]')
+  return { wrapper, playerNameInput, btnAdd, btnCancel, errorMessage, bottomSheetWrapper };
 }
 
 describe("Rendering", ()=> {
@@ -101,9 +102,10 @@ describe("Logic & Events", ()=> {
   let playerNameInput;
   let btnAdd;
   let btnCancel;
+  let bottomSheetWrapper;
 
   beforeEach(() => {
-    ({ wrapper, playerNameInput, btnAdd, btnCancel } = setupAddPlayerSheetTest());
+    ({ wrapper, playerNameInput, btnAdd, btnCancel, bottomSheetWrapper } = setupAddPlayerSheetTest());
   });
 
   it("emits 'playerAdded' event on valid submit", async ()=> {
@@ -156,7 +158,28 @@ describe("Logic & Events", ()=> {
     // modelValue should remain true for the component to be open
     expect(wrapper.props("modelValue")).toBe(true);
   });
-});
+
+  it("toggles persistence based on input value to prevent data loss", async ()=> {
+    const name = "Clark Kent";
+    const nativeInput = playerNameInput.find("input");
+
+    // initial state, empty input
+    // the component shouldn't ve persistent
+    expect(bottomSheetWrapper.attributes("persistent")).toBe("false");
+
+    await nativeInput.setValue(name);
+    await nextTick();
+
+    // the component should be persistent after user interaction
+    expect(bottomSheetWrapper.attributes("persistent")).toBe("true");
+
+    await nativeInput.setValue("");
+    await nextTick();
+    
+    // the component shouldn't be persistent it the input data is deleted
+    expect(bottomSheetWrapper.attributes("persistent")).toBe("false");
+  })
+})
 
 describe("Validations", ()=> {
   it.todo("doesn't allow submission on empty input", ()=> {});
