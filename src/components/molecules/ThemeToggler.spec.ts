@@ -30,8 +30,8 @@ const mountToggler = ( props = {} ) => {
       stubs: {
         "v-tooltip": {
           template: `
-            <div data-test="v-tooltip" v-bind="$attrs">
-              <slot name="activator" :props="{ 'data-test': 'activator-props' }" />
+            <div v-bind="$attrs">
+              <slot name="activator" :props="{ 'data-testid': 'activator-props' }" />
               <slot/>
             </div>
           `
