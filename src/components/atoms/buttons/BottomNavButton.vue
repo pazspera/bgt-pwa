@@ -8,6 +8,8 @@ const props = defineProps<NavButton>();
 
 const route = useRoute();
 
+defineOptions({ name: "BottomNavButton" });
+
 </script>
 
 <template>

@@ -12,6 +12,7 @@ defineProps<{
   modelValue: boolean,
   errorMessage?: string
 }>()
+defineOptions({ name: "AddPlayerSheet" });
 
 const validationSchema = toTypedSchema(
   object({

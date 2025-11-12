@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-// No logic required
+defineOptions({ name: "SubsectionTitle" });
 </script>
 
 <style scoped>

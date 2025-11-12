@@ -7,6 +7,8 @@
 <script setup lang="ts">
 import { defineProps, computed } from 'vue';
 
+defineOptions({ name: "ExternalLink" });
+
 const props = defineProps<{ href: string; target?: string }>();
 
 const target = computed(() => props.target ?? '_blank');

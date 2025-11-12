@@ -4,6 +4,8 @@ import { useCheckDbHealth } from "../../composables/useCheckDbHealth";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faCircleCheck,faCircleExclamation } from "@fortawesome/free-solid-svg-icons";
 
+defineOptions({ name: "AppSnackbar" });
+
 const { statusMessage, color, icon, checkHealth, hasRun } = useCheckDbHealth();
 const snackbarVisible = ref(false);
 
