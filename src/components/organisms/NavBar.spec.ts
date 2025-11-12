@@ -15,7 +15,11 @@ const vuetify = createVuetifyForTest({ VAppBar, VNavigationDrawer, VBtn, VRow, V
 const faBarsText = faBars.iconName;
 
 // Data to verify NavigationLinks
-const expectedTo = ["BoardGames", "Players", "Games"];
+const expectedTo = [
+  { name: "BoardGames" },
+  { name: "Players" },
+  { name: "Games" },
+];
 const expectedText = ["Ludoteca", "Jugadores", "Partidas"]; 
 
 const mountNavbar = () => {
@@ -156,6 +160,22 @@ describe("NavBar Drawer", ()=> {
     expect(window.innerWidth).toBeLessThanOrEqual(768);
     expectNavigationLinks(vNavigationDrawer, expectedTo, expectedText);
   });
+
+  it("closes drawer when navigation link is clicked", async ()=> {
+    const { wrapper, vNavigationDrawer } = setupNavbarTest(800);
+    wrapper.vm.drawer = true;
+    const allDrawerLinks = vNavigationDrawer.findAll('[data-testid="navigation-link"]');
+    const boardGameLink = allDrawerLinks.find(w => w.text().includes("Ludoteca"));
+
+    if (!boardGameLink.exists()) {
+      throw new Error("No se encontró el link 'Ludoteca' en el drawer. Revisa el setup de mockViewport o el DOM.");
+    }
+
+    await boardGameLink.trigger("click");
+    await nextTick();
+
+    expect(wrapper.vm.drawer).toBe(false);
+  });
 })
  
 describe("NavBar Shared", ()=> {
@@ -178,31 +198,5 @@ describe("NavBar Shared", ()=> {
   });
 })
 
-describe("NavBar Navigation", ()=> {
-  it("navigates to correct route when desktop link is clicked", async ()=> {
-    const { vAppBar } = setupNavbarTest(1200);
-    // checks if the component calls router.push()
-    const pushSpy = vi.spyOn(router, "push");
-    const boardGameLink = vAppBar.find('[data-to="BoardGames"]');
-    
-    await boardGameLink.trigger("click");
-
-    expect(pushSpy).toHaveBeenCalledWith({ name: "BoardGames" });
-  });
-
-  it("navigates to correct route and closes drawer when drawer link is clicked", async ()=> {
-    const { wrapper, vNavigationDrawer } = setupNavbarTest(800);
-    // checks if the component calls router.push()
-    const pushSpy = vi.spyOn(router, "push");
-    const boardGameLink = vNavigationDrawer.find('[data-to="BoardGames"]');
-
-    await boardGameLink.trigger("click");
-    await nextTick();
-
-    expect(pushSpy).toHaveBeenCalledWith({ name: "BoardGames" });
-    // checks if the ref drawer is false, meaning the drawer closed
-    expect(wrapper.vm.drawer).toBe(false);
-  });
-})
 
 
