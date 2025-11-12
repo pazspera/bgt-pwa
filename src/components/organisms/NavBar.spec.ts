@@ -25,14 +25,14 @@ const mountNavbar = () => {
       stubs: {
         "v-app-bar": {
           template: `
-            <div data-test="v-app-bar-stub" v-bind="$attrs">
+            <div v-bind="$attrs">
               <slot/>
             </div>
           `
         },
         "v-navigation-drawer": {
           template: `
-            <div data-test="v-navigation-drawer" v-bind="$attrs">
+            <div v-bind="$attrs">
               <slot/>
             </div>
           `
@@ -46,8 +46,8 @@ const mountNavbar = () => {
 const setupNavbarTest = (viewportWidth = 1200) => {
   mockViewportForVueUse(viewportWidth);
   const wrapper = mountNavbar();
-  const vAppBar = wrapper.find('[data-test="v-app-bar-stub"]');
-  const vNavigationDrawer = wrapper.find('[data-test="v-navigation-drawer"]');
+  const vAppBar = wrapper.find('[data-testid="app-bar"]');
+  const vNavigationDrawer = wrapper.find('[data-testid="navigation-drawer"]');
   return { wrapper, vAppBar, vNavigationDrawer };
 }
 

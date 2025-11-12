@@ -21,7 +21,7 @@ defineExpose({ drawer });
 </script>
 
 <template>
-  <v-app-bar app color="surface" role="navigation" aria-label="Navegación principal">
+  <v-app-bar app color="surface" role="navigation" aria-label="Navegación principal" data-testid="app-bar">
     <v-container>
       <v-row align="center" justify="space-between" class="px-0 navbar-row">
         <div class="d-flex align-center logo-container">
@@ -50,7 +50,7 @@ defineExpose({ drawer });
   </v-app-bar>
 
   <!-- Drawer for mobile/tablet -->
-  <v-navigation-drawer v-model="drawer" temporary location="right" class="nav-drawer">
+  <v-navigation-drawer v-model="drawer" temporary location="right" class="nav-drawer" data-testid="navigation-drawer">
     <v-list nav class="nav-drawer-list">
       <NavigationLink :to="{ name: 'BoardGames' }" link @click="drawer = false">
         Ludoteca
