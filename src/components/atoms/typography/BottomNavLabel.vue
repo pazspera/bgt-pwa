@@ -6,7 +6,7 @@
 </template>
 
 <script setup lang="ts">
-// No logic required
+defineOptions({ name: "BottomNavLabel" });
 </script>
 
 <style scoped>
