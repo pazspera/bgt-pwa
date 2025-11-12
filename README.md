@@ -30,6 +30,9 @@ src/
 
 Dentro del directorio src/test hay funciones utilitarias para el setup y para crear una instancia de Vuetify en cada test.
 
+### Convención de atributos para Test (`data-testid`)
+Para seleccionar elementos en los test se usa el atributo `data-testid`. Este atributo debe **definirse en el componente Vue real, no en los stubs**. Esto asegura que las pruebas validen la funcionalidad del componente y no del stub temporal.
+
 ### ⚠️​ Testing eventos emitidos en formularios 
 Cuando se usa `vee-validate` con `defineEmits`, el evento no se captura si se dispara desde el botón (`@click`) o el formulario (`@submit`). Esto se debe a que `handleSubmit` encapsula la lógica y el `emit` no se registra en el wrapper.
 
