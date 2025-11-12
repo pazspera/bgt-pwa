@@ -3,7 +3,7 @@
 import { expect } from "vitest";
 
 export const expectNavigationLinks = (sectionWrapper, expectedTo, expectedText) => {
-  const navLinks = sectionWrapper.findAll('[data-test="navigation-link"]');
+  const navLinks = sectionWrapper.findAll('[data-testid="navigation-link"]');
 
   try {
     // amount of link founds matches amount of expected links
