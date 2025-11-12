@@ -23,7 +23,7 @@ const mountButton = ( props: Partial<NavButton> = {}) => {
       stubs: {
         "v-btn": {
           // $attrs is necessary so all attributes from v-btn pass to the stub
-          template: '<div data-test="v-btn-stub" v-bind="$attrs"><slot/></div>'
+          template: '<div v-bind="$attrs"><slot/></div>'
         }
       }
     },
@@ -50,7 +50,7 @@ it("receives valid :to route as object and passes it to v-btn", ()=> {
   // the prop is being passed down correctly to the child
   // however, now the v-btn is a stub, so we need to look for it instead
   // of the v-btn component
-  const vBtnStub = wrapper.find('[data-test="v-btn-stub"]');
+  const vBtnStub = wrapper.find('[data-testid="bottom-nav-button"]');
 
   // checks that the attribute "to" exists and it contains "[object Object]"
   // now the route is the object, it was easier when it was a string but
@@ -89,7 +89,7 @@ describe("active button display logic", ()=> {
     await wrapper.vm.$nextTick();
     
     // Assert
-    const vBtnStub = wrapper.find('[data-test="v-btn-stub"]');
+    const vBtnStub = wrapper.find('[data-testid="bottom-nav-button"]');
     expect(vBtnStub.attributes('aria-current')).toBe("page");
   });
   
@@ -102,7 +102,7 @@ describe("active button display logic", ()=> {
     await wrapper.vm.$nextTick();
   
     // Assert
-    const vBtnStub = wrapper.find('[data-test="v-btn-stub"]');
+    const vBtnStub = wrapper.find('[data-testid="bottom-nav-button"');
     expect(vBtnStub.attributes("aria-current")).toBe(undefined);
   }); 
 })

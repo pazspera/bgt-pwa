@@ -4,7 +4,7 @@
 export const routerLinkStub = {
   props: ["to"],
   template: `
-    <a data-test="router-link-stub" 
+    <a data-testid="router-link-stub" 
         :href="to" 
         :aria-current="$router.currentRoute.value.name === to.name ? 'page' : undefined" 
         v-bind="$attrs"

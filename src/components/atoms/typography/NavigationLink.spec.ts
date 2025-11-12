@@ -47,7 +47,7 @@ it("receives valid :to route as an object", ()=> {
   const testRoute = { name: "EditPlayer", params: { id: 36 }};
   const wrapper = mountNavigationLink({ to: testRoute });
   // the stub is needed, the wrapper doesn't have the "to"
-  const navigationLinkStub = wrapper.find('[data-test="router-link-stub"]')
+  const navigationLinkStub = wrapper.find('[data-testid="router-link-stub"]')
 
   // Assert
   // - checks that the attribute "to" exists
@@ -74,7 +74,7 @@ describe("active link logic", ()=> {
     await wrapper.vm.$nextTick();
   
     // Assert
-    const navigationLinkStub = wrapper.find('[data-test="router-link-stub"]');
+    const navigationLinkStub = wrapper.find('[data-testid="router-link-stub"]');
     expect(navigationLinkStub.attributes("aria-current")).toBe("page"); 
   });
   
@@ -87,7 +87,7 @@ describe("active link logic", ()=> {
     await wrapper.vm.$nextTick();
 
     // Assert
-    const navigationLinkStub = wrapper.find('[data-test="router-link-stub"]');
+    const navigationLinkStub = wrapper.find('[data-testid="router-link-stub"]');
     expect(navigationLinkStub.attributes("aria-current")).toBe(undefined);
   });
 })

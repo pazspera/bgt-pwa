@@ -24,7 +24,7 @@ const toggleTheme = () => {
 </script>
 
 <template>
-  <v-tooltip :text="tooltipText" location="bottom">
+  <v-tooltip :text="tooltipText" location="bottom" data-testid="v-tooltip">
     <template v-slot:activator="{ props }">
       <v-btn 
         v-bind="props"

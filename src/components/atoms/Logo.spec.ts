@@ -2,6 +2,7 @@ import { it, expect, describe, beforeEach } from "vitest";
 import { mount } from "@vue/test-utils";
 import Logo from "./Logo.vue";
 import { router } from "../../tests/utils/createRouterMock";
+import { routerLinkStub } from "../../tests/utils/stubRouterLink";
 
 const mountLogo = ( props = {} ) => {
   return mount(Logo, {
@@ -15,7 +16,7 @@ const mountLogo = ( props = {} ) => {
         RouterLink: {
           props: ["to"],
           template: `
-            <a data-test="router-link-stub"
+            <a 
               :href="to"
               v-bind="$attrs"
             >
@@ -61,7 +62,7 @@ it("renders the correct :to route on the link", ()=> {
   // Arrange
   const testRoute = { name: "EditPlayer", params: { id: 45 }};
   const wrapper = mountLogo({ to: testRoute });
-  const logoStub = wrapper.find("[data-test='router-link-stub']");
+  const logoStub = wrapper.find('[data-testid="app-logo"]');
 
   // Assert
   expect(logoStub.attributes("href")).toBeDefined();

@@ -19,6 +19,7 @@ const route = useRoute();
     class="bottom-nav__button" 
     :aria-current="route.name === props.to.name ? 'page' : undefined"
     :aria-label="label"
+    data-testid="bottom-nav-button"
   >
     <FontAwesomeIcon :icon="icon" class="bottom-nav__icon" />
     <BottomNavLabel class="bottom-nav__label">{{ label }}</BottomNavLabel>
