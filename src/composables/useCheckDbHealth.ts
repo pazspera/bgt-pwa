@@ -11,6 +11,7 @@ import { ref } from "vue";
 export function useCheckDbHealth() {
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const uri = BASE_URL + "/health";
+  // const uri = BASE_URL + "/health?status=error";
   
   const statusMessage = ref("");
   const color = ref("info");
