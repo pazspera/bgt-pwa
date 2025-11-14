@@ -36,6 +36,7 @@
     "@vitest/ui": "^3.2.4",
     "@vue/test-utils": "^2.4.6",
     "flush-promises": "^1.0.2",
+    "msw": "^2.12.1",
     "resize-observer-polyfill": "^1.5.1",
     "sass": "^1.32.7",
     "typescript": "^5.9.3",
@@ -43,5 +44,10 @@
     "vite-plugin-pwa": "^1.0.3",
     "vitest": "^3.2.4",
     "vue-router-mock": "^2.0.0"
+  },
+  "msw": {
+    "workerDirectory": [
+      "public"
+    ]
   }
 }
