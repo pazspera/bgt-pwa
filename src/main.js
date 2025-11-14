@@ -110,6 +110,16 @@ const vuetify = createVuetify({
 	},
 });
 
+// Mock API
+async function prepareApp() {
+  if(import.meta.env.DEV) {
+    const { worker } = await import("./mocks/browser");
+    return worker.start();
+  }
+
+  return Promise.resolve();
+}
+
 let app = createApp(App);
 
 // Font Awesome
@@ -121,4 +131,7 @@ app.use(createPinia());
 app.use(VueSweetalert2);
 app.component("VueDatePicker", VueDatePicker);
 app.component("font-awesome-icon", FontAwesomeIcon);
-app.mount("#app");
+
+prepareApp().then(()=> {
+  app.mount("#app");
+})
