@@ -1,11 +1,3 @@
-/* 
-Petición a /db-health para confirmar que ande la api
-Cosas que tiene que devolver:
-- Mensaje 
-- Icono
-- Color (success o error)
-
-*/
 import { ref } from "vue";
 
 export function useCheckDbHealth() {
