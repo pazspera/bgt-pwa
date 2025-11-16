@@ -40,6 +40,39 @@ export const handlers = [
         statusText: "OK"
       }
     )
+  }),
+  // GET/player/:id
+  http.get("*/players/:id", async({ params, request })=> {
+    const url = new URL(request.url);
+    const statusParam = url.searchParams.get("status");
 
+    const playerId = Number(params.id);
+    const player = mockPlayers.find(p => p.id === playerId);
+
+    await new Promise(resolve => setTimeout(resolve, 300));
+
+    if(statusParam === "error") {
+      console.log("returning error on get/player/:id");
+      return new HttpResponse(null, {
+        status: 500,
+        statusText: "Internal Server Error"
+      })
+    }
+
+    if(statusParam === "not-found") {
+      console.log("returning player not found on get/player/:id");
+      return new HttpResponse(null, {
+        status: 404,
+        statusText: "Not Found"
+      })
+    }
+
+    return HttpResponse.json(
+      player,
+      {
+        status: 200, 
+        statusText: "OK"
+      }
+    )
   })
 ]

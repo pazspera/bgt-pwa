@@ -1,3 +1,4 @@
+import { triggerAsyncId } from "async_hooks";
 import type { Player } from "../types/domain/player";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "/api";
@@ -14,6 +15,26 @@ export async function getPlayers(): Promise<Player[]> {
     return data;
   } catch (error) {
     console.error("Error al obtener jugadores:", error);
+    throw error;
+  }
+}
+
+export async function getPlayer(id) {
+  try {
+    const response = await fetch(`${API_BASE_URL}/players/${id}`);
+
+    if(response.status === 404){
+      throw new Error(`Jugador con id ${id} no existe`);
+    }
+
+    if(!response.ok){
+      throw new Error(`Error ${response.status}: No se pudo obtener el jugador con id ${id}`);
+    }
+
+    const data: Player = await response.json();
+    return data;
+  } catch (error) {
+    console.error(`Error al obtener jugador id ${id}:`, error);
     throw error;
   }
 }

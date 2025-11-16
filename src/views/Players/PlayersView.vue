@@ -2,14 +2,17 @@
 import { ref, onBeforeMount } from "vue";
 import AddPlayerSheet from "../../components/organisms/AddPlayerSheet.vue";
 import { usePlayers } from "../../composables/usePlayers";
+import { usePlayer } from "../../composables/usePlayer";
 
 const isSheetVisible = ref(false);
 const errorText = ref("");
 defineOptions({ name: "PlayersView" });
 const { players, loading, error, fetch } = usePlayers();
+const { fetchPlayer } = usePlayer(); 
 
 onBeforeMount(()=> {
   fetch();
+  fetchPlayer(1);
 })
 
 const handlePlayerAdded = ()=> {}
