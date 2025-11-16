@@ -16,21 +16,17 @@ export async function getPlayers(): Promise<Player[]> {
 }
 
 export async function getPlayer(id) {
-  try {
-    const response = await fetch(`${API_BASE_URL}/players/${id}`);
-
-    if(response.status === 404){
-      throw new Error(`Jugador con id ${id} no existe`);
-    }
-
-    if(!response.ok){
-      throw new Error(`Error ${response.status}: No se pudo obtener el jugador con id ${id}`);
-    }
-
-    const data: Player = await response.json();
-    return data;
-  } catch (error) {
-    console.error(`Error al obtener jugador id ${id}:`, error);
-    throw error;
+  const response = await fetch(`${API_BASE_URL}/players/${id}`);
+  
+  if(response.status === 404){
+    throw new Error(`Jugador con id ${id} no existe`);
   }
+
+  if(!response.ok){
+    throw new Error(`Error ${response.status}: No se pudo obtener el jugador con id ${id}`);
+  }
+
+  const data: Player = await response.json();
+  return data;
+
 }

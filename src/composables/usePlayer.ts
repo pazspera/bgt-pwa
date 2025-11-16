@@ -15,8 +15,8 @@ export function usePlayer() {
       const data = await getPlayer(id);
       player.value = data;
       console.log(`Jugador ${id} mockeado`, data)
-    } catch (error) {
-      error.value = error.message;
+    } catch (e) {
+      error.value = e.message;
       console.log("Error en usePlayer", error.value);
     } finally {
       loading.value = false;
