@@ -1,10 +1,16 @@
 <script setup>
-import { ref } from "vue";
+import { ref, onBeforeMount } from "vue";
 import AddPlayerSheet from "../../components/organisms/AddPlayerSheet.vue";
+import { usePlayers } from "../../composables/usePlayers";
 
 const isSheetVisible = ref(false);
 const errorText = ref("");
 defineOptions({ name: "PlayersView" });
+const { players, loading, error, fetch } = usePlayers();
+
+onBeforeMount(()=> {
+  fetch();
+})
 
 const handlePlayerAdded = ()=> {}
 
