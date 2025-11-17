@@ -1,4 +1,3 @@
-import { triggerAsyncId } from "async_hooks";
 import type { Player } from "../types/domain/player";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "/api";
@@ -28,5 +27,24 @@ export async function getPlayer(id) {
 
   const data: Player = await response.json();
   return data;
+
+}
+
+export async function deletePlayer(id) {
+  const response = await fetch(`${API_BASE_URL}/players/${id}`, {
+    method: "DELETE",
+  });
+
+  if(response.status === 204 || response.status === 200) {
+    return;
+  }
+
+  if(response.status === 404) {
+    throw new Error(`Jugador con id ${id} no encontrado para eliminar`)
+  }
+
+  if(!response.ok) {
+    throw new Error(`Error ${response.status}: No se pudo eliminar el jugador con id ${id}`);
+  }
 
 }
