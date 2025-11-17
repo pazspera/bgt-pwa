@@ -34,9 +34,8 @@ Dentro del directorio src/test hay funciones utilitarias para el setup y para cr
 Para seleccionar elementos en los test se usa el atributo `data-testid`. Este atributo debe **definirse en el componente Vue real, no en los stubs**. Esto asegura que las pruebas validen la funcionalidad del componente y no del stub temporal.
 
 ### ⚠️​ Testing eventos emitidos en formularios 
-Cuando se usa `vee-validate` con `defineEmits`, el evento no se captura si se dispara desde el botón (`@click`) o el formulario (`@submit`). Esto se debe a que `handleSubmit` encapsula la lógica y el `emit` no se registra en el wrapper.
-
-> Solución: llamar directamente al método expuesto con `defineExpose`. Ejemplo de AddPlayerSheet.spec.ts:
+- **Problema:** Cuando se usa `vee-validate` con `defineEmits`, el evento no se captura si se dispara desde el botón (`@click`) o el formulario (`@submit`). Esto se debe a que `handleSubmit` encapsula la lógica y el `emit` no se registra en el wrapper.
+- **Solución:** llamar directamente al método expuesto con `defineExpose`. 
 
 ```typescript
 await wrapper.vm.submitForm();
@@ -44,6 +43,35 @@ expect(wrapper.emitted("playerAdded")).toEqual([
   [{ playerName: "Stephen King" }]
 ]);
 ```
+(Link al test entero)[https://github.com/pazspera/bgt-pwa/blob/main/src/components/organisms/AddPlayerSheet.spec.ts]
+
+### ⚠️ Testing de composables
+
+#### Doble mocking (`spyOn` y `fetch`)
+Para testear fallos de servicios (como un error de red), usar solo `getPlayerSpy.mockRejectedValue` falla.
+- **Problema:** En Node.js, la línea `await fetch(...)` se ejecuta antes que el spy pueda actuar. Esto causa un *error de red genérico* que sobreescribe el mensaje de error del test. 
+- **Solución:** Usar un *doble mocking*. Se mockea el `fetch` global (`vi.spyOn(global, "fetch")`) con el *mismo mensaje de error que espera el test*, asegurando que se capture el mensaje correcto.
+
+```typescript
+const errorMessage = "Error en el servidor al obtener jugadores";
+getPlayersSpy.mockRejectedValue(new Error(errorMessage));
+
+vi.spyOn(global, "fetch").mockRejectedValue(new Error(errorMessage))
+```
+(Link al test entero)[https://github.com/pazspera/bgt-pwa/blob/main/src/composables/usePlayers.spec.ts]
+
+#### Captura de promesa rechazada en tests de error
+Al probar un error, la función del composable devuelve una promesa rechazada. 
+- **Problema:** Si se usa solo `await promise;`, Vitest detiene el test por una Promesa no manejada (Uncaught Rejection). Esto impide que se verifique el resto del test.
+- **Solución:** Envolver el `await promise;` en un `try/catch` en el test para "silenciar" ese rechazo y permitir que el código continúe.
+
+```typescript
+const promise = fetchPlayer(playerId);
+expect(loading.value).toBe(true);
+
+try { await promise; } catch(e) {}
+```
+(Link al test, revisar casos de error response)[https://github.com/pazspera/bgt-pwa/blob/main/src/composables/usePlayer.spec.ts]
 
 ## Sistema de diseño 
 
