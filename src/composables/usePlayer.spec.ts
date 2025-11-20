@@ -2,6 +2,7 @@ import { it, describe, expect, afterEach, vi } from "vitest";
 import { usePlayer } from "./usePlayer";
 import * as PlayerService from "../api/playerService";
 import { mockPlayers } from "../mocks/data/players";
+import { API_ERROR_MESSAGES } from "../constants/apiErrorMessages";
 
 const getPlayerSpy = vi.spyOn(PlayerService, "getPlayer");
 
@@ -38,7 +39,7 @@ describe("usePlayer", ()=> {
 
   it("error response: updates error message when player not found", async ()=> {
     const playerId = 999;
-    const errorMessage = `Jugador con id ${playerId} no existe`;
+    const errorMessage = API_ERROR_MESSAGES.GET_PLAYER_NOT_FOUND(playerId);
     getPlayerSpy.mockRejectedValue(new Error(errorMessage));
 
     vi.spyOn(global, "fetch").mockResolvedValue({
@@ -72,7 +73,7 @@ describe("usePlayer", ()=> {
 
   it("error response: updates error message in case of network error", async ()=> {
     const playerId = 999;
-    const errorMessage = "Network Error";
+    const errorMessage = API_ERROR_MESSAGES.NETWORK_ERROR;
     getPlayerSpy.mockRejectedValue(new Error(errorMessage));
 
     vi.spyOn(global, "fetch").mockRejectedValue(new Error(errorMessage));

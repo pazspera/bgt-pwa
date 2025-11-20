@@ -13,6 +13,8 @@ situations that can happen:
 - the id is not found
 - network error
 */
+
+// TODO crear constantes para error messages e implementarlos en tests y composables
 import { it, describe, expect, afterAll, vi, beforeEach } from "vitest";
 import * as PlayerService from "../api/playerService";
 import { useDeletePlayer, players } from "./useDeletePlayer";

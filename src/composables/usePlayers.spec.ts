@@ -2,6 +2,7 @@ import { it, describe, expect, vi, afterEach } from "vitest";
 import { usePlayers } from "./usePlayers";
 import * as PlayerService from "../api/playerService";
 import { mockPlayers } from "../mocks/data/players";
+import { API_ERROR_MESSAGES } from "../constants/apiErrorMessages";
 
 const getPlayersSpy = vi.spyOn(PlayerService, "getPlayers");
 
@@ -36,13 +37,13 @@ describe("usePlayers", ()=> {
 
 
   it("service error: updates error and loading, returns empty array for players", async ()=> {
-    const errorMessage = "Error en el servidor al obtener jugadores";
+    const errorMessage = API_ERROR_MESSAGES.GET_PLAYERS_FAILED(500);
     getPlayersSpy.mockRejectedValue(new Error(errorMessage));
 
     // need to mock the rejected value with the same message
     // as the real fetch in Node.js executes first and
     // overrides the error, causing the test to fail
-    vi.spyOn(global, "fetch").mockRejectedValue(new Error(errorMessage))
+    vi.spyOn(global, "fetch").mockRejectedValue(new Error(errorMessage));
 
     const { players, loading, error, fetch } = runUsePlayers();
 
