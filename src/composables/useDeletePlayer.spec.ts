@@ -21,19 +21,27 @@ import { useDeletePlayer, players } from "./useDeletePlayer";
 import { mockPlayers } from "../mocks/data/players"; 
 import { API_ERROR_MESSAGES } from "../constants/apiErrorMessages";
 
-const deletePlayerSpy = vi.spyOn(PlayerService, "deletePlayer");
+// module must be mocked first to avoid hoisting issue
+vi.mock("../api/playerService", ()=> {
+  return {
+    deletePlayer: vi.fn(),
+  }
+})
+
+// get the reference to the mocked function
+const deletePlayerMock = vi.mocked(PlayerService).deletePlayer;
 
 // reset players ref so it always starts with all players
 beforeEach(()=> {
   players.value = JSON.parse(JSON.stringify(mockPlayers));
-  deletePlayerSpy.mockClear();
+  deletePlayerMock.mockClear();
 })
 
 describe("deletePlayer", ()=> {
   it("success response: deletes requested player, updates loading status", async ()=> {
     const playerId = 4;
     // mocks api success call
-    deletePlayerSpy.mockResolvedValue(undefined);
+    deletePlayerMock.mockResolvedValue(undefined);
 
     const { loading, error, deletePlayer } = useDeletePlayer(); 
 
@@ -50,8 +58,8 @@ describe("deletePlayer", ()=> {
     await promise;
 
     // test end state
-    expect(deletePlayerSpy).toHaveBeenCalledTimes(1);
-    expect(deletePlayerSpy).toHaveBeenCalledWith(playerId);
+    expect(deletePlayerMock).toHaveBeenCalledTimes(1);
+    expect(deletePlayerMock).toHaveBeenCalledWith(playerId);
 
     expect(loading.value).toBe(false);
     expect(error.value).toBeNull();
@@ -87,7 +95,7 @@ describe("deletePlayer", ()=> {
     const playerId = 999;
     const playersInitialLength = players.value.length;
     const errorMessage = API_ERROR_MESSAGES.DELETE_PLAYER_NOT_FOUND(playerId);
-    deletePlayerSpy.mockRejectedValue(new Error(errorMessage));
+    deletePlayerMock.mockRejectedValue(new Error(errorMessage));
 
     const { loading, error, deletePlayer } = useDeletePlayer();
 
@@ -102,8 +110,8 @@ describe("deletePlayer", ()=> {
     await Promise.resolve();
 
     // test end state
-    expect(deletePlayerSpy).toHaveBeenCalledTimes(1);
-    expect(deletePlayerSpy).toHaveBeenCalledWith(playerId);
+    expect(deletePlayerMock).toHaveBeenCalledTimes(1);
+    expect(deletePlayerMock).toHaveBeenCalledWith(playerId);
 
     expect(loading.value).toBe(false);
     expect(error.value).toBe(errorMessage);
@@ -114,7 +122,7 @@ describe("deletePlayer", ()=> {
   it("error response: network error", async ()=> {
     const playerId = 3;
     const errorMessage = API_ERROR_MESSAGES.NETWORK_ERROR;
-    deletePlayerSpy.mockRejectedValue(new Error(errorMessage));
+    deletePlayerMock.mockRejectedValue(new Error(errorMessage));
 
     const { loading, error, deletePlayer } = useDeletePlayer();
 
@@ -127,8 +135,8 @@ describe("deletePlayer", ()=> {
     await promise;
 
     // test end state
-    expect(deletePlayerSpy).toHaveBeenCalledTimes(1);
-    expect(deletePlayerSpy).toHaveBeenCalledWith(playerId);
+    expect(deletePlayerMock).toHaveBeenCalledTimes(1);
+    expect(deletePlayerMock).toHaveBeenCalledWith(playerId);
 
     expect(loading.value).toBe(false);
     expect(error.value).toBe(errorMessage);
