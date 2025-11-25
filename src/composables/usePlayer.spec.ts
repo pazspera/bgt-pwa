@@ -12,7 +12,7 @@ const runUsePlayer = ()=> {
 }
 
 describe("usePlayer", ()=> {
-  it("sucess response: loads requested player, updates loading status", async ()=> {
+  it("success response: loads requested player, updates loading status", async ()=> {
     // mocked response
     const playerId = 1;
     const mockedPlayer = mockPlayers.find(p => p.id === playerId);

@@ -15,11 +15,11 @@ situations that can happen:
 */
 
 // TODO crear constantes para error messages e implementarlos en tests y composables
-import { it, describe, expect, afterAll, vi, beforeEach } from "vitest";
+import { it, describe, expect, afterEach, vi, beforeEach } from "vitest";
 import * as PlayerService from "../api/playerService";
 import { useDeletePlayer, players } from "./useDeletePlayer";
 import { mockPlayers } from "../mocks/data/players"; 
-import { afterEach } from "node:test";
+import { API_ERROR_MESSAGES } from "../constants/apiErrorMessages";
 
 const deletePlayerSpy = vi.spyOn(PlayerService, "deletePlayer");
 
@@ -30,7 +30,7 @@ beforeEach(()=> {
 })
 
 describe("deletePlayer", ()=> {
-  it.only("sucess response: deletes requested player, updates loading status", async ()=> {
+  it("success response: deletes requested player, updates loading status", async ()=> {
     const playerId = 4;
     // mocks api success call
     deletePlayerSpy.mockResolvedValue(undefined);
@@ -73,9 +73,66 @@ describe("deletePlayer", ()=> {
     // - mockedPlayers shouldn't contain a player with the deleted id. use find(), if it doesn't find anything, it should be undefined
   }); 
 
-  it.todo("error response: updates error message when player not found", ()=> {});
+  it("error response: updates error message when player not found", async ()=> {
+    // mock api 404 call
+    // looks for id in players, will no be found
+    // test initial state: loading = false / error = null
+    // create promise
+    // loading = true
+    // await promise
+    // end state
+    // - spy called 1 with player id
+    // - loading to be false
+    // - error = delete player not found
+    const playerId = 999;
+    const playersInitialLength = players.value.length;
+    const errorMessage = API_ERROR_MESSAGES.DELETE_PLAYER_NOT_FOUND(playerId);
+    deletePlayerSpy.mockRejectedValue(new Error(errorMessage));
 
-  it.todo("error response: network error", ()=> {});
+    const { loading, error, deletePlayer } = useDeletePlayer();
+
+    // test initial state
+    expect(loading.value).toBe(false);
+    expect(error.value).toBeNull();
+
+    const promise = deletePlayer(playerId);
+    expect(loading.value).toBe(true);
+    await promise;
+    
+    await Promise.resolve();
+
+    // test end state
+    expect(deletePlayerSpy).toHaveBeenCalledTimes(1);
+    expect(deletePlayerSpy).toHaveBeenCalledWith(playerId);
+
+    expect(loading.value).toBe(false);
+    expect(error.value).toBe(errorMessage);
+    // checks no player was deleted
+    expect(players.value.length).toBe(playersInitialLength);
+  });
+
+  it("error response: network error", async ()=> {
+    const playerId = 3;
+    const errorMessage = API_ERROR_MESSAGES.NETWORK_ERROR;
+    deletePlayerSpy.mockRejectedValue(new Error(errorMessage));
+
+    const { loading, error, deletePlayer } = useDeletePlayer();
+
+    // test initial state
+    expect(loading.value).toBe(false);
+    expect(error.value).toBeNull();
+
+    const promise = deletePlayer(playerId);
+    expect(loading.value).toBe(true);
+    await promise;
+
+    // test end state
+    expect(deletePlayerSpy).toHaveBeenCalledTimes(1);
+    expect(deletePlayerSpy).toHaveBeenCalledWith(playerId);
+
+    expect(loading.value).toBe(false);
+    expect(error.value).toBe(errorMessage);
+  });
 
   afterEach(()=> {
     vi.restoreAllMocks();
