@@ -22,6 +22,12 @@ export const handlers = [
   // GET/players
   http.get("*/players", async({ request }) => {
     const url = new URL(request.url);
+
+    // fix so msw doesn't interfere with loading the views
+    if(url.pathname.endsWith(".vue") || url.pathname.endsWith("js")) {
+      return;
+    }
+
     const statusParam = url.searchParams.get("status");
 
     await new Promise(resolve => setTimeout(resolve, 600));
@@ -45,6 +51,11 @@ export const handlers = [
   // GET/player/:id
   http.get("*/players/:id", async({ params, request })=> {
     const url = new URL(request.url);
+
+    if(url.pathname.endsWith(".vue") || url.pathname.endsWith("js")) {
+      return;
+    }
+
     const statusParam = url.searchParams.get("status");
 
     const playerId = Number(params.id);
@@ -79,6 +90,11 @@ export const handlers = [
   // DELETE/player/:id
   http.delete("*/players/:id", async ({ params, request}) => {
     const url = new URL(request.url);
+
+    if(url.pathname.endsWith(".vue") || url.pathname.endsWith("js")) {
+      return;
+    }
+    
     const statusParam = url.searchParams.get("status");
      
     const playerId = Number(params.id);
