@@ -17,6 +17,7 @@ export function usePlayer() {
       console.log(`Jugador ${id} mockeado`, data)
     } catch (e) {
       error.value = e.message;
+      player.value = null;
       console.log("Error en usePlayer", error.value);
     } finally {
       loading.value = false;
