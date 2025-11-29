@@ -9,14 +9,9 @@ const isSheetVisible = ref(false);
 const errorText = ref("");
 defineOptions({ name: "PlayersView" });
 const { fetch } = usePlayers();
-const { fetchPlayer } = usePlayer(); 
-const { deletePlayer } = useDeletePlayer();
 
 onBeforeMount(()=> {
   fetch();
-  fetchPlayer(1);
-  deletePlayer(6);
-  deletePlayer(4);
 })
 
 const handlePlayerAdded = ()=> {}
