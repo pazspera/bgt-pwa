@@ -5,6 +5,11 @@ export const handlers = [
   http.get("*/players", async({ request }) => {
     const url = new URL(request.url);
 
+    // fix so msw doesn't interfere with loading the views
+    if(url.pathname.endsWith(".vue") || url.pathname.endsWith("js")) {
+      return;
+    }    
+
     await new Promise(resolve => setTimeout(resolve, 600));
 
     return HttpResponse.json(
@@ -18,6 +23,11 @@ export const handlers = [
   // GET/player/:id
   http.get("*/players/:id", async({ params, request })=> {
     const url = new URL(request.url);
+
+    // fix so msw doesn't interfere with loading the views
+    if(url.pathname.endsWith(".vue") || url.pathname.endsWith("js")) {
+      return;
+    }
 
     const playerId = Number(params.id);
     const player = mockPlayers.find(p => p.id === playerId);
@@ -43,6 +53,11 @@ export const handlers = [
   // DELETE/player/:id
   http.delete("*/players/:id", async ({ params, request}) => {
     const url = new URL(request.url);
+
+   // fix so msw doesn't interfere with loading the views
+    if(url.pathname.endsWith(".vue") || url.pathname.endsWith("js")) {
+      return;
+    }
      
     const playerId = Number(params.id);
 
