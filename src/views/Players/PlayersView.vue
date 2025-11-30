@@ -25,6 +25,10 @@ const mockPlayer = {
 const handleEditPlayer = (playerId: number) => {
   console.log("editPlayer: ", playerId);
 }
+
+const handleDeletePlayer = (playerId: number) => {
+  console.log("deletePlayer: ", playerId);
+}
 // 
 
 const handlePlayerAdded = ()=> {}
@@ -45,6 +49,7 @@ const handlePlayerAdded = ()=> {}
     <PlayerCard 
       :player="mockPlayer"
       @editPlayer="handleEditPlayer"
+      @deletePlayer="handleDeletePlayer"
     ></PlayerCard>
     
     <AddPlayerSheet v-model="isSheetVisible" :errorMessage="errorText" @playerAdded="handlePlayerAdded" />

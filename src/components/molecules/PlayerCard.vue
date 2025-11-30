@@ -14,8 +14,12 @@ const emit = defineEmits<{
 
 defineOptions({ name: "PlayerCard" });
 
-const handleEmit = () => {
+const handleEditPlayer = () => {
   emit("editPlayer", props.player.id);
+}
+
+const handleDeletePlayer = () => {
+  emit("deletePlayer", props.player.id);
 }
 
 </script>
@@ -34,7 +38,7 @@ const handleEmit = () => {
     <v-card-actions class="player-card-actions">
       <v-btn 
         data-testid="player-card-edit-btn"
-        @click="handleEmit"  
+        @click="handleEditPlayer"  
         class="button-edit" 
         rounded="circle" 
         icon
@@ -43,6 +47,7 @@ const handleEmit = () => {
       </v-btn>
       <v-btn 
         data-testid="player-card-delete-btn"
+        @click="handleDeletePlayer"
         class="button-delete" 
         rounded="circle" 
         icon

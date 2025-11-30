@@ -93,6 +93,23 @@ describe("component logic",()=> {
     expect(emittedEvents[0][0]).toEqual(mockPlayer.id);
   });
 
-  it.todo("emits deletePlayer event when delete button clicked", ()=> {});
-  it.todo("emits playerId on deletePlayer", ()=> {});
+  it("emits deletePlayer event when delete button clicked", async ()=> {
+    await btnDelete.trigger("click");
+    await nextTick();
+
+    const emittedEvents = wrapper.emitted("deletePlayer");
+
+    expect(emittedEvents).toBeTruthy();
+    expect(emittedEvents).toHaveLength(1);
+  });
+  
+  it("emits playerId on deletePlayer", async ()=> {
+    await btnDelete.trigger("click");
+    await nextTick();
+
+    const emittedEvents = wrapper.emitted("deletePlayer");
+
+    expect(emittedEvents).toBeTruthy();
+    expect(emittedEvents[0][0]).toEqual(mockPlayer.id);
+  });
 })
