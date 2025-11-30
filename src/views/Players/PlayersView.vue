@@ -7,12 +7,11 @@ import PlayerCard from "../../components/molecules/PlayerCard.vue";
 const isSheetVisible = ref(false);
 const errorText = ref("");
 defineOptions({ name: "PlayersView" });
-const { fetchPlayer } = usePlayer();
+const { fetchPlayer, player } = usePlayer();
 
-const testPlayer = ref(null);
 
 onBeforeMount(async ()=> {
-  testPlayer.value = await fetchPlayer(1);
+  await fetchPlayer(1);
 })
 
 const mockPlayer = {
@@ -47,7 +46,7 @@ const handlePlayerAdded = ()=> {}
     <br/>
     <br/>
     <PlayerCard 
-      :player="mockPlayer"
+      :player="player"
       @editPlayer="handleEditPlayer"
       @deletePlayer="handleDeletePlayer"
     ></PlayerCard>
