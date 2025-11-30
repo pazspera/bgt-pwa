@@ -45,7 +45,8 @@ const handlePlayerAdded = ()=> {}
     </v-btn>
     <br/>
     <br/>
-    <PlayerCard 
+    <PlayerCard
+      v-if="player"
       :player="player"
       @editPlayer="handleEditPlayer"
       @deletePlayer="handleDeletePlayer"
