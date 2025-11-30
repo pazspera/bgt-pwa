@@ -2,11 +2,11 @@ import { it, describe, beforeEach, expect } from "vitest";
 import { mount } from "@vue/test-utils";
 import { createVuetifyForTest } from "../../tests/utils/createVuetifyForTest";
 import PlayerCard from "./PlayerCard.vue";
-import { VCard } from "vuetify/components";
+import { VCard, VCardActions, VCardText } from "vuetify/components";
 import type { Player } from "../../types/domain/player";
 import { faTrash, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 
-const vuetify = createVuetifyForTest({ VCard });
+const vuetify = createVuetifyForTest({ VCard, VCardActions, VCardText });
 const faTrashText = faTrash.iconName;
 const faPenToSquareText = faPenToSquare.iconName;
 
