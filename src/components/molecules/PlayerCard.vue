@@ -23,11 +23,11 @@ defineOptions({ name: "PlayerCard" });
     </v-card-text>
 
     <v-card-actions class="player-card-actions">
-      <v-btn class="button-edit" rounded="circle">
-        <FontAwesomeIcon :icon="faPenToSquare" />
+      <v-btn class="button-edit" rounded="circle" icon>
+        <FontAwesomeIcon :icon="faPenToSquare" class="icon-edit" />
       </v-btn>
-      <v-btn class="button-delete" rounded="circle">
-        <FontAwesomeIcon :icon="faTrash" />
+      <v-btn class="button-delete" rounded="circle" icon>
+        <FontAwesomeIcon :icon="faTrash" class="icon-delete" />
       </v-btn>
     </v-card-actions>
   </v-card>
@@ -64,5 +64,14 @@ defineOptions({ name: "PlayerCard" });
   .player-card-text {
     padding-bottom: 8px;
   }
+}
+</style>
+
+<style>
+/* Global styles for button hover state */
+.button-edit:hover .icon-edit,
+.button-delete:hover .icon-delete {
+  color: var(--v-surface) !important;
+  fill: var(--v-surface) !important;
 }
 </style>
