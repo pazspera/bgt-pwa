@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref, onBeforeMount } from "vue";
 import AddPlayerSheet from "../../components/organisms/AddPlayerSheet.vue";
 import { usePlayer } from "../../composables/usePlayer";
@@ -13,7 +13,6 @@ const testPlayer = ref(null);
 
 onBeforeMount(async ()=> {
   testPlayer.value = await fetchPlayer(1);
-  console.log("testplayer", testPlayer.value)
 })
 
 const mockPlayer = {
@@ -21,6 +20,12 @@ const mockPlayer = {
   name: "Zeuchi, the Great",
   createdAt: "createdAt"
 }
+
+// test functions for emitted events on PlayerCard
+const handleEditPlayer = (playerId: number) => {
+  console.log("editPlayer: ", playerId);
+}
+// 
 
 const handlePlayerAdded = ()=> {}
 
@@ -37,7 +42,10 @@ const handlePlayerAdded = ()=> {}
     </v-btn>
     <br/>
     <br/>
-    <PlayerCard :player="mockPlayer"></PlayerCard>
+    <PlayerCard 
+      :player="mockPlayer"
+      @editPlayer="handleEditPlayer"
+    ></PlayerCard>
     
     <AddPlayerSheet v-model="isSheetVisible" :errorMessage="errorText" @playerAdded="handlePlayerAdded" />
   </v-container>

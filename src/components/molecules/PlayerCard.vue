@@ -5,9 +5,18 @@ import { faTrash, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 
 const props = defineProps<{
   player: Player,
-}>()
+}>();
+
+const emit = defineEmits<{
+  editPlayer: [id: number],
+  deletePlayer: [id: number],
+}>();
 
 defineOptions({ name: "PlayerCard" });
+
+const handleEmit = () => {
+  emit("editPlayer", props.player.id);
+}
 
 </script>
 
@@ -23,10 +32,21 @@ defineOptions({ name: "PlayerCard" });
     </v-card-text>
 
     <v-card-actions class="player-card-actions">
-      <v-btn class="button-edit" rounded="circle" icon>
+      <v-btn 
+        data-testid="player-card-edit-btn"
+        @click="handleEmit"  
+        class="button-edit" 
+        rounded="circle" 
+        icon
+      >
         <FontAwesomeIcon :icon="faPenToSquare" class="icon-edit" />
       </v-btn>
-      <v-btn class="button-delete" rounded="circle" icon>
+      <v-btn 
+        data-testid="player-card-delete-btn"
+        class="button-delete" 
+        rounded="circle" 
+        icon
+      >
         <FontAwesomeIcon :icon="faTrash" class="icon-delete" />
       </v-btn>
     </v-card-actions>
