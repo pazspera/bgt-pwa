@@ -1,14 +1,13 @@
 <script setup>
 import { ref, onBeforeMount } from "vue";
 import AddPlayerSheet from "../../components/organisms/AddPlayerSheet.vue";
-import { usePlayers } from "../../composables/usePlayers";
 import { usePlayer } from "../../composables/usePlayer";
 import PlayerCard from "../../components/molecules/PlayerCard.vue";
 
 const isSheetVisible = ref(false);
 const errorText = ref("");
 defineOptions({ name: "PlayersView" });
-const { fetch } = usePlayers();
+const { fetchPlayer } = usePlayer();
 
 const testPlayer = ref(null);
 
@@ -17,6 +16,11 @@ onBeforeMount(async ()=> {
   console.log("testplayer", testPlayer.value)
 })
 
+const mockPlayer = {
+  id: 333,
+  name: "Zeuchi, the Great",
+  createdAt: "createdAt"
+}
 
 const handlePlayerAdded = ()=> {}
 
@@ -33,7 +37,7 @@ const handlePlayerAdded = ()=> {}
     </v-btn>
     <br/>
     <br/>
-    <PlayerCard :player="testPlayer"></PlayerCard>
+    <PlayerCard :player="mockPlayer"></PlayerCard>
     
     <AddPlayerSheet v-model="isSheetVisible" :errorMessage="errorText" @playerAdded="handlePlayerAdded" />
   </v-container>

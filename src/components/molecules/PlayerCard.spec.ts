@@ -1,7 +1,51 @@
-import { it, describe } from "vitest";
+import { it, describe, beforeEach, expect } from "vitest";
+import { mount } from "@vue/test-utils";
+import { createVuetifyForTest } from "../../tests/utils/createVuetifyForTest";
+import PlayerCard from "./PlayerCard.vue";
+import { VCard } from "vuetify/components";
+import type { Player } from "../../types/domain/player";
+
+const vuetify = createVuetifyForTest({ VCard });
+
+const mockPlayer: Player = {
+  id: 333,
+  name: "Zeuchi, the Great",
+  createdAt: "createdAt"
+}
+
+const mountPlayerCard = ()=> {
+  return mount(PlayerCard, {
+    props: {
+      player: mockPlayer,
+    },
+    global: {
+      plugins: [vuetify],
+      stubs: {
+        "vCard": {
+          template: `
+            <div v-bind="$attrs">
+              <slot/>
+            </div>
+          `
+        }
+      }
+    }
+  })
+}
 
 describe("rendering",()=> {
-  it.todo("displays player name", ()=> {});
+  let wrapper;
+
+  beforeEach(()=> {
+    wrapper = mountPlayerCard();
+  })
+
+  it("displays player name", ()=> {
+    const playerName = wrapper.find('[data-testid="player-card-name"]');
+
+    expect(playerName.exists()).toBe(true);
+    expect(playerName.text()).toBe(mockPlayer.name);
+  });
   it.todo("renders delete icon", ()=> {});
   it.todo("renders edit icon", ()=> {});
 })

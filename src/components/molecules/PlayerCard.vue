@@ -11,8 +11,13 @@ defineOptions({ name: "PlayerCard" });
 
 <template>
   <v-card
-   text="prueba card"
+   data-testid="player-card"
   >
- 
+    <template #text>
+      <span
+        data-testid="player-card-name">
+        {{ player.name }}
+      </span>
+    </template>
   </v-card>
 </template>
