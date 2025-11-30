@@ -3,16 +3,20 @@ import { ref, onBeforeMount } from "vue";
 import AddPlayerSheet from "../../components/organisms/AddPlayerSheet.vue";
 import { usePlayers } from "../../composables/usePlayers";
 import { usePlayer } from "../../composables/usePlayer";
-import { useDeletePlayer } from "../../composables/useDeletePlayer";
+import PlayerCard from "../../components/molecules/PlayerCard.vue";
 
 const isSheetVisible = ref(false);
 const errorText = ref("");
 defineOptions({ name: "PlayersView" });
 const { fetch } = usePlayers();
 
-onBeforeMount(()=> {
-  fetch();
+const testPlayer = ref(null);
+
+onBeforeMount(async ()=> {
+  testPlayer.value = await fetchPlayer(1);
+  console.log("testplayer", testPlayer.value)
 })
+
 
 const handlePlayerAdded = ()=> {}
 
@@ -27,7 +31,10 @@ const handlePlayerAdded = ()=> {}
     >
       Agregar jugador
     </v-btn>
-
+    <br/>
+    <br/>
+    <PlayerCard :player="testPlayer"></PlayerCard>
+    
     <AddPlayerSheet v-model="isSheetVisible" :errorMessage="errorText" @playerAdded="handlePlayerAdded" />
   </v-container>
 </template>
