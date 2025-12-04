@@ -112,11 +112,15 @@ const vuetify = createVuetify({
 
 // Mock API
 async function prepareApp() {
-  if(import.meta.env.DEV) {
+  const SHOULD_MOCK = import.meta.env.VITE_MOCK_API === "true";
+
+  if(SHOULD_MOCK) {
     const { worker } = await import("./mocks/browser");
+    console.log("start mock")
     return worker.start();
   }
 
+  console.log("Conectando a la API");
   return Promise.resolve();
 }
 
