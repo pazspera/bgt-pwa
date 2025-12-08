@@ -1,8 +1,5 @@
-import { pick } from "vuetify/lib/util"
-import PlayersView from "../../views/Players/PlayersView.vue"
-
 export interface Player {
-  id: number,
+  id: string,
   name: string
   createdAt: string,
 }
