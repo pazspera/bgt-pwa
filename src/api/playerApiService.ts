@@ -18,7 +18,8 @@ export async function getPlayers() {
   }
 }
 
-export async function getPlayer(id: string) {}
+export async function getPlayer(id: string) {
+}
 
 export async function createPlayer() {}
 

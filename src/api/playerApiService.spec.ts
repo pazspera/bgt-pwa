@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, afterEach } from "vitest";
-import { getPlayers } from "./playerApiService";
+import { getPlayers, getPlayer } from "./playerApiService";
 import { API_ERROR_MESSAGES } from "../constants/apiErrorMessages";
-import type { PlayersListResponse } from "../types/domain/playerApi";
+import type { PlayersListResponse, PlayerApiResponse } from "../types/domain/playerApi";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -69,4 +69,36 @@ describe("playerApiService: getPlayers()", ()=> {
     await expect(getPlayers()).rejects.toThrow(API_ERROR_MESSAGES.NETWORK_ERROR);
   });
 
+})
+
+describe("playerApiService: getPlayer()", ()=> {
+  afterEach(()=> {
+    vi.restoreAllMocks();
+    vi.clearAllMocks();
+  })
+
+  it.only("success: return requested player", async ()=> {
+    const mockResponse: PlayerApiResponse = {
+      id: "1",
+      name: "Zeuchi",
+      is_registered: false,
+      created_at: "2025-01-01T10:00:00Z",
+      updated_at: "2025-01-02T10:00:00Z",
+    };
+
+    vi.spyOn(global, "fetch").mockResolvedValueOnce({
+      ok: true,
+      json: async () => mockResponse,
+    } as unknown as Response);
+
+    const result = await getPlayer(mockResponse.id);
+
+    expect(result).toEqual(mockResponse);
+    expect(global.fetch).toHaveBeenCalledWith(`${API_BASE_URL}/player/${mockResponse.id}`);
+    expect(global.fetch).toHaveBeenCalledTimes(1);
+  });
+
+  it.todo("error: player not found (404)", async ()=> {});
+  it.todo("error: internal server error (500)", async ()=> {});
+  it.todo("error: network error", async ()=> {});
 })
