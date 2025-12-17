@@ -18,7 +18,24 @@ export async function getPlayers() {
   }
 }
 
-export async function getPlayer(id: string) {}
+export async function getPlayer(id: string) {
+  try {
+    const response = await fetch(`${API_BASE_URL}/players/${id}`);
+
+    if(response.status === 404){
+      throw new Error(API_ERROR_MESSAGES.GET_PLAYER_NOT_FOUND(id));
+    }
+  
+    if(!response.ok){
+      throw new Error(API_ERROR_MESSAGES.GET_PLAYER_FAILED(response.status, id));
+    }
+  
+    const data: PlayerApiResponse = await response.json();
+    return data;
+  } catch(error) {
+    throw new Error(API_ERROR_MESSAGES.UNKNOWN_ERROR(error?.message));
+  }
+}
 
 export async function createPlayer() {}
 
