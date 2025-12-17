@@ -5,7 +5,7 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export async function getPlayers() {
   try {
-    const response = await fetch(`${API_BASE_URL}/players`);
+    const response = await fetch(`${API_BASE_URL}/players`, { method: "GET" });
 
     if(!response.ok) {
       throw new Error(API_ERROR_MESSAGES.GET_PLAYERS_FAILED(response.status));
@@ -14,7 +14,7 @@ export async function getPlayers() {
     const data: PlayersListResponse = await response.json();
     return data;
   } catch (error) {
-    throw new Error(API_ERROR_MESSAGES.UNKNOWN_ERROR(error.message));
+    throw new Error(API_ERROR_MESSAGES.UNKNOWN_ERROR(error?.message));
   }
 }
 
