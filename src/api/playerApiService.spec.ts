@@ -94,7 +94,7 @@ describe("playerApiService: getPlayer()", ()=> {
     const result = await getPlayer(mockResponse.id);
 
     expect(result).toEqual(mockResponse);
-    expect(global.fetch).toHaveBeenCalledWith(`${API_BASE_URL}/player/${mockResponse.id}`);
+    expect(global.fetch).toHaveBeenCalledWith(`${API_BASE_URL}/players/${mockResponse.id}`);
     expect(global.fetch).toHaveBeenCalledTimes(1);
   });
 
