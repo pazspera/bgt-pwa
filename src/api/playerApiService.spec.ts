@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, afterEach } from "vitest";
-import { getPlayers, getPlayer } from "./playerApiService";
+import { getPlayers, getPlayer, deletePlayer } from "./playerApiService";
 import { API_ERROR_MESSAGES } from "../constants/apiErrorMessages";
 import type { PlayersListResponse, PlayerApiResponse } from "../types/domain/playerApi";
 import { mockPlayers } from "../mocks/data/players";
@@ -95,7 +95,7 @@ describe("playerApiService: getPlayer()", ()=> {
     const result = await getPlayer(mockResponse.id);
 
     expect(result).toEqual(mockResponse);
-    expect(global.fetch).toHaveBeenCalledWith(`${API_BASE_URL}/players/${mockResponse.id}`);
+    expect(global.fetch).toHaveBeenCalledWith(`${API_BASE_URL}/players/${mockResponse.id}`, { method: "GET" });
     expect(global.fetch).toHaveBeenCalledTimes(1);
   });
 
@@ -120,4 +120,33 @@ describe("playerApiService: getPlayer()", ()=> {
   it("error: network error", async ()=> {
     vi.spyOn(global, "fetch").mockRejectedValueOnce(new TypeError(API_ERROR_MESSAGES.NETWORK_ERROR));
   });
+})
+
+describe("playerApiService: deletePlayer()", ()=> {
+  afterEach(()=> {
+    vi.restoreAllMocks();
+    vi.clearAllMocks();
+  });
+
+  it.only("success: deleted returns 200 or 204", async ()=> {
+    const playerId = "123"
+
+    vi.spyOn(global, "fetch").mockResolvedValueOnce({
+      ok: true,
+      status: 200,
+    } as unknown as Response);
+
+    const result200 = await deletePlayer(playerId);
+
+    expect(global.fetch).toHaveBeenCalledWith(`${API_BASE_URL}/players/${playerId}`, { method: "DELETE" });
+    expect(global.fetch).toHaveBeenCalledTimes(1);
+    expect(result200).toBeTruthy();
+    expect(result200).toContain(200);
+  });
+  
+  it.todo("error: requested player not found (404)", async ()=> {});
+
+  it.todo("error: internal server error (500)", async ()=> {});
+
+  it.todo("error: network error", async ()=> {});
 })
