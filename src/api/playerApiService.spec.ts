@@ -186,7 +186,7 @@ describe("playerApiService: createPlayer()", ()=> {
     updated_at: "2025-01-01T10:00:00Z",
   }
 
-  it.only("success: returns 201 on created player", async ()=> {
+  it("success: returns 201 on created player", async ()=> {
     vi.spyOn(global, "fetch").mockResolvedValueOnce({
       ok: true,
       status: 201,
@@ -204,7 +204,7 @@ describe("playerApiService: createPlayer()", ()=> {
     })
   });
 
-  it.only("error: bad request (400)", async ()=> {
+  it("error: bad request (400)", async ()=> {
     vi.spyOn(global, "fetch").mockResolvedValueOnce({
       ok: false,
       status: 400,
@@ -213,7 +213,7 @@ describe("playerApiService: createPlayer()", ()=> {
     await expect(createPlayer(newPlayer)).rejects.toThrow(API_ERROR_MESSAGES.CREATE_PLAYER_ERROR(400));
   });
 
-  it.only("error: internal server error (500)", async ()=> {
+  it("error: internal server error (500)", async ()=> {
     vi.spyOn(global, "fetch").mockResolvedValueOnce({
       ok: false,
       status: 500
@@ -222,7 +222,7 @@ describe("playerApiService: createPlayer()", ()=> {
     await expect(createPlayer(newPlayer)).rejects.toThrow(API_ERROR_MESSAGES.CREATE_PLAYER_ERROR(500));
   });
 
-  it.only("error: network error", async ()=> {
+  it("error: network error", async ()=> {
     vi.spyOn(global, "fetch").mockRejectedValueOnce(new TypeError(API_ERROR_MESSAGES.NETWORK_ERROR));
 
     await expect(createPlayer(newPlayer)).rejects.toThrow(API_ERROR_MESSAGES.NETWORK_ERROR);
