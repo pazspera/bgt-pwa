@@ -20,7 +20,7 @@ export async function getPlayers() {
 
 export async function getPlayer(id: string) {
   try {
-    const response = await fetch(`${API_BASE_URL}/players/${id}`);
+    const response = await fetch(`${API_BASE_URL}/players/${id}`, { method: "GET" });
 
     if(response.status === 404){
       throw new Error(API_ERROR_MESSAGES.GET_PLAYER_NOT_FOUND(id));
@@ -41,4 +41,20 @@ export async function createPlayer() {}
 
 export async function updatePlayer() {}
 
-export async function deletePlayer(id: string) {}
+export async function deletePlayer(id: string) {
+  try {
+    const response = await fetch(`${API_BASE_URL}/players/${id}`, { method: "DELETE" });
+
+    if(response.status === 404) {
+      throw new Error(API_ERROR_MESSAGES.DELETE_PLAYER_NOT_FOUND(id));
+    }
+    
+    if(response.status !== 200 && response.status !== 204) {
+      throw new Error(API_ERROR_MESSAGES.DELETE_PLAYER_ERROR(response.status, id));
+    }
+
+    return true;
+  } catch (error) {
+    throw new Error(API_ERROR_MESSAGES.UNKNOWN_ERROR(error?.message));
+  }
+}

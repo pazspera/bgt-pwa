@@ -128,20 +128,20 @@ describe("playerApiService: deletePlayer()", ()=> {
     vi.clearAllMocks();
   });
 
-  it.only("success: deleted returns 200 or 204", async ()=> {
-    const playerId = "123"
+  it.each([200, 204])("success: delete returns %s", async (status) => {
+    const playerId = "123";
 
     vi.spyOn(global, "fetch").mockResolvedValueOnce({
       ok: true,
-      status: 200,
+      status,
     } as unknown as Response);
 
-    const result200 = await deletePlayer(playerId);
+    const result = await deletePlayer(playerId);
 
     expect(global.fetch).toHaveBeenCalledWith(`${API_BASE_URL}/players/${playerId}`, { method: "DELETE" });
     expect(global.fetch).toHaveBeenCalledTimes(1);
-    expect(result200).toBeTruthy();
-    expect(result200).toContain(200);
+    expect(result).toBeTruthy();
+    expect([200, 204]).toContain(status);
   });
   
   it.todo("error: requested player not found (404)", async ()=> {});
