@@ -37,9 +37,9 @@ export async function getPlayer(id: string) {
   }
 }
 
-export async function createPlayer() {}
+export async function createPlayer(player: CreatePlayerRequest) {}
 
-export async function updatePlayer() {}
+export async function updatePlayer(updatedPlayer: UpdatePlayerRequest) {}
 
 export async function deletePlayer(id: string) {
   try {
