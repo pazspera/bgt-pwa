@@ -1,8 +1,7 @@
 import { describe, it, expect, vi, afterEach } from "vitest";
-import { getPlayers, getPlayer, deletePlayer } from "./playerApiService";
+import { getPlayers, getPlayer, deletePlayer, createPlayer, updatePlayer } from "./playerApiService";
 import { API_ERROR_MESSAGES } from "../constants/apiErrorMessages";
-import type { PlayersListResponse, PlayerApiResponse } from "../types/domain/playerApi";
-import { mockPlayers } from "../mocks/data/players";
+import type { PlayersListResponse, PlayerApiResponse, CreatePlayerRequest } from "../types/domain/playerApi";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -166,5 +165,66 @@ describe("playerApiService: deletePlayer()", ()=> {
     vi.spyOn(global, "fetch").mockRejectedValueOnce(new TypeError(API_ERROR_MESSAGES.NETWORK_ERROR));
 
     await expect(deletePlayer(playerId)).rejects.toThrow(API_ERROR_MESSAGES.NETWORK_ERROR)
+  });
+})
+
+describe("playerApiService: createPlayer()", ()=> {
+  afterEach(()=> {
+    vi.restoreAllMocks();
+    vi.clearAllMocks();
+  });
+
+  const newPlayer: CreatePlayerRequest = {
+    name: "New Zeuchi 2.0",
+  }
+
+  const mockResponse: PlayerApiResponse = {
+    id: "123",
+    name: "New Zeuchi 2.0",
+    is_registered: true,
+    created_at: "2025-01-01T10:00:00Z",
+    updated_at: "2025-01-01T10:00:00Z",
+  }
+
+  it("success: returns 201 on created player", async ()=> {
+    vi.spyOn(global, "fetch").mockResolvedValueOnce({
+      ok: true,
+      status: 201,
+      json: async () => mockResponse,
+    } as unknown as Response);
+
+    const result = await createPlayer(newPlayer);
+
+    expect(result).toEqual(mockResponse);
+    expect(global.fetch).toHaveBeenCalledTimes(1);
+    expect(global.fetch).toHaveBeenCalledWith(`${API_BASE_URL}/players`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newPlayer),
+    })
+  });
+
+  it("error: bad request (400)", async ()=> {
+    vi.spyOn(global, "fetch").mockResolvedValueOnce({
+      ok: false,
+      status: 400,
+    } as unknown as Response);
+
+    await expect(createPlayer(newPlayer)).rejects.toThrow(API_ERROR_MESSAGES.CREATE_PLAYER_ERROR(400));
+  });
+
+  it("error: internal server error (500)", async ()=> {
+    vi.spyOn(global, "fetch").mockResolvedValueOnce({
+      ok: false,
+      status: 500
+    } as unknown as Response);
+
+    await expect(createPlayer(newPlayer)).rejects.toThrow(API_ERROR_MESSAGES.CREATE_PLAYER_ERROR(500));
+  });
+
+  it("error: network error", async ()=> {
+    vi.spyOn(global, "fetch").mockRejectedValueOnce(new TypeError(API_ERROR_MESSAGES.NETWORK_ERROR));
+
+    await expect(createPlayer(newPlayer)).rejects.toThrow(API_ERROR_MESSAGES.NETWORK_ERROR);
   });
 })

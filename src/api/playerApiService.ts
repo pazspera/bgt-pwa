@@ -37,9 +37,30 @@ export async function getPlayer(id: string) {
   }
 }
 
-export async function createPlayer() {}
+export async function createPlayer(newPlayer: CreatePlayerRequest) {
+  try {
+    const response = await fetch(`${API_BASE_URL}/players`, {
+      method: "POST",
+      headers: { 'Content-Type': 'application/json', },
+      body: JSON.stringify(newPlayer),
+    });
 
-export async function updatePlayer() {}
+    if(response.status === 400) {
+      throw new Error(API_ERROR_MESSAGES.CREATE_PLAYER_ERROR(400));
+    }
+    
+    if(!response.ok) {
+      throw new Error(API_ERROR_MESSAGES.CREATE_PLAYER_ERROR(response.status));
+    }
+    
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    throw new Error(API_ERROR_MESSAGES.UNKNOWN_ERROR(error?.message));
+  }
+}
+
+export async function updatePlayer(updatedPlayer: UpdatePlayerRequest) {}
 
 export async function deletePlayer(id: string) {
   try {
