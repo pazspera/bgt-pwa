@@ -128,9 +128,9 @@ describe("playerApiService: deletePlayer()", ()=> {
     vi.clearAllMocks();
   });
 
-  it.each([200, 204])("success: delete returns %s", async (status) => {
-    const playerId = "123";
+  const playerId = "123";
 
+  it.each([200, 204])("success: delete returns %s", async (status) => {
     vi.spyOn(global, "fetch").mockResolvedValueOnce({
       ok: true,
       status,
@@ -144,9 +144,27 @@ describe("playerApiService: deletePlayer()", ()=> {
     expect([200, 204]).toContain(status);
   });
   
-  it.todo("error: requested player not found (404)", async ()=> {});
+  it("error: requested player not found (404)", async ()=> {
+    vi.spyOn(global, "fetch").mockResolvedValueOnce({
+      ok: false,
+      status: 404,
+    } as unknown as Response);
 
-  it.todo("error: internal server error (500)", async ()=> {});
+    await expect(deletePlayer(playerId)).rejects.toThrow(API_ERROR_MESSAGES.DELETE_PLAYER_NOT_FOUND(playerId));
+  });
 
-  it.todo("error: network error", async ()=> {});
+  it("error: internal server error (500)", async ()=> {
+    vi.spyOn(global, "fetch").mockResolvedValueOnce({
+      ok: false,
+      status: 500
+    } as unknown as Response);
+
+    await expect(deletePlayer(playerId)).rejects.toThrow(API_ERROR_MESSAGES.DELETE_PLAYER_ERROR(500, playerId));
+  });
+
+  it("error: network error", async ()=> {
+    vi.spyOn(global, "fetch").mockRejectedValueOnce(new TypeError(API_ERROR_MESSAGES.NETWORK_ERROR));
+
+    await expect(deletePlayer(playerId)).rejects.toThrow(API_ERROR_MESSAGES.NETWORK_ERROR)
+  });
 })
