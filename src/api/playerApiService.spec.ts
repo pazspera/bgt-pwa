@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, afterEach } from "vitest";
-import { getPlayers, getPlayer } from "./playerApiService";
+import { getPlayers, getPlayer, deletePlayer } from "./playerApiService";
 import { API_ERROR_MESSAGES } from "../constants/apiErrorMessages";
 import type { PlayersListResponse, PlayerApiResponse } from "../types/domain/playerApi";
 import { mockPlayers } from "../mocks/data/players";
@@ -95,7 +95,7 @@ describe("playerApiService: getPlayer()", ()=> {
     const result = await getPlayer(mockResponse.id);
 
     expect(result).toEqual(mockResponse);
-    expect(global.fetch).toHaveBeenCalledWith(`${API_BASE_URL}/players/${mockResponse.id}`);
+    expect(global.fetch).toHaveBeenCalledWith(`${API_BASE_URL}/players/${mockResponse.id}`, { method: "GET" });
     expect(global.fetch).toHaveBeenCalledTimes(1);
   });
 
@@ -119,5 +119,52 @@ describe("playerApiService: getPlayer()", ()=> {
 
   it("error: network error", async ()=> {
     vi.spyOn(global, "fetch").mockRejectedValueOnce(new TypeError(API_ERROR_MESSAGES.NETWORK_ERROR));
+  });
+})
+
+describe("playerApiService: deletePlayer()", ()=> {
+  afterEach(()=> {
+    vi.restoreAllMocks();
+    vi.clearAllMocks();
+  });
+
+  const playerId = "123";
+
+  it.each([200, 204])("success: delete returns %s", async (status) => {
+    vi.spyOn(global, "fetch").mockResolvedValueOnce({
+      ok: true,
+      status,
+    } as unknown as Response);
+
+    const result = await deletePlayer(playerId);
+
+    expect(global.fetch).toHaveBeenCalledWith(`${API_BASE_URL}/players/${playerId}`, { method: "DELETE" });
+    expect(global.fetch).toHaveBeenCalledTimes(1);
+    expect(result).toBeTruthy();
+    expect([200, 204]).toContain(status);
+  });
+  
+  it("error: requested player not found (404)", async ()=> {
+    vi.spyOn(global, "fetch").mockResolvedValueOnce({
+      ok: false,
+      status: 404,
+    } as unknown as Response);
+
+    await expect(deletePlayer(playerId)).rejects.toThrow(API_ERROR_MESSAGES.DELETE_PLAYER_NOT_FOUND(playerId));
+  });
+
+  it("error: internal server error (500)", async ()=> {
+    vi.spyOn(global, "fetch").mockResolvedValueOnce({
+      ok: false,
+      status: 500
+    } as unknown as Response);
+
+    await expect(deletePlayer(playerId)).rejects.toThrow(API_ERROR_MESSAGES.DELETE_PLAYER_ERROR(500, playerId));
+  });
+
+  it("error: network error", async ()=> {
+    vi.spyOn(global, "fetch").mockRejectedValueOnce(new TypeError(API_ERROR_MESSAGES.NETWORK_ERROR));
+
+    await expect(deletePlayer(playerId)).rejects.toThrow(API_ERROR_MESSAGES.NETWORK_ERROR)
   });
 })
