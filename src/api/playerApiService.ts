@@ -60,7 +60,7 @@ export async function createPlayer(newPlayer: CreatePlayerRequest) {
   }
 }
 
-export async function updatePlayer(updatedPlayer: UpdatePlayerRequest) {}
+export async function updatePlayer(id: string, updatedPlayer: UpdatePlayerRequest) {}
 
 export async function deletePlayer(id: string) {
   try {

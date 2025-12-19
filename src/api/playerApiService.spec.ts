@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, afterEach } from "vitest";
 import { getPlayers, getPlayer, deletePlayer, createPlayer, updatePlayer } from "./playerApiService";
 import { API_ERROR_MESSAGES } from "../constants/apiErrorMessages";
-import type { PlayersListResponse, PlayerApiResponse, CreatePlayerRequest } from "../types/domain/playerApi";
+import type { PlayersListResponse, PlayerApiResponse, CreatePlayerRequest, UpdatePlayerRequest } from "../types/domain/playerApi";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -227,4 +227,61 @@ describe("playerApiService: createPlayer()", ()=> {
 
     await expect(createPlayer(newPlayer)).rejects.toThrow(API_ERROR_MESSAGES.NETWORK_ERROR);
   });
+});
+
+describe("playerApiService: updatePlayer()", ()=> {
+  afterEach(()=> {
+    vi.restoreAllMocks();
+    vi.clearAllMocks();
+  });
+
+  const playerId = "333";
+  const updateData: UpdatePlayerRequest = { name: "Zeuchi, the one and only" };
+  const mockResponse: PlayerApiResponse = {
+    ...updateData,
+    id: playerId,
+    is_registered: true,
+    created_at: "2025-01-01T10:00:00Z",
+    updated_at: "2025-01-01T10:00:00Z",
+  }
+  
+  it.only("success: returns updated player (200)", async ()=> {
+    vi.spyOn(global, "fetch").mockResolvedValueOnce({
+      ok: true,
+      status: 200,
+      json: async ()=> mockResponse,
+    } as unknown as Response);
+
+    const result = await updatePlayer(playerId, updateData);
+
+    expect(result).toEqual(mockResponse);
+    expect(global.fetch).toHaveBeenCalledTimes(1);
+    expect(global.fetch).toHaveBeenCalledWith(`${API_BASE_URL}/players/${playerId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(updateData),
+    });
+  });
+
+  it.only("success: no content (204)", async ()=> {
+    vi.spyOn(global, "fetch").mockResolvedValueOnce({
+      ok: true,
+      status: 204,
+    } as unknown as Response);
+
+    const result = await updatePlayer(playerId, updateData);
+
+    expect(result).toBeTruthy();
+    expect(global.fetch).toHaveBeenCalledTimes(1);
+    expect(global.fetch).toHaveBeenCalledWith(`${API_BASE_URL}/players/${playerId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(updateData),
+    });
+  });
+
+  it.todo("error: bad request (400)", async ()=> {});
+  it.todo("error: player not found (404)", async ()=> {});
+  it.todo("error: internal server error (500)", async ()=> {});
+  it.todo("error: network error", async ()=> {});
 })
