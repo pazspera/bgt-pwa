@@ -9,7 +9,10 @@ export const API_ERROR_MESSAGES = {
 
   CREATE_PLAYER_ERROR: (status: number) => `Error: ${status}: No se pudo crear el jugador`,
 
+  UPDATE_PLAYER_ERROR: (status: number) => `Error: ${status}: No se pudo actualizar el jugador`,
+  UPDATE_PLAYER_NOT_FOUND: (status: number, id: string) => `Jugador con id ${id} no encontrado`,
+
   UNKNOWN_ERROR: (message: string) => message ? `${message}` : "Error desconocido",
-  // UNKNOWN_ERROR: "Error desconocido",
+  
   NETWORK_ERROR: "Error de conexión"
 }
