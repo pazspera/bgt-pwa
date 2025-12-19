@@ -245,7 +245,7 @@ describe("playerApiService: updatePlayer()", ()=> {
     updated_at: "2025-01-01T10:00:00Z",
   }
   
-  it.only("success: returns updated player (200)", async ()=> {
+  it("success: returns updated player (200)", async ()=> {
     vi.spyOn(global, "fetch").mockResolvedValueOnce({
       ok: true,
       status: 200,
@@ -263,7 +263,7 @@ describe("playerApiService: updatePlayer()", ()=> {
     });
   });
 
-  it.only("success: no content (204)", async ()=> {
+  it("success: no content (204)", async ()=> {
     vi.spyOn(global, "fetch").mockResolvedValueOnce({
       ok: true,
       status: 204,
@@ -280,8 +280,36 @@ describe("playerApiService: updatePlayer()", ()=> {
     });
   });
 
-  it.todo("error: bad request (400)", async ()=> {});
-  it.todo("error: player not found (404)", async ()=> {});
-  it.todo("error: internal server error (500)", async ()=> {});
-  it.todo("error: network error", async ()=> {});
+  it("error: bad request (400)", async ()=> {
+    vi.spyOn(global, "fetch").mockResolvedValueOnce({
+      ok: false,
+      status: 400
+    } as unknown as Response);
+
+    await expect(updatePlayer(playerId, updateData)).rejects.toThrow(API_ERROR_MESSAGES.UPDATE_PLAYER_ERROR(400));
+  });
+
+  it("error: player not found (404)", async ()=> {
+    vi.spyOn(global, "fetch").mockResolvedValueOnce({
+      ok: false, 
+      status: 404
+    } as unknown as Response);
+
+    await expect(updatePlayer(playerId, updateData)).rejects.toThrow(API_ERROR_MESSAGES.UPDATE_PLAYER_NOT_FOUND(404, playerId));
+  });
+
+  it("error: internal server error (500)", async ()=> {
+    vi.spyOn(global, "fetch").mockResolvedValueOnce({
+      ok: false, 
+      status: 500
+    } as unknown as Response);
+
+    await expect(updatePlayer(playerId, updateData)).rejects.toThrow(API_ERROR_MESSAGES.UPDATE_PLAYER_ERROR(500));
+  });
+
+  it("error: network error", async ()=> {
+    vi.spyOn(global, "fetch").mockRejectedValueOnce(new TypeError(API_ERROR_MESSAGES.NETWORK_ERROR));
+
+    await expect(updatePlayer(playerId, updateData)).rejects.toThrow(API_ERROR_MESSAGES.NETWORK_ERROR);
+  });
 })

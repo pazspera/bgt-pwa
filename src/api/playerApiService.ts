@@ -72,6 +72,18 @@ export async function updatePlayer(id: string, updatedData: UpdatePlayerRequest)
       return true;
     }
 
+    if(response.status === 400) {
+      throw new Error(API_ERROR_MESSAGES.UPDATE_PLAYER_ERROR(400));
+    }
+
+    if(response.status === 404) {
+      throw new Error(API_ERROR_MESSAGES.UPDATE_PLAYER_NOT_FOUND(404, id));
+    }
+
+    if(!response.ok) {
+      throw new Error(API_ERROR_MESSAGES.UPDATE_PLAYER_ERROR(500));
+    }
+
     const data = await response.json();
     return data;
   } catch (error) {
