@@ -60,7 +60,24 @@ export async function createPlayer(newPlayer: CreatePlayerRequest) {
   }
 }
 
-export async function updatePlayer(id: string, updatedPlayer: UpdatePlayerRequest) {}
+export async function updatePlayer(id: string, updatedData: UpdatePlayerRequest) {
+  try {
+    const response = await fetch(`${API_BASE_URL}/players/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(updatedData),
+    });
+
+    if(response.status === 204) {
+      return true;
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    throw new Error(API_ERROR_MESSAGES.UNKNOWN_ERROR(error?.message));
+  }
+}
 
 export async function deletePlayer(id: string) {
   try {
