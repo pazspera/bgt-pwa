@@ -9,7 +9,22 @@ export function usePlayersApi() {
   const loading: Ref<boolean> = ref(false);
   const error: Ref<string | null> = ref(null);
 
-  const fetchPlayers = async () => {};
+  const fetchPlayers = async () => {
+    loading.value = true;
+    error.value = null;
+
+    try {
+      const fetchedPlayers = await PlayerApiService.getPlayers();
+      totalPlayers.value = fetchedPlayers.total;
+      players.value = fetchedPlayers.data;
+    } catch (error) {
+      
+    } finally {
+      loading.value = false;
+    }
+
+    return { players, loading, error, fetchPlayers };
+  };
 
   const createPlayer = async () => {};
 

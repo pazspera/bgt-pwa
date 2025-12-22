@@ -1,23 +1,41 @@
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect, vi, afterEach } from "vitest";
 import * as PlayerApiService from "../api/playerApiService";
-import { mockPlayers } from "../mocks/data/players";
+import { mockPlayersApi, mockPlayersListResponse } from "../mocks/data/playersApi";
 import { API_ERROR_MESSAGES } from "../constants/apiErrorMessages";
 import { usePlayersApi } from "./usePlayersApi";
 
+
 describe("usePlayersApi", ()=> {
-  const runUsePlayers = () => {
-    const { players, totalPlayers, newPlayer, loading, error, fetchPlayers, createPlayer, deletePlayer } = usePlayersApi();
-  }
+  afterEach(()=> {
+    vi.restoreAllMocks();
+    vi.clearAllMocks();
+  })
 
   describe("fetchPlayers", ()=> {
     it.only("success: loads all players, updates loading status", async()=> {
       // mock API service
-      vi.spyOn(PlayerApiService, "getPlayers").mockResolvedValueOnce({
-        total: 2,
-        limit: 10,
-        offset: 0,
-        data: mockPlayers,
-      })
+      const getPlayersSpy = vi.spyOn(PlayerApiService, "getPlayers").mockResolvedValueOnce(mockPlayersListResponse);
+
+      const { players, totalPlayers, loading, error, fetchPlayers } = usePlayersApi();
+
+      // test initial state
+      expect(loading.value).toBe(false);
+      expect(players.value).toEqual([]);
+
+      const promise = fetchPlayers();
+      
+      // starts loading and resets errors
+      expect(loading.value).toBe(true);
+      expect(error.value).toBeNull();
+
+      await promise;
+
+      // test end state
+      expect(getPlayersSpy).toHaveBeenCalledTimes(1);
+      expect(loading.value).toBe(false);
+      expect(error.value).toBeNull();
+      expect(totalPlayers.value).toBe(mockPlayersListResponse.total);
+      expect(players.value).toEqual(mockPlayersApi);
     });
 
     it("error not found (404): updates error and loading, returns empty array for players", async()=> {});

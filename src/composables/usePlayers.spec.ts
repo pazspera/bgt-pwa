@@ -12,6 +12,7 @@ const runUsePlayers = ()=> {
 }
  
 describe("usePlayers", ()=> {
+
   it("success response: loads all players, updates loading status", async ()=> {
     // configures spy to return mocked response
     getPlayersSpy.mockResolvedValue(mockPlayers);

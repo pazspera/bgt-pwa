@@ -1,5 +1,5 @@
-import type { PlayerApiResponse } from "../../types/domain/playerApi"
-export const mockPlayers: PlayerApiResponse[] = [
+import type { PlayerApiResponse, PlayersListResponse } from "../../types/domain/playerApi"
+export const mockPlayersApi: PlayerApiResponse[] = [
   { 
     id: "1", 
     name: "Zeuchi", 
@@ -29,3 +29,10 @@ export const mockPlayers: PlayerApiResponse[] = [
     is_registered: false,
   },
 ]
+
+export const mockPlayersListResponse: PlayersListResponse = {
+  total: mockPlayersApi.length,
+  limit: mockPlayersApi.length,
+  offset: 0,
+  data: mockPlayersApi,
+}
