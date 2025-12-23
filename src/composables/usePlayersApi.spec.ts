@@ -38,7 +38,7 @@ describe("usePlayersApi", ()=> {
       expect(players.value).toEqual(mockPlayersApi);
     });
 
-    it("success no players: updates loading status and players correctly with empty list", async()=> {
+    it("success no players: updates loading status and players with empty list", async()=> {
       // mock API service
       const getPlayersSpy = vi.spyOn(PlayerApiService, "getPlayers").mockResolvedValueOnce({
         total: 0,
@@ -69,8 +69,55 @@ describe("usePlayersApi", ()=> {
       expect(players.value).toEqual([]);
     });
 
-    it("internal server error (500): updates error and loading", async()=> {});
-    it("network error: updates error and loading", async()=> {});
+    it.only("internal server error (500): updates error and loading", async()=> {
+      const getPlayersSpy = vi.spyOn(PlayerApiService, "getPlayers").mockRejectedValueOnce(new Error(API_ERROR_MESSAGES.GET_PLAYERS_FAILED(500)));
+
+      const { players, totalPlayers, loading, error, fetchPlayers } = usePlayersApi();
+
+      // test initial state
+      expect(loading.value).toBe(false);
+      expect(players.value).toEqual([]);
+
+      const promise = fetchPlayers();
+
+      // starts loading and resets errors
+      expect(loading.value).toBe(true);
+      expect(error.value).toBeNull();
+
+      await promise;
+
+      // test end state
+      expect(getPlayersSpy).toHaveBeenCalledTimes(1);
+      expect(loading.value).toBe(false);
+      expect(error.value).toBe(API_ERROR_MESSAGES.GET_PLAYERS_FAILED(500));
+      expect(totalPlayers.value).toBe(0);
+      expect(players.value).toEqual([]);
+    });
+
+    it.only("network error: updates error and loading", async()=> {
+      const getPlayersSpy = vi.spyOn(PlayerApiService, "getPlayers").mockRejectedValueOnce(new Error(API_ERROR_MESSAGES.NETWORK_ERROR));
+
+      const { players, totalPlayers, loading, error, fetchPlayers } = usePlayersApi();
+
+      // test initial state
+      expect(loading.value).toBe(false);
+      expect(players.value).toEqual([]);
+
+      const promise = fetchPlayers();
+
+      // starts loading and resets errors
+      expect(loading.value).toBe(true);
+      expect(error.value).toBeNull();
+
+      await promise;
+
+      // test end state
+      expect(getPlayersSpy).toHaveBeenCalledTimes(1);
+      expect(loading.value).toBe(false);
+      expect(error.value).toBe(API_ERROR_MESSAGES.NETWORK_ERROR);
+      expect(totalPlayers.value).toBe(0);
+      expect(players.value).toEqual([]);
+    });
   });
 
   describe("createPlayer", ()=> {

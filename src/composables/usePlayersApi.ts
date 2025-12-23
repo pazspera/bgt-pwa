@@ -17,8 +17,8 @@ export function usePlayersApi() {
       const fetchedPlayers = await PlayerApiService.getPlayers();
       totalPlayers.value = fetchedPlayers.total;
       players.value = fetchedPlayers.data;
-    } catch (error) {
-      
+    } catch (e) {
+      error.value = e.message;
     } finally {
       loading.value = false;
     }
