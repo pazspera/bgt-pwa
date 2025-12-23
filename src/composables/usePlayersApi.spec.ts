@@ -223,9 +223,62 @@ describe("usePlayersApi", ()=> {
       expect(error.value).toBeNull();
     });
 
-    it.todo("error not found(404): updates error and loading", async()=> {});
-    it.todo("internal server error (500): updates error and loading", async()=> {});
-    it.todo("network error: updates error and loading", async()=> {});
+    it("error not found(404): updates error and loading", async()=> {
+      const deletePlayerSpy = vi.spyOn(PlayerApiService, "deletePlayer").mockRejectedValueOnce(new Error(API_ERROR_MESSAGES.DELETE_PLAYER_NOT_FOUND(id)));
+
+      const { loading, error, deleted, deletePlayer } = usePlayersApi();
+
+      expectSharedInitialState(loading.value, error.value);
+      expect(deleted.value).toBe(false);
+
+      const promise = deletePlayer(id);
+
+      expectLoadingState(loading.value, error.value);
+
+      await promise;
+
+      expectSharedEndState(deletePlayerSpy, loading.value);
+      expect(deleted.value).toBe(false);
+      expect(error.value).toBe(API_ERROR_MESSAGES.DELETE_PLAYER_NOT_FOUND(id));
+    });
+
+    it("internal server error (500): updates error and loading", async()=> {
+      const deletePlayerSpy = vi.spyOn(PlayerApiService, "deletePlayer").mockRejectedValueOnce(new Error(API_ERROR_MESSAGES.DELETE_PLAYER_ERROR(500, id)));
+
+      const { loading, error, deleted, deletePlayer } = usePlayersApi();
+
+      expectSharedInitialState(loading.value, error.value);
+      expect(deleted.value).toBe(false);
+
+      const promise = deletePlayer(id);
+
+      expectLoadingState(loading.value, error.value);
+
+      await promise;
+
+      expectSharedEndState(deletePlayerSpy, loading.value);
+      expect(deleted.value).toBe(false);
+      expect(error.value).toBe(API_ERROR_MESSAGES.DELETE_PLAYER_ERROR(500, id));
+    });
+
+    it("network error: updates error and loading", async()=> {
+      const deletePlayerSpy = vi.spyOn(PlayerApiService, "deletePlayer").mockRejectedValueOnce(new Error(API_ERROR_MESSAGES.NETWORK_ERROR));
+
+      const { loading, error, deleted, deletePlayer } = usePlayersApi();
+
+      expectSharedInitialState(loading.value, error.value);
+      expect(deleted.value).toBe(false);
+
+      const promise = deletePlayer(id);
+
+      expectLoadingState(loading.value, error.value);
+
+      await promise;
+
+      expectSharedEndState(deletePlayerSpy, loading.value);
+      expect(deleted.value).toBe(false);
+      expect(error.value).toBe(API_ERROR_MESSAGES.NETWORK_ERROR);
+    });
   })
 
 })

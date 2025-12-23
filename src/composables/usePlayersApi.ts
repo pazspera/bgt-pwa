@@ -47,7 +47,7 @@ export function usePlayersApi() {
       await PlayerApiService.deletePlayer(id);
       deleted.value = true;
     } catch (err) {
-      
+      error.value = err.message;
     } finally {
       loading.value = false;
     }
