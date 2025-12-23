@@ -3,6 +3,7 @@ import * as PlayerApiService from "../api/playerApiService";
 import { mockPlayersApi, mockPlayersListResponse } from "../mocks/data/playersApi";
 import { API_ERROR_MESSAGES } from "../constants/apiErrorMessages";
 import { usePlayersApi } from "./usePlayersApi";
+import { CreatePlayerRequest, PlayerApiResponse } from "../types/domain/playerApi";
 
 
 describe("usePlayersApi", ()=> {
@@ -123,7 +124,58 @@ describe("usePlayersApi", ()=> {
   });
 
   describe("createPlayer", ()=> {
-    it.todo("success: loads requested player, updates loading status", async()=> {});
+    const expectInitialState = (loading, error, newPlayer) => {
+      expect(loading).toBe(false);
+      expect(error).toBeNull();
+      expect(newPlayer).toBeNull();
+    };
+
+    const expectLoadingState = (loading, error) => {
+      expect(loading).toBe(true);
+      expect(error).toBeNull();
+    }
+
+    const expectSharedEndState = (spyFunction, loading, error) => {
+      expect(spyFunction).toHaveBeenCalledTimes(1);
+      expect(loading).toBe(false);
+      expect(error).toBeNull();
+    }
+
+    it.only("success: creates player, updates loading status", async()=> {
+      // create mock data with the player that returns
+      // IT RETURNS PlayerApiResponse
+      // create spy for createPlayer
+      // destructure what i need from the function
+      // initial state
+      // call function
+      // loading state
+      // await promise
+      // test end state, the player that was sent should equal the mock
+      const mockPlayer: PlayerApiResponse = { 
+        name: "Super Mega Zeuchi",
+        id: "47144f8b-9705-41b2-9556-17ff1ac5193e",
+        is_registered: false,
+        created_at: "2025-12-23T15:03:06.576636563Z",
+        updated_at: "0001-01-01T00:00:00Z"  
+      };
+      const playerToCreate: CreatePlayerRequest = { name: "Super Mega Zeuchi" };
+
+      const createPlayerSpy = vi.spyOn(PlayerApiService, "createPlayer").mockResolvedValueOnce(mockPlayer);
+
+      const { loading, error, newPlayer, createPlayer } = usePlayersApi();
+      
+      expectInitialState(loading.value, error.value, newPlayer.value);
+
+      const promise = createPlayer(playerToCreate);
+
+      expectLoadingState(loading.value, error.value);
+
+      await promise;
+
+      expectSharedEndState(createPlayerSpy, loading.value, error.value);
+      expect(newPlayer.value).toEqual(mockPlayer);
+    });
+
     it.todo("error not found (404): updates error and loading, returns null for player", async()=> {});
     it.todo("internal server error (500): updates error and loading", async()=> {});
     it.todo("network error: updates error and loading", async()=> {});

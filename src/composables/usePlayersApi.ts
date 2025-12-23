@@ -8,6 +8,7 @@ export function usePlayersApi() {
   const newPlayer: Ref<PlayerApiResponse | null> = ref(null);
   const loading: Ref<boolean> = ref(false);
   const error: Ref<string | null> = ref(null);
+  // crear un player request con tipo CreatePlayerRequest??
 
   const fetchPlayers = async () => {
     loading.value = true;
@@ -23,10 +24,23 @@ export function usePlayersApi() {
       loading.value = false;
     }
 
-    return { players, loading, error, fetchPlayers };
   };
 
-  const createPlayer = async () => {};
+  const createPlayer = async (playerData) => {
+    loading.value = true;
+    error.value = null;
+
+    try {
+      const response = await PlayerApiService.createPlayer(playerData);
+      newPlayer.value = response; 
+    } catch (error) {
+      
+    } finally {
+      loading.value = false;
+    }
+
+    return 
+  };
 
   const deletePlayer = async () => {};
 
