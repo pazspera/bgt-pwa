@@ -36,3 +36,11 @@ export const mockPlayersListResponse: PlayersListResponse = {
   offset: 0,
   data: mockPlayersApi,
 }
+
+export const mockSinglePlayer: PlayerApiResponse = { 
+  id: "1", 
+  name: "Zeuchi", 
+  created_at: "1999-10-10-0:00:00Z",
+  updated_at: "1999-10-10-0:00:00Z",
+  is_registered: false,
+};

@@ -8,7 +8,19 @@ export function usePlayerApi() {
   const error: Ref<string | null> = ref(null);
   const updated: Ref<boolean> = ref(false);
 
-  const fetchPlayer = async (id: string) => {};
+  const fetchPlayer = async (id: string) => {
+    loading.value = true;
+    error.value = null;
+
+    try {
+      const fetchPlayer: PlayerApiResponse = await PlayerApiService.getPlayer(id);
+      player.value = fetchPlayer;
+    } catch (error) {
+      
+    } finally {
+      loading.value = false;
+    }
+  };
 
   const updatePlayer = async (id: string, name: string) => {};
 
