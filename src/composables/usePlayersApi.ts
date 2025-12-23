@@ -33,8 +33,8 @@ export function usePlayersApi() {
     try {
       const response = await PlayerApiService.createPlayer(playerData);
       newPlayer.value = response; 
-    } catch (error) {
-      
+    } catch (e) {
+      error.value = e.message;
     } finally {
       loading.value = false;
     }
