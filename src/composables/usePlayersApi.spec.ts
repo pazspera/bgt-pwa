@@ -4,21 +4,7 @@ import { mockPlayersApi, mockPlayersListResponse } from "../mocks/data/playersAp
 import { API_ERROR_MESSAGES } from "../constants/apiErrorMessages";
 import { usePlayersApi } from "./usePlayersApi";
 import { CreatePlayerRequest, PlayerApiResponse } from "../types/domain/playerApi";
-
-const expectSharedInitialState = (loading, error) => {
-  expect(loading).toBe(false);
-  expect(error).toBeNull();
-}
-
-const expectLoadingState = (loading, error) => {
-  expect(loading).toBe(true);
-  expect(error).toBeNull();
-}
-
-const expectSharedEndState = (spyFunction, loading) => {
-  expect(spyFunction).toHaveBeenCalledTimes(1);
-  expect(loading).toBe(false);
-}
+import { expectSharedInitialState, expectLoadingState, expectSharedEndState } from "../tests/utils/apiComposables";
 
 describe("usePlayersApi", ()=> {
   afterEach(()=> {

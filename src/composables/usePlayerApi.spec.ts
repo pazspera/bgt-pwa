@@ -3,21 +3,8 @@ import * as PlayerApiService from "../api/playerApiService";
 import { mockSinglePlayer } from "../mocks/data/playersApi";
 import { API_ERROR_MESSAGES } from "../constants/apiErrorMessages";
 import { usePlayerApi } from "./usePlayerApi";
+import { expectSharedInitialState, expectLoadingState, expectSharedEndState } from "../tests/utils/apiComposables";
 
-const expectSharedInitialState = (loading, error) => {
-  expect(loading).toBe(false);
-  expect(error).toBeNull();
-}
-
-const expectLoadingState = (loading, error) => {
-  expect(loading).toBe(true);
-  expect(error).toBeNull();
-}
-
-const expectSharedEndState = (spyFunction, loading) => {
-  expect(spyFunction).toHaveBeenCalledTimes(1);
-  expect(loading).toBe(false);
-}
 describe("usePlayerApi", ()=> {
   afterEach(()=> {
     vi.restoreAllMocks();
