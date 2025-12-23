@@ -4,6 +4,7 @@ import { mockSinglePlayer } from "../mocks/data/playersApi";
 import { API_ERROR_MESSAGES } from "../constants/apiErrorMessages";
 import { usePlayerApi } from "./usePlayerApi";
 import { expectSharedInitialState, expectLoadingState, expectSharedEndState } from "../tests/utils/apiComposables";
+import { updateRelative } from "vuetify/lib/labs/VCalendar/util/timestamp";
 
 describe("usePlayerApi", ()=> {
   afterEach(()=> {
@@ -87,7 +88,37 @@ describe("usePlayerApi", ()=> {
   });
   
   describe("updatePlayer", ()=> {
-    it.todo("success: player updated correctly, loading status updated", ()=> {});
+    const updatedPlayer = {
+      ...mockSinglePlayer,
+      name: "Zeuchi updated"
+    }
+
+    const udpateRequest = {
+      name: "Zeuchi updated",
+    }
+
+    it.only("success: player updated correctly, loading status updated", async ()=> {
+      const updatePlayerSpy = vi.spyOn(PlayerApiService, "updatePlayer").mockResolvedValueOnce(updatedPlayer);
+
+      const { loading, error, updated, player, updatePlayer } = usePlayerApi();
+
+      expectSharedInitialState(loading.value, error.value);
+      expect(updated.value).toBe(false);
+      expect(player.value).toBeNull();
+
+      const promise = updatePlayer(updatedPlayer.id, udpateRequest);
+
+      expectLoadingState(loading.value, error.value);
+
+      await promise;
+
+      expectSharedEndState(updatePlayerSpy, loading.value);
+      expect(error.value).toBeNull();
+      expect(updated.value).toBe(true);
+      expect(player.value).toEqual(updatedPlayer)
+    });
+
+
     it.todo("error (404): updates loading and error", async ()=> {});
     it.todo("error (500): updates loading and error", async ()=> {});
     it.todo("network error: updates loading and error", async ()=> {});

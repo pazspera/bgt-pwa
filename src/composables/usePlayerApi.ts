@@ -22,7 +22,20 @@ export function usePlayerApi() {
     }
   };
 
-  const updatePlayer = async (id: string, name: string) => {};
+  const updatePlayer = async (id: string, name: UpdatePlayerRequest) => {
+    loading.value = true;
+    error.value = null;
+
+    try {
+      const updatedPlayer = await PlayerApiService.updatePlayer(id, name);
+      player.value = updatedPlayer;
+      updated.value = true;
+    } catch (error) {
+      
+    } finally {
+      loading.value = false;
+    }
+  };
 
   return { player, loading, error, updated, fetchPlayer, updatePlayer };
 }
