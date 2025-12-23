@@ -4,6 +4,7 @@ import { mockPlayersApi, mockPlayersListResponse } from "../mocks/data/playersAp
 import { API_ERROR_MESSAGES } from "../constants/apiErrorMessages";
 import { usePlayersApi } from "./usePlayersApi";
 import { CreatePlayerRequest, PlayerApiResponse } from "../types/domain/playerApi";
+import { tryOnBeforeMount } from "@vueuse/core";
 
 const expectSharedInitialState = (loading, error) => {
   expect(loading).toBe(false);
@@ -201,7 +202,27 @@ describe("usePlayersApi", ()=> {
   });
 
   describe("deletePlayer", ()=> {
-    it.each([200,204])("success: delete updates loading status", async()=> {});
+    const id = "333";
+
+    it("success: deleted, loading and error update correctly", async()=> {
+      const deletePlayerSpy = vi.spyOn(PlayerApiService, "deletePlayer").mockResolvedValueOnce(true);
+
+      const { loading, error, deleted, deletePlayer } = usePlayersApi();
+
+      expectSharedInitialState(loading.value, error.value);
+      expect(deleted.value).toBe(false);
+
+      const promise = deletePlayer(id);
+
+      expectLoadingState(loading.value, error.value);
+
+      await promise;
+
+      expectSharedEndState(deletePlayerSpy, loading.value);
+      expect(deleted.value).toBe(true);
+      expect(error.value).toBeNull();
+    });
+
     it.todo("error not found(404): updates error and loading", async()=> {});
     it.todo("internal server error (500): updates error and loading", async()=> {});
     it.todo("network error: updates error and loading", async()=> {});

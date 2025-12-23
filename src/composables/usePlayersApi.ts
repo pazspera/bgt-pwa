@@ -1,6 +1,6 @@
 import * as PlayerApiService from "../api/playerApiService";
 import { ref, type Ref } from "vue";
-import type { PlayerApiResponse, PlayersListResponse } from "../types/domain/playerApi";
+import type { PlayerApiResponse, PlayersListResponse, CreatePlayerRequest } from "../types/domain/playerApi";
 
 export function usePlayersApi() {
   const players: Ref<PlayerApiResponse[]> = ref([]);
@@ -8,7 +8,7 @@ export function usePlayersApi() {
   const newPlayer: Ref<PlayerApiResponse | null> = ref(null);
   const loading: Ref<boolean> = ref(false);
   const error: Ref<string | null> = ref(null);
-  // crear un player request con tipo CreatePlayerRequest??
+  const deleted: Ref<boolean> = ref(false);
 
   const fetchPlayers = async () => {
     loading.value = true;
@@ -23,10 +23,9 @@ export function usePlayersApi() {
     } finally {
       loading.value = false;
     }
-
   };
 
-  const createPlayer = async (playerData) => {
+  const createPlayer = async (playerData: CreatePlayerRequest) => {
     loading.value = true;
     error.value = null;
 
@@ -38,11 +37,21 @@ export function usePlayersApi() {
     } finally {
       loading.value = false;
     }
-
-    return 
   };
 
-  const deletePlayer = async () => {};
+  const deletePlayer = async (id: string) => {
+    loading.value = true;
+    error.value = null;
 
-  return { players, totalPlayers, newPlayer, loading, error, fetchPlayers, createPlayer, deletePlayer };
+    try {
+      await PlayerApiService.deletePlayer(id);
+      deleted.value = true;
+    } catch (err) {
+      
+    } finally {
+      loading.value = false;
+    }
+  };
+
+  return { players, totalPlayers, newPlayer, loading, error, deleted, fetchPlayers, createPlayer, deletePlayer };
 }
