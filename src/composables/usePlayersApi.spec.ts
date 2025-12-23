@@ -4,7 +4,6 @@ import { mockPlayersApi, mockPlayersListResponse } from "../mocks/data/playersAp
 import { API_ERROR_MESSAGES } from "../constants/apiErrorMessages";
 import { usePlayersApi } from "./usePlayersApi";
 import { CreatePlayerRequest, PlayerApiResponse } from "../types/domain/playerApi";
-import { tryOnBeforeMount } from "@vueuse/core";
 
 const expectSharedInitialState = (loading, error) => {
   expect(loading).toBe(false);
