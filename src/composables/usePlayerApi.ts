@@ -15,8 +15,8 @@ export function usePlayerApi() {
     try {
       const fetchPlayer: PlayerApiResponse = await PlayerApiService.getPlayer(id);
       player.value = fetchPlayer;
-    } catch (error) {
-      
+    } catch (err) {
+      error.value = err.message;
     } finally {
       loading.value = false;
     }

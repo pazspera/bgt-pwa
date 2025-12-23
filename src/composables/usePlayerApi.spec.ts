@@ -12,7 +12,7 @@ describe("usePlayerApi", ()=> {
   })
 
   describe("fetchPlayer", ()=> {
-    it.only("success: loads player, updates loading status", async ()=> {
+    it("success: loads player, updates loading status", async ()=> {
       const getPlayerSpy = vi.spyOn(PlayerApiService, "getPlayer").mockResolvedValueOnce(mockSinglePlayer);
 
       const { player, loading, error, fetchPlayer } = usePlayerApi();
@@ -31,9 +31,59 @@ describe("usePlayerApi", ()=> {
       expect(player.value).toEqual(mockSinglePlayer);
     });
 
-    it.todo("error (404): updates loading and error", async ()=> {});
-    it.todo("error (500): updates loading and error", async ()=> {});
-    it.todo("network error: updates loading and error", async ()=> {});
+    it("error (404): updates loading and error", async ()=> {
+      const getPlayerSpy = vi.spyOn(PlayerApiService, "getPlayer").mockRejectedValueOnce(new Error(API_ERROR_MESSAGES.GET_PLAYER_NOT_FOUND(mockSinglePlayer.id)));
+
+      const { player, loading, error, fetchPlayer } = usePlayerApi();
+
+      expectSharedInitialState(loading.value, error.value);
+      expect(player.value).toBeNull();
+
+      const promise = fetchPlayer(mockSinglePlayer.id);
+
+      expectLoadingState(loading.value, error.value);
+
+      await promise;
+
+      expectSharedEndState(getPlayerSpy, loading.value);
+      expect(error.value).toBe(API_ERROR_MESSAGES.GET_PLAYER_NOT_FOUND(mockSinglePlayer.id));
+    });
+
+    it("error (500): updates loading and error", async ()=> {
+      const getPlayerSpy = vi.spyOn(PlayerApiService, "getPlayer").mockRejectedValueOnce(new Error(API_ERROR_MESSAGES.GET_PLAYER_FAILED(500, mockSinglePlayer.id)));
+
+      const { player, loading, error, fetchPlayer } = usePlayerApi();
+
+      expectSharedInitialState(loading.value, error.value);
+      expect(player.value).toBeNull();
+
+      const promise = fetchPlayer(mockSinglePlayer.id);
+
+      expectLoadingState(loading.value, error.value);
+
+      await promise;
+
+      expectSharedEndState(getPlayerSpy, loading.value);
+      expect(error.value).toBe(API_ERROR_MESSAGES.GET_PLAYER_FAILED(500, mockSinglePlayer.id));
+    });
+
+    it("network error: updates loading and error", async ()=> {
+      const getPlayerSpy = vi.spyOn(PlayerApiService, "getPlayer").mockRejectedValueOnce(new Error(API_ERROR_MESSAGES.NETWORK_ERROR));
+
+      const { player, loading, error, fetchPlayer } = usePlayerApi();
+
+      expectSharedInitialState(loading.value, error.value);
+      expect(player.value).toBeNull();
+
+      const promise = fetchPlayer(mockSinglePlayer.id);
+
+      expectLoadingState(loading.value, error.value);
+
+      await promise;
+
+      expectSharedEndState(getPlayerSpy, loading.value);
+      expect(error.value).toBe(API_ERROR_MESSAGES.NETWORK_ERROR);
+    });
   });
   
   describe("updatePlayer", ()=> {
