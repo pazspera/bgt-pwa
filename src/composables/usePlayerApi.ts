@@ -30,8 +30,8 @@ export function usePlayerApi() {
       const updatedPlayer = await PlayerApiService.updatePlayer(id, name);
       player.value = updatedPlayer;
       updated.value = true;
-    } catch (error) {
-      
+    } catch (err) {
+      error.value = err.message;
     } finally {
       loading.value = false;
     }
