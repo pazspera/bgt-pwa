@@ -12,6 +12,16 @@ describe("usePlayersApi", ()=> {
   })
 
   describe("fetchPlayers", ()=> {
+    const expectInitialState = (loading, players) => {
+      expect(loading).toBe(false);
+      expect(players).toEqual([]);
+    }
+
+    const expectLoadingState = (loading, error) => {
+      expect(loading).toBe(true);
+      expect(error).toBeNull();
+    }
+    
     it("success: loads all players, updates loading status", async()=> {
       // mock API service
       const getPlayersSpy = vi.spyOn(PlayerApiService, "getPlayers").mockResolvedValueOnce(mockPlayersListResponse);
@@ -19,14 +29,12 @@ describe("usePlayersApi", ()=> {
       const { players, totalPlayers, loading, error, fetchPlayers } = usePlayersApi();
 
       // test initial state
-      expect(loading.value).toBe(false);
-      expect(players.value).toEqual([]);
+      expectInitialState(loading.value, players.value);
 
       const promise = fetchPlayers();
       
       // starts loading and resets errors
-      expect(loading.value).toBe(true);
-      expect(error.value).toBeNull();
+      expectLoadingState(loading.value, error.value);
 
       await promise;
 
@@ -50,14 +58,12 @@ describe("usePlayersApi", ()=> {
       const { players, totalPlayers, loading, error, fetchPlayers } = usePlayersApi();
 
       // test initial state
-      expect(loading.value).toBe(false);
-      expect(players.value).toEqual([]);
+      expectInitialState(loading.value, players.value);
 
       const promise = fetchPlayers();
 
       // starts loading and resets errors
-      expect(loading.value).toBe(true);
-      expect(error.value).toBeNull();
+      expectLoadingState(loading.value, error.value);
 
       await promise;
 
@@ -69,20 +75,18 @@ describe("usePlayersApi", ()=> {
       expect(players.value).toEqual([]);
     });
 
-    it.only("internal server error (500): updates error and loading", async()=> {
+    it("internal server error (500): updates error and loading", async()=> {
       const getPlayersSpy = vi.spyOn(PlayerApiService, "getPlayers").mockRejectedValueOnce(new Error(API_ERROR_MESSAGES.GET_PLAYERS_FAILED(500)));
 
       const { players, totalPlayers, loading, error, fetchPlayers } = usePlayersApi();
 
       // test initial state
-      expect(loading.value).toBe(false);
-      expect(players.value).toEqual([]);
+      expectInitialState(loading.value, players.value);
 
       const promise = fetchPlayers();
 
       // starts loading and resets errors
-      expect(loading.value).toBe(true);
-      expect(error.value).toBeNull();
+      expectLoadingState(loading.value, error.value);
 
       await promise;
 
@@ -94,20 +98,18 @@ describe("usePlayersApi", ()=> {
       expect(players.value).toEqual([]);
     });
 
-    it.only("network error: updates error and loading", async()=> {
+    it("network error: updates error and loading", async()=> {
       const getPlayersSpy = vi.spyOn(PlayerApiService, "getPlayers").mockRejectedValueOnce(new Error(API_ERROR_MESSAGES.NETWORK_ERROR));
 
       const { players, totalPlayers, loading, error, fetchPlayers } = usePlayersApi();
 
       // test initial state
-      expect(loading.value).toBe(false);
-      expect(players.value).toEqual([]);
+      expectInitialState(loading.value, players.value);
 
       const promise = fetchPlayers();
 
       // starts loading and resets errors
-      expect(loading.value).toBe(true);
-      expect(error.value).toBeNull();
+      expectLoadingState(loading.value, error.value);
 
       await promise;
 
@@ -121,17 +123,17 @@ describe("usePlayersApi", ()=> {
   });
 
   describe("createPlayer", ()=> {
-    it("success: loads requested player, updates loading status", async()=> {});
-    it("error not found (404): updates error and loading, returns null for player", async()=> {});
-    it("internal server error (500): updates error and loading", async()=> {});
-    it("network error: updates error and loading", async()=> {});
+    it.todo("success: loads requested player, updates loading status", async()=> {});
+    it.todo("error not found (404): updates error and loading, returns null for player", async()=> {});
+    it.todo("internal server error (500): updates error and loading", async()=> {});
+    it.todo("network error: updates error and loading", async()=> {});
   });
 
   describe("deletePlayer", ()=> {
     it.each([200,204])("success: delete updates loading status", async()=> {});
-    it("error not found(404): updates error and loading", async()=> {});
-    it("internal server error (500): updates error and loading", async()=> {});
-    it("network error: updates error and loading", async()=> {});
+    it.todo("error not found(404): updates error and loading", async()=> {});
+    it.todo("internal server error (500): updates error and loading", async()=> {});
+    it.todo("network error: updates error and loading", async()=> {});
   })
 
 })
