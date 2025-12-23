@@ -1,25 +1,12 @@
 <script setup lang="ts">
 import { ref, onBeforeMount } from "vue";
 import AddPlayerSheet from "../../components/organisms/AddPlayerSheet.vue";
-import { usePlayer } from "../../composables/usePlayer";
 import PlayerCard from "../../components/molecules/PlayerCard.vue";
 import { getPlayers, getPlayer } from "../../api/playerApiService";
 
 const isSheetVisible = ref(false);
 const errorText = ref("");
 defineOptions({ name: "PlayersView" });
-const { fetchPlayer, player } = usePlayer();
-
-
-onBeforeMount(async ()=> {
-  await fetchPlayer(1);
-
-  const players = await getPlayers();
-  console.log("players", players);
-  const player = await getPlayer("a24940cd-6747-4b10-bb0d-5ac4f6506605");
-  console.log("player", player);
-  
-})
 
 const mockPlayer = {
   id: 333,
