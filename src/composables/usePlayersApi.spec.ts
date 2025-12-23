@@ -4,7 +4,23 @@ import { mockPlayersApi, mockPlayersListResponse } from "../mocks/data/playersAp
 import { API_ERROR_MESSAGES } from "../constants/apiErrorMessages";
 import { usePlayersApi } from "./usePlayersApi";
 import { CreatePlayerRequest, PlayerApiResponse } from "../types/domain/playerApi";
+import { error } from "console";
 
+
+const expectSharedInitialState = (loading, error) => {
+  expect(loading).toBe(false);
+  expect(error).toBeNull();
+}
+
+const expectLoadingState = (loading, error) => {
+  expect(loading).toBe(true);
+  expect(error).toBeNull();
+}
+
+const expectSharedEndState = (spyFunction, loading) => {
+  expect(spyFunction).toHaveBeenCalledTimes(1);
+  expect(loading).toBe(false);
+}
 
 describe("usePlayersApi", ()=> {
   afterEach(()=> {
@@ -12,17 +28,7 @@ describe("usePlayersApi", ()=> {
     vi.clearAllMocks();
   })
 
-  describe("fetchPlayers", ()=> {
-    const expectInitialState = (loading, players) => {
-      expect(loading).toBe(false);
-      expect(players).toEqual([]);
-    }
-
-    const expectLoadingState = (loading, error) => {
-      expect(loading).toBe(true);
-      expect(error).toBeNull();
-    }
-    
+  describe("fetchPlayers", ()=> {    
     it("success: loads all players, updates loading status", async()=> {
       // mock API service
       const getPlayersSpy = vi.spyOn(PlayerApiService, "getPlayers").mockResolvedValueOnce(mockPlayersListResponse);
@@ -30,7 +36,8 @@ describe("usePlayersApi", ()=> {
       const { players, totalPlayers, loading, error, fetchPlayers } = usePlayersApi();
 
       // test initial state
-      expectInitialState(loading.value, players.value);
+      expectSharedInitialState(loading.value, error.value);
+      expect(players.value).toEqual([]);
 
       const promise = fetchPlayers();
       
@@ -40,8 +47,7 @@ describe("usePlayersApi", ()=> {
       await promise;
 
       // test end state
-      expect(getPlayersSpy).toHaveBeenCalledTimes(1);
-      expect(loading.value).toBe(false);
+      expectSharedEndState(getPlayersSpy, loading.value);
       expect(error.value).toBeNull();
       expect(totalPlayers.value).toBe(mockPlayersListResponse.total);
       expect(players.value).toEqual(mockPlayersApi);
@@ -59,7 +65,8 @@ describe("usePlayersApi", ()=> {
       const { players, totalPlayers, loading, error, fetchPlayers } = usePlayersApi();
 
       // test initial state
-      expectInitialState(loading.value, players.value);
+      expectSharedInitialState(loading.value, error.value);
+      expect(players.value).toEqual([]);
 
       const promise = fetchPlayers();
 
@@ -69,8 +76,7 @@ describe("usePlayersApi", ()=> {
       await promise;
 
       // test end state
-      expect(getPlayersSpy).toHaveBeenCalledTimes(1);
-      expect(loading.value).toBe(false);
+      expectSharedEndState(getPlayersSpy, loading.value);
       expect(error.value).toBeNull();
       expect(totalPlayers.value).toBe(0);
       expect(players.value).toEqual([]);
@@ -82,7 +88,8 @@ describe("usePlayersApi", ()=> {
       const { players, totalPlayers, loading, error, fetchPlayers } = usePlayersApi();
 
       // test initial state
-      expectInitialState(loading.value, players.value);
+      expectSharedInitialState(loading.value, error.value);
+      expect(players.value).toEqual([]);
 
       const promise = fetchPlayers();
 
@@ -92,8 +99,7 @@ describe("usePlayersApi", ()=> {
       await promise;
 
       // test end state
-      expect(getPlayersSpy).toHaveBeenCalledTimes(1);
-      expect(loading.value).toBe(false);
+      expectSharedEndState(getPlayersSpy, loading.value);
       expect(error.value).toBe(API_ERROR_MESSAGES.GET_PLAYERS_FAILED(500));
       expect(totalPlayers.value).toBe(0);
       expect(players.value).toEqual([]);
@@ -105,7 +111,8 @@ describe("usePlayersApi", ()=> {
       const { players, totalPlayers, loading, error, fetchPlayers } = usePlayersApi();
 
       // test initial state
-      expectInitialState(loading.value, players.value);
+      expectSharedInitialState(loading.value, error.value);
+      expect(players.value).toEqual([]);
 
       const promise = fetchPlayers();
 
@@ -115,8 +122,7 @@ describe("usePlayersApi", ()=> {
       await promise;
 
       // test end state
-      expect(getPlayersSpy).toHaveBeenCalledTimes(1);
-      expect(loading.value).toBe(false);
+      expectSharedEndState(getPlayersSpy, loading.value);
       expect(error.value).toBe(API_ERROR_MESSAGES.NETWORK_ERROR);
       expect(totalPlayers.value).toBe(0);
       expect(players.value).toEqual([]);
@@ -124,24 +130,7 @@ describe("usePlayersApi", ()=> {
   });
 
   describe("createPlayer", ()=> {
-    const expectInitialState = (loading, error, newPlayer) => {
-      expect(loading).toBe(false);
-      expect(error).toBeNull();
-      expect(newPlayer).toBeNull();
-    };
-
-    const expectLoadingState = (loading, error) => {
-      expect(loading).toBe(true);
-      expect(error).toBeNull();
-    }
-
-    const expectSharedEndState = (spyFunction, loading, error) => {
-      expect(spyFunction).toHaveBeenCalledTimes(1);
-      expect(loading).toBe(false);
-      expect(error).toBeNull();
-    }
-
-    it.only("success: creates player, updates loading status", async()=> {
+    it("success: creates player, updates loading status", async()=> {
       // create mock data with the player that returns
       // IT RETURNS PlayerApiResponse
       // create spy for createPlayer
@@ -164,7 +153,8 @@ describe("usePlayersApi", ()=> {
 
       const { loading, error, newPlayer, createPlayer } = usePlayersApi();
       
-      expectInitialState(loading.value, error.value, newPlayer.value);
+      expectSharedInitialState(loading.value, error.value);
+      expect(newPlayer.value).toBeNull();
 
       const promise = createPlayer(playerToCreate);
 
@@ -172,7 +162,8 @@ describe("usePlayersApi", ()=> {
 
       await promise;
 
-      expectSharedEndState(createPlayerSpy, loading.value, error.value);
+      expectSharedEndState(createPlayerSpy, loading.value);
+      expect(error.value).toBeNull();
       expect(newPlayer.value).toEqual(mockPlayer);
     });
 
