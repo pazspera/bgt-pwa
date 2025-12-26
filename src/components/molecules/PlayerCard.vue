@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import type { Player } from '../../types/domain/player';
+import type { PlayerApiResponse } from '../../types/domain/playerApi';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faTrash, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 
 const props = defineProps<{
-  player: Player,
+  player: PlayerApiResponse,
 }>();
 
 const emit = defineEmits<{
