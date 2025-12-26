@@ -2,7 +2,9 @@
   <v-app>
     <NavBar v-if="width > 768" />
     <v-main>
-      <router-view />
+      <v-container>
+        <router-view />
+      </v-container>
     </v-main>
     <v-footer app v-if="width <= 768" height="72">
       <BottomNavigation  />

@@ -29,7 +29,7 @@ const handlePlayerAdded = ()=> {}
 </script>
 
 <template>
-  <v-container class="mt-4">
+  <v-container class="mt-4 container">
     <v-row>
       <v-col>
         <h1>Jugadores</h1>
@@ -45,15 +45,15 @@ const handlePlayerAdded = ()=> {}
     </v-row>
 
     <!-- error -->
-    <v-container v-if="errorList">
-      <v-row>
+    <v-row v-if="errorList" >
+      <v-col>
         <v-alert
           color="error"
           title="¡Oh, no! Ocurrió un error"
           :text="errorList"
         ></v-alert>
-      </v-row>
-    </v-container>
+      </v-col>
+    </v-row>
 
     <!-- loading -->
     <v-row v-if="loadingList && (!players || players.length === 0) && !errorList">
@@ -80,4 +80,8 @@ const handlePlayerAdded = ()=> {}
   </v-container>
 </template>
 
-<style scoped></style>
+<style scoped>
+.container {
+  padding: 0;
+}
+</style>
