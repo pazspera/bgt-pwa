@@ -15,7 +15,7 @@ export function usePlayersApi() {
     error.value = null;
 
     try {
-      const fetchedPlayers: PlayersListResponse = await PlayerApiService.getPlayers();
+      const fetchedPlayers: PlayersListResponse = await PlayerApiService.delet();
       totalPlayers.value = fetchedPlayers.total;
       players.value = fetchedPlayers.data;
     } catch (e) {
