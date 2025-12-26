@@ -1,22 +1,14 @@
 <script setup lang="ts">
 import { ref, type Ref, onBeforeMount } from "vue";
 import AddPlayerSheet from "../../components/organisms/AddPlayerSheet.vue";
-import type { PlayerApiResponse } from "../../types/domain/playerApi";
 import { usePlayersApi } from "../../composables/usePlayersApi";
 import CardGrid from "../../components/organisms/CardGrid.vue";
-import BodyText from "../../components/atoms/typography/BodyText.vue";
 
-const isSheetVisible = ref(false);
-const errorText = ref("");
+const isSheetVisible: Ref<boolean> = ref(false);
+const errorText: Ref<string> = ref("");
 defineOptions({ name: "PlayersView" });
 
 const { players, totalPlayers, loading, error, fetchPlayers } = usePlayersApi();
-
-const mockPlayer = {
-  id: 333,
-  name: "Zeuchi, the Great",
-  createdAt: "createdAt"
-}
 
 onBeforeMount(async ()=> {
   await fetchPlayers();
@@ -52,21 +44,32 @@ const handlePlayerAdded = ()=> {}
       </v-col>
     </v-row>
 
+    <!-- error -->
+    <v-container v-if="error">
+      <v-row>
+        <v-alert
+          color="error"
+          title="¡Oh, no! Ocurrió un error"
+          :text="error"
+        ></v-alert>
+      </v-row>
+    </v-container>
+
     <!-- loading -->
-    <v-row v-if="loading && (!players || players.length === 0)">
+    <v-row v-if="loading && (!players || players.length === 0) && !error">
       <v-col>
         <v-progress-circular></v-progress-circular>
       </v-col>
     </v-row>
 
     <CardGrid 
-      v-else-if="players && players.length > 0"
+      v-else-if="(players && players.length > 0) && !error"
       :data="players"
       type="player"
     ></CardGrid>
 
     <!-- no players -->
-    <v-row v-else>
+    <v-row v-else-if="!error">
       <v-col>
         <h2>No hay jugadores</h2>
         <p>Creá tu primer jugador haciendo click en el botón "Agregar jugador".</p>
