@@ -3,6 +3,8 @@ import { ref, onBeforeMount } from "vue";
 import AddPlayerSheet from "../../components/organisms/AddPlayerSheet.vue";
 import PlayerCard from "../../components/molecules/PlayerCard.vue";
 import { getPlayers, getPlayer } from "../../api/playerApiService";
+import CardGrid from "../../components/organisms/CardGrid.vue";
+import { mockPlayersApi } from "../../mocks/data/playersApi";
 
 const isSheetVisible = ref(false);
 const errorText = ref("");
@@ -39,13 +41,12 @@ const handlePlayerAdded = ()=> {}
     </v-btn>
     <br/>
     <br/>
-    <PlayerCard
-      v-if="player"
-      :player="player"
-      @editPlayer="handleEditPlayer"
-      @deletePlayer="handleDeletePlayer"
-    ></PlayerCard>
     
+    <CardGrid 
+      :data="mockPlayersApi"
+      type="player"
+    ></CardGrid>
+
     <AddPlayerSheet v-model="isSheetVisible" :errorMessage="errorText" @playerAdded="handlePlayerAdded" />
   </v-container>
 </template>
