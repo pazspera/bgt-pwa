@@ -4,6 +4,7 @@ import AddPlayerSheet from "../../components/organisms/AddPlayerSheet.vue";
 import { usePlayersApi } from "../../composables/usePlayersApi";
 import CardGrid from "../../components/organisms/CardGrid.vue";
 import type { CreatePlayerRequest } from "../../types/domain/playerApi";
+import { PLAYER_STATUS } from "../../constants/ui_feedback/players";
 
 const isSheetVisible: Ref<boolean> = ref(false);
 const errorText: Ref<string> = ref("");
@@ -35,7 +36,7 @@ const handlePlayerAdded = async (newPlayer: CreatePlayerRequest)=> {
   console.log("nombre nuevo jugador: ", newPlayer.name);
   const playerCreated = await createPlayer(newPlayer);
   console.log(playerCreated);
-  showSnackbar(`Jugador ${newPlayer.name} creado correctamente`, "success");
+  showSnackbar(PLAYER_STATUS.CREATED(newPlayer.name), "success");
 }
 
 const showSnackbar = (text: string, color: string) => {
