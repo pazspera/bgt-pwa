@@ -7,6 +7,11 @@ import type { CreatePlayerRequest } from "../../types/domain/playerApi";
 
 const isSheetVisible: Ref<boolean> = ref(false);
 const errorText: Ref<string> = ref("");
+
+const snackbar = ref(false);
+const snackbarText = ref("");
+const snackbarColor = ref("");
+
 defineOptions({ name: "PlayersView" });
 
 const { players, totalPlayers, loading: loadingList, error: errorList, fetchPlayers, createPlayer } = usePlayersApi();
@@ -30,6 +35,13 @@ const handlePlayerAdded = async (newPlayer: CreatePlayerRequest)=> {
   console.log("nombre nuevo jugador: ", newPlayer.name);
   const playerCreated = await createPlayer(newPlayer);
   console.log(playerCreated);
+  showSnackbar(`Jugador ${newPlayer.name} creado correctamente`, "success");
+}
+
+const showSnackbar = (text: string, color: string) => {
+  snackbarText.value = text;
+  snackbarColor.value = color;
+  snackbar.value = true;
 }
 
 </script>
@@ -81,6 +93,24 @@ const handlePlayerAdded = async (newPlayer: CreatePlayerRequest)=> {
         <p>Creá tu primer jugador haciendo click en el botón "Agregar jugador".</p>
       </v-col>
     </v-row>
+
+    <!-- shows status of actions -->
+    <v-snackbar
+      v-model="snackbar"
+      :color="snackbarColor"
+      location="bottom center"
+    >
+      {{ snackbarText }}
+
+      <template v-slot:actions>
+        <v-btn
+          variant="text"
+          @click="snackbar = false"
+        >
+          Cerrar
+        </v-btn>
+      </template>
+    </v-snackbar>
 
     <AddPlayerSheet v-model="isSheetVisible" :errorMessage="errorText" @playerAdded="handlePlayerAdded" />
   </v-container>
