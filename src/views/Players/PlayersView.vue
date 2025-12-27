@@ -3,12 +3,13 @@ import { ref, type Ref, onBeforeMount } from "vue";
 import AddPlayerSheet from "../../components/organisms/AddPlayerSheet.vue";
 import { usePlayersApi } from "../../composables/usePlayersApi";
 import CardGrid from "../../components/organisms/CardGrid.vue";
+import type { CreatePlayerRequest } from "../../types/domain/playerApi";
 
 const isSheetVisible: Ref<boolean> = ref(false);
 const errorText: Ref<string> = ref("");
 defineOptions({ name: "PlayersView" });
 
-const { players, totalPlayers, loading: loadingList, error: errorList, fetchPlayers } = usePlayersApi();
+const { players, totalPlayers, loading: loadingList, error: errorList, fetchPlayers, createPlayer } = usePlayersApi();
 
 onBeforeMount(async ()=> {
   await fetchPlayers();
@@ -24,7 +25,12 @@ const handleDeletePlayer = (playerId: number) => {
 }
 // 
 
-const handlePlayerAdded = ()=> {}
+const handlePlayerAdded = async (newPlayer: CreatePlayerRequest)=> {
+  console.log("handlePlayerAdded recibe: ", newPlayer);
+  console.log("nombre nuevo jugador: ", newPlayer.name);
+  const playerCreated = await createPlayer(newPlayer);
+  console.log(playerCreated);
+}
 
 </script>
 

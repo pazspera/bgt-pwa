@@ -32,6 +32,7 @@ export function usePlayersApi() {
     try {
       const response = await PlayerApiService.createPlayer(playerData);
       newPlayer.value = response; 
+      return response;
     } catch (e) {
       error.value = e.message;
     } finally {

@@ -3,7 +3,7 @@ import SubsectionTitle from '../atoms/typography/SubsectionTitle.vue';
 import { object, string } from "yup";
 import { toTypedSchema } from '@vee-validate/yup';
 import { useForm, useField } from 'vee-validate';
-import { ref, defineEmits, computed } from "vue";
+import { ref, computed } from "vue";
 import { VExpandTransition } from 'vuetify/components';
 import { AddPlayerSheetText } from '../../constants/ui_text/AddPlayerSheet';
 import AddPlayer from '../../views/Players/AddPlayer.vue';
@@ -35,10 +35,11 @@ const {
   errorMessage: playerNameError,
   validate
 } = useField<string>("playerName");
+
 const isPersistent = computed(()=> playerNameValue.value?.length > 0);
 
 const submitForm = handleSubmit(values => {
-  emit("playerAdded", values);
+  emit("playerAdded", { name: values.playerName });
 })
 
 const closeSheet = ()=> {
