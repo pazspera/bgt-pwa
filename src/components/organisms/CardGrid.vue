@@ -11,6 +11,11 @@ const props = defineProps<{
   type: "player" | "boardgame" | "game",
 }>();
 
+const emit = defineEmits<{
+  'edit-player': [player: PlayerApiResponse],
+  'delete-player': [player: PlayerApiResponse],
+}>();
+
 onBeforeMount(()=> {
   console.log(props.data);
 })
@@ -28,7 +33,11 @@ onBeforeMount(()=> {
         md="4"
         lg="3"
       >
-        <PlayerCard v-if="type === 'player'" :player="item" />
+        <PlayerCard v-if="type === 'player'" 
+          :player="item"
+          @edit-player="(player) => $emit('edit-player', player)"
+          @delete-player="(player) => $emit('delete-player', player)"
+        />
       </v-col>
     </v-row>
   </v-container>

@@ -3,7 +3,7 @@ import { ref, type Ref, onBeforeMount } from "vue";
 import AddPlayerSheet from "../../components/organisms/AddPlayerSheet.vue";
 import { usePlayersApi } from "../../composables/usePlayersApi";
 import CardGrid from "../../components/organisms/CardGrid.vue";
-import type { CreatePlayerRequest } from "../../types/domain/playerApi";
+import type { CreatePlayerRequest, PlayerApiResponse } from "../../types/domain/playerApi";
 import { PLAYER_STATUS, CONFIRM_DELETE_PLAYER } from "../../constants/ui_feedback/players";
 import { capitalize } from "../../utils/formatters";
 
@@ -25,12 +25,12 @@ onBeforeMount(async ()=> {
 })
 
 // test functions for emitted events on PlayerCard
-const handleEditPlayer = (playerId: number) => {
-  console.log("editPlayer: ", playerId);
+const handleEditPlayer = (player: PlayerApiResponse) => {
+  console.log("editPlayer: ", player);
 }
 
-const handleDeletePlayer = (playerId: number) => {
-  console.log("deletePlayer: ", playerId);
+const handleDeletePlayer = (player: PlayerApiResponse) => {
+  console.log("deletePlayer: ", player);
 }
 
 
@@ -112,6 +112,8 @@ const showAddPlayerSheet = () => {
       v-else-if="(players && players.length > 0) && !errorList"
       :data="players"
       type="player"
+      @delete-player="handleDeletePlayer"
+      @edit-player="handleEditPlayer"
     ></CardGrid>
 
     <!-- no players -->

@@ -8,18 +8,18 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-  editPlayer: [id: number],
-  deletePlayer: [id: number],
+  'edit-player': [player: PlayerApiResponse],
+  'delete-player': [player: PlayerApiResponse],
 }>();
 
 defineOptions({ name: "PlayerCard" });
 
 const handleEditPlayer = () => {
-  emit("editPlayer", props.player.id);
+  emit("edit-player", props.player);
 }
 
 const handleDeletePlayer = () => {
-  emit("deletePlayer", props.player.id);
+  emit("delete-player", props.player);
 }
 
 </script>
