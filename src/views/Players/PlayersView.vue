@@ -11,6 +11,9 @@ const isSheetVisible: Ref<boolean> = ref(false);
 const errorText: Ref<string> = ref("");
 
 const isDeleteDialogVisible: Ref<boolean> = ref(false);
+const deleteDialogText : Ref<string> = ref(""); 
+const isDeleteConfirmed: Ref<boolean> = ref(false);
+const selectedPlayer: Ref<PlayerApiResponse | null> = ref(null);
 
 const snackbar = ref(false);
 const snackbarText = ref("");
@@ -18,7 +21,7 @@ const snackbarColor = ref("");
 
 defineOptions({ name: "PlayersView" });
 
-const { players, totalPlayers, loading: loadingList, error: errorList, fetchPlayers, createPlayer } = usePlayersApi();
+const { players, totalPlayers, loading: loadingList, error: errorList, fetchPlayers, createPlayer, deletePlayer } = usePlayersApi();
 
 onBeforeMount(async ()=> {
   await fetchPlayers();
@@ -30,9 +33,29 @@ const handleEditPlayer = (player: PlayerApiResponse) => {
 }
 
 const handleDeletePlayer = (player: PlayerApiResponse) => {
-  console.log("deletePlayer: ", player);
+  selectedPlayer.value = player;
+  deleteDialogText.value = CONFIRM_DELETE_PLAYER.TEXT(player.name);
+  isDeleteDialogVisible.value = true;
 }
 
+const confirmDelete = async () => {
+  if(!selectedPlayer.value) return;
+
+  try {
+    await deletePlayer(selectedPlayer.value.id); 
+
+    //updates ui
+    players.value = players.value.filter(player => player.id !== selectedPlayer.value?.id);
+
+    isDeleteDialogVisible.value = false;
+    showSnackbar(PLAYER_STATUS.DELETED(selectedPlayer.value.name), "success");
+  } catch (error) {
+    isDeleteDialogVisible.value = false;
+    showSnackbar(PLAYER_STATUS.ERROR.DELETE(selectedPlayer.value.name), "error");
+  } finally {
+    selectedPlayer.value = null;
+  }
+}
 
 const handlePlayerAdded = async (newPlayer: CreatePlayerRequest)=> {
   const formattedName = capitalize(newPlayer.name);
@@ -46,7 +69,7 @@ const handlePlayerAdded = async (newPlayer: CreatePlayerRequest)=> {
   try {
     const playerToSave = { ...newPlayer, name: formattedName };
     const playerCreated = await createPlayer(playerToSave);
-    console.log(playerCreated);
+    
     // updates players locally, if the code gets here, it was ok
     // faster ui update for the user
     players.value.push(playerCreated);
@@ -150,18 +173,18 @@ const showAddPlayerSheet = () => {
     > 
       <v-card
         prepend-icon="mdi-map-marker"
-        text="TEXT"
+        :text="deleteDialogText"
         :title="CONFIRM_DELETE_PLAYER.TITLE"
       >
         <template v-slot:actions>
           <v-spacer></v-spacer>
-
-          <v-btn @click="isDeleteDialogVisible = false">
-            {{ CONFIRM_DELETE_PLAYER.CANCEL_BTN_TEXT }}
+          
+          <v-btn @click="confirmDelete">
+            {{ CONFIRM_DELETE_PLAYER.CONFIRM_BTN_TEXT }}
           </v-btn>
 
           <v-btn @click="isDeleteDialogVisible = false">
-            {{ CONFIRM_DELETE_PLAYER.CONFIRM_BTN_TEXT }}
+            {{ CONFIRM_DELETE_PLAYER.CANCEL_BTN_TEXT }}
           </v-btn>
         </template>
       </v-card>

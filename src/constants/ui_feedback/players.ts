@@ -6,13 +6,13 @@ export const PLAYER_STATUS = {
     CREATE: "No se pudo crear el jugador",
     CREATE_ALREADY_EXISTS: (name: string) => `El jugador ${name} ya existe, intentá con otro nombre`,
     UPDATE: "No se pudo actualizar el jugador",
-    DELETE  : "No se pudo eliminar el jugador",
+    DELETE: (name: string) => `No se pudo eliminar el jugador "${name}"`,
   }
 }
 
 export const CONFIRM_DELETE_PLAYER = {
   TITLE: "¿Estás segurx?",
-  TEXT: (name: string) => `Vas a eliminar al jugador ${name}. Está acción no puede revertirse.`, 
+  TEXT: (name: string) => `Vas a eliminar al jugador "${name}". Está acción no puede revertirse.`, 
   CONFIRM_BTN_TEXT: "Borrar jugador",
   CANCEL_BTN_TEXT: "Cancelar"
 }
