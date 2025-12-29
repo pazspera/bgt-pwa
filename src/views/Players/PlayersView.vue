@@ -5,6 +5,7 @@ import { usePlayersApi } from "../../composables/usePlayersApi";
 import CardGrid from "../../components/organisms/CardGrid.vue";
 import type { CreatePlayerRequest } from "../../types/domain/playerApi";
 import { PLAYER_STATUS } from "../../constants/ui_feedback/players";
+import { capitalize } from "../../utils/formatters";
 
 const isSheetVisible: Ref<boolean> = ref(false);
 const errorText: Ref<string> = ref("");
@@ -32,21 +33,26 @@ const handleDeletePlayer = (playerId: number) => {
 // 
 
 const handlePlayerAdded = async (newPlayer: CreatePlayerRequest)=> {
-  console.log("handlePlayerAdded recibe: ", newPlayer);
-  console.log("nombre nuevo jugador: ", newPlayer.name);
+  const formattedName = capitalize(newPlayer.name);
+  const playerNameExists = doesPlayerExist(formattedName);
 
-  const playerNameExists = doesPlayerExist(newPlayer.name);
-
-  if(!playerNameExists) {
-    const playerCreated = await createPlayer(newPlayer);
-    console.log(playerCreated);
-    isSheetVisible.value = false;
-    showSnackbar(PLAYER_STATUS.CREATED(newPlayer.name), "success");
-    await fetchPlayers();
-  } else {
-    errorText.value = PLAYER_STATUS.ERROR.CREATE_ALREADY_EXISTS(newPlayer.name);
+  if(playerNameExists) {
+    errorText.value = PLAYER_STATUS.ERROR.CREATE_ALREADY_EXISTS(formattedName);
+    return;
   }
 
+  try {
+    const playerToSave = { ...newPlayer, name: formattedName };
+    const playerCreated = await createPlayer(playerToSave);
+    console.log(playerCreated);
+    // updates players locally, if the code gets here, it was ok
+    // faster ui update for the user
+    players.value.push(playerCreated);
+    isSheetVisible.value = false;
+    showSnackbar(PLAYER_STATUS.CREATED(formattedName), "success");
+  } catch (error) {
+    errorText.value = PLAYER_STATUS.ERROR.CREATE;
+  }
 }
 
 const doesPlayerExist = (name: string) => {
@@ -132,7 +138,11 @@ const showAddPlayerSheet = () => {
       </template>
     </v-snackbar>
 
-    <AddPlayerSheet v-model="isSheetVisible" :errorMessage="errorText" @playerAdded="handlePlayerAdded" />
+    <AddPlayerSheet 
+      v-model="isSheetVisible" 
+      :errorMessage="errorText" 
+      @playerAdded="handlePlayerAdded" 
+    />
   </v-container>
 </template>
 

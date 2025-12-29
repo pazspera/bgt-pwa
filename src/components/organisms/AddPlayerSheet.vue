@@ -6,7 +6,6 @@ import { useForm, useField } from 'vee-validate';
 import { ref, computed } from "vue";
 import { VExpandTransition } from 'vuetify/components';
 import { AddPlayerSheetText } from '../../constants/ui_text/AddPlayerSheet';
-import AddPlayer from '../../views/Players/AddPlayer.vue';
 
 defineProps<{
   modelValue: boolean,
