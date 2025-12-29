@@ -42,6 +42,7 @@ const handlePlayerAdded = async (newPlayer: CreatePlayerRequest)=> {
     console.log(playerCreated);
     isSheetVisible.value = false;
     showSnackbar(PLAYER_STATUS.CREATED(newPlayer.name), "success");
+    await fetchPlayers();
   } else {
     errorText.value = PLAYER_STATUS.ERROR.CREATE_ALREADY_EXISTS(newPlayer.name);
   }
