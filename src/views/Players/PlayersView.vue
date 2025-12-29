@@ -58,6 +58,11 @@ const showSnackbar = (text: string, color: string) => {
   snackbar.value = true;
 }
 
+const showAddPlayerSheet = () => {
+  errorText.value = "";
+  isSheetVisible.value = !isSheetVisible.value; 
+} 
+
 </script>
 
 <template>
@@ -66,7 +71,7 @@ const showSnackbar = (text: string, color: string) => {
       <v-col>
         <h1>Jugadores</h1>
         <v-btn 
-          @click="isSheetVisible = !isSheetVisible"
+          @click="showAddPlayerSheet"
           color="primary"
         >
           Agregar jugador
