@@ -6,6 +6,7 @@ export function usePlayerApi() {
   const player: Ref<PlayerApiResponse | null> = ref(null);
   const loading: Ref<boolean> = ref(false);
   const error: Ref<string | null> = ref(null);
+  const errorUpdate: Ref<string | null> = ref(null);
   const updated: Ref<boolean> = ref(false);
 
   const fetchPlayer = async (id: string) => {
@@ -17,6 +18,7 @@ export function usePlayerApi() {
       player.value = fetchPlayer;
     } catch (err) {
       error.value = err.message;
+      throw err;
     } finally {
       loading.value = false;
     }
@@ -24,18 +26,19 @@ export function usePlayerApi() {
 
   const updatePlayer = async (id: string, name: UpdatePlayerRequest) => {
     loading.value = true;
-    error.value = null;
+    errorUpdate.value = null;
 
     try {
       const updatedPlayer = await PlayerApiService.updatePlayer(id, name);
       player.value = updatedPlayer;
       updated.value = true;
     } catch (err) {
-      error.value = err.message;
+      errorUpdate.value = err.message;
+      throw err;
     } finally {
       loading.value = false;
     }
   };
 
-  return { player, loading, error, updated, fetchPlayer, updatePlayer };
+  return { player, loading, error, errorUpdate, updated, fetchPlayer, updatePlayer };
 }

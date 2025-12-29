@@ -12,7 +12,6 @@ const errorText: Ref<string> = ref("");
 
 const isDeleteDialogVisible: Ref<boolean> = ref(false);
 const deleteDialogText : Ref<string> = ref(""); 
-const isDeleteConfirmed: Ref<boolean> = ref(false);
 const selectedPlayer: Ref<PlayerApiResponse | null> = ref(null);
 
 const snackbar = ref(false);
@@ -21,7 +20,7 @@ const snackbarColor = ref("");
 
 defineOptions({ name: "PlayersView" });
 
-const { players, totalPlayers, loading: loadingList, error: errorList, fetchPlayers, createPlayer, deletePlayer } = usePlayersApi();
+const { players, totalPlayers, loading: loadingList, error: errorList, errorCreatePlayer, errorDeletePlayer, fetchPlayers, createPlayer, deletePlayer } = usePlayersApi();
 
 onBeforeMount(async ()=> {
   await fetchPlayers();
@@ -113,7 +112,7 @@ const showAddPlayerSheet = () => {
       </v-col>
     </v-row>
 
-    <!-- error -->
+    <!-- error for the player list -->
     <v-row v-if="errorList" >
       <v-col>
         <v-alert
