@@ -34,9 +34,22 @@ const handleDeletePlayer = (playerId: number) => {
 const handlePlayerAdded = async (newPlayer: CreatePlayerRequest)=> {
   console.log("handlePlayerAdded recibe: ", newPlayer);
   console.log("nombre nuevo jugador: ", newPlayer.name);
-  const playerCreated = await createPlayer(newPlayer);
-  console.log(playerCreated);
-  showSnackbar(PLAYER_STATUS.CREATED(newPlayer.name), "success");
+
+  const playerNameExists = doesPlayerExist(newPlayer.name);
+
+  if(!playerNameExists) {
+    const playerCreated = await createPlayer(newPlayer);
+    console.log(playerCreated);
+    isSheetVisible.value = false;
+    showSnackbar(PLAYER_STATUS.CREATED(newPlayer.name), "success");
+  } else {
+    errorText.value = PLAYER_STATUS.ERROR.CREATE_ALREADY_EXISTS(newPlayer.name);
+  }
+
+}
+
+const doesPlayerExist = (name: string) => {
+  return players.value.some(player => player.name === name);
 }
 
 const showSnackbar = (text: string, color: string) => {
