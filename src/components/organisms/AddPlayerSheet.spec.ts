@@ -118,8 +118,8 @@ describe("Logic & Events", ()=> {
   });
 
   it("emits 'playerAdded' event on valid submit", async ()=> {
-    const playerName = "Stephen King";
-    await setTextInputValue(wrapper, "input-player-name", playerName);
+    const name = "Stephen King";
+    await setTextInputValue(wrapper, "input-player-name", name);
 
     await btnAdd.trigger("click");
     await nextTick();
@@ -137,9 +137,9 @@ describe("Logic & Events", ()=> {
   });
 
   it("the emitted event matches with the string entered by the user", async ()=> {
-    const playerName = "Stephen King";
+    const name = "Stephen King";
 
-    await setTextInputValue(wrapper, "input-player-name", playerName);
+    await setTextInputValue(wrapper, "input-player-name", name);
     
     // DO NOT use the button to trigger the emit event
     // submitForm() has to be called directly or it doesn't work
@@ -148,7 +148,7 @@ describe("Logic & Events", ()=> {
 
     const emittedEvents = wrapper.emitted("playerAdded");
     expect(emittedEvents).toEqual([
-      [{ playerName }]
+      [{ name }]
     ]);
 
   });
@@ -237,7 +237,7 @@ describe("Validations", ()=> {
     await nextTick();
 
     expect(wrapper.emitted("playerAdded")).toEqual([
-      [{ playerName: nameWithoutSpaces }]
+      [{ name: nameWithoutSpaces }]
     ])
   });
 
@@ -261,7 +261,7 @@ describe("Validations", ()=> {
     await nextTick();
 
     expect(wrapper.emitted("playerAdded")).toEqual([
-      [{ playerName : threeLetters }]
+      [{ name : threeLetters }]
     ])
   })
 });
