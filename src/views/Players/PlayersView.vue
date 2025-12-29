@@ -4,11 +4,13 @@ import AddPlayerSheet from "../../components/organisms/AddPlayerSheet.vue";
 import { usePlayersApi } from "../../composables/usePlayersApi";
 import CardGrid from "../../components/organisms/CardGrid.vue";
 import type { CreatePlayerRequest } from "../../types/domain/playerApi";
-import { PLAYER_STATUS } from "../../constants/ui_feedback/players";
+import { PLAYER_STATUS, CONFIRM_DELETE_PLAYER } from "../../constants/ui_feedback/players";
 import { capitalize } from "../../utils/formatters";
 
 const isSheetVisible: Ref<boolean> = ref(false);
 const errorText: Ref<string> = ref("");
+
+const isDeleteDialogVisible: Ref<boolean> = ref(false);
 
 const snackbar = ref(false);
 const snackbarText = ref("");
@@ -30,7 +32,7 @@ const handleEditPlayer = (playerId: number) => {
 const handleDeletePlayer = (playerId: number) => {
   console.log("deletePlayer: ", playerId);
 }
-// 
+
 
 const handlePlayerAdded = async (newPlayer: CreatePlayerRequest)=> {
   const formattedName = capitalize(newPlayer.name);
@@ -137,6 +139,31 @@ const showAddPlayerSheet = () => {
         </v-btn>
       </template>
     </v-snackbar>
+
+    <!-- confirm delete dialog -->
+    <v-dialog
+      v-model="isDeleteDialogVisible"
+      max-width="400"
+      persistent
+    > 
+      <v-card
+        prepend-icon="mdi-map-marker"
+        text="TEXT"
+        :title="CONFIRM_DELETE_PLAYER.TITLE"
+      >
+        <template v-slot:actions>
+          <v-spacer></v-spacer>
+
+          <v-btn @click="isDeleteDialogVisible = false">
+            {{ CONFIRM_DELETE_PLAYER.CANCEL_BTN_TEXT }}
+          </v-btn>
+
+          <v-btn @click="isDeleteDialogVisible = false">
+            {{ CONFIRM_DELETE_PLAYER.CONFIRM_BTN_TEXT }}
+          </v-btn>
+        </template>
+      </v-card>
+    </v-dialog>
 
     <AddPlayerSheet 
       v-model="isSheetVisible" 
