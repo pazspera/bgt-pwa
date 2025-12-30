@@ -135,54 +135,65 @@ describe("usePlayersApi", ()=> {
       // test end state, the player that was sent should equal the mock
       const createPlayerSpy = vi.spyOn(PlayerApiService, "createPlayer").mockResolvedValueOnce(mockPlayer);
 
-      const { loading, error, newPlayer, createPlayer } = usePlayersApi();
+      const { loading, errorCreatePlayer , newPlayer, createPlayer } = usePlayersApi();
       
-      expectSharedInitialState(loading.value, error.value);
+      expectSharedInitialState(loading.value, errorCreatePlayer.value);
       expect(newPlayer.value).toBeNull();
 
       const promise = createPlayer(playerToCreate);
 
-      expectLoadingState(loading.value, error.value);
+      expectLoadingState(loading.value, errorCreatePlayer.value);
 
       await promise;
 
       expectSharedEndState(createPlayerSpy, loading.value);
-      expect(error.value).toBeNull();
+      expect(errorCreatePlayer.value).toBeNull();
       expect(newPlayer.value).toEqual(mockPlayer);
     });
 
     it("error: updates error and loading, returns null for player", async()=> {
-      const createPlayerSpy = vi.spyOn(PlayerApiService, "createPlayer").mockRejectedValueOnce(new Error(API_ERROR_MESSAGES.CREATE_PLAYER_ERROR(500)));
+      const errorMessage = API_ERROR_MESSAGES.CREATE_PLAYER_ERROR(500);
+      const createPlayerSpy = vi.spyOn(PlayerApiService, "createPlayer").mockRejectedValueOnce(new Error(errorMessage));
 
-      const { loading, error, createPlayer } = usePlayersApi();
+      const { loading, errorCreatePlayer, createPlayer, newPlayer } = usePlayersApi();
 
-      expectSharedInitialState(loading.value, error.value);
+      expectSharedInitialState(loading.value, errorCreatePlayer.value);
+      expect(newPlayer.value).toBeNull();
 
       const promise = createPlayer(playerToCreate);
 
-      expectLoadingState(loading.value, error.value);
+      expectLoadingState(loading.value, errorCreatePlayer.value);
 
-      await promise;
+      // need to catch the thrown error or test fails
+      try {
+        await promise;
+      } catch (error) { }
 
       expectSharedEndState(createPlayerSpy, loading.value);
-      expect(error.value).toBe(API_ERROR_MESSAGES.CREATE_PLAYER_ERROR(500));
+      expect(errorCreatePlayer.value).toBe(errorMessage);
+      expect(newPlayer.value).toBeNull;
     });
 
     it("network error: updates error and loading", async()=> {
-      const createPlayerSpy = vi.spyOn(PlayerApiService, "createPlayer").mockRejectedValueOnce(new Error(API_ERROR_MESSAGES.NETWORK_ERROR));
+      const errorMessage = API_ERROR_MESSAGES.NETWORK_ERROR;
 
-      const { loading, error, createPlayer } = usePlayersApi();
+      const createPlayerSpy = vi.spyOn(PlayerApiService, "createPlayer").mockRejectedValueOnce(new Error(errorMessage));
 
-      expectSharedInitialState(loading.value, error.value);
+      const { loading, errorCreatePlayer, createPlayer } = usePlayersApi();
+
+      expectSharedInitialState(loading.value, errorCreatePlayer.value);
 
       const promise = createPlayer(playerToCreate);
 
-      expectLoadingState(loading.value, error.value);
+      expectLoadingState(loading.value, errorCreatePlayer.value);
 
-      await promise;
+      // need to catch the thrown error or test fails
+      try {
+        await promise;
+      } catch (error) { }
 
       expectSharedEndState(createPlayerSpy, loading.value);
-      expect(error.value).toBe(API_ERROR_MESSAGES.NETWORK_ERROR);
+      expect(errorCreatePlayer.value).toBe(errorMessage);
     });
   });
 
@@ -192,77 +203,87 @@ describe("usePlayersApi", ()=> {
     it("success: deleted, loading and error update correctly", async()=> {
       const deletePlayerSpy = vi.spyOn(PlayerApiService, "deletePlayer").mockResolvedValueOnce(true);
 
-      const { loading, error, deleted, deletePlayer } = usePlayersApi();
+      const { loading, errorDeletePlayer, deleted, deletePlayer } = usePlayersApi();
 
-      expectSharedInitialState(loading.value, error.value);
+      expectSharedInitialState(loading.value, errorDeletePlayer.value);
       expect(deleted.value).toBe(false);
 
       const promise = deletePlayer(id);
 
-      expectLoadingState(loading.value, error.value);
+      expectLoadingState(loading.value, errorDeletePlayer.value);
 
       await promise;
 
       expectSharedEndState(deletePlayerSpy, loading.value);
       expect(deleted.value).toBe(true);
-      expect(error.value).toBeNull();
+      expect(errorDeletePlayer.value).toBeNull();
     });
 
     it("error not found(404): updates error and loading", async()=> {
-      const deletePlayerSpy = vi.spyOn(PlayerApiService, "deletePlayer").mockRejectedValueOnce(new Error(API_ERROR_MESSAGES.DELETE_PLAYER_NOT_FOUND(id)));
+      const errorMessage = API_ERROR_MESSAGES.DELETE_PLAYER_NOT_FOUND(id);
+      const deletePlayerSpy = vi.spyOn(PlayerApiService, "deletePlayer").mockRejectedValueOnce(new Error(errorMessage));
 
-      const { loading, error, deleted, deletePlayer } = usePlayersApi();
+      const { loading, errorDeletePlayer, deleted, deletePlayer } = usePlayersApi();
 
-      expectSharedInitialState(loading.value, error.value);
+      expectSharedInitialState(loading.value, errorDeletePlayer.value);
       expect(deleted.value).toBe(false);
 
       const promise = deletePlayer(id);
 
-      expectLoadingState(loading.value, error.value);
+      expectLoadingState(loading.value, errorDeletePlayer.value);
 
-      await promise;
+      // need to catch the thrown error or test fails
+      try {
+        await promise;
+      } catch (error) { }
 
       expectSharedEndState(deletePlayerSpy, loading.value);
       expect(deleted.value).toBe(false);
-      expect(error.value).toBe(API_ERROR_MESSAGES.DELETE_PLAYER_NOT_FOUND(id));
+      expect(errorDeletePlayer.value).toBe(errorMessage);
     });
 
     it("internal server error (500): updates error and loading", async()=> {
       const deletePlayerSpy = vi.spyOn(PlayerApiService, "deletePlayer").mockRejectedValueOnce(new Error(API_ERROR_MESSAGES.DELETE_PLAYER_ERROR(500, id)));
 
-      const { loading, error, deleted, deletePlayer } = usePlayersApi();
+      const { loading, errorDeletePlayer, deleted, deletePlayer } = usePlayersApi();
 
-      expectSharedInitialState(loading.value, error.value);
+      expectSharedInitialState(loading.value, errorDeletePlayer.value);
       expect(deleted.value).toBe(false);
 
       const promise = deletePlayer(id);
 
-      expectLoadingState(loading.value, error.value);
+      expectLoadingState(loading.value, errorDeletePlayer.value);
 
-      await promise;
+      // need to catch the thrown error or test fails
+      try {
+        await promise;
+      } catch (error) { }
 
       expectSharedEndState(deletePlayerSpy, loading.value);
       expect(deleted.value).toBe(false);
-      expect(error.value).toBe(API_ERROR_MESSAGES.DELETE_PLAYER_ERROR(500, id));
+      expect(errorDeletePlayer.value).toBe(API_ERROR_MESSAGES.DELETE_PLAYER_ERROR(500, id));
     });
 
     it("network error: updates error and loading", async()=> {
       const deletePlayerSpy = vi.spyOn(PlayerApiService, "deletePlayer").mockRejectedValueOnce(new Error(API_ERROR_MESSAGES.NETWORK_ERROR));
 
-      const { loading, error, deleted, deletePlayer } = usePlayersApi();
+      const { loading, errorDeletePlayer, deleted, deletePlayer } = usePlayersApi();
 
-      expectSharedInitialState(loading.value, error.value);
+      expectSharedInitialState(loading.value, errorDeletePlayer.value);
       expect(deleted.value).toBe(false);
 
       const promise = deletePlayer(id);
 
-      expectLoadingState(loading.value, error.value);
+      expectLoadingState(loading.value, errorDeletePlayer.value);
 
-      await promise;
+      // need to catch the thrown error or test fails
+      try {
+        await promise;
+      } catch (error) { }
 
       expectSharedEndState(deletePlayerSpy, loading.value);
       expect(deleted.value).toBe(false);
-      expect(error.value).toBe(API_ERROR_MESSAGES.NETWORK_ERROR);
+      expect(errorDeletePlayer.value).toBe(API_ERROR_MESSAGES.NETWORK_ERROR);
     });
   })
 
