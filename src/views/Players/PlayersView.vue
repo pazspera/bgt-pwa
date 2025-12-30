@@ -33,6 +33,7 @@ onBeforeMount(async ()=> {
 // test functions for emitted events on PlayerCard
 const handleEditPlayer = (player: PlayerApiResponse) => {
   console.log("editPlayer: ", player);
+  playerToEdit.value = player;
   showEditPlayerSheet();
 }
 
@@ -102,6 +103,10 @@ const showAddPlayerSheet = () => {
 const showEditPlayerSheet = () => {
   editErrorText.value = "";
   isEditSheetVisible.value = !isEditSheetVisible.value;
+
+  if(!isEditSheetVisible.value) {
+    playerToEdit.value = null;
+  }
 }
 
 </script>

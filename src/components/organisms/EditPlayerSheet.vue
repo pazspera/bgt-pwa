@@ -3,16 +3,16 @@ import SubsectionTitle from '../atoms/typography/SubsectionTitle.vue';
 import { object, string } from "yup";
 import { toTypedSchema } from '@vee-validate/yup';
 import { useForm, useField } from 'vee-validate';
-import { ref, computed } from "vue";
+import { ref, computed, watch } from "vue";
 import { VExpandTransition } from 'vuetify/components';
 import { EditPlayerSheetText } from '../../constants/ui_text/EditPlayerSheet';
 import { PlayerApiResponse } from "../../types/domain/playerApi"
 
-defineProps<{
+const props = defineProps<{
   modelValue: boolean,
   errorMessage?: string,
   player: PlayerApiResponse | null,
-}>()
+}>();
 defineOptions({ name: "EditPlayerSheet" });
 
 const validationSchema = toTypedSchema(
@@ -26,7 +26,7 @@ const validationSchema = toTypedSchema(
 
 const emit = defineEmits(["update:modelValue", "playerAdded"]);
 
-const { handleSubmit, resetForm } = useForm({
+const { handleSubmit, resetForm, setValues } = useForm({
   validationSchema,
   initialValues: { playerName: "" }
 })
@@ -36,6 +36,16 @@ const {
   errorMessage: playerNameError,
   validate
 } = useField<string>("playerName");
+
+watch(() => props.player, (newPlayer) => {
+  if (newPlayer) {
+    // Si viene un player, llenamos el campo manualmente
+    playerNameValue.value = newPlayer.name;
+  } else {
+    // Si es null (crear nuevo), limpiamos el formulario
+    resetForm();
+  }
+}, { immediate: true });
 
 const isPersistent = computed(()=> playerNameValue.value?.length > 0);
 
