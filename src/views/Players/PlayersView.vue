@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, type Ref, onBeforeMount } from "vue";
 import AddPlayerSheet from "../../components/organisms/AddPlayerSheet.vue";
+import EditPlayerSheet from "../../components/organisms/EditPlayerSheet.vue";
 import { usePlayersApi } from "../../composables/usePlayersApi";
 import CardGrid from "../../components/organisms/CardGrid.vue";
 import type { CreatePlayerRequest, PlayerApiResponse } from "../../types/domain/playerApi";
@@ -9,6 +10,9 @@ import { capitalize } from "../../utils/formatters";
 
 const isSheetVisible: Ref<boolean> = ref(false);
 const errorText: Ref<string> = ref("");
+const isEditSheetVisible: Ref<boolean> = ref(false);
+const editErrorText: Ref<string> = ref("");
+const playerToEdit: Ref<PlayerApiResponse | null> = ref(null);
 
 const isDeleteDialogVisible: Ref<boolean> = ref(false);
 const deleteDialogText : Ref<string> = ref(""); 
@@ -29,6 +33,7 @@ onBeforeMount(async ()=> {
 // test functions for emitted events on PlayerCard
 const handleEditPlayer = (player: PlayerApiResponse) => {
   console.log("editPlayer: ", player);
+  showEditPlayerSheet();
 }
 
 const handleDeletePlayer = (player: PlayerApiResponse) => {
@@ -93,6 +98,11 @@ const showAddPlayerSheet = () => {
   errorText.value = "";
   isSheetVisible.value = !isSheetVisible.value; 
 } 
+
+const showEditPlayerSheet = () => {
+  editErrorText.value = "";
+  isEditSheetVisible.value = !isEditSheetVisible.value;
+}
 
 </script>
 
@@ -193,6 +203,12 @@ const showAddPlayerSheet = () => {
       v-model="isSheetVisible" 
       :errorMessage="errorText" 
       @playerAdded="handlePlayerAdded" 
+    />
+
+    <EditPlayerSheet
+      v-model="isEditSheetVisible"
+      :errorMessage="editErrorText"
+      :player="playerToEdit"
     />
   </v-container>
 </template>

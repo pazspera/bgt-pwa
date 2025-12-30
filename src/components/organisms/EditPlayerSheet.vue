@@ -11,7 +11,7 @@ import { PlayerApiResponse } from "../../types/domain/playerApi"
 defineProps<{
   modelValue: boolean,
   errorMessage?: string,
-  player: PlayerApiResponse,
+  player: PlayerApiResponse | null,
 }>()
 defineOptions({ name: "EditPlayerSheet" });
 
