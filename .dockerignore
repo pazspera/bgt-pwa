@@ -29,9 +29,9 @@ README.md
 .github
 
 # Env
-.env
-.env.local
-.env.*.local
+# .env
+# .env.local
+# .env.*.local
 
 # Temp
 tmp
