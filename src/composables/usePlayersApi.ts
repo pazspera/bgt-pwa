@@ -12,12 +12,12 @@ export function usePlayersApi() {
   const errorCreatePlayer: Ref<string | null> = ref(null);
   const errorDeletePlayer: Ref<string | null> = ref(null);
 
-  const fetchPlayers = async () => {
+  const fetchPlayers = async (sortBy: string = "created_at", order: string = "asc") => {
     loading.value = true;
     error.value = null;
 
     try {
-      const fetchedPlayers: PlayersListResponse = await PlayerApiService.getPlayers();
+      const fetchedPlayers: PlayersListResponse = await PlayerApiService.getPlayers(sortBy, order);
       totalPlayers.value = fetchedPlayers.total;
       players.value = fetchedPlayers.data;
     } catch (e) {

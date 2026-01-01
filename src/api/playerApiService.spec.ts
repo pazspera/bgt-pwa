@@ -42,7 +42,7 @@ describe("playerApiService: getPlayers()", ()=> {
     const result = await getPlayers();
 
     expect(result).toEqual(mockResponse);
-    expect(global.fetch).toHaveBeenCalledWith(`${API_BASE_URL}/players`, { method: "GET" });
+    expect(global.fetch).toHaveBeenCalledWith(`${API_BASE_URL}/players?sortBy=name&order=asc`, { method: "GET" });
   });
   
   it("error: resource not found (404)", async ()=> {
