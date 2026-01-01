@@ -92,18 +92,22 @@ const handlePlayerUpdated = async (updatedPlayer: { id: string, name: UpdatePlay
   console.log("in handlePlayerUpdated");
   console.log(updatedPlayer);
   editErrorText.value = "";
+  const formattedEditName = capitalize(updatedPlayer.name.name);
+  const formattedRequest: UpdatePlayerRequest = {
+    name: formattedEditName,
+  }
   
   try {
-    await updatePlayerAction(updatedPlayer.id, updatedPlayer.name);
+    await updatePlayerAction(updatedPlayer.id, formattedRequest);
 
     // update ui locally
     const index = players.value.findIndex(p => p.id === updatedPlayer.id);
     if (index !== -1) {
-      players.value[index].name = updatedPlayer.name.name;
+      players.value[index].name = formattedRequest.name;
     }
 
     isEditSheetVisible.value = false;
-    showSnackbar(PLAYER_STATUS.UPDATED(updatedPlayer.name.name), "success");
+    showSnackbar(PLAYER_STATUS.UPDATED(formattedRequest.name), "success");
   } catch (error) {
     errorText.value = errorUpdate.value || PLAYER_STATUS.ERROR.UPDATE;
   }
