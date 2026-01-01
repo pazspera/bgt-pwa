@@ -6,7 +6,7 @@ import { useForm, useField } from 'vee-validate';
 import { ref, computed, watch } from "vue";
 import { VExpandTransition } from 'vuetify/components';
 import { EditPlayerSheetText } from '../../constants/ui_text/EditPlayerSheet';
-import { PlayerApiResponse } from "../../types/domain/playerApi"
+import { PlayerApiResponse, UpdatePlayerRequest } from "../../types/domain/playerApi"
 
 const props = defineProps<{
   modelValue: boolean,
@@ -24,7 +24,7 @@ const validationSchema = toTypedSchema(
   })
 )
 
-const emit = defineEmits(["update:modelValue", "playerAdded"]);
+const emit = defineEmits(["update:modelValue", "playerUpdated"]);
 
 const { handleSubmit, resetForm, setValues } = useForm({
   validationSchema,
@@ -50,13 +50,27 @@ watch(() => props.player, (newPlayer) => {
 const isPersistent = computed(()=> playerNameValue.value?.length > 0);
 
 const submitForm = handleSubmit(values => {
-  emit("playerAdded", { name: values.playerName });
+  if (!props.player) return;
+
+  emit("playerUpdated", { 
+    id: props.player.id,
+    name: { name: values.playerName.trim() }
+  });
 })
 
 const closeSheet = ()=> {
   emit("update:modelValue", false );
   resetForm();
 }
+
+const isNameChanged = computed(()=> {
+  if(!props.player) return false;
+  return playerNameValue.value.trim() !== props.player.name;
+})
+
+const canSubmit = computed(()=> {
+  return isNameChanged.value && !playerNameError.value && playerNameValue.value.length >= 3;
+})
 
 defineExpose({
   validatePlayerName: validate
@@ -86,8 +100,9 @@ defineExpose({
               type="submit" 
               color="primary"
               @click="submitForm"
+              :disabled="!isNameChanged"
               data-testid="btn-add-player"
-            >{{ EditPlayerSheetText.buttons.add }}</v-btn>
+            >{{ EditPlayerSheetText.buttons.save }}</v-btn>
             <v-btn 
               variant="text"
               @click="closeSheet" 

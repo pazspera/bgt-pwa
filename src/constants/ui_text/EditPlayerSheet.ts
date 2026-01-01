@@ -4,7 +4,7 @@ export const EditPlayerSheetText = {
     playerName: "Nombre"
   },
   buttons: {
-    add: "Editar",
+    save: "Guardar cambios",
     cancel: "Cancelar"
   },
   errors: {

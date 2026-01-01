@@ -3,10 +3,12 @@ import { ref, type Ref, onBeforeMount } from "vue";
 import AddPlayerSheet from "../../components/organisms/AddPlayerSheet.vue";
 import EditPlayerSheet from "../../components/organisms/EditPlayerSheet.vue";
 import { usePlayersApi } from "../../composables/usePlayersApi";
+import { usePlayerApi } from "../../composables/usePlayerApi";
 import CardGrid from "../../components/organisms/CardGrid.vue";
-import type { CreatePlayerRequest, PlayerApiResponse } from "../../types/domain/playerApi";
+import type { CreatePlayerRequest, PlayerApiResponse, UpdatePlayerRequest } from "../../types/domain/playerApi";
 import { PLAYER_STATUS, CONFIRM_DELETE_PLAYER } from "../../constants/ui_feedback/players";
 import { capitalize } from "../../utils/formatters";
+
 
 const isSheetVisible: Ref<boolean> = ref(false);
 const errorText: Ref<string> = ref("");
@@ -25,6 +27,7 @@ const snackbarColor = ref("");
 defineOptions({ name: "PlayersView" });
 
 const { players, totalPlayers, loading: loadingList, error: errorList, errorCreatePlayer, errorDeletePlayer, fetchPlayers, createPlayer, deletePlayer } = usePlayersApi();
+const { updatePlayer: updatePlayerAction, errorUpdate, loading: updating } = usePlayerApi();
 
 onBeforeMount(async ()=> {
   await fetchPlayers();
@@ -83,6 +86,28 @@ const handlePlayerAdded = async (newPlayer: CreatePlayerRequest)=> {
   } catch (error) {
     errorText.value = PLAYER_STATUS.ERROR.CREATE;
   }
+}
+
+const handlePlayerUpdated = async (updatedPlayer: { id: string, name: UpdatePlayerRequest }) => {
+  console.log("in handlePlayerUpdated");
+  console.log(updatedPlayer);
+  editErrorText.value = "";
+  
+  try {
+    await updatePlayerAction(updatedPlayer.id, updatedPlayer.name);
+
+    // update ui locally
+    const index = players.value.findIndex(p => p.id === updatedPlayer.id);
+    if (index !== -1) {
+      players.value[index].name = updatedPlayer.name.name;
+    }
+
+    isEditSheetVisible.value = false;
+    showSnackbar(PLAYER_STATUS.UPDATED(updatedPlayer.name.name), "success");
+  } catch (error) {
+    errorText.value = errorUpdate.value || PLAYER_STATUS.ERROR.UPDATE;
+  }
+
 }
 
 const doesPlayerExist = (name: string) => {
@@ -214,6 +239,7 @@ const showEditPlayerSheet = () => {
       v-model="isEditSheetVisible"
       :errorMessage="editErrorText"
       :player="playerToEdit"
+      @playerUpdated="handlePlayerUpdated"
     />
   </v-container>
 </template>
