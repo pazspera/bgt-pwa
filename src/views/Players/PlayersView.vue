@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, type Ref, onBeforeMount } from "vue";
+import { ref, type Ref, onBeforeMount, computed } from "vue";
 import AddPlayerSheet from "../../components/organisms/AddPlayerSheet.vue";
 import EditPlayerSheet from "../../components/organisms/EditPlayerSheet.vue";
 import { usePlayersApi } from "../../composables/usePlayersApi";
@@ -134,6 +134,12 @@ const showEditPlayerSheet = () => {
   }
 }
 
+const sortedPlayers = computed(()=> {
+  if(!players.value) return [];
+
+  return [...players.value].sort((a,b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime());
+})
+
 </script>
 
 <template>
@@ -172,7 +178,7 @@ const showEditPlayerSheet = () => {
 
     <CardGrid 
       v-else-if="(players && players.length > 0) && !errorList"
-      :data="players"
+      :data="sortedPlayers"
       type="player"
       @delete-player="handleDeletePlayer"
       @edit-player="handleEditPlayer"
