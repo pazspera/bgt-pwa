@@ -3,9 +3,14 @@ import type { PlayerApiResponse, PlayersListResponse, CreatePlayerRequest, Updat
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-export async function getPlayers() {
+export async function getPlayers(sortBy: string = "created_at", order: string = "asc") {
+  const params = new URLSearchParams({
+    sortBy: sortBy,
+    order: order
+  })
+
   try {
-    const response = await fetch(`${API_BASE_URL}/players`, { method: "GET" });
+    const response = await fetch(`${API_BASE_URL}/players?${params.toString()}`, { method: "GET" });
 
     if(!response.ok) {
       throw new Error(API_ERROR_MESSAGES.GET_PLAYERS_FAILED(response.status));

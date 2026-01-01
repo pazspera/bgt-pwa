@@ -23,7 +23,7 @@ defineExpose({ drawer });
 <template>
   <v-app-bar app color="surface" role="navigation" aria-label="Navegación principal" data-testid="app-bar">
     <v-container>
-      <v-row align="center" justify="space-between" class="px-0 navbar-row">
+      <v-row align="center" justify="space-between" class=" navbar-row">
         <div class="d-flex align-center logo-container">
           <Logo />
         </div>

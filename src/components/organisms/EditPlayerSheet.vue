@@ -3,28 +3,30 @@ import SubsectionTitle from '../atoms/typography/SubsectionTitle.vue';
 import { object, string } from "yup";
 import { toTypedSchema } from '@vee-validate/yup';
 import { useForm, useField } from 'vee-validate';
-import { ref, computed } from "vue";
+import { ref, computed, watch } from "vue";
 import { VExpandTransition } from 'vuetify/components';
-import { AddPlayerSheetText } from '../../constants/ui_text/AddPlayerSheet';
+import { EditPlayerSheetText } from '../../constants/ui_text/EditPlayerSheet';
+import { PlayerApiResponse, UpdatePlayerRequest } from "../../types/domain/playerApi"
 
-defineProps<{
+const props = defineProps<{
   modelValue: boolean,
-  errorMessage?: string
-}>()
-defineOptions({ name: "AddPlayerSheet" });
+  errorMessage?: string,
+  player: PlayerApiResponse | null,
+}>();
+defineOptions({ name: "EditPlayerSheet" });
 
 const validationSchema = toTypedSchema(
   object({
     playerName: string()
-      .required(AddPlayerSheetText.errors.required)
+      .required(EditPlayerSheetText.errors.required)
       .trim()
-      .min(3, AddPlayerSheetText.errors.minLength)
+      .min(3, EditPlayerSheetText.errors.minLength)
   })
 )
 
-const emit = defineEmits(["update:modelValue", "playerAdded"]);
+const emit = defineEmits(["update:modelValue", "playerUpdated"]);
 
-const { handleSubmit, resetForm } = useForm({
+const { handleSubmit, resetForm, setValues } = useForm({
   validationSchema,
   initialValues: { playerName: "" }
 })
@@ -35,16 +37,40 @@ const {
   validate
 } = useField<string>("playerName");
 
+watch(() => props.player, (newPlayer) => {
+  if (newPlayer) {
+    // Si viene un player, llenamos el campo manualmente
+    playerNameValue.value = newPlayer.name;
+  } else {
+    // Si es null (crear nuevo), limpiamos el formulario
+    resetForm();
+  }
+}, { immediate: true });
+
 const isPersistent = computed(()=> playerNameValue.value?.length > 0);
 
 const submitForm = handleSubmit(values => {
-  emit("playerAdded", { name: values.playerName });
+  if (!props.player) return;
+
+  emit("playerUpdated", { 
+    id: props.player.id,
+    name: { name: values.playerName.trim() }
+  });
 })
 
 const closeSheet = ()=> {
   emit("update:modelValue", false );
   resetForm();
 }
+
+const isNameChanged = computed(()=> {
+  if(!props.player) return false;
+  return playerNameValue.value.trim() !== props.player.name;
+})
+
+const canSubmit = computed(()=> {
+  return isNameChanged.value && !playerNameError.value && playerNameValue.value.length >= 3;
+})
 
 defineExpose({
   validatePlayerName: validate
@@ -61,11 +87,11 @@ defineExpose({
   >
     <v-sheet color="surface">
       <v-container class="container">
-        <SubsectionTitle class="title">{{ AddPlayerSheetText.title }}</SubsectionTitle>
+        <SubsectionTitle class="title">{{ EditPlayerSheetText.title }}</SubsectionTitle>
         <form @submit.prevent="submitForm">
           <v-text-field 
             v-model="playerNameValue" 
-            :label="AddPlayerSheetText.labels.playerName"
+            :label="EditPlayerSheetText.labels.playerName"
             :error-messages="playerNameError" 
             data-testid="input-player-name"
           ></v-text-field>
@@ -74,13 +100,14 @@ defineExpose({
               type="submit" 
               color="primary"
               @click="submitForm"
+              :disabled="!isNameChanged"
               data-testid="btn-add-player"
-            >{{ AddPlayerSheetText.buttons.add }}</v-btn>
+            >{{ EditPlayerSheetText.buttons.save }}</v-btn>
             <v-btn 
               variant="text"
               @click="closeSheet" 
               data-testid="btn-cancel"
-            >{{ AddPlayerSheetText.buttons.cancel }}</v-btn>
+            >{{ EditPlayerSheetText.buttons.cancel }}</v-btn>
           </div>
         </form>
 

@@ -9,13 +9,15 @@ export function usePlayersApi() {
   const loading: Ref<boolean> = ref(false);
   const error: Ref<string | null> = ref(null);
   const deleted: Ref<boolean> = ref(false);
+  const errorCreatePlayer: Ref<string | null> = ref(null);
+  const errorDeletePlayer: Ref<string | null> = ref(null);
 
-  const fetchPlayers = async () => {
+  const fetchPlayers = async (sortBy: string = "created_at", order: string = "asc") => {
     loading.value = true;
     error.value = null;
 
     try {
-      const fetchedPlayers: PlayersListResponse = await PlayerApiService.getPlayers();
+      const fetchedPlayers: PlayersListResponse = await PlayerApiService.getPlayers(sortBy, order);
       totalPlayers.value = fetchedPlayers.total;
       players.value = fetchedPlayers.data;
     } catch (e) {
@@ -27,13 +29,15 @@ export function usePlayersApi() {
 
   const createPlayer = async (playerData: CreatePlayerRequest) => {
     loading.value = true;
-    error.value = null;
+    errorCreatePlayer.value = null;
 
     try {
       const response = await PlayerApiService.createPlayer(playerData);
       newPlayer.value = response; 
+      return response;
     } catch (e) {
-      error.value = e.message;
+      errorCreatePlayer.value = e.message;
+      throw e;
     } finally {
       loading.value = false;
     }
@@ -41,17 +45,18 @@ export function usePlayersApi() {
 
   const deletePlayer = async (id: string) => {
     loading.value = true;
-    error.value = null;
+    errorDeletePlayer.value = null;
 
     try {
       await PlayerApiService.deletePlayer(id);
       deleted.value = true;
     } catch (err) {
-      error.value = err.message;
+      errorDeletePlayer.value = err.message;
+      throw err;
     } finally {
       loading.value = false;
     }
   };
 
-  return { players, totalPlayers, newPlayer, loading, error, deleted, fetchPlayers, createPlayer, deletePlayer };
+  return { players, totalPlayers, newPlayer, loading, error, errorCreatePlayer, errorDeletePlayer, deleted, fetchPlayers, createPlayer, deletePlayer };
 }

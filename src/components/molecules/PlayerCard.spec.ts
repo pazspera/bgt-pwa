@@ -2,8 +2,8 @@ import { it, describe, beforeEach, expect } from "vitest";
 import { mount } from "@vue/test-utils";
 import { createVuetifyForTest } from "../../tests/utils/createVuetifyForTest";
 import PlayerCard from "./PlayerCard.vue";
+import { mockSinglePlayer } from "../../mocks/data/playersApi";
 import { VCard, VCardActions, VCardText, VBtn } from "vuetify/components";
-import type { Player } from "../../types/domain/player";
 import { faTrash, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { nextTick } from "vue";
 
@@ -11,16 +11,10 @@ const vuetify = createVuetifyForTest({ VCard, VCardActions, VCardText, VBtn });
 const faTrashText = faTrash.iconName;
 const faPenToSquareText = faPenToSquare.iconName;
 
-const mockPlayer: Player = {
-  id: 333,
-  name: "Zeuchi, the Great",
-  createdAt: "createdAt"
-}
-
 const mountPlayerCard = ()=> {
   return mount(PlayerCard, {
     props: {
-      player: mockPlayer,
+      player: mockSinglePlayer,
     },
     global: {
       plugins: [vuetify],
@@ -48,7 +42,7 @@ describe("rendering",()=> {
     const playerName = wrapper.find('[data-testid="player-card-name"]');
 
     expect(playerName.exists()).toBe(true);
-    expect(playerName.text()).toBe(mockPlayer.name);
+    expect(playerName.text()).toBe(mockSinglePlayer.name);
   });
 
   it("renders delete icon", ()=> {
@@ -76,40 +70,40 @@ describe("component logic",()=> {
     await btnEdit.trigger("click");
     await nextTick();
 
-    const emittedEvents = wrapper.emitted("editPlayer");
+    const emittedEvents = wrapper.emitted("edit-player");
 
     expect(emittedEvents).toBeTruthy();
     expect(emittedEvents).toHaveLength(1);
   });
 
-  it("emits playerId on editPlayer", async ()=> {
+  it("emits player on editPlayer", async ()=> {
     await btnEdit.trigger("click");
     await nextTick();
 
-    const emittedEvents = wrapper.emitted("editPlayer");
+    const emittedEvents = wrapper.emitted("edit-player");
     expect(emittedEvents).toBeTruthy();
     // emittedEvents returns an array of arrays
     // have to access the index twice to get to the value to compare
-    expect(emittedEvents[0][0]).toEqual(mockPlayer.id);
+    expect(emittedEvents[0][0]).toEqual(mockSinglePlayer);
   });
 
   it("emits deletePlayer event when delete button clicked", async ()=> {
     await btnDelete.trigger("click");
     await nextTick();
 
-    const emittedEvents = wrapper.emitted("deletePlayer");
+    const emittedEvents = wrapper.emitted("delete-player");
 
     expect(emittedEvents).toBeTruthy();
     expect(emittedEvents).toHaveLength(1);
   });
   
-  it("emits playerId on deletePlayer", async ()=> {
+  it("emits player on deletePlayer", async ()=> {
     await btnDelete.trigger("click");
     await nextTick();
 
-    const emittedEvents = wrapper.emitted("deletePlayer");
+    const emittedEvents = wrapper.emitted("delete-player");
 
     expect(emittedEvents).toBeTruthy();
-    expect(emittedEvents[0][0]).toEqual(mockPlayer.id);
+    expect(emittedEvents[0][0]).toEqual(mockSinglePlayer);
   });
 })
