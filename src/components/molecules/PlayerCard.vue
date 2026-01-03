@@ -42,6 +42,7 @@ const handleDeletePlayer = () => {
         class="button-edit" 
         rounded="circle" 
         icon
+        variant="text"
       >
         <FontAwesomeIcon :icon="faPenToSquare" class="icon-edit" />
       </v-btn>
@@ -51,6 +52,7 @@ const handleDeletePlayer = () => {
         class="button-delete" 
         rounded="circle" 
         icon
+        variant="text"
       >
         <FontAwesomeIcon :icon="faTrash" class="icon-delete" />
       </v-btn>
@@ -94,9 +96,9 @@ const handleDeletePlayer = () => {
 
 <style>
 /* Global styles for button hover state */
-.button-edit:hover .icon-edit,
+/* .button-edit:hover .icon-edit,
 .button-delete:hover .icon-delete {
   color: var(--v-surface) !important;
   fill: var(--v-surface) !important;
-}
+} */
 </style>

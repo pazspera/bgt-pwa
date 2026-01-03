@@ -157,3 +157,41 @@ h6 {
   color: var(--gray-dark);
   opacity: 0.6;
 }
+
+
+/* --- Fix global hover para btn --- */
+
+/* Atacamos el estado hover específicamente para Light Mode */
+.v-theme--lightTheme .v-btn--variant-text:hover {
+  /* Forzamos el color del texto/icono a través de la variable de Vuetify */
+  --v-theme-on-surface: var(--accent-600) !important;
+  color: var(--accent-600) !important;
+}
+
+/* El fondo del botón (Overlay) */
+.v-theme--lightTheme .v-btn--variant-text:hover .v-btn__overlay {
+  background-color: var(--primary-600) !important;
+  opacity: 1 !important;
+}
+
+/* El Icono: Esta es la regla más importante para romper el bloqueo */
+.v-theme--lightTheme .v-btn--variant-text:hover .v-btn__content svg,
+.v-theme--lightTheme .v-btn--variant-text:hover i {
+  color: var(--accent-600) !important;
+  fill: var(--accent-600) !important;
+  /* El filtro asegura que el color se imponga sobre cualquier capa */
+  filter: drop-shadow(0 0 0 var(--accent-600)); 
+}
+
+/* --- FIX FINAL: DARK MODE --- */
+.v-theme--darkTheme .v-btn--variant-text:hover {
+  color: var(--accent-400) !important;
+}
+
+.v-theme--darkTheme .v-btn--variant-text:hover .v-btn__overlay {
+  opacity: 0.1 !important;
+}
+
+.v-theme--darkTheme .v-btn--variant-text:hover .v-btn__content svg {
+  color: var(--accent-400) !important;
+}

@@ -49,8 +49,8 @@ const COLOR = {
 const lightTheme = {
   dark: false,
   colors: {
-    primary: COLOR.PRIMARY_400,
-    secondary: COLOR.ACCENT_400,
+    primary: COLOR.PRIMARY_600,
+    secondary: COLOR.ACCENT_600,
     background: COLOR.NEUTRAL_200,
     surface: COLOR.TEXT_LIGHT,
     'on-primary': COLOR.TEXT_DARK,
@@ -76,9 +76,9 @@ const darkTheme = {
     background: COLOR.NEUTRAL_900,
     surface: COLOR.NEUTRAL_800,
     'on-primary': COLOR.TEXT_DARK,
-    'on-secondary': COLOR.TEXT_DARK,
+    'on-secondary': COLOR.NEUTRAL_900,
     'on-background': COLOR.TEXT_LIGHT,
-    'on-surface': COLOR.TEXT_LIGHT,
+    'on-surface': "#ffffff",
     error: COLOR.ERROR_DARK,
     info: COLOR.INFO_DARK,
     success: COLOR.SUCCESS_DARK,
@@ -87,6 +87,15 @@ const darkTheme = {
     'on-info': COLOR.TEXT_DARK,
     'on-success': COLOR.TEXT_DARK,
     'on-warning': COLOR.TEXT_DARK,
+  },
+  variables: {
+    'border-opacity': 0.12,
+    'hover-opacity': 0.15,      // Reducimos la intensidad del hover global
+    'focus-opacity': 0.12,
+    'selected-opacity': 0.12,
+    'activated-opacity': 0.12,
+    'pressed-opacity': 0.16,
+    'dragged-opacity': 0.08,
   }
 };
 
@@ -108,6 +117,13 @@ const vuetify = createVuetify({
       lightTheme,
 		},
 	},
+  defaults: {
+    VBtn: {
+      variant: "text",
+      color: "on-surface",
+      ripple: false,
+    }
+  }
 });
 
 // Mock API
