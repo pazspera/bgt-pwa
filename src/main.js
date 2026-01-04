@@ -68,11 +68,11 @@ const lightTheme = {
   },
   variables: {
     'border-opacity': 0.12,
-    'hover-opacity': 0.15,      
+    'hover-opacity': 0.1,      
     'focus-opacity': 0.12,
     'selected-opacity': 0.12,
-    'activated-opacity': 0.12,
-    'pressed-opacity': 0.16,
+    'activated-opacity': 0,
+    'pressed-opacity': 0.,
     'dragged-opacity': 0.08,
   }
 };
@@ -99,11 +99,11 @@ const darkTheme = {
   },
   variables: {
     'border-opacity': 0.12,
-    'hover-opacity': 0.15,     
+    'hover-opacity': 0.1,     
     'focus-opacity': 0.12,
     'selected-opacity': 0.12,
-    'activated-opacity': 0.12,
-    'pressed-opacity': 0.16,
+    'activated-opacity': 0,
+    'pressed-opacity': 0,
     'dragged-opacity': 0.08,
   }
 };
@@ -126,6 +126,16 @@ const vuetify = createVuetify({
       lightTheme,
 		},
 	},
+  defaults: {
+    VBtn: {
+      style: [
+        {
+          "--v-activated-opacity": "0",
+          "--v-hover-opacity": "0.1"
+        }
+      ]
+    }
+  }
 });
 
 // Mock API
