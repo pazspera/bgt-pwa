@@ -30,8 +30,7 @@ onBeforeMount(()=> {
         :key="item.id"
         cols="12"
         sm="6"
-        md="4"
-        lg="3"
+        lg="4"
       >
         <PlayerCard v-if="type === 'player'" 
           :player="item"
