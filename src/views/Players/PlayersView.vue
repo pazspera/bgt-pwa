@@ -8,8 +8,6 @@ import CardGrid from "../../components/organisms/CardGrid.vue";
 import type { CreatePlayerRequest, PlayerApiResponse, UpdatePlayerRequest } from "../../types/domain/playerApi";
 import { PLAYER_STATUS, CONFIRM_DELETE_PLAYER } from "../../constants/ui_feedback/players";
 import { capitalize } from "../../utils/formatters";
-import { mockSinglePlayer } from "../../mocks/data/playersApi";
-import PlayerCard from "../../components/molecules/PlayerCard.vue";
 
 const isSheetVisible: Ref<boolean> = ref(false);
 const errorText: Ref<string> = ref("");
@@ -162,8 +160,6 @@ const sortedPlayers = computed(()=> {
         <br/>
       </v-col>
     </v-row>
-
-    <PlayerCard :player="mockSinglePlayer" />
 
     <!-- error for the player list -->
     <v-row v-if="errorList" >

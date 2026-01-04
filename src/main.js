@@ -117,13 +117,6 @@ const vuetify = createVuetify({
       lightTheme,
 		},
 	},
-  defaults: {
-    VBtn: {
-      variant: "text",
-      color: "on-surface",
-      ripple: false,
-    }
-  }
 });
 
 // Mock API

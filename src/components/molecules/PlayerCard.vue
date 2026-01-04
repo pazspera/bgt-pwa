@@ -39,7 +39,7 @@ const handleDeletePlayer = () => {
       <v-btn 
         data-testid="player-card-edit-btn"
         @click="handleEditPlayer"  
-        class="button-edit" 
+        class="action-btn button-edit" 
         rounded="circle" 
         icon
         variant="text"
@@ -49,7 +49,7 @@ const handleDeletePlayer = () => {
       <v-btn 
         data-testid="player-card-delete-btn"
         @click="handleDeletePlayer"
-        class="button-delete" 
+        class="action-btn button-delete" 
         rounded="circle" 
         icon
         variant="text"
@@ -78,6 +78,40 @@ const handleDeletePlayer = () => {
   cursor: pointer;
 }
 
+/* --- Fix global hover para btn --- */
+.action-btn {
+  color: inherit !important;
+}
+
+/* FIX LIGHT MODE */
+:root .v-theme--lightTheme :deep(.v-btn.action-btn:hover) {
+  /* Redefinimos la variable que Vuetify usa para pintar el contenido (icono) */
+  --v-theme-on-surface: var(--accent-600) !important;
+  color: var(--accent-600) !important;
+}
+
+:root .v-theme--lightTheme :deep(.v-btn.action-btn:hover .v-btn__overlay) {
+  background-color: var(--primary-600) !important;
+  opacity: 1 !important;
+}
+
+/* Forzamos el SVG a usar la variable que acabamos de setear */
+:root .v-theme--lightTheme :deep(.v-btn.action-btn:hover svg) {
+  fill: var(--accent-600) !important;
+  color: var(--accent-600) !important;
+}
+
+/* --- FIX DARK MODE (El que ya te funcionaba) --- */
+:root .v-theme--darkTheme :deep(.v-btn.action-btn:hover .v-btn__overlay) {
+  background-color: var(--primary-300) !important;
+  opacity: 0.2 !important;
+}
+
+:root .v-theme--darkTheme :deep(.v-btn.action-btn:hover svg) {
+  fill: var(--accent-400) !important;
+  color: var(--accent-400) !important;
+}
+
 @media(max-width: 400px) {
   .player-card {
     flex-direction: column;
@@ -101,4 +135,7 @@ const handleDeletePlayer = () => {
   color: var(--v-surface) !important;
   fill: var(--v-surface) !important;
 } */
+
+ 
+
 </style>
