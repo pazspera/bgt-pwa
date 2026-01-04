@@ -40,7 +40,8 @@ const handleDeletePlayer = () => {
         data-testid="player-card-edit-btn"
         @click="handleEditPlayer"  
         class="action-btn button-edit" 
-        variant="text"
+        variant="plain"
+        color="primary"
       >
         <FontAwesomeIcon :icon="faPenToSquare" class="icon-edit" /> Editar
       </v-btn>
@@ -48,7 +49,8 @@ const handleDeletePlayer = () => {
         data-testid="player-card-delete-btn"
         @click="handleDeletePlayer"
         class="action-btn button-delete" 
-        variant="text"
+        variant="plain"
+        color="error"
       >
         <FontAwesomeIcon :icon="faTrash" class="icon-delete" /> Borrar
       </v-btn>
@@ -62,17 +64,15 @@ const handleDeletePlayer = () => {
   flex-direction: column;
   justify-content: space-between;
   align-items: self-start;
-}
-
-.player-card-text,
-.player-card-actions {
-  padding: 16px;
+  padding: 12px;
 }
 
 .button-edit,
 .button-delete {
   cursor: pointer;
 }
+
+
 
 @media(max-width: 400px) {
   .player-card {
@@ -88,16 +88,4 @@ const handleDeletePlayer = () => {
     padding-bottom: 8px;
   }
 }
-</style>
-
-<style>
-/* Global styles for button hover state */
-/* .button-edit:hover .icon-edit,
-.button-delete:hover .icon-delete {
-  color: var(--v-surface) !important;
-  fill: var(--v-surface) !important;
-} */
-
- 
-
 </style>

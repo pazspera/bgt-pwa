@@ -65,6 +65,15 @@ const lightTheme = {
     'on-info': COLOR.TEXT_LIGHT,
     'on-success': COLOR.TEXT_LIGHT,
     'on-warning': COLOR.TEXT_DARK,
+  },
+  variables: {
+    'border-opacity': 0.12,
+    'hover-opacity': 0.15,      
+    'focus-opacity': 0.12,
+    'selected-opacity': 0.12,
+    'activated-opacity': 0.12,
+    'pressed-opacity': 0.16,
+    'dragged-opacity': 0.08,
   }
 };
 
@@ -78,7 +87,7 @@ const darkTheme = {
     'on-primary': COLOR.TEXT_DARK,
     'on-secondary': COLOR.NEUTRAL_900,
     'on-background': COLOR.TEXT_LIGHT,
-    'on-surface': "#ffffff",
+    'on-surface': COLOR.PRIMARY_100,
     error: COLOR.ERROR_DARK,
     info: COLOR.INFO_DARK,
     success: COLOR.SUCCESS_DARK,
@@ -90,7 +99,7 @@ const darkTheme = {
   },
   variables: {
     'border-opacity': 0.12,
-    'hover-opacity': 0.15,      // Reducimos la intensidad del hover global
+    'hover-opacity': 0.15,     
     'focus-opacity': 0.12,
     'selected-opacity': 0.12,
     'activated-opacity': 0.12,
