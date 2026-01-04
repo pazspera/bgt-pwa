@@ -53,7 +53,7 @@ const lightTheme = {
     secondary: COLOR.ACCENT_600,
     background: COLOR.NEUTRAL_200,
     surface: COLOR.TEXT_LIGHT,
-    'on-primary': COLOR.TEXT_DARK,
+    'on-primary': COLOR.TEXT_LIGHT,
     'on-secondary': COLOR.TEXT_DARK,
     'on-background': COLOR.TEXT_DARK,
     'on-surface': COLOR.TEXT_DARK,
@@ -65,15 +65,6 @@ const lightTheme = {
     'on-info': COLOR.TEXT_LIGHT,
     'on-success': COLOR.TEXT_LIGHT,
     'on-warning': COLOR.TEXT_DARK,
-  },
-  variables: {
-    'border-opacity': 0.12,
-    'hover-opacity': 0.1,      
-    'focus-opacity': 0.12,
-    'selected-opacity': 0.12,
-    'activated-opacity': 0,
-    'pressed-opacity': 0.,
-    'dragged-opacity': 0.08,
   }
 };
 
@@ -85,9 +76,9 @@ const darkTheme = {
     background: COLOR.NEUTRAL_900,
     surface: COLOR.NEUTRAL_800,
     'on-primary': COLOR.TEXT_DARK,
-    'on-secondary': COLOR.NEUTRAL_900,
+    'on-secondary': COLOR.TEXT_DARK,
     'on-background': COLOR.TEXT_LIGHT,
-    'on-surface': COLOR.PRIMARY_100,
+    'on-surface': COLOR.TEXT_LIGHT,
     error: COLOR.ERROR_DARK,
     info: COLOR.INFO_DARK,
     success: COLOR.SUCCESS_DARK,
@@ -96,15 +87,6 @@ const darkTheme = {
     'on-info': COLOR.TEXT_DARK,
     'on-success': COLOR.TEXT_DARK,
     'on-warning': COLOR.TEXT_DARK,
-  },
-  variables: {
-    'border-opacity': 0.12,
-    'hover-opacity': 0.1,     
-    'focus-opacity': 0.12,
-    'selected-opacity': 0.12,
-    'activated-opacity': 0,
-    'pressed-opacity': 0,
-    'dragged-opacity': 0.08,
   }
 };
 
@@ -126,16 +108,16 @@ const vuetify = createVuetify({
       lightTheme,
 		},
 	},
-  defaults: {
-    VBtn: {
-      style: [
-        {
-          "--v-activated-opacity": "0",
-          "--v-hover-opacity": "0.1"
-        }
-      ]
+  variables: {
+      // controla la intensidad del overlay en hover
+      'button-hover-opacity': 0.12,
+      // controla la opacidad cuando el botón está enfocado
+      'button-focused-opacity': 0.16,
+      // opacidad cuando el botón está deshabilitado
+      'button-disabled-opacity': 0.38,
+      // opacidad del overlay en active (click)
+      'button-pressed-opacity': 0.2,
     }
-  }
 });
 
 // Mock API

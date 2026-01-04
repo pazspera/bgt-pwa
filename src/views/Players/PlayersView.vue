@@ -227,11 +227,19 @@ const sortedPlayers = computed(()=> {
         <template v-slot:actions>
           <v-spacer></v-spacer>
           
-          <v-btn @click="confirmDelete">
+          <v-btn
+            color="error" 
+            variant="plain"
+            @click="confirmDelete"
+          >
             {{ CONFIRM_DELETE_PLAYER.CONFIRM_BTN_TEXT }}
           </v-btn>
 
-          <v-btn @click="isDeleteDialogVisible = false">
+          <v-btn
+            color="primary" 
+            variant="plain"
+            @click="isDeleteDialogVisible = false"
+          >
             {{ CONFIRM_DELETE_PLAYER.CANCEL_BTN_TEXT }}
           </v-btn>
         </template>

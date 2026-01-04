@@ -38,7 +38,7 @@ const handleDeletePlayer = () => {
 
     <v-card-actions class="player-card-actions">
       <AppButton 
-        variant="text"
+        variant="tonal"
         label="Editar"
         :icon="faPenToSquare"
         @click="handleEditPlayer"
