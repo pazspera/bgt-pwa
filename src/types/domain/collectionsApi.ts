@@ -1,4 +1,4 @@
-export interface CollectionApiResponse {
+export interface CollectionsApiResponse {
   id: string,
   name: string,
   bgg_id: number,
@@ -7,17 +7,17 @@ export interface CollectionApiResponse {
   max_players: number,
   playing_time: number,
   complexity: number,
-  create_at: string,
+  created_at: string,
   updated_at: string,
 }
 
-export interface CollectionListResponse { 
+export interface CollectionsListResponse { 
   id: string,
   name: string,
   description: string,
   created_by: string,
-  is_primary: string,
+  is_primary: boolean,
   created_at: string,
   updated_at: string,
-  games: CollectionApiResponse[],
+  games: CollectionsApiResponse[],
 }

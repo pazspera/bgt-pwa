@@ -1,9 +1,9 @@
 import * as CollectionApiService from "../api/collectionApiService";
 import { ref, type Ref } from "vue";
-import { CollectionApiResponse, CollectionListResponse } from "../types/domain/collectionApi";
+import { CollectionsApiResponse, CollectionsListResponse } from "../types/domain/collectionsApi";
 
 export function useCollectionsApi() {
-  const collection: Ref<CollectionApiResponse[]> = ref([]);
+  const collection: Ref<CollectionsApiResponse[]> = ref([]);
   const totalBoardgames: Ref<number> = ref(0);
   const loading: Ref<boolean> = ref(false);
   const errorFetchCollection: Ref<boolean> = ref(false);
@@ -13,7 +13,7 @@ export function useCollectionsApi() {
     errorFetchCollection.value = null;
 
     try {
-      const fetchedCollection: CollectionListResponse = await CollectionApiService.getCollections();
+      const fetchedCollection: CollectionsListResponse = await CollectionApiService.getCollections();
       totalBoardgames.value = fetchedCollection.games.length;
       collection.value = fetchedCollection.games;
     } catch (err) {
