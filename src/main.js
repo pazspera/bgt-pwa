@@ -109,15 +109,16 @@ const vuetify = createVuetify({
 		},
 	},
   variables: {
-      // controla la intensidad del overlay en hover
-      'button-hover-opacity': 0.12,
-      // controla la opacidad cuando el botón está enfocado
-      'button-focused-opacity': 0.16,
-      // opacidad cuando el botón está deshabilitado
-      'button-disabled-opacity': 0.38,
-      // opacidad del overlay en active (click)
-      'button-pressed-opacity': 0.2,
+    'button-hover-opacity': 0.12,
+    'button-focused-opacity': 0.16,
+    'button-disabled-opacity': 0.38,
+    'button-pressed-opacity': 0.2,
+  },
+  defaults: {
+    VBtn: {
+      ripple: false,
     }
+  }
 });
 
 // Mock API
