@@ -8,7 +8,7 @@ export function useCollectionsApi() {
   const loading: Ref<boolean> = ref(false);
   const errorFetchCollection: Ref<boolean> = ref(false);
 
-  const fetchCollection = async () => {
+  const fetchCollections = async () => {
     loading.value = true;
     errorFetchCollection.value = null;
 
@@ -23,5 +23,5 @@ export function useCollectionsApi() {
     }
   };
 
-  return { collection, totalBoardgames, loading, errorFetchCollection, fetchCollection };
+  return { collection, totalBoardgames, loading, errorFetchCollection, fetchCollections };
 }

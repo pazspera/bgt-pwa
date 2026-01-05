@@ -7,10 +7,10 @@ defineOptions({ name: "BoardGamesView" });
 
 const isSnackBarVisible = true;
 
-const { collection, totalBoardgames, loading, errorFetchCollection, fetchCollection } = useCollectionsApi();
+const { collection, totalBoardgames, loading, errorFetchCollection, fetchCollections } = useCollectionsApi();
 
 onBeforeMount(async ()=> {
-  await fetchCollection();
+  await fetchCollections();
   console.log(collection.value);
 })
 
