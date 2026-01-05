@@ -157,3 +157,7 @@ h6 {
   color: var(--gray-dark);
   opacity: 0.6;
 }
+
+button.v-btn {
+  cursor: pointer;
+}

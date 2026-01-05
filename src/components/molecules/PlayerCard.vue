@@ -39,20 +39,22 @@ const handleDeletePlayer = () => {
       <v-btn 
         data-testid="player-card-edit-btn"
         @click="handleEditPlayer"  
-        class="button-edit" 
-        rounded="circle" 
-        icon
+        class="action-btn button-edit"
+        color="primary"
+        variant="plain"
       >
         <FontAwesomeIcon :icon="faPenToSquare" class="icon-edit" />
+        <span>Editar</span>
       </v-btn>
       <v-btn 
         data-testid="player-card-delete-btn"
         @click="handleDeletePlayer"
-        class="button-delete" 
-        rounded="circle" 
-        icon
+        class="action-btn button-delete"
+        color="error"
+        variant="plain" 
       >
         <FontAwesomeIcon :icon="faTrash" class="icon-delete" />
+        <span>Borrar</span>
       </v-btn>
     </v-card-actions>
   </v-card>
@@ -61,14 +63,10 @@ const handleDeletePlayer = () => {
 <style scoped>
 .player-card {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
-  align-items: center;
-}
-
-.player-card-text,
-.player-card-actions {
-  padding: 16px;
+  align-items: self-start;
+  padding: 12px;
 }
 
 .button-edit,
@@ -76,27 +74,4 @@ const handleDeletePlayer = () => {
   cursor: pointer;
 }
 
-@media(max-width: 400px) {
-  .player-card {
-    flex-direction: column;
-    align-items: start;
-  }
-
-  .player-card-actions {
-    padding-top: 0;
-  }
-
-  .player-card-text {
-    padding-bottom: 8px;
-  }
-}
-</style>
-
-<style>
-/* Global styles for button hover state */
-.button-edit:hover .icon-edit,
-.button-delete:hover .icon-delete {
-  color: var(--v-surface) !important;
-  fill: var(--v-surface) !important;
-}
 </style>

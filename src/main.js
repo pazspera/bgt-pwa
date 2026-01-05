@@ -49,11 +49,11 @@ const COLOR = {
 const lightTheme = {
   dark: false,
   colors: {
-    primary: COLOR.PRIMARY_400,
-    secondary: COLOR.ACCENT_400,
+    primary: COLOR.PRIMARY_600,
+    secondary: COLOR.ACCENT_600,
     background: COLOR.NEUTRAL_200,
     surface: COLOR.TEXT_LIGHT,
-    'on-primary': COLOR.TEXT_DARK,
+    'on-primary': COLOR.TEXT_LIGHT,
     'on-secondary': COLOR.TEXT_DARK,
     'on-background': COLOR.TEXT_DARK,
     'on-surface': COLOR.TEXT_DARK,
@@ -108,6 +108,17 @@ const vuetify = createVuetify({
       lightTheme,
 		},
 	},
+  variables: {
+    'button-hover-opacity': 0.12,
+    'button-focused-opacity': 0.16,
+    'button-disabled-opacity': 0.38,
+    'button-pressed-opacity': 0.2,
+  },
+  defaults: {
+    VBtn: {
+      ripple: false,
+    }
+  }
 });
 
 // Mock API

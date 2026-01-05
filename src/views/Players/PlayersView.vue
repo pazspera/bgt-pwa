@@ -9,7 +9,6 @@ import type { CreatePlayerRequest, PlayerApiResponse, UpdatePlayerRequest } from
 import { PLAYER_STATUS, CONFIRM_DELETE_PLAYER } from "../../constants/ui_feedback/players";
 import { capitalize } from "../../utils/formatters";
 
-
 const isSheetVisible: Ref<boolean> = ref(false);
 const errorText: Ref<string> = ref("");
 const isEditSheetVisible: Ref<boolean> = ref(false);
@@ -228,11 +227,19 @@ const sortedPlayers = computed(()=> {
         <template v-slot:actions>
           <v-spacer></v-spacer>
           
-          <v-btn @click="confirmDelete">
+          <v-btn
+            color="error" 
+            variant="plain"
+            @click="confirmDelete"
+          >
             {{ CONFIRM_DELETE_PLAYER.CONFIRM_BTN_TEXT }}
           </v-btn>
 
-          <v-btn @click="isDeleteDialogVisible = false">
+          <v-btn
+            color="primary" 
+            variant="plain"
+            @click="isDeleteDialogVisible = false"
+          >
             {{ CONFIRM_DELETE_PLAYER.CANCEL_BTN_TEXT }}
           </v-btn>
         </template>
