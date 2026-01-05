@@ -53,11 +53,6 @@ const props = withDefaults(defineProps<Props>(),{
   fill: currentColor !important;
 }
 
-/* Feedback físico */
-.app-btn.v-btn:active {
-  transform: scale(0.95);
-}
-
 /* HOVER por color usando tokens on-* para contraste correcto */
 .app-btn.v-btn.is-primary:hover {
   background-color: var(--v-theme-primary) !important;

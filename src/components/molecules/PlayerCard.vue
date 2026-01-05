@@ -37,7 +37,27 @@ const handleDeletePlayer = () => {
     </v-card-text>
 
     <v-card-actions class="player-card-actions">
-      <AppButton 
+      <v-btn 
+        data-testid="player-card-edit-btn"
+        @click="handleEditPlayer"  
+        class="action-btn button-edit"
+        color="primary"
+        variant="plain"
+      >
+        <FontAwesomeIcon :icon="faPenToSquare" class="icon-edit" />
+        <span>Editar</span>
+      </v-btn>
+      <v-btn 
+        data-testid="player-card-delete-btn"
+        @click="handleDeletePlayer"
+        class="action-btn button-delete"
+        color="error"
+        variant="plain" 
+      >
+        <FontAwesomeIcon :icon="faTrash" class="icon-delete" />
+        <span>Borrar</span>
+      </v-btn>
+      <!-- <AppButton 
         variant="tonal"
         label="Editar"
         :icon="faPenToSquare"
@@ -53,7 +73,7 @@ const handleDeletePlayer = () => {
         color="error"
         class="action-btn button-delete"
         data-testid="player-card-delete-btn" 
-      />
+      /> -->
     </v-card-actions>
   </v-card>
 </template>
