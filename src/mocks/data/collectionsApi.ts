@@ -48,3 +48,14 @@ export const mockCollectionsListResponse: CollectionsListResponse = {
     }
   ]
 }
+
+export const mockCollectionsEmptyListResponse: CollectionsListResponse = {
+  id: "b6acc73a-6b7a-4c67-937a-e1a6169f173f",
+  name: "Ludoteca default",
+  description: "Mi ludoteca",
+  created_by: "9482eacc-479b-4542-8bc5-5b2af5a4dc72",
+  is_primary: true,
+  created_at: "2025-12-02T13:20:37.599276Z",
+  updated_at: "2025-12-02T13:25:31.244572Z",
+  "games": []
+}

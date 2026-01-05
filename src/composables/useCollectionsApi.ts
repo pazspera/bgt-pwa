@@ -6,22 +6,22 @@ export function useCollectionsApi() {
   const collection: Ref<CollectionsApiResponse[]> = ref([]);
   const totalBoardgames: Ref<number> = ref(0);
   const loading: Ref<boolean> = ref(false);
-  const errorFetchCollection: Ref<boolean> = ref(false);
+  const errorFetchCollections: Ref<string | null> = ref(null);
 
   const fetchCollections = async () => {
     loading.value = true;
-    errorFetchCollection.value = null;
+    errorFetchCollections.value = null;
 
     try {
       const fetchedCollection: CollectionsListResponse = await CollectionApiService.getCollections();
       totalBoardgames.value = fetchedCollection.games.length;
       collection.value = fetchedCollection.games;
     } catch (err) {
-      errorFetchCollection.value = err.message;
+      errorFetchCollections.value = err.message;
     } finally { 
       loading.value = false;
     }
   };
 
-  return { collection, totalBoardgames, loading, errorFetchCollection, fetchCollections };
+  return { collection, totalBoardgames, loading, errorFetchCollections, fetchCollections };
 }

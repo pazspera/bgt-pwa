@@ -11,6 +11,7 @@ export async function getCollections() {
       throw new Error(API_ERROR_MESSAGES.GET_COLLECTIONS_FAILED(response.status));
     }
 
+    // no estoy llamando a la propiedad games pero me devuelve solo eso 
     const data: CollectionsListResponse = await response.json();
     return data;
   } catch (err) {
