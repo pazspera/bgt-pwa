@@ -2,7 +2,6 @@
 import type { PlayerApiResponse } from '../../types/domain/playerApi';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faTrash, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
-import AppButton from '../atoms/buttons/AppButton.vue';
 
 const props = defineProps<{
   player: PlayerApiResponse,
@@ -57,23 +56,6 @@ const handleDeletePlayer = () => {
         <FontAwesomeIcon :icon="faTrash" class="icon-delete" />
         <span>Borrar</span>
       </v-btn>
-      <!-- <AppButton 
-        variant="tonal"
-        label="Editar"
-        :icon="faPenToSquare"
-        @click="handleEditPlayer"
-        class="action-btn button-edit"
-        data-testid="player-card-edit-btn"   
-      />
-      <AppButton
-        variant="tonal"
-        label="Borrar 2"
-        :icon="faTrash"
-        @click="handleDeletePlayer"
-        color="error"
-        class="action-btn button-delete"
-        data-testid="player-card-delete-btn" 
-      /> -->
     </v-card-actions>
   </v-card>
 </template>
