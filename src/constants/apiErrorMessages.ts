@@ -14,5 +14,7 @@ export const API_ERROR_MESSAGES = {
 
   UNKNOWN_ERROR: (message: string) => message ? `${message}` : "Error desconocido",
   
-  NETWORK_ERROR: "Error de conexión"
+  NETWORK_ERROR: "Error de conexión",
+
+  GET_COLLECTIONS_FAILED: (status: number) => `Error ${status}: No se pudo obtener la ludoteca`,
 }

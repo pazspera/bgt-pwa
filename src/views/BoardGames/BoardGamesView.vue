@@ -1,10 +1,17 @@
 <script setup>
 import AppSnackbar from '../../components/molecules/AppSnackbar.vue';
-import { ref } from "vue";
+import { onBeforeMount } from "vue";
+import * as CollectionsApiService from "../../api/collectionApiService";
 
 defineOptions({ name: "BoardGamesView" });
 
 const isSnackBarVisible = true;
+
+onBeforeMount(async ()=> {
+  const data = await CollectionsApiService.getCollections();
+  console.log(data)
+
+})
 
 </script>
 
