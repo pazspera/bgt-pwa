@@ -2,14 +2,24 @@
 import type { PlayerApiResponse } from '../../types/domain/playerApi';
 import { onBeforeMount } from 'vue';
 import PlayerCard from '../molecules/PlayerCard.vue';
+import BoardgameCard from '../molecules/BoardgameCard.vue';
+import { CollectionsApiResponse } from '../../types/domain/collectionsApi';
 
 // definir un or con los distintos tipos de card que puede recibir
-type GridItem = PlayerApiResponse;
+type GridItem = PlayerApiResponse | CollectionsApiResponse;
 
 const props = defineProps<{
   data: GridItem[],
   type: "player" | "boardgame" | "game",
 }>();
+
+function isPlayer(item: GridItem): item is PlayerApiResponse {
+  return props.type === "player" && "is_registered" in item;
+}
+
+function isBoardgame(item: CollectionsApiResponse): item is CollectionsApiResponse {
+  return props.type === "boardgame" && "bbg_id" in item;
+}
 
 const emit = defineEmits<{
   'edit-player': [player: PlayerApiResponse],
@@ -32,10 +42,14 @@ onBeforeMount(()=> {
         sm="6"
         lg="4"
       >
-        <PlayerCard v-if="type === 'player'" 
+        <PlayerCard v-if="isPlayer(item)" 
           :player="item"
           @edit-player="(player) => $emit('edit-player', player)"
           @delete-player="(player) => $emit('delete-player', player)"
+        />
+
+        <BoardgameCard v-else-if="isBoardgame(item)"
+          :boardgame="item"
         />
       </v-col>
     </v-row>

@@ -4,6 +4,7 @@ import { onBeforeMount } from "vue";
 import { useCollectionsApi } from '../../composables/useCollectionsApi';
 import { mockCollectionsApiResponse } from '../../mocks/data/collectionsApi';
 import BoardgameCard from '../../components/molecules/BoardgameCard.vue';
+import CardGrid from '../../components/organisms/CardGrid.vue';
 
 defineOptions({ name: "BoardGamesView" });
 
@@ -22,9 +23,11 @@ onBeforeMount(async ()=> {
   <v-container class="mt-4">
     <h1>Ludoteca</h1>
     <p>Lista de juegos (placeholder)</p>
-    <BoardgameCard
-      :boardgame="mockCollectionsApiResponse"
-    />
+
+    <CardGrid
+      :data="collection"
+      type="boardgame"
+    ></CardGrid>
 
     <AppSnackbar
       v-model="isSnackBarVisible" 

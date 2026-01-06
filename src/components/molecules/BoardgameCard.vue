@@ -5,7 +5,9 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 const props = defineProps<{
   boardgame: CollectionsApiResponse
-}>()
+}>();
+
+defineOptions({ name: "BoardgamesCard" });
 
 </script>
 
