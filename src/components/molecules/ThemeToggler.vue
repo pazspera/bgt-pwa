@@ -32,6 +32,7 @@ const toggleTheme = () => {
         color="on-surface"
         icon
         variant="flat"
+        class="theme-toggler"
       >
         <FontAwesomeIcon 
           :icon="isDark ? faSun : faMoon"
@@ -49,5 +50,11 @@ const toggleTheme = () => {
 
 .v-btn :deep(.v-btn__overlay) {
   opacity: 0 !important;
+}
+
+@media(min-width: 1024px) {
+  .theme-toggler {
+    margin-left: 20px !important;
+  }
 }
 </style>

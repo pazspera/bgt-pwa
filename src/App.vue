@@ -2,7 +2,7 @@
   <v-app>
     <NavBar v-if="width > 768" />
     <v-main>
-      <v-container>
+      <v-container class="container-padding">
         <router-view />
       </v-container>
     </v-main>
