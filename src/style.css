@@ -161,3 +161,8 @@ h6 {
 button.v-btn {
   cursor: pointer;
 }
+
+/* Fix nesting padding in containers */
+.container-padding {
+  padding: 0 16px !important;
+}
