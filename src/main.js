@@ -117,6 +117,9 @@ const vuetify = createVuetify({
   defaults: {
     VBtn: {
       ripple: false,
+    },
+    VContainer: {
+      style: [{ padding: "0" }],
     }
   }
 });
