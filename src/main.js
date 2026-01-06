@@ -8,12 +8,12 @@ import "vuetify/styles";
 import { createVuetify, useTheme } from "vuetify";
 import * as components from "vuetify/components";
 import * as directives from "vuetify/directives";
-import { aliases, fa } from "vuetify/iconsets/fa";
+import { aliases, fa } from "vuetify/iconsets/fa-svg";
 import { mdi } from "vuetify/iconsets/mdi";
 /* FontAwesome, only icons to be used */
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faDice, faUsers, faBoxArchive, faBars, faSun, faMoon, faTrash, faPenToSquare, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faDice, faUsers, faBoxArchive, faBars, faSun, faMoon, faTrash, faPenToSquare, faPlus, faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 
 import VueSweetalert2 from "vue-sweetalert2";
 
@@ -97,8 +97,7 @@ const vuetify = createVuetify({
 		defaultSet: "fa",
 		aliases,
 		sets: {
-			fa,
-			mdi,
+			fa
 		},
 	},
 	theme: {
@@ -138,10 +137,10 @@ async function prepareApp() {
   return Promise.resolve();
 }
 
-let app = createApp(App);
-
 // Font Awesome
-library.add(faDice, faUsers, faBoxArchive, faBars, faSun, faMoon, faTrash, faPenToSquare, faPlus);
+library.add(faDice, faUsers, faBoxArchive, faBars, faSun, faMoon, faTrash, faPenToSquare, faPlus, faTriangleExclamation);
+
+let app = createApp(App);
 
 app.use(vuetify);
 app.use(router);

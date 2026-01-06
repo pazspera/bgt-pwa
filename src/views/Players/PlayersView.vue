@@ -217,7 +217,7 @@ const sortedPlayers = computed(()=> {
       persistent
     > 
       <v-card
-        prepend-icon="mdi-map-marker"
+        prepend-icon="fas fa-triangle-exclamation"
         :text="deleteDialogText"
         :title="CONFIRM_DELETE_PLAYER.TITLE"
       >
