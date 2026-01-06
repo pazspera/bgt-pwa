@@ -3,6 +3,7 @@ import AppSnackbar from '../../components/molecules/AppSnackbar.vue';
 import { onBeforeMount } from "vue";
 import { useCollectionsApi } from '../../composables/useCollectionsApi';
 import CardGrid from '../../components/organisms/CardGrid.vue';
+import LoadingRow from '../../components/molecules/LoadingRow.vue';
 
 defineOptions({ name: "BoardGamesView" });
 
@@ -20,7 +21,6 @@ onBeforeMount(async ()=> {
 <template>
   <v-container class="mt-4">
     <h1>Ludoteca</h1>
-    <p>Lista de juegos (placeholder)</p>
 
     <!-- error on the boardgames list initial fetch -->
     <v-row v-if="errorFetchCollection">
@@ -34,11 +34,7 @@ onBeforeMount(async ()=> {
     </v-row>
 
     <!-- loading -->
-    <v-row v-else-if="loadingList && (!collection || totalBoardgames === 0) && !errorFetchCollection">
-      <v-col>
-        <v-progress-circular></v-progress-circular>
-      </v-col>
-    </v-row>
+    <LoadingRow v-else-if="loadingList && (!collection || totalBoardgames === 0) && !errorFetchCollection"/>
 
     <CardGrid
       v-else-if="(collection && collection.length > 0) && !errorFetchCollection"
