@@ -31,9 +31,9 @@ const handleDeletePlayer = () => {
     variant="elevated"
     hover
   >
-    <v-card-text class="player-card-text">
+    <v-card-item class="player-card-text">
       <span data-testid="player-card-name">{{ player.name }}</span>
-    </v-card-text>
+    </v-card-item>
 
     <v-card-actions class="player-card-actions">
       <v-btn 

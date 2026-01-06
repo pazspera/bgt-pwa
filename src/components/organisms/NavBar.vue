@@ -70,6 +70,7 @@ defineExpose({ drawer });
 .navbar-row {
   display: flex;
   justify-content: space-between !important;
+  margin: 0;
 }
 
 .nav-drawer-icons {

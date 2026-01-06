@@ -8,6 +8,7 @@ import CardGrid from "../../components/organisms/CardGrid.vue";
 import type { CreatePlayerRequest, PlayerApiResponse, UpdatePlayerRequest } from "../../types/domain/playerApi";
 import { PLAYER_STATUS, CONFIRM_DELETE_PLAYER } from "../../constants/ui_feedback/players";
 import { capitalize } from "../../utils/formatters";
+import LoadingRow from "../../components/molecules/LoadingRow.vue";
 
 const isSheetVisible: Ref<boolean> = ref(false);
 const errorText: Ref<string> = ref("");
@@ -173,11 +174,7 @@ const sortedPlayers = computed(()=> {
     </v-row>
 
     <!-- loading -->
-    <v-row v-if="loadingList && (!players || players.length === 0) && !errorList">
-      <v-col>
-        <v-progress-circular></v-progress-circular>
-      </v-col>
-    </v-row>
+    <LoadingRow v-if="loadingList && (!players || players.length === 0) && !errorList"/>
 
     <CardGrid 
       v-else-if="(players && players.length > 0) && !errorList"
