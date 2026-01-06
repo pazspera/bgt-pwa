@@ -34,7 +34,7 @@ defineExpose({ drawer });
             <NavigationLink :to="{ name: 'BoardGames' }">Ludoteca</NavigationLink>
             <NavigationLink :to="{ name: 'Players' }">Jugadores</NavigationLink>
             <NavigationLink :to="{ name: 'Games' }">Partidas</NavigationLink>
-            <ThemeToggler icon-size="var(--font-size-lg)"/>
+            <ThemeToggler class="theme-toggler-desktop" icon-size="var(--font-size-lg)"/>
           </div>
   
           <!-- Mobile / Tablet toggle: visible <1025px -->
@@ -85,11 +85,12 @@ defineExpose({ drawer });
 
 .nav-links .navigation-link, 
 .nav-drawer-list .navigation-link {
-  margin-left: 12px;
+  margin-left: 20px;
   text-decoration: none;
   color: rgb(var(--v-theme-on-surface));
   transition: all 0.15s ease-in-out;
 }
+
 
 .nav-links .navigation-link:hover, 
 .nav-drawer-list .navigation-link:hover {
