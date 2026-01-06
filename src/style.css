@@ -166,3 +166,8 @@ button.v-btn {
 .container-padding {
   padding: 0 16px !important;
 }
+
+/* Fix padding container in bottom sheets */
+.bottom-sheet-container {
+  padding: 36px 24px !important;
+}

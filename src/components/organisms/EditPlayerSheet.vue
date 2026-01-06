@@ -86,7 +86,7 @@ defineExpose({
     data-testid="bottom-sheet"
   >
     <v-sheet color="surface">
-      <v-container class="container">
+      <v-container class="bottom-sheet-container">
         <SubsectionTitle class="title">{{ EditPlayerSheetText.title }}</SubsectionTitle>
         <form @submit.prevent="submitForm">
           <v-text-field 
@@ -130,10 +130,6 @@ defineExpose({
 .title {
   margin-top: 0 !important;
   margin-bottom: 16px !important;
-}
-
-.container {
-  padding: 36px 24px;
 }
 
 .sheet-buttons {
