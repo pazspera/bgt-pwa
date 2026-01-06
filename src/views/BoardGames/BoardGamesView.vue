@@ -2,15 +2,13 @@
 import AppSnackbar from '../../components/molecules/AppSnackbar.vue';
 import { onBeforeMount } from "vue";
 import { useCollectionsApi } from '../../composables/useCollectionsApi';
-import { mockCollectionsApiResponse } from '../../mocks/data/collectionsApi';
-import BoardgameCard from '../../components/molecules/BoardgameCard.vue';
 import CardGrid from '../../components/organisms/CardGrid.vue';
 
 defineOptions({ name: "BoardGamesView" });
 
 const isSnackBarVisible = true;
 
-const { collection, totalBoardgames, loading, errorFetchCollection, fetchCollections } = useCollectionsApi();
+const { collection, totalBoardgames, loading: loadingList, errorFetchCollection, fetchCollections } = useCollectionsApi();
 
 onBeforeMount(async ()=> {
   await fetchCollections();
@@ -24,7 +22,26 @@ onBeforeMount(async ()=> {
     <h1>Ludoteca</h1>
     <p>Lista de juegos (placeholder)</p>
 
+    <!-- error on the boardgames list initial fetch -->
+    <v-row v-if="errorFetchCollection">
+      <v-col>
+        <v-alert
+          color="error"
+          title="¡Oh, no! Ocurrió un error"
+          :text="errorFetchCollection"
+        ></v-alert>
+      </v-col>
+    </v-row>
+
+    <!-- loading -->
+    <v-row v-else-if="loadingList && (!collection || totalBoardgames === 0) && !errorFetchCollection">
+      <v-col>
+        <v-progress-circular></v-progress-circular>
+      </v-col>
+    </v-row>
+
     <CardGrid
+      v-else-if="(collection && collection.length > 0) && !errorFetchCollection"
       :data="collection"
       type="boardgame"
     ></CardGrid>

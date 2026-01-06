@@ -18,7 +18,7 @@ function isPlayer(item: GridItem): item is PlayerApiResponse {
 }
 
 function isBoardgame(item: CollectionsApiResponse): item is CollectionsApiResponse {
-  return props.type === "boardgame" && "bbg_id" in item;
+  return props.type === "boardgame" && "bgg_id" in item;
 }
 
 const emit = defineEmits<{
