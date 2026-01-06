@@ -9,7 +9,7 @@ defineOptions({ name: "BoardGamesView" });
 
 const isSnackBarVisible = true;
 
-const { collection, totalBoardgames, loading: loadingList, errorFetchCollection, fetchCollections } = useCollectionsApi();
+const { collection, totalBoardgames, loading: loadingList, errorFetchCollections, fetchCollections } = useCollectionsApi();
 
 onBeforeMount(async ()=> {
   await fetchCollections();
@@ -23,12 +23,12 @@ onBeforeMount(async ()=> {
     <h1>Ludoteca</h1>
 
     <!-- error on the boardgames list initial fetch -->
-    <v-row v-if="errorFetchCollection">
+    <v-row v-if="errorFetchCollections">
       <v-col>
         <v-alert
           color="error"
           title="¡Oh, no! Ocurrió un error"
-          :text="errorFetchCollection"
+          :text="errorFetchCollections"
         ></v-alert>
       </v-col>
     </v-row>
