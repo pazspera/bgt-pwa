@@ -181,3 +181,43 @@ body .v-overlay-container {
   color: #2D153D !important;
 }
 
+/* FIX hover y selected en options de v-select */
+/* 1. Fondo de la lista desplegable (el contenedor blanco/oscuro) */
+.v-overlay-container .v-list {
+  background-color: var(--white) !important;
+  color: var(--primary-900) !important;
+}
+
+/* 2. OPCIÓN SELECCIONADA: Fondo lila claro, texto lila muy oscuro */
+.v-overlay-container .v-list-item--active {
+  background-color: #EDE2F3 !important; /* PRIMARY_100 */
+  color: #2D153D !important;           /* PRIMARY_900 */
+}
+
+.v-overlay-container .v-list-item--active .v-list-item-title {
+  color: #2D153D !important;
+  font-weight: bold;
+}
+
+/* 3. HOVER: Cuando pasas el mouse por cualquier opción */
+.v-overlay-container .v-list-item:hover .v-list-item__overlay {
+  opacity: 0.15 !important;
+  background-color: #633183 !important; /* PRIMARY_600 */
+}
+
+/* 4. CHIPS DENTRO DEL INPUT: Fondo lila fuerte, texto blanco */
+.v-select .v-chip--variant-tonal {
+  background-color: #633183 !important;
+  color: #FCFFFE !important;
+  opacity: 1 !important;
+}
+
+.v-select .v-chip--variant-tonal .v-chip__content {
+  color: #FCFFFE !important;
+}
+
+/* 5. ELIMINAR EL RECUADRO NEGRO DEL INPUT */
+.v-field__input input {
+  all: unset !important;
+  width: 100% !important;
+}
