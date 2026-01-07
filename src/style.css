@@ -104,3 +104,80 @@ h1, h2, h3, h4, h5, h6 {
 button.v-btn {
   cursor: pointer;
 }
+
+/* *** */
+/* 1. Forzamos a que Vuetify use sus propios colores de contraste 
+      Esto arregla el texto y fondo del mismo color */
+.v-application {
+  color: var(--v-theme-on-surface) !important;
+}
+
+/* 2. Fix para los Menús (Selects, Dialogs) que flotan fuera de la app */
+:global(.v-overlay-container) {
+  color: var(--v-theme-on-surface) !important;
+}
+
+/* 3. Aseguramos que los títulos y botones hereden el color correcto */
+.v-card-title, .v-btn, .v-list-item-title {
+  color: inherit !important;
+}
+
+/* 4. Fix para los inputs nativos (la "cajita negra" o bordes extra) */
+.v-field__input input {
+  color: inherit !important;
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+
+body .v-overlay-container {
+  --v-theme-on-surface: 45, 21, 61; /* Tu COLOR.TEXT_DARK en RGB */
+  --v-theme-on-primary: 45, 21, 61;
+}
+
+/* Fix específico para la lista del select */
+.v-list-item--active {
+  background-color: #EDE2F3 !important; /* PRIMARY_100 */
+  color: #2D153D !important;           /* TEXT_DARK */
+}
+
+/* Fix para los chips dentro del select */
+.v-select .v-chip--variant-tonal {
+  background-color: #633183 !important; /* PRIMARY_600 */
+  color: #FCFFFE !important;           /* WHITE */
+}
+
+.v-select .v-chip--variant-tonal .v-chip__content {
+  color: #FCFFFE !important;
+}
+
+/* FIX para chips de v-select */
+.v-select .v-chip--variant-tonal {
+  background-color: #633183 !important; /* Tu PRIMARY_600 */
+  opacity: 1 !important;
+  color: #FCFFFE !important; /* Texto blanco para resaltar sobre el lila oscuro */
+}
+
+/* 2. Aseguramos que el contenido herede ese blanco */
+.v-select .v-chip--variant-tonal .v-chip__content {
+  color: #FCFFFE !important;
+}
+
+/* 3. El overlay del chip a veces ensucia el color, lo ocultamos */
+.v-select .v-chip__underlay {
+  display: none !important;
+}
+
+/* Esto ataca a la opción cuando está seleccionada en el menú */
+.v-list-item--active.v-list-item--link {
+  background-color: #EDE2F3 !important; /* Lila clarito */
+  color: #2D153D !important;           /* Texto oscuro */
+}
+
+/* Forzamos el color del texto dentro de la opción activa */
+.v-list-item--active .v-list-item-title {
+  color: #2D153D !important;
+}
+

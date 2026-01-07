@@ -116,4 +116,6 @@ const closeDialog = () => {
   background-color: #BD9CD3 !important; /* Fondo lila claro para el chip */
   opacity: 1 !important;
 }
+
+
 </style>
