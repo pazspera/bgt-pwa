@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { AddGameDialogText } from '../../constants/ui_text/AddGameDialog';
 
 defineProps<{
   modelValue: boolean
@@ -22,7 +23,9 @@ const closeDialog = () => {
       data-testid="add-game-dialog"
     >
       <v-card class="dialog">
-        <v-card-title class="dialog-title">Nueva partida de JUEGO</v-card-title> 
+        <v-card-title class="dialog-title">
+          {{ AddGameDialogText.title }}
+        </v-card-title> 
         
         <v-card-text>
           <v-form>
@@ -38,7 +41,7 @@ const closeDialog = () => {
               >
                 <v-select
                   chips
-                  label="Jugadores"
+                  :label="AddGameDialogText.labels.selectPlayers"
                   :items="['Zeuchi', 'Mareita', 'Zeuchi again',]"
                   variant="outlined"
                   density="comfortable"
@@ -57,14 +60,14 @@ const closeDialog = () => {
             color="primary"
             variant="elevated"
           >
-            Guardar partida
+            {{ AddGameDialogText.buttons.save }}
           </v-btn>
           <v-btn
             color="error"
             variant="text"
             @click="closeDialog"
           >
-            Cancelar
+            {{ AddGameDialogText.buttons.cancel }}
           </v-btn>
         </v-card-actions>
       </v-card>
