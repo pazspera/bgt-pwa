@@ -247,3 +247,28 @@ body .v-overlay-container {
 .v-overlay-container .v-list-item--selected .v-list-item__overlay {
   background-color: transparent !important;
 }
+
+
+/* FIX UNIVERSAL DE CONTRASTE PARA ESTADOS ACTIVOS */
+/* 1. Atacamos a cualquier Item de Lista que esté activo o seleccionado */
+.v-list-item--active,
+.v-list-item--selected,
+.v-list-item--active:hover {
+  background-color: var(--primary-100) !important;
+  color: var(--primary-900) !important;
+  opacity: 1 !important;
+}
+
+/* 2. Aseguramos que el contenido (título e iconos) herede el color oscuro */
+.v-list-item--active .v-list-item-title,
+.v-list-item--selected .v-list-item-title,
+.v-list-item--active .v-icon,
+.v-list-item--selected .v-icon {
+  color: var(--primary-900) !important;
+}
+
+/* 3. Evitamos que Vuetify ensucie el fondo con su overlay gris/negro predeterminado */
+.v-list-item--active .v-list-item__overlay,
+.v-list-item--selected .v-list-item__overlay {
+  display: none !important;
+}
