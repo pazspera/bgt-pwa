@@ -23,7 +23,7 @@ const closeDialog = () => {
       data-testid="add-game-dialog"
     >
       <v-card class="dialog">
-        <v-card-title class="dialog-title">
+        <v-card-title class="dialog-title mb-4">
           {{ AddGameDialogText.title }}
         </v-card-title> 
         
@@ -32,16 +32,19 @@ const closeDialog = () => {
             <v-row>
               <v-col
                 cols="12"
+                md="4"
               >
                 <v-date-input
-                  label="¿Cuándo se jugó la partida?"
+                  :label="AddGameDialogText.labels.selectDate"
                   prepend-icon=""
                   prepend-inner-icon="$calendar"
                   variant="outlined"
                 ></v-date-input>
               </v-col>
               <v-col
-                cols="12"  
+                cols="12"
+                sm="6"
+                md="4"  
               >
                 <v-select
                   chips
@@ -57,8 +60,11 @@ const closeDialog = () => {
               </v-col>
               <v-col
                 cols="12"
+                sm="6"
+                md="4"
               >
                 <v-select
+                  chips
                   variant="outlined"
                   density="comfortable"
                   :label="AddGameDialogText.labels.selectWinner"
@@ -114,5 +120,6 @@ const closeDialog = () => {
   justify-content: flex-start;
   padding: 0 24px 16px 24px;
 }
+
 
 </style>

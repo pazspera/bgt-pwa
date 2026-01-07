@@ -107,3 +107,8 @@ h1, h2, h3, h4, h5, h6 {
 button.v-btn {
   cursor: pointer;
 }
+
+/* Override to make selects equal height to VDateInput on dialog */
+.v-select .v-field__input {
+  min-height: 56px !important;
+}
