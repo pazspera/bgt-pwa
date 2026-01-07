@@ -74,37 +74,23 @@
 }
 
 /* Resets */
-*,
-*:before,
-*:after {
+html {
   box-sizing: border-box;
+  overflow-y: auto; 
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
 }
 
 body {
   margin: 0;
-}
-
-html {
-  background-color: var(--gray-light);
-}
-
-img {
-  max-width: 100%;
-  display: block;
-}
-
-/* Typography */
-body {
   font-family: var(--font-text);
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-title);
+  line-height: 1.2;
 }
 
 
