@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { AddGameDialogText } from '../../constants/ui_text/AddGameDialog';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { faFloppyDisk } from "@fortawesome/free-solid-svg-icons";
+
 
 defineProps<{
   modelValue: boolean
@@ -91,7 +94,8 @@ const closeDialog = () => {
             color="primary"
             variant="elevated"
           >
-            {{ AddGameDialogText.buttons.save }}
+            <FontAwesomeIcon :icon="faFloppyDisk" />
+            <span>{{ AddGameDialogText.buttons.save }}</span>
           </v-btn>
           <v-btn
             color="error"
