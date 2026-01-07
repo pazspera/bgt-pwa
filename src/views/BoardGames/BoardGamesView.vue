@@ -30,13 +30,6 @@ onBeforeMount(async ()=> {
       Test agregar partida
     </v-btn>
 
-    <v-select
-                      chips
-                      label="Jugadores"
-                      :items="['Zeuchi', 'Mareita', 'Zeuchi again',]"
-                    >
-                    </v-select>
-
     <!-- error on the boardgames list initial fetch -->
     <v-row v-if="errorFetchCollections">
       <v-col>

@@ -22,7 +22,7 @@ const closeDialog = () => {
       data-testid="add-game-dialog"
     >
       <v-card class="dialog">
-        <v-card-title>Nueva partida de JUEGO</v-card-title> 
+        <v-card-title class="dialog-title">Nueva partida de JUEGO</v-card-title> 
 
         <v-divider></v-divider>
         
@@ -44,6 +44,7 @@ const closeDialog = () => {
                   variant="outlined"
                   density="comfortable"
                   class="all-unset"
+                  multiple
                   append-inner-icon="fas fa-chevron-down"
                 >
                 </v-select>
@@ -67,25 +68,29 @@ const closeDialog = () => {
 </template>
 
 <style scoped>
-  .dialog {
-    padding: 16px;
-  }
-
-  .all-unset :deep(*) {
-    all: revert; /* O 'revert-layer' si usas cascada moderna */
-    box-sizing: border-box;
-  }
-
-
-:deep(.v-field) {
-  --v-field-padding-bottom: 8px;
-  --v-field-padding-top: 8px;
-  min-height: 56px !important; /* Altura estándar de un select outlined */
-  display: flex !important;
+.dialog{
+  padding: 12px;
 }
 
-:deep(.v-select__selection) {
-  display: flex;
-  align-items: center;
+.dialog-title {
+  padding: 16px 24px 0 24px;
+}
+
+/* Fix para estilos del select */
+:deep(.v-field__input input) {
+  all: unset !important; /* Ignora CUALQUIER estilo de 'input' de tu style.css */
+  width: 100% !important;
+  color: inherit !important;
+  font-family: inherit !important;
+}
+
+:deep(.v-field__field) {
+  display: flex !important;
+  align-items: center !important;
+  min-height: 56px !important;
+}
+
+:deep(.v-field__overlay) {
+  background-color: transparent !important;
 }
 </style>
