@@ -34,7 +34,10 @@ const closeDialog = () => {
                 cols="12"
                 class="mb-3"
               >
-                Agregar v-date-input
+                <v-date-input
+                  label="¿Cuándo se jugó la partida?"
+                  variant="outlined"
+                ></v-date-input>
               </v-col>
               <v-col
                 cols="12"  
