@@ -32,10 +32,11 @@ const closeDialog = () => {
             <v-row>
               <v-col
                 cols="12"
-                class="mb-3"
               >
                 <v-date-input
                   label="¿Cuándo se jugó la partida?"
+                  prepend-icon=""
+                  prepend-inner-icon="$calendar"
                   variant="outlined"
                 ></v-date-input>
               </v-col>
@@ -78,7 +79,7 @@ const closeDialog = () => {
           </v-form>
         </v-card-text>
 
-        <v-card-actions class="dialog-actions">
+        <v-card-actions class="dialog-actions mt-3">
           <v-btn
             type="submit" 
             color="primary"
