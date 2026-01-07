@@ -23,8 +23,6 @@ const closeDialog = () => {
     >
       <v-card class="dialog">
         <v-card-title class="dialog-title">Nueva partida de JUEGO</v-card-title> 
-
-        <v-divider></v-divider>
         
         <v-card-text>
           <v-form>
@@ -53,16 +51,21 @@ const closeDialog = () => {
           </v-form>
         </v-card-text>
 
-        <v-divider></v-divider>
-        
-        <v-card-actions>
+        <v-card-actions class="dialog-actions">
           <v-btn
-            class="ms-auto"
-            text="Ok"
+            type="submit" 
             color="primary"
             variant="elevated"
+          >
+            Guardar partida
+          </v-btn>
+          <v-btn
+            color="error"
+            variant="text"
             @click="closeDialog"
-          ></v-btn>
+          >
+            Cancelar
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -77,5 +80,11 @@ const closeDialog = () => {
   padding: 16px 24px 0 24px;
 }
 
+.dialog-actions {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 0 24px 16px 24px;
+}
 
 </style>
