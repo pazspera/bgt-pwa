@@ -61,6 +61,16 @@ const closeDialog = () => {
                   :items="['Zeuchi', 'Mareita']"
                 ></v-select>
               </v-col>
+              <v-col
+                cols="12"
+              >
+                <v-textarea
+                  variant="outlined"
+                  :label="AddGameDialogText.labels.notes"
+                  no-resize
+                  max-rows="3"
+                ></v-textarea>
+              </v-col>
             </v-row>
           </v-form>
         </v-card-text>
