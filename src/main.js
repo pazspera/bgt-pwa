@@ -13,7 +13,7 @@ import { mdi } from "vuetify/iconsets/mdi";
 /* FontAwesome, only icons to be used */
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faDice, faUsers, faBoxArchive, faBars, faSun, faMoon, faTrash, faPenToSquare, faPlus, faTriangleExclamation, faChevronDown, faSquare } from "@fortawesome/free-solid-svg-icons";
+import { faDice, faUsers, faBoxArchive, faBars, faSun, faMoon, faTrash, faPenToSquare, faPlus, faTriangleExclamation, faChevronDown, faSquare, faCaretDown, faCheck, faCheckSquare } from "@fortawesome/free-solid-svg-icons";
 
 import VueSweetalert2 from "vue-sweetalert2";
 
@@ -95,7 +95,17 @@ const vuetify = createVuetify({
 	directives,
 	icons: {
 		defaultSet: "fa",
-		aliases,
+		aliases: {
+      ...aliases,
+      dropdown: "fas fa-caret-down",
+      expand: "fas fa-chevron-down",
+      menu: "fas fa-bars",
+      check: "fas fa-check",
+      checkboxOn: "fas fa-check-square",
+      checkboxOff: "fas fa-square",
+      complete: "fas fa-check"
+      uncheck: "fas fa-square",
+    },
 		sets: { fa },
 	},
 	theme: {
@@ -136,7 +146,7 @@ async function prepareApp() {
 }
 
 // Font Awesome
-library.add(faDice, faUsers, faBoxArchive, faBars, faSun, faMoon, faTrash, faPenToSquare, faPlus, faTriangleExclamation, faChevronDown, faSquare);
+library.add(faDice, faUsers, faBoxArchive, faBars, faSun, faMoon, faTrash, faPenToSquare, faPlus, faTriangleExclamation, faChevronDown, faSquare, faCaretDown, faCheck, faCheckSquare);
 
 let app = createApp(App);
 
