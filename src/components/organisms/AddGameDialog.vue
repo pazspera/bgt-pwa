@@ -42,11 +42,13 @@ const closeDialog = () => {
                 <v-select
                   chips
                   :label="AddGameDialogText.labels.selectPlayers"
+                  :hint="AddGameDialogText.hints.selectPlayers"
                   :items="['Zeuchi', 'Mareita', 'Zeuchi again',]"
                   variant="outlined"
                   density="comfortable"
                   class="all-unset"
                   multiple
+                  persistent-hint
                 >
                 </v-select>
               </v-col>

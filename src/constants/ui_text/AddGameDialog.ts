@@ -4,6 +4,9 @@ export const AddGameDialogText = {
     selectPlayers: "¿Quiénes jugaron?",
     selectWinner: "¿Quién ganó?"
   },
+  hints: {
+    selectPlayers: "Podés elegir más de un jugador",
+  },
   buttons: {
     save: "Guardar partida",
     cancel: "Cancelar",
