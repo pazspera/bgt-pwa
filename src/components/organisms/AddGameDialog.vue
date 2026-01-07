@@ -46,11 +46,20 @@ const closeDialog = () => {
                   :items="['Zeuchi', 'Mareita', 'Zeuchi again',]"
                   variant="outlined"
                   density="comfortable"
-                  class="all-unset"
                   multiple
                   persistent-hint
                 >
                 </v-select>
+              </v-col>
+              <v-col
+                cols="12"
+              >
+                <v-select
+                  variant="outlined"
+                  density="comfortable"
+                  :label="AddGameDialogText.labels.selectWinner"
+                  :items="['Zeuchi', 'Mareita']"
+                ></v-select>
               </v-col>
             </v-row>
           </v-form>
