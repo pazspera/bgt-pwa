@@ -100,6 +100,11 @@ h1, h2, h3, h4, h5, h6 {
   padding: 0 16px !important;
 }
 
+/* Fix padding container in bottom sheets */
+.bottom-sheet-container {
+  padding: 36px 24px !important;
+}
+
 /* Fixes necesarios */
 button.v-btn {
   cursor: pointer;
@@ -220,4 +225,27 @@ body .v-overlay-container {
 .v-field__input input {
   all: unset !important;
   width: 100% !important;
+}
+
+/* 1. Atacamos todas las variantes de 'active' y 'selected' que usa Vuetify 3 */
+.v-overlay-container .v-list-item--active,
+.v-overlay-container .v-list-item--selected {
+  background-color: #EDE2F3 !important; /* PRIMARY_100 (Fondo claro) */
+  color: #2D153D !important;           /* PRIMARY_900 (Texto oscuro) */
+  opacity: 1 !important;
+}
+
+/* 2. Forzamos el color del texto y de los iconos internos */
+.v-overlay-container .v-list-item--active .v-list-item-title,
+.v-overlay-container .v-list-item--selected .v-list-item-title,
+.v-overlay-container .v-list-item--active .v-icon,
+.v-overlay-container .v-list-item--selected .v-icon {
+  color: #2D153D !important;
+  --v-theme-on-surface: 45, 21, 61 !important; /* Refuerzo de variable */
+}
+
+/* 3. Evitamos que Vuetify le ponga un overlay oscuro encima al estar seleccionado */
+.v-overlay-container .v-list-item--active .v-list-item__overlay,
+.v-overlay-container .v-list-item--selected .v-list-item__overlay {
+  background-color: transparent !important;
 }

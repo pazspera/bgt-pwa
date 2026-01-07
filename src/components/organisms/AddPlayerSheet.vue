@@ -60,7 +60,7 @@ defineExpose({
     data-testid="bottom-sheet"
   >
     <v-sheet color="surface">
-      <v-container class="container">
+      <v-container class="bottom-sheet-container">
         <SubsectionTitle class="title">{{ AddPlayerSheetText.title }}</SubsectionTitle>
         <form @submit.prevent="submitForm">
           <v-text-field 
