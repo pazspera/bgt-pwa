@@ -18,7 +18,7 @@ const closeDialog = () => {
   <v-dialog
       :model-value="modelValue"
       @update:model-value="emit('update:modelValue', $event)"
-      max-width="800px"
+      max-width="1100px"
       scrollable
       data-testid="add-game-dialog"
     >
