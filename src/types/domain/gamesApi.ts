@@ -1,6 +1,7 @@
 export interface GameApiResponse {
   boardgame_id: string,
   // se usa el collection_id?
+  // si, se usa. viene en la rta, es el id de CollectionsListResponse
   collection_id: string,
   player_group?: string | null,
   start_date: string,
