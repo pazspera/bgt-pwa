@@ -103,7 +103,7 @@ const vuetify = createVuetify({
       check: "fas fa-check",
       checkboxOn: "fas fa-check-square",
       checkboxOff: "fas fa-square",
-      complete: "fas fa-check"
+      complete: "fas fa-check",
       uncheck: "fas fa-square",
     },
 		sets: { fa },
