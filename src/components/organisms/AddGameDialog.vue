@@ -28,9 +28,10 @@ const closeDialog = () => {
         
         <v-card-text>
           <v-form>
-            <v-row dense>
+            <v-row>
               <v-col
                 cols="12"
+                class="mb-3"
               >
                 Agregar v-date-input
               </v-col>
@@ -58,7 +59,8 @@ const closeDialog = () => {
           <v-btn
             class="ms-auto"
             text="Ok"
-            variant="plain"
+            color="primary"
+            variant="elevated"
             @click="closeDialog"
           ></v-btn>
         </v-card-actions>
