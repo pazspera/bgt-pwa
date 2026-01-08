@@ -2,10 +2,11 @@
 import { AddGameDialogText } from '../../constants/ui_text/AddGameDialog';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faFloppyDisk } from "@fortawesome/free-solid-svg-icons";
-
+import { CollectionsApiResponse } from '../../types/domain/collectionsApi';
 
 defineProps<{
-  modelValue: boolean
+  modelValue: boolean,
+  boardgame: CollectionsApiResponse | null,
 }>();
 defineOptions({ name: "AddGameDialog" });
 
@@ -29,7 +30,7 @@ const closeDialog = () => {
     >
       <v-card class="dialog">
         <v-card-title class="dialog-title mb-4">
-          {{ AddGameDialogText.title }}
+          {{ AddGameDialogText.title + boardgame.name}}
         </v-card-title> 
         
         <v-card-text>

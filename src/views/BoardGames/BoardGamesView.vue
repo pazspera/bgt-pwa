@@ -5,15 +5,18 @@ import { useCollectionsApi } from '../../composables/useCollectionsApi';
 import CardGrid from '../../components/organisms/CardGrid.vue';
 import LoadingRow from '../../components/molecules/LoadingRow.vue';
 import AddGameDialog from '../../components/organisms/AddGameDialog.vue';
+import { CollectionsApiResponse } from '../../types/domain/collectionsApi';
 
 defineOptions({ name: "BoardGamesView" });
 
 const isSnackBarVisible: Ref<boolean> = ref(true);
 const isAddGameDialogOpen: Ref<boolean> = ref(false);
+const selectedBoardgame: Ref<CollectionsApiResponse | null> = ref(null);
 
 const { collection, totalBoardgames, loading: loadingList, errorFetchCollections, fetchCollections } = useCollectionsApi();
 
-const handleAddGame = () => {
+const handleAddGame = (boardgame: CollectionsApiResponse) => {
+  selectedBoardgame.value = boardgame;
   isAddGameDialogOpen.value = true;
 }
 
@@ -54,7 +57,8 @@ onBeforeMount(async ()=> {
     />
 
     <AddGameDialog
-      v-model="isAddGameDialogOpen" 
+      v-model="isAddGameDialogOpen"
+      :boardgame="selectedBoardgame" 
     />
   </v-container>
 </template>
