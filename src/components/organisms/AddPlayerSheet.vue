@@ -73,6 +73,7 @@ defineExpose({
             <v-btn 
               type="submit" 
               color="primary"
+              variant="elevated"
               @click="submitForm"
               data-testid="btn-add-player"
             >{{ AddPlayerSheetText.buttons.add }}</v-btn>

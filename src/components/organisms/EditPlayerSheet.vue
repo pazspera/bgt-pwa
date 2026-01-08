@@ -100,6 +100,7 @@ defineExpose({
               type="submit" 
               color="primary"
               @click="submitForm"
+              variant="elevated"
               :disabled="!isNameChanged"
               data-testid="btn-add-player"
             >{{ EditPlayerSheetText.buttons.save }}</v-btn>

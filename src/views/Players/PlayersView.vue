@@ -154,6 +154,7 @@ const sortedPlayers = computed(()=> {
         <v-btn 
           @click="showAddPlayerSheet"
           color="primary"
+          variant="elevated"
         >
           Agregar jugador
         </v-btn>
