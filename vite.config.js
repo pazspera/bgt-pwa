@@ -30,10 +30,6 @@ export default defineConfig({
       {
         find: '@',
         replacement: path.resolve(__dirname, './src')
-      },
-      {
-        find: 'vuetify/styles',
-        replacement: path.resolve(__dirname, '__mocks__/styleMock.js'),
       }
     ]
   },
@@ -45,6 +41,12 @@ export default defineConfig({
   test: {
     globals: true,
     environment: "jsdom",
+    alias: [
+      {
+        find: 'vuetify/styles',
+        replacement: path.resolve(__dirname, '__mocks__/styleMock.js'),
+      }
+    ],
     setupFiles: ['./src/tests/setup.ts', './src/tests/utils/createRouterMock.ts'],
     poolOptions: {
       threads: {

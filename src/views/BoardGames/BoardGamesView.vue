@@ -1,15 +1,24 @@
-<script setup>
+<script setup lang="ts">
 import AppSnackbar from '../../components/molecules/AppSnackbar.vue';
-import { onBeforeMount } from "vue";
+import { onBeforeMount, ref, type Ref } from "vue";
 import { useCollectionsApi } from '../../composables/useCollectionsApi';
 import CardGrid from '../../components/organisms/CardGrid.vue';
 import LoadingRow from '../../components/molecules/LoadingRow.vue';
+import AddGameDialog from '../../components/organisms/AddGameDialog.vue';
+import { CollectionsApiResponse } from '../../types/domain/collectionsApi';
 
 defineOptions({ name: "BoardGamesView" });
 
-const isSnackBarVisible = true;
+const isSnackBarVisible: Ref<boolean> = ref(true);
+const isAddGameDialogOpen: Ref<boolean> = ref(false);
+const selectedBoardgame: Ref<CollectionsApiResponse | null> = ref(null);
 
 const { collection, totalBoardgames, loading: loadingList, errorFetchCollections, fetchCollections } = useCollectionsApi();
+
+const handleAddGame = (boardgame: CollectionsApiResponse) => {
+  selectedBoardgame.value = boardgame;
+  isAddGameDialogOpen.value = true;
+}
 
 onBeforeMount(async ()=> {
   await fetchCollections();
@@ -34,16 +43,22 @@ onBeforeMount(async ()=> {
     </v-row>
 
     <!-- loading -->
-    <LoadingRow v-else-if="loadingList && (!collection || totalBoardgames === 0) && !errorFetchCollection"/>
+    <LoadingRow v-else-if="loadingList && (!collection || totalBoardgames === 0) && !errorFetchCollections"/>
 
     <CardGrid
-      v-else-if="(collection && collection.length > 0) && !errorFetchCollection"
+      v-else-if="(collection && collection.length > 0) && !errorFetchCollections"
       :data="collection"
       type="boardgame"
+      @add-game="handleAddGame"
     ></CardGrid>
 
     <AppSnackbar
       v-model="isSnackBarVisible" 
+    />
+
+    <AddGameDialog
+      v-model="isAddGameDialogOpen"
+      :boardgame="selectedBoardgame" 
     />
   </v-container>
 </template>

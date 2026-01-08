@@ -24,6 +24,7 @@ function isBoardgame(item: CollectionsApiResponse): item is CollectionsApiRespon
 const emit = defineEmits<{
   'edit-player': [player: PlayerApiResponse],
   'delete-player': [player: PlayerApiResponse],
+  'add-game': [boardgame: CollectionsApiResponse],
 }>();
 
 onBeforeMount(()=> {
@@ -50,6 +51,7 @@ onBeforeMount(()=> {
 
         <BoardgameCard v-else-if="isBoardgame(item)"
           :boardgame="item"
+          @add-game="(boardgame) => $emit('add-game', boardgame)"
         />
       </v-col>
     </v-row>

@@ -74,92 +74,23 @@
 }
 
 /* Resets */
-*,
-*:before,
-*:after {
-  box-sizing: inherit;
-}
-
 html {
   box-sizing: border-box;
+  overflow-y: auto; 
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
 }
 
 body {
   margin: 0;
-}
-
-html {
-  background-color: var(--gray-light);
-}
-
-img {
-  max-width: 100%;
-  display: block;
-}
-
-/* Typography */
-body {
   font-family: var(--font-text);
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-title);
-}
-
-/* Buttons */
-.btn {
-  border-radius: 0;
-  text-transform: uppercase;
-}
-
-.btn__primary {
-  font-size: var(--size6);
-  background-color: var(--primary-light);
-  color: var(--white);
-  transition: all 0.2s ease-in-out;
-}
-
-.btn__secondary {
-  font-size: var(--size7);
-  padding: 0.5rem 1rem;
-  background-color: var(--primary-light);
-  color: var(--white);
-  transition: all 0.2s ease-in-out;
-}
-
-.btn__primary:hover,
-.btn__primary:focus,
-.btn__primary:active,
-.btn__secondary:hover,
-.btn__secondary:focus,
-.btn__secondary:active {
-  background-color: var(--black);
-  color: var(--white);
-  transition: all 0.2s ease-in-out;
-}
-
-.btn__primary:focus,
-.btn__secondary:focus {
-  box-shadow: 0 0 0 0.25rem var(--white);
-}
-
-.material-icons {
-  cursor: pointer;
-  color: var(--gray-darker);
-}
-
-.material-icons:hover {
-  color: var(--gray-dark);
-  opacity: 0.6;
-}
-
-button.v-btn {
-  cursor: pointer;
+  line-height: 1.2;
 }
 
 /* Fix nesting padding in containers */
@@ -170,4 +101,14 @@ button.v-btn {
 /* Fix padding container in bottom sheets */
 .bottom-sheet-container {
   padding: 36px 24px !important;
+}
+
+/* Fixes necesarios */
+button.v-btn {
+  cursor: pointer;
+}
+
+/* Override to make selects equal height to VDateInput on dialog */
+.v-select .v-field__input {
+  min-height: 56px !important;
 }

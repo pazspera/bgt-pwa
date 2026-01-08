@@ -9,6 +9,10 @@ const props = defineProps<{
 
 defineOptions({ name: "BoardgamesCard" });
 
+const emit = defineEmits<{
+  "add-game": [ boardgame: CollectionsApiResponse ],
+}>();
+
 </script>
 
 <template>
@@ -26,6 +30,7 @@ defineOptions({ name: "BoardgamesCard" });
       <v-btn
         color="primary"
         variant="plain"
+        @click="emit('add-game', boardgame)"
       >
         <FontAwesomeIcon :icon="faPlus" />
         <span>Agregar partida</span>
