@@ -105,10 +105,6 @@ defineExpose({
   margin-bottom: 16px !important;
 }
 
-.container {
-  padding: 36px 24px;
-}
-
 .sheet-buttons {
   display: flex;
   gap: 8px;
