@@ -9,7 +9,9 @@ defineProps<{
 }>();
 defineOptions({ name: "AddGameDialog" });
 
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits<{
+  "update:modelValue": [ dialogVisibility: boolean ],
+}>();
 
 const closeDialog = () => {
   emit("update:modelValue", false);

@@ -13,6 +13,10 @@ const isAddGameDialogOpen = ref(false);
 
 const { collection, totalBoardgames, loading: loadingList, errorFetchCollections, fetchCollections } = useCollectionsApi();
 
+const handleAddGame = () => {
+  isAddGameDialogOpen.value = true;
+}
+
 onBeforeMount(async ()=> {
   await fetchCollections();
   console.log(collection.value);
@@ -48,6 +52,7 @@ onBeforeMount(async ()=> {
       v-else-if="(collection && collection.length > 0) && !errorFetchCollection"
       :data="collection"
       type="boardgame"
+      @add-game="handleAddGame"
     ></CardGrid>
 
     <AppSnackbar
