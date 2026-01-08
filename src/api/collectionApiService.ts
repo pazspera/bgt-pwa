@@ -5,7 +5,7 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export async function getCollections() {
   try {
-    const response = await fetch(`${API_BASE_URL}/collections/primary/games`, { method: "GET" });
+    const response = await fetch(`${API_BASE_URL}v1/collections/primary/games`, { method: "GET" });
     
     if(!response.ok) {
       throw new Error(API_ERROR_MESSAGES.GET_COLLECTIONS_FAILED(response.status));

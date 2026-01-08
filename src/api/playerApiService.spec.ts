@@ -42,7 +42,7 @@ describe("playerApiService: getPlayers()", ()=> {
     const result = await getPlayers();
 
     expect(result).toEqual(mockResponse);
-    expect(global.fetch).toHaveBeenCalledWith(`${API_BASE_URL}/players?sortBy=created_at&order=asc`, { method: "GET" });
+    expect(global.fetch).toHaveBeenCalledWith(`${API_BASE_URL}v1/players?sortBy=created_at&order=asc`, { method: "GET" });
   });
   
   it("error: resource not found (404)", async ()=> {
@@ -94,7 +94,7 @@ describe("playerApiService: getPlayer()", ()=> {
     const result = await getPlayer(mockResponse.id);
 
     expect(result).toEqual(mockResponse);
-    expect(global.fetch).toHaveBeenCalledWith(`${API_BASE_URL}/players/${mockResponse.id}`, { method: "GET" });
+    expect(global.fetch).toHaveBeenCalledWith(`${API_BASE_URL}v1/players/${mockResponse.id}`, { method: "GET" });
     expect(global.fetch).toHaveBeenCalledTimes(1);
   });
 
@@ -137,7 +137,7 @@ describe("playerApiService: deletePlayer()", ()=> {
 
     const result = await deletePlayer(playerId);
 
-    expect(global.fetch).toHaveBeenCalledWith(`${API_BASE_URL}/players/${playerId}`, { method: "DELETE" });
+    expect(global.fetch).toHaveBeenCalledWith(`${API_BASE_URL}v1/players/${playerId}`, { method: "DELETE" });
     expect(global.fetch).toHaveBeenCalledTimes(1);
     expect(result).toBeTruthy();
     expect([200, 204]).toContain(status);
@@ -197,7 +197,7 @@ describe("playerApiService: createPlayer()", ()=> {
 
     expect(result).toEqual(mockResponse);
     expect(global.fetch).toHaveBeenCalledTimes(1);
-    expect(global.fetch).toHaveBeenCalledWith(`${API_BASE_URL}/players`, {
+    expect(global.fetch).toHaveBeenCalledWith(`${API_BASE_URL}v1/players`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newPlayer),
@@ -256,7 +256,7 @@ describe("playerApiService: updatePlayer()", ()=> {
 
     expect(result).toEqual(mockResponse);
     expect(global.fetch).toHaveBeenCalledTimes(1);
-    expect(global.fetch).toHaveBeenCalledWith(`${API_BASE_URL}/players/${playerId}`, {
+    expect(global.fetch).toHaveBeenCalledWith(`${API_BASE_URL}v1/players/${playerId}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(updateData),
@@ -273,7 +273,7 @@ describe("playerApiService: updatePlayer()", ()=> {
 
     expect(result).toBeTruthy();
     expect(global.fetch).toHaveBeenCalledTimes(1);
-    expect(global.fetch).toHaveBeenCalledWith(`${API_BASE_URL}/players/${playerId}`, {
+    expect(global.fetch).toHaveBeenCalledWith(`${API_BASE_URL}v1/players/${playerId}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(updateData),

@@ -20,7 +20,7 @@ describe("collectionApiService: getCollections()", ()=> {
     const result = await getCollections();
 
     expect(global.fetch).toHaveBeenCalledTimes(1);
-    expect(global.fetch).toHaveBeenCalledWith(`${API_BASE_URL}/collections/primary/games`, { method: "GET" });
+    expect(global.fetch).toHaveBeenCalledWith(`${API_BASE_URL}v1/collections/primary/games`, { method: "GET" });
     expect(result).toEqual(mockCollectionsListResponse);
   });
 

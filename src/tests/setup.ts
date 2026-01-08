@@ -9,4 +9,4 @@ if (typeof require !== 'undefined') {
     (require as any).extensions['.scss'] = () => cssMock;
 }
 
-import.meta.env.VITE_API_BASE_URL = "/api/v1";
+import.meta.env.VITE_API_BASE_URL = "/api/";
