@@ -29,7 +29,7 @@ const emit = defineEmits<{
     <v-card-actions>
       <v-btn
         color="primary"
-        variant="plain"
+        variant="flat"
         @click="emit('add-game', boardgame)"
       >
         <FontAwesomeIcon :icon="faPlus" />

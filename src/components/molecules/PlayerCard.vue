@@ -41,7 +41,7 @@ const handleDeletePlayer = () => {
         @click="handleEditPlayer"  
         class="action-btn button-edit"
         color="primary"
-        variant="plain"
+        variant="flat"
       >
         <FontAwesomeIcon :icon="faPenToSquare" class="icon-edit" />
         <span>Editar</span>
@@ -51,7 +51,7 @@ const handleDeletePlayer = () => {
         @click="handleDeletePlayer"
         class="action-btn button-delete"
         color="error"
-        variant="plain" 
+        variant="text" 
       >
         <FontAwesomeIcon :icon="faTrash" class="icon-delete" />
         <span>Borrar</span>
