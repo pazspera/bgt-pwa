@@ -44,7 +44,7 @@ export async function getPlayer(id: string) {
 
 export async function createPlayer(newPlayer: CreatePlayerRequest) {
   try {
-    const response = await fetch(`${API_BASE_URL}v1/players`, {
+    const response = await fetch(`${API_BASE_URL}/v1/players`, {
       method: "POST",
       headers: { 'Content-Type': 'application/json', },
       body: JSON.stringify(newPlayer),
