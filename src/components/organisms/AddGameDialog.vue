@@ -22,15 +22,41 @@ const { players, totalPlayers, loading, error, fetchPlayers } = usePlayersApi();
 
 const selectedPlayers: Ref<PlayerApiResponse[]> = ref([]);
 const gameWinner: Ref<PlayerApiResponse | null> = ref(null);
+const errorCount: Ref<number> = ref(0);
 
 onBeforeMount(async ()=> {
   await fetchPlayers();
-  console.log(players.value);
 })
 
 const closeDialog = () => {
+  errorCount.value = 0;
   emit("update:modelValue", false);
 }
+
+/* 
+  To avoid an infinite loop of retry messages, we tell the user
+  to retry fetchPlayers one time. If it fails again, the error
+  message instructs the user to reload the page.
+*/
+watch(error, (newValue) => {
+  if(newValue !== null) {
+    errorCount.value++;
+  }
+})
+
+const handleReloadOnError = async () => {
+  if(errorCount.value === 1) {
+    await fetchPlayers();
+
+    // resets errorCount if it loads correctly
+    if(!error.value) {
+      errorCount.value = 0;
+    }
+  } else {
+    window.location.reload();
+  }
+}
+/* *** */
 
 watch(selectedPlayers, (newPlayers)=> {
   if(gameWinner.value && !newPlayers.some(p => p.id === gameWinner.value.id)) {
@@ -54,20 +80,42 @@ watch(gameWinner, (newValue, oldValue)=> {
       @update:model-value="emit('update:modelValue', $event)"
       max-width="1100px"
       scrollable
-      persistent
       data-testid="add-game-dialog"
     >
 
       <v-card class="dialog">
         <!-- loading -->
         <div v-if="loading || error" class="overlay-container">
-          <div class="d-flex flex-column justify-center align-center">
+          <div class="d-flex flex-column justify-center align-center w-100">
             <LoadingRow v-if="loading" class="ma-0"></LoadingRow>
-            <p v-if="error" class="mt-4">Mensaje error</p>
+
+            <v-row v-if="error" class="w-66 flex-grow-0">
+              <v-col cols="12">
+                <v-alert
+                  color="error"
+                  :title="errorCount === 1 ? AddGameDialogText.errors.failedLoadTitleFirst : AddGameDialogText.errors.failedLoadTitleSecond"
+                  class="error-container"
+                >
+                  <div>
+                      <span class="mt-4">{{ errorCount === 1 ? AddGameDialogText.errors.loadFirstTry : AddGameDialogText.errors.loadSecondTry }}</span>
+                  </div>
+                  <template #append>
+                    <v-btn
+                      color="white"
+                      variant="flat"
+                      size="small"
+                      @click="handleReloadOnError"
+                    >
+                      {{ errorCount === 1 ? AddGameDialogText.buttons.retryFirstTry : AddGameDialogText.buttons.retrySecondTry }}
+                    </v-btn>
+                  </template>
+                </v-alert>
+              </v-col>
+            </v-row>
           </div>
         </div>
 
-        <div :class="{ 'hidden-on-loading': loading }" class="content-wrapper">
+        <div :class="{ 'hidden-on-loading': loading || error }" class="content-wrapper">
           <v-card-item class="mb-4" >
             <v-card-title class="dialog-title">
               {{ AddGameDialogText.title }}
