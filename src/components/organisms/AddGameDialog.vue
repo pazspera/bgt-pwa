@@ -29,9 +29,15 @@ const closeDialog = () => {
       data-testid="add-game-dialog"
     >
       <v-card class="dialog">
-        <v-card-title class="dialog-title mb-4">
-          {{ AddGameDialogText.title + boardgame.name}}
-        </v-card-title> 
+        <v-card-item class="mb-4">
+          <v-card-title class="dialog-title">
+            {{ AddGameDialogText.title }}
+          </v-card-title>
+          <v-card-subtitle>
+            {{ boardgame.name }}
+          </v-card-subtitle>
+        </v-card-item>
+         
         
         <v-card-text>
           <v-form>

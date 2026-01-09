@@ -1,5 +1,5 @@
 export const AddGameDialogText = {
-  title: "Nueva partida de ",
+  title: "Nueva partida",
   labels: {
     selectDate: "Fecha",
     selectPlayers: "¿Quiénes jugaron?",
