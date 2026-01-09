@@ -1,5 +1,5 @@
 export const AddGameDialogText = {
-  title: "Nueva partida de ",
+  title: "Nueva partida",
   labels: {
     selectDate: "Fecha",
     selectPlayers: "¿Quiénes jugaron?",
@@ -12,8 +12,13 @@ export const AddGameDialogText = {
   buttons: {
     save: "Guardar partida",
     cancel: "Cancelar",
+    retryFirstTry: "Reintentar",
+    retrySecondTry: "Recargar"
   },
   errors: {
-
+    failedLoadTitleFirst: "¡Oh, no! Ocurrió un error",
+    failedLoadTitleSecond: "No sos vos, somos nosotrxs",
+    loadFirstTry: "Algo falló en el camino, probá otra vez.",
+    loadSecondTry: "Empecemos de nuevo. Por favor, recargá la página."
   }
 }
