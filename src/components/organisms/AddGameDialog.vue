@@ -20,7 +20,7 @@ const emit = defineEmits<{
 
 const { players, totalPlayers, loading, error, fetchPlayers } = usePlayersApi();
 
-const selectedPlayers: Ref<PlayerApiResponse[] | []> = ref([]);
+const selectedPlayers: Ref<PlayerApiResponse[]> = ref([]);
 const gameWinner: Ref<PlayerApiResponse | null> = ref(null);
 
 onBeforeMount(async ()=> {
@@ -32,12 +32,10 @@ const closeDialog = () => {
   emit("update:modelValue", false);
 }
 
-watch(selectedPlayers, (newValue, oldValue)=> {
-  console.log("selectedPlayers")
-  console.log(`oldValue:`)
-  console.log(oldValue)
-  console.log(`newValue`)
-  console.log(newValue)
+watch(selectedPlayers, (newPlayers)=> {
+  if(gameWinner.value && !newPlayers.some(p => p.id === gameWinner.value.id)) {
+    gameWinner.value = null;
+  }
 })
 
 watch(gameWinner, (newValue, oldValue)=> {
