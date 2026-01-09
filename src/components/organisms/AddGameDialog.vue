@@ -6,7 +6,6 @@ import { CollectionsApiResponse } from '../../types/domain/collectionsApi';
 import { usePlayersApi } from '../../composables/usePlayersApi';
 import { onBeforeMount } from 'vue';
 import LoadingRow from '../molecules/LoadingRow.vue';
-import { ref } from "vue";
 
 defineProps<{
   modelValue: boolean,
