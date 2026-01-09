@@ -4,8 +4,9 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faFloppyDisk } from "@fortawesome/free-solid-svg-icons";
 import { CollectionsApiResponse } from '../../types/domain/collectionsApi';
 import { usePlayersApi } from '../../composables/usePlayersApi';
-import { onBeforeMount } from 'vue';
+import { onBeforeMount, ref, type Ref, watch } from 'vue';
 import LoadingRow from '../molecules/LoadingRow.vue';
+import { PlayerApiResponse } from '../../types/domain/playerApi';
 
 defineProps<{
   modelValue: boolean,
@@ -19,6 +20,9 @@ const emit = defineEmits<{
 
 const { players, totalPlayers, loading, error, fetchPlayers } = usePlayersApi();
 
+const selectedPlayers= ref([]);
+const gameWinner = ref(null);
+
 onBeforeMount(async ()=> {
   await fetchPlayers();
   console.log(players.value);
@@ -27,6 +31,22 @@ onBeforeMount(async ()=> {
 const closeDialog = () => {
   emit("update:modelValue", false);
 }
+
+watch(selectedPlayers, (newValue, oldValue)=> {
+  console.log("selectedPlayers")
+  console.log(`oldValue:`)
+  console.log(oldValue)
+  console.log(`newValue`)
+  console.log(newValue)
+})
+
+watch(gameWinner, (newValue, oldValue)=> {
+  console.log("gameWinner")
+  console.log(`oldValue:`)
+  console.log(oldValue)
+  console.log(`newValue`)
+  console.log(newValue)
+})
 
 </script>
 
@@ -82,6 +102,7 @@ const closeDialog = () => {
                     chips
                     :label="AddGameDialogText.labels.selectPlayers"
                     :hint="AddGameDialogText.hints.selectPlayers"
+                    v-model="selectedPlayers"
                     :items="players"
                     item-title="name"
                     item-value="id"
@@ -89,6 +110,7 @@ const closeDialog = () => {
                     density="comfortable"
                     multiple
                     persistent-hint
+                    return-object
                   >
                   </v-select>
                 </v-col>
@@ -101,8 +123,12 @@ const closeDialog = () => {
                     chips
                     variant="outlined"
                     density="comfortable"
+                    v-model="gameWinner"
                     :label="AddGameDialogText.labels.selectWinner"
-                    :items="['Zeuchi', 'Mareita']"
+                    :items="selectedPlayers"
+                    item-title="name"
+                    item-value="id"
+                    return-object
                   ></v-select>
                 </v-col>
                 <v-col
