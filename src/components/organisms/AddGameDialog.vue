@@ -21,6 +21,7 @@ const { players, totalPlayers, loading, error, fetchPlayers } = usePlayersApi();
 
 onBeforeMount(async ()=> {
   await fetchPlayers();
+  console.log(players.value);
 })
 
 const closeDialog = () => {
@@ -81,7 +82,9 @@ const closeDialog = () => {
                     chips
                     :label="AddGameDialogText.labels.selectPlayers"
                     :hint="AddGameDialogText.hints.selectPlayers"
-                    :items="['Zeuchi', 'Mareita', 'Zeuchi again',]"
+                    :items="players"
+                    item-title="name"
+                    item-value="id"
                     variant="outlined"
                     density="comfortable"
                     multiple
