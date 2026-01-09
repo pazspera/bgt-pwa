@@ -20,9 +20,6 @@ const emit = defineEmits<{
 
 const { players, totalPlayers, loading, error, fetchPlayers } = usePlayersApi();
 
-const testError = true;
-const testErrorMessage = true;
-
 onBeforeMount(async ()=> {
   await fetchPlayers();
 })
@@ -45,14 +42,14 @@ const closeDialog = () => {
 
       <v-card class="dialog">
         <!-- loading -->
-        <div v-if="testError" class="overlay-container">
+        <div v-if="loading || error" class="overlay-container">
           <div class="d-flex flex-column justify-center align-center">
-            <LoadingRow v-if="testError" class="ma-0"></LoadingRow>
-            <p v-if="testErrorMessage && testError" class="mt-4">Mensaje error</p>
+            <LoadingRow v-if="loading" class="ma-0"></LoadingRow>
+            <p v-if="error" class="mt-4">Mensaje error</p>
           </div>
         </div>
 
-        <div :class="{ 'hidden-on-loading': testError }" class="content-wrapper">
+        <div :class="{ 'hidden-on-loading': loading }" class="content-wrapper">
           <v-card-item class="mb-4" >
             <v-card-title class="dialog-title">
               {{ AddGameDialogText.title }}
@@ -149,18 +146,6 @@ const closeDialog = () => {
   display: flex;
   flex-direction: column;
   min-height: 200px;
-}
-
-.overlay-container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9;
 }
 
 .content-wrapper {
