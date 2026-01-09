@@ -3,6 +3,10 @@ import { AddGameDialogText } from '../../constants/ui_text/AddGameDialog';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faFloppyDisk } from "@fortawesome/free-solid-svg-icons";
 import { CollectionsApiResponse } from '../../types/domain/collectionsApi';
+import { usePlayersApi } from '../../composables/usePlayersApi';
+import { onBeforeMount } from 'vue';
+import LoadingRow from '../molecules/LoadingRow.vue';
+import { ref } from "vue";
 
 defineProps<{
   modelValue: boolean,
@@ -13,6 +17,14 @@ defineOptions({ name: "AddGameDialog" });
 const emit = defineEmits<{
   "update:modelValue": [ dialogVisibility: boolean ],
 }>();
+
+const { players, totalPlayers, loading, error, fetchPlayers } = usePlayersApi();
+
+const testError = true;
+
+onBeforeMount(async ()=> {
+  await fetchPlayers();
+})
 
 const closeDialog = () => {
   emit("update:modelValue", false);
@@ -27,9 +39,22 @@ const closeDialog = () => {
       max-width="1100px"
       scrollable
       data-testid="add-game-dialog"
+      :class="{ 'container-on-loading': testError }"
     >
+
       <v-card class="dialog">
-        <v-card-item class="mb-4">
+        <!-- loading -->
+        <v-container  
+          v-if="testError"
+          :class="{ 'loader-on-loading': testError }"
+        >
+          <LoadingRow></LoadingRow>
+        </v-container>
+
+        <v-card-item 
+          class="mb-4"
+          :class="{ 'hidden-on-loading': testError }"
+        >
           <v-card-title class="dialog-title">
             {{ AddGameDialogText.title }}
           </v-card-title>
@@ -39,7 +64,9 @@ const closeDialog = () => {
         </v-card-item>
          
         
-        <v-card-text>
+        <v-card-text
+          :class="{ 'hidden-on-loading': testError }"
+        >
           <v-form>
             <v-row>
               <v-col
@@ -97,7 +124,10 @@ const closeDialog = () => {
           </v-form>
         </v-card-text>
 
-        <v-card-actions class="dialog-actions mt-3">
+        <v-card-actions 
+          class="dialog-actions mt-3"
+          :class="{ 'hidden-on-loading': testError }"
+        >
           <v-btn
             type="submit" 
             color="primary"
@@ -134,5 +164,17 @@ const closeDialog = () => {
   padding: 0 24px 16px 24px;
 }
 
+.hidden-on-loading {
+  visibility: hidden;
+}
 
+.container-on-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loader-on-loading {
+  border: 1px solid red;
+}
 </style>
