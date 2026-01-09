@@ -20,8 +20,8 @@ const emit = defineEmits<{
 
 const { players, totalPlayers, loading, error, fetchPlayers } = usePlayersApi();
 
-const selectedPlayers= ref([]);
-const gameWinner = ref(null);
+const selectedPlayers: Ref<PlayerApiResponse[] | []> = ref([]);
+const gameWinner: Ref<PlayerApiResponse | null> = ref(null);
 
 onBeforeMount(async ()=> {
   await fetchPlayers();
@@ -124,6 +124,7 @@ watch(gameWinner, (newValue, oldValue)=> {
                     variant="outlined"
                     density="comfortable"
                     v-model="gameWinner"
+                    :disabled="selectedPlayers.length === 0"
                     :label="AddGameDialogText.labels.selectWinner"
                     :items="selectedPlayers"
                     item-title="name"
