@@ -1,0 +1,40 @@
+GET /api/v1/games?include=players
+
+Response:
+{
+    "total": 3,
+    "limit": 10,
+    "offset": 0,
+    "data": [
+        {
+            "boardgame_id": "492d002e-76e3-4e72-a0ce-b739a4f4f86c",
+            "notes": "Eu precisei me preparar mouito",
+            "boardgame_name": "Carcassonne",
+            "players": [
+                {
+                    "is_winner": true,
+                    "player_id": "1e6cebfe-b512-4735-8d44-b8215cc31293",
+                    "is_registered": false
+                },
+                {
+                    "is_winner": false,
+                    "player_id": "a65c88ea-fa62-49ff-a209-e9788b6784db",
+                    "is_registered": false
+                }
+            ]
+        },
+        {
+            "boardgame_id": "492d002e-76e3-4e72-a0ce-b739a4f4f86c",
+            "notes": "Eu precisei me preparar mouito",
+            "boardgame_name": "Carcassonne",
+            "players": [
+                {
+                    "is_winner": true,
+                    "player_id": "3a28cf09-0506-4d1d-aba7-414702eb690c",
+                    "player_name": "Zeuchi, Wizard Supreme",
+                    "is_registered": false
+                }
+            ]
+        }
+    ]
+}
