@@ -1,15 +1,17 @@
 <script setup lang="ts">
-import * as GameApiService from "../../api/gameApiService";
+import { useGamesApi } from "../../composables/useGamesApi";
 import { onBeforeMount } from "vue";
 import { CreateGameRequest } from "../../types/domain/gamesApi";
 
 defineOptions({ name: "GamesView" });
 
-onBeforeMount(()=> {
+onBeforeMount(async ()=> {
 const today = new Date().toISOString();
 console.log(today);
 
-const newGame: CreateGameRequest = {
+const { loading, newGame, errorSaveGame, saveGame } =  useGamesApi();
+
+const exampleNewGame: CreateGameRequest = {
   boardgame_id: "bcae2afc-f027-489d-8f70-fd8f79d10533",
   collection_id: "b6acc73a-6b7a-4c67-937a-e1a6169f173f",
   player_group_id: null,
@@ -28,9 +30,13 @@ const newGame: CreateGameRequest = {
   ]
 }
 
-console.log(newGame);
+console.log(exampleNewGame);
 
-GameApiService.createGame(newGame);
+await saveGame(exampleNewGame);
+console.log(`loading: ${loading.value}`)
+console.log(`newGame:`)
+console.log(newGame.value)
+console.log(`errorSaveGame: ${errorSaveGame.value}`);
 
 })
 
