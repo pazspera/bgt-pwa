@@ -57,6 +57,7 @@ onBeforeMount(async ()=> {
     />
 
     <AddGameDialog
+      v-if="selectedBoardgame"
       v-model="isAddGameDialogOpen"
       :boardgame="selectedBoardgame" 
     />
