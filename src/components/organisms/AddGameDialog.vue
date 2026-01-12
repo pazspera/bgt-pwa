@@ -29,6 +29,7 @@ const { players, totalPlayers, loading, error, fetchPlayers } = usePlayersApi();
 const selectedPlayers: Ref<PlayerApiResponse[]> = ref([]);
 const gameWinner: Ref<PlayerApiResponse | null> = ref(null);
 const errorCount: Ref<number> = ref(0);
+const savingGame: Ref<boolean> = ref(false);
 
 const validationSchema = computed(() => {
   const minPlayer = props.boardgame?.min_players ?? 1;
@@ -173,9 +174,10 @@ const handleReloadOnError = async () => {
 /* *** */
 
 const onSubmit = handleSubmit((values) => {
+  savingGame.value = true;
   console.log("form válido", values);
 
-  closeDialog();
+  // closeDialog();
 })
 </script>
 
@@ -309,6 +311,7 @@ const onSubmit = handleSubmit((values) => {
               @click="onSubmit" 
               color="primary"
               variant="elevated"
+              :loading="savingGame"
             >
               <FontAwesomeIcon :icon="faFloppyDisk" />
               <span>{{ AddGameDialogText.buttons.save }}</span>
