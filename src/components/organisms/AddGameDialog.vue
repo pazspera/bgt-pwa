@@ -9,7 +9,7 @@ import LoadingRow from '../molecules/LoadingRow.vue';
 import { PlayerApiResponse } from '../../types/domain/playerApi';
 import { object, string, date, array, boolean } from "yup";
 
-defineProps<{
+const props =  defineProps<{
   modelValue: boolean,
   boardgame: CollectionsApiResponse | null,
 }>();
@@ -26,11 +26,17 @@ const validationSchema = object({
       is_winner: boolean().required(),
       is_registered: boolean().default(false),
     }))
-    .min(1, "Agregá al menos un jugador")
-    // agregar que tenga como min la cantidad de jugadores que viene del boardgame
+    .min(props.boardgame.min_players, `Agregá al menos ${props.boardgame.min_players} jugadores`)
+    .max(props.boardgame.max_players, `Podés agregar hasta ${props.boardgame.max_players} jugadores`)
   ,
-  winner: object(),
+  winner: object({
+    player_id: string().required(),
+    is_winner: boolean().required(),
+    is_registered: boolean().default(false)
+  }),
   notes: string()
+    .ensure()
+    .max(500, "Las notas son demasiado extensas")
 });
 
 const emit = defineEmits<{
