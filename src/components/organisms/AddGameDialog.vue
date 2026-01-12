@@ -49,9 +49,12 @@ const validationSchema = computed(() => {
       ,
       winner: object({
         player_id: string().required(),
-        is_winner: boolean().required("Elegí quién ganó la partida"),
+        is_winner: boolean().required(),
         is_registered: boolean().default(false)
-      }),
+      })
+        .nullable()
+        .required("Elegí quién ganó la partida")
+      ,
       notes: string()
         .ensure()
         .max(500, "Las notas son demasiado extensas")
@@ -139,7 +142,7 @@ const closeDialog = () => {
   selectedPlayers.value= [];
   gameWinner.value = null;
   errorCount.value = 0;
-  
+
   emit("update:modelValue", false);
 }
 
