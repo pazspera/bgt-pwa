@@ -8,6 +8,7 @@ import { onBeforeMount, ref, type Ref, watch } from 'vue';
 import LoadingRow from '../molecules/LoadingRow.vue';
 import { PlayerApiResponse } from '../../types/domain/playerApi';
 import { object, string, date, array, boolean } from "yup";
+import { toTypedSchema } from "@vee-validate/yup";
 
 const props =  defineProps<{
   modelValue: boolean,
@@ -15,29 +16,32 @@ const props =  defineProps<{
 }>();
 defineOptions({ name: "AddGameDialog" });
 
-const validationSchema = object({
-  date: date()
-    .required("La fecha es obligatoria")
-    .default(() => new Date())
-    .max(new Date(), "No podemos guardar partidas del futuro"),
-  players: array()
-    .of(object({
+const validationSchema = toTypedSchema(
+  object({
+    date: date()
+      .required("La fecha es obligatoria")
+      .default(() => new Date())
+      .max(new Date(), "No podemos guardar partidas del futuro"),
+    players: array()
+      .of(object({
+        player_id: string().required(),
+        is_winner: boolean().required(),
+        is_registered: boolean().default(false),
+      }))
+      .min(props.boardgame.min_players, `Agregá al menos ${props.boardgame.min_players} jugadores`)
+      .max(props.boardgame.max_players, `Podés agregar hasta ${props.boardgame.max_players} jugadores`)
+    ,
+    winner: object({
       player_id: string().required(),
       is_winner: boolean().required(),
-      is_registered: boolean().default(false),
-    }))
-    .min(props.boardgame.min_players, `Agregá al menos ${props.boardgame.min_players} jugadores`)
-    .max(props.boardgame.max_players, `Podés agregar hasta ${props.boardgame.max_players} jugadores`)
-  ,
-  winner: object({
-    player_id: string().required(),
-    is_winner: boolean().required(),
-    is_registered: boolean().default(false)
-  }),
-  notes: string()
-    .ensure()
-    .max(500, "Las notas son demasiado extensas")
-});
+      is_registered: boolean().default(false)
+    }),
+    notes: string()
+      .ensure()
+      .max(500, "Las notas son demasiado extensas")
+  })
+);
+
 
 const emit = defineEmits<{
   "update:modelValue": [ dialogVisibility: boolean ],
