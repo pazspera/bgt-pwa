@@ -20,6 +20,8 @@ defineOptions({ name: "AddGameDialog" });
 
 const emit = defineEmits<{
   "update:modelValue": [ dialogVisibility: boolean ],
+  "success": [ message: string],
+  "error": [ message: string ]
 }>();
 
 const { players, totalPlayers, loading, error, fetchPlayers } = usePlayersApi();
