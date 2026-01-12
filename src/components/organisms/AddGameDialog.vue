@@ -49,7 +49,7 @@ const validationSchema = computed(() => {
       ,
       winner: object({
         player_id: string().required(),
-        is_winner: boolean().required(),
+        is_winner: boolean().required("Elegí quién ganó la partida"),
         is_registered: boolean().default(false)
       }),
       notes: string()
@@ -132,7 +132,14 @@ onBeforeMount(async ()=> {
 })
 
 const closeDialog = () => {
+  // reset vee-validate
+  resetForm();
+
+  // reset variables
+  selectedPlayers.value= [];
+  gameWinner.value = null;
   errorCount.value = 0;
+  
   emit("update:modelValue", false);
 }
 
@@ -161,16 +168,11 @@ const handleReloadOnError = async () => {
 }
 /* *** */
 
+const onSubmit = handleSubmit((values) => {
+  console.log("form válido", values);
 
-
-watch(gameWinner, (newValue, oldValue)=> {
-  console.log("gameWinner")
-  console.log(`oldValue:`)
-  console.log(oldValue)
-  console.log(`newValue`)
-  console.log(newValue)
+  closeDialog();
 })
-
 </script>
 
 <template>
@@ -299,7 +301,8 @@ watch(gameWinner, (newValue, oldValue)=> {
   
           <v-card-actions class="dialog-actions mt-3">
             <v-btn
-              type="submit" 
+              type="submit"
+              @click="onSubmit" 
               color="primary"
               variant="elevated"
             >
