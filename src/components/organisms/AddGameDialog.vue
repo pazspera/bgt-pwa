@@ -252,7 +252,7 @@ const onSubmit = handleSubmit((values) => {
                   <v-select
                     chips
                     :label="AddGameDialogText.labels.selectPlayers"
-                    :hint="AddGameDialogText.hints.selectPlayers"
+                    :hint="selectedPlayers.length === 0 ? AddGameDialogText.hints.selectPlayers : ''"
                     v-model="selectedPlayers"
                     :error-messages="selectedPlayers.length > 0 || submitCount > 0 ? formErrors.players : ''"
                     :items="players"
