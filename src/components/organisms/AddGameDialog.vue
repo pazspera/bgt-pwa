@@ -9,7 +9,8 @@ import LoadingRow from '../molecules/LoadingRow.vue';
 import { PlayerApiResponse } from '../../types/domain/playerApi';
 import { object, string, date, array, boolean } from "yup";
 import { toTypedSchema } from "@vee-validate/yup";
-import { useField, useForm } from "vee-validate";
+import { useField, useForm, useFieldArray } from "vee-validate";
+import type { PlayerInGame } from '../../types/domain/gamesApi';
 
 const props =  defineProps<{
   modelValue: boolean,
@@ -20,6 +21,12 @@ defineOptions({ name: "AddGameDialog" });
 const emit = defineEmits<{
   "update:modelValue": [ dialogVisibility: boolean ],
 }>();
+
+const { players, totalPlayers, loading, error, fetchPlayers } = usePlayersApi();
+
+const selectedPlayers: Ref<PlayerApiResponse[]> = ref([]);
+const gameWinner: Ref<PlayerApiResponse | null> = ref(null);
+const errorCount: Ref<number> = ref(0);
 
 const validationSchema = toTypedSchema(
   object({
@@ -57,20 +64,36 @@ const { handleSubmit, resetForm } = useForm({
   }
 })
 
-const { 
-  value: dateValue, 
-  errorMessage: dateError, 
-} = useField<Date>('date');
-const { 
-  value: notesValue,
-  errorMessage: notesError, 
-} = useField<String>('notes');
+const { value: dateValue, errorMessage: dateError } = useField<Date>('date');
+const { value: notesValue, errorMessage: notesError } = useField<String>('notes');
+const { value: winnerValue, errorMessage: winnerError } = useField<PlayerInGame>('winner');
+const { fields, push, remove } = useFieldArray<PlayerInGame>('players');
 
-const { players, totalPlayers, loading, error, fetchPlayers } = usePlayersApi();
+// watch sincronizes the selection in the input with vee-validate
+// We're using selectedPlayers, not the v-model of players 
+// It would always show the min_players error since players doesn't
+// show when a player was added, that's on selectedPlayers
+// The watch saves the player added in selectedPlayers using the 
+// format defined in validationSchema 
+watch(selectedPlayers, (newPlayers) => {
+  // cleans current array in vee-validate
+  // if a player is added and deleted, the array has to be repopulated from scratch
+  while(fields.value.length > 0) {
+    remove(0);
+  }
 
-const selectedPlayers: Ref<PlayerApiResponse[]> = ref([]);
-const gameWinner: Ref<PlayerApiResponse | null> = ref(null);
-const errorCount: Ref<number> = ref(0);
+  // loads the data coming from the select
+  newPlayers.forEach((player) => {
+    push({
+      player_id: player.id,
+      is_winner: gameWinner.value?.id === player.id,
+      is_registered: player.is_registered ?? false,
+    })
+  })
+}, { deep: true });
+// deep: true is needed to check if anything changed in the objects in the array
+// If the user selects the winner, the player object changes and that prop
+// has to be updated in selectedPlayers
 
 onBeforeMount(async ()=> {
   await fetchPlayers();
