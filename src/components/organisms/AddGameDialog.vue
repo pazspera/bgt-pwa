@@ -54,7 +54,7 @@ const validationSchema = toTypedSchema(
   })
 );
 
-const { handleSubmit, resetForm } = useForm({
+const { handleSubmit, resetForm, errors: formErrors } = useForm({
   validationSchema,
   initialValues: {
     date: new Date(),
@@ -69,6 +69,7 @@ const { value: notesValue, errorMessage: notesError } = useField<String>('notes'
 const { value: winnerValue, errorMessage: winnerError } = useField<PlayerInGame>('winner');
 const { fields, push, remove } = useFieldArray<PlayerInGame>('players');
 
+// WATCH FOR PLAYERS SELECT
 // watch sincronizes the selection in the input with vee-validate
 // We're using selectedPlayers, not the v-model of players 
 // It would always show the min_players error since players doesn't
@@ -90,10 +91,34 @@ watch(selectedPlayers, (newPlayers) => {
       is_registered: player.is_registered ?? false,
     })
   })
+
+  // if the selected winner is no longer in the players array, remove it
+  if(gameWinner.value && !newPlayers.some(p => p.id === gameWinner.value.id)) {
+    gameWinner.value = null;
+  }
+
+  // syncronizes winner with vee-validate
+  // if there is no winner, it's null
+  // if there is a winner, we send the object formated to schema
+  winnerValue.value = gameWinner.value ? {
+    player_id: gameWinner.value.id,
+    is_winner: true,
+    is_registered: gameWinner.value.is_registered ?? false,
+  } : null;
 }, { deep: true });
 // deep: true is needed to check if anything changed in the objects in the array
 // If the user selects the winner, the player object changes and that prop
 // has to be updated in selectedPlayers
+
+// WATCH FOR WINNER SELECT
+// checks if the player changes the winner without touching the players
+watch(gameWinner, (newWinner)=> {
+  winnerValue.value = newWinner ? {
+    player_id: newWinner.id,
+    is_winner: true,
+    is_registered: newWinner.is_registered ?? false,
+  } : null;
+})
 
 onBeforeMount(async ()=> {
   await fetchPlayers();
@@ -129,11 +154,7 @@ const handleReloadOnError = async () => {
 }
 /* *** */
 
-watch(selectedPlayers, (newPlayers)=> {
-  if(gameWinner.value && !newPlayers.some(p => p.id === gameWinner.value.id)) {
-    gameWinner.value = null;
-  }
-})
+
 
 watch(gameWinner, (newValue, oldValue)=> {
   console.log("gameWinner")
@@ -205,6 +226,8 @@ watch(gameWinner, (newValue, oldValue)=> {
                 >
                   <v-date-input
                     :label="AddGameDialogText.labels.selectDate"
+                    v-model="dateValue"
+                    :error-messages="dateError"
                     prepend-icon=""
                     prepend-inner-icon="$calendar"
                     variant="outlined"
@@ -220,6 +243,7 @@ watch(gameWinner, (newValue, oldValue)=> {
                     :label="AddGameDialogText.labels.selectPlayers"
                     :hint="AddGameDialogText.hints.selectPlayers"
                     v-model="selectedPlayers"
+                    :error-messages="formErrors.players"
                     :items="players"
                     item-title="name"
                     item-value="id"
@@ -241,6 +265,7 @@ watch(gameWinner, (newValue, oldValue)=> {
                     variant="outlined"
                     density="comfortable"
                     v-model="gameWinner"
+                    :error-messages="winnerError"
                     :disabled="selectedPlayers.length === 0"
                     :label="AddGameDialogText.labels.selectWinner"
                     :items="selectedPlayers"
@@ -254,6 +279,8 @@ watch(gameWinner, (newValue, oldValue)=> {
                 >
                   <v-textarea
                     variant="outlined"
+                    v-model="notesValue"
+                    :error-messages="notesError"
                     :label="AddGameDialogText.labels.notes"
                     no-resize
                     max-rows="3"
