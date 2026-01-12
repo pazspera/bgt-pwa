@@ -9,12 +9,17 @@ import LoadingRow from '../molecules/LoadingRow.vue';
 import { PlayerApiResponse } from '../../types/domain/playerApi';
 import { object, string, date, array, boolean } from "yup";
 import { toTypedSchema } from "@vee-validate/yup";
+import { useField, useForm } from "vee-validate";
 
 const props =  defineProps<{
   modelValue: boolean,
   boardgame: CollectionsApiResponse | null,
 }>();
 defineOptions({ name: "AddGameDialog" });
+
+const emit = defineEmits<{
+  "update:modelValue": [ dialogVisibility: boolean ],
+}>();
 
 const validationSchema = toTypedSchema(
   object({
@@ -42,10 +47,24 @@ const validationSchema = toTypedSchema(
   })
 );
 
+const { handleSubmit, resetForm } = useForm({
+  validationSchema,
+  initialValues: {
+    date: new Date(),
+    players: [],
+    winner: null,
+    notes: ""
+  }
+})
 
-const emit = defineEmits<{
-  "update:modelValue": [ dialogVisibility: boolean ],
-}>();
+const { 
+  value: dateValue, 
+  errorMessage: dateError, 
+} = useField<Date>('date');
+const { 
+  value: notesValue,
+  errorMessage: notesError, 
+} = useField<String>('notes');
 
 const { players, totalPlayers, loading, error, fetchPlayers } = usePlayersApi();
 
