@@ -180,22 +180,35 @@ const onSubmit = handleSubmit(async (values) => {
   console.log("form válido", values);
 
   try {
+    // maps existing players and check which player is the winner
+    // it was showing all players as winner false
+    const mappedPlayers = values.players.map((player) => ({
+      player_id: player.player_id,
+      is_registered: player.is_registered,
+      is_winner: player.player_id === gameWinner.value?.id,
+    }))
+
     const payload: CreateGameRequest = {
       boardgame_id: props.boardgame.id,
       // NO ENTIENDO DONDE ESTÁ LA COLLECTION_ID
-      collection_id: '',
+      // está hardcodeado en GamesView
+      collection_id: 'b6acc73a-6b7a-4c67-937a-e1a6169f173f',
       player_group_id: null,
       start_date: values.date.toISOString(),
       end_date: values.date.toISOString(),
       notes: values.notes,
-      players: values.players as PlayerInGame[],
+      players: mappedPlayers,
     };
     console.log(payload)
-     
-  } catch (error) {
     
+    await saveGame(payload);
+
+    emit("success", "¡La partida fue guardada exitosamente!");
+    closeDialog();
+  } catch (error) {
+    emit("error", errorSaveGame.value || "Hubo un error al guardar la partida");
   } finally {
-    // closeDialog();
+    savingGame.value = false;
   }
 })
 </script>
