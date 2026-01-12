@@ -62,7 +62,7 @@ const validationSchema = computed(() => {
   )
 })
 
-const { handleSubmit, resetForm, errors: formErrors } = useForm({
+const { handleSubmit, resetForm, errors: formErrors, submitCount } = useForm({
   validationSchema,
   initialValues: {
     date: new Date(),
@@ -254,7 +254,7 @@ const onSubmit = handleSubmit((values) => {
                     :label="AddGameDialogText.labels.selectPlayers"
                     :hint="AddGameDialogText.hints.selectPlayers"
                     v-model="selectedPlayers"
-                    :error-messages="selectedPlayers.length > 0 ? formErrors.players : ''"
+                    :error-messages="selectedPlayers.length > 0 || submitCount > 0 ? formErrors.players : ''"
                     :items="players"
                     item-title="name"
                     item-value="id"
@@ -276,7 +276,7 @@ const onSubmit = handleSubmit((values) => {
                     variant="outlined"
                     density="comfortable"
                     v-model="gameWinner"
-                    :error-messages="selectedPlayers.length > 0 && winnerMeta.touched ? winnerError : ''"
+                    :error-messages="selectedPlayers.length > 0 && (winnerMeta.touched || submitCount > 0) ? winnerError : ''"
                     :disabled="selectedPlayers.length === 0"
                     :label="AddGameDialogText.labels.selectWinner"
                     :items="selectedPlayers"
