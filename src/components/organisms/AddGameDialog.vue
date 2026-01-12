@@ -4,13 +4,14 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faFloppyDisk } from "@fortawesome/free-solid-svg-icons";
 import { CollectionsApiResponse } from '../../types/domain/collectionsApi';
 import { usePlayersApi } from '../../composables/usePlayersApi';
+import { useGamesApi } from '../../composables/useGamesApi'; 
 import { onBeforeMount, ref, type Ref, watch, computed } from 'vue';
 import LoadingRow from '../molecules/LoadingRow.vue';
 import { PlayerApiResponse } from '../../types/domain/playerApi';
 import { object, string, date, array, boolean } from "yup";
 import { toTypedSchema } from "@vee-validate/yup";
 import { useField, useForm, useFieldArray } from "vee-validate";
-import type { PlayerInGame } from '../../types/domain/gamesApi';
+import type { PlayerInGame, CreateGameRequest } from '../../types/domain/gamesApi';
 
 const props =  defineProps<{
   modelValue: boolean,
@@ -25,6 +26,7 @@ const emit = defineEmits<{
 }>();
 
 const { players, totalPlayers, loading, error, fetchPlayers } = usePlayersApi();
+const { loading: saveGameLoading, newGame, errorSaveGame, saveGame } = useGamesApi();
 
 const selectedPlayers: Ref<PlayerApiResponse[]> = ref([]);
 const gameWinner: Ref<PlayerApiResponse | null> = ref(null);
@@ -173,11 +175,28 @@ const handleReloadOnError = async () => {
 }
 /* *** */
 
-const onSubmit = handleSubmit((values) => {
+const onSubmit = handleSubmit(async (values) => {
   savingGame.value = true;
   console.log("form válido", values);
 
-  // closeDialog();
+  try {
+    const payload: CreateGameRequest = {
+      boardgame_id: props.boardgame.id,
+      // NO ENTIENDO DONDE ESTÁ LA COLLECTION_ID
+      collection_id: '',
+      player_group_id: null,
+      start_date: values.date.toISOString(),
+      end_date: values.date.toISOString(),
+      notes: values.notes,
+      players: values.players as PlayerInGame[],
+    };
+    console.log(payload)
+     
+  } catch (error) {
+    
+  } finally {
+    // closeDialog();
+  }
 })
 </script>
 

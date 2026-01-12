@@ -20,7 +20,7 @@ const handleAddGame = (boardgame: CollectionsApiResponse) => {
   isAddGameDialogOpen.value = true;
 }
 
-onBeforeMount(async ()=> {
+onBeforeMount(async () => {
   await fetchCollections();
   console.log(collection.value);
 })
@@ -34,33 +34,19 @@ onBeforeMount(async ()=> {
     <!-- error on the boardgames list initial fetch -->
     <v-row v-if="errorFetchCollections">
       <v-col>
-        <v-alert
-          color="error"
-          title="¡Oh, no! Ocurrió un error"
-          :text="errorFetchCollections"
-        ></v-alert>
+        <v-alert color="error" title="¡Oh, no! Ocurrió un error" :text="errorFetchCollections"></v-alert>
       </v-col>
     </v-row>
 
     <!-- loading -->
-    <LoadingRow v-else-if="loadingList && (!collection || totalBoardgames === 0) && !errorFetchCollections"/>
+    <LoadingRow v-else-if="loadingList && (!collection || totalBoardgames === 0) && !errorFetchCollections" />
 
-    <CardGrid
-      v-else-if="(collection && collection.length > 0) && !errorFetchCollections"
-      :data="collection"
-      type="boardgame"
-      @add-game="handleAddGame"
-    ></CardGrid>
+    <CardGrid v-else-if="(collection && collection.length > 0) && !errorFetchCollections" :data="collection"
+      type="boardgame" @add-game="handleAddGame"></CardGrid>
 
-    <AppSnackbar
-      v-model="isSnackBarVisible" 
-    />
+    <AppSnackbar v-model="isSnackBarVisible" />
 
-    <AddGameDialog
-      v-if="selectedBoardgame"
-      v-model="isAddGameDialogOpen"
-      :boardgame="selectedBoardgame" 
-    />
+    <AddGameDialog v-if="selectedBoardgame" v-model="isAddGameDialogOpen" :boardgame="selectedBoardgame" />
   </v-container>
 </template>
 
