@@ -62,8 +62,6 @@ const validationSchema = computed(() => {
   )
 })
 
-
-
 const { handleSubmit, resetForm, errors: formErrors } = useForm({
   validationSchema,
   initialValues: {
@@ -71,12 +69,13 @@ const { handleSubmit, resetForm, errors: formErrors } = useForm({
     players: [],
     winner: null,
     notes: ""
-  }
+  },
+  validateOnMount: false,
 })
 
 const { value: dateValue, errorMessage: dateError } = useField<Date>('date');
 const { value: notesValue, errorMessage: notesError } = useField<String>('notes');
-const { value: winnerValue, errorMessage: winnerError } = useField<PlayerInGame>('winner');
+const { value: winnerValue, errorMessage: winnerError, meta: winnerMeta } = useField<PlayerInGame>('winner');
 const { fields, push, remove } = useFieldArray<PlayerInGame>('players');
 
 // WATCH FOR PLAYERS SELECT
@@ -277,7 +276,7 @@ const onSubmit = handleSubmit((values) => {
                     variant="outlined"
                     density="comfortable"
                     v-model="gameWinner"
-                    :error-messages="winnerError"
+                    :error-messages="winnerMeta.touched ? winnerError : ''"
                     :disabled="selectedPlayers.length === 0"
                     :label="AddGameDialogText.labels.selectWinner"
                     :items="selectedPlayers"
