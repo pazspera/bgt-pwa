@@ -184,7 +184,6 @@ const onSubmit = handleSubmit(async (values) => {
     // it was showing all players as winner false
     const mappedPlayers = values.players.map((player) => ({
       player_id: player.player_id,
-      is_registered: player.is_registered,
       is_winner: player.player_id === gameWinner.value?.id,
     }))
 
