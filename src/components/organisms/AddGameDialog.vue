@@ -194,7 +194,7 @@ const onSubmit = handleSubmit(async (values) => {
       collection_id: 'b6acc73a-6b7a-4c67-937a-e1a6169f173f',
       player_group_id: null,
       start_date: values.date.toISOString(),
-      end_date: values.date.toISOString(),
+      end_date: new Date(new Date(values.date).setHours(values.date.getHours() + 1)).toISOString(),
       notes: values.notes,
       players: mappedPlayers,
     };
