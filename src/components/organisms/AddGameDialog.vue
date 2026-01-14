@@ -12,6 +12,7 @@ import { object, string, date, array, boolean } from "yup";
 import { toTypedSchema } from "@vee-validate/yup";
 import { useField, useForm, useFieldArray } from "vee-validate";
 import type { PlayerInGame, CreateGameRequest } from '../../types/domain/gamesApi';
+import { API_ERROR_MESSAGES } from '../../constants/apiErrorMessages';
 
 const props =  defineProps<{
   modelValue: boolean,
@@ -40,17 +41,17 @@ const validationSchema = computed(() => {
   return toTypedSchema(
     object({
       date: date()
-        .required("La fecha es obligatoria")
+        .required(AddGameDialogText.validationErrors.dateRequired)
         .default(() => new Date())
-        .max(new Date(), "No podemos guardar partidas del futuro"),
+        .max(new Date(), AddGameDialogText.validationErrors.dateMax),
       players: array()
         .of(object({
           player_id: string().required(),
           is_winner: boolean().required(),
           is_registered: boolean().default(false),
         }))
-        .min(minPlayer, `Agregá al menos ${props.boardgame.min_players} jugadores`)
-        .max(maxPlayer, `Podés agregar hasta ${props.boardgame.max_players} jugadores`)
+        .min(minPlayer, AddGameDialogText.validationErrors.playersMin(props.boardgame.min_players))
+        .max(maxPlayer, AddGameDialogText.validationErrors.playersMax(props.boardgame.max_players))
       ,
       winner: object({
         player_id: string().required(),
@@ -58,11 +59,11 @@ const validationSchema = computed(() => {
         is_registered: boolean().default(false)
       })
         .nullable()
-        .required("Elegí quién ganó la partida")
+        .required(AddGameDialogText.validationErrors.winnerRequired)
       ,
       notes: string()
         .ensure()
-        .max(500, "Las notas son demasiado extensas")
+        .max(500, AddGameDialogText.validationErrors.notesMax)
     })
   )
 })
