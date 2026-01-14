@@ -12,7 +12,6 @@ import { object, string, date, array, boolean } from "yup";
 import { toTypedSchema } from "@vee-validate/yup";
 import { useField, useForm, useFieldArray } from "vee-validate";
 import type { PlayerInGame, CreateGameRequest } from '../../types/domain/gamesApi';
-import { API_ERROR_MESSAGES } from '../../constants/apiErrorMessages';
 
 const props =  defineProps<{
   modelValue: boolean,
