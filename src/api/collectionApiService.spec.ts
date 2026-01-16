@@ -25,7 +25,10 @@ describe("collectionApiService: getCollections()", ()=> {
   });
 
   it("error: internal server error (500)", async()=> {
-    vi.spyOn(global, "fetch").mockRejectedValue(new TypeError(API_ERROR_MESSAGES.GET_COLLECTIONS_FAILED(500)));
+    vi.spyOn(global, "fetch").mockResolvedValueOnce({
+      ok: false,
+      status: 500
+    } as unknown as Response);
 
     await expect(getCollections()).rejects.toThrow(API_ERROR_MESSAGES.GET_COLLECTIONS_FAILED(500));
   });
