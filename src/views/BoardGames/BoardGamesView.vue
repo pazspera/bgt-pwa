@@ -10,6 +10,9 @@ import { CollectionsApiResponse } from '../../types/domain/collectionsApi';
 defineOptions({ name: "BoardGamesView" });
 
 const isSnackBarVisible: Ref<boolean> = ref(true);
+const isSavedSnackBarVisible: Ref<boolean> = ref(false);
+const savedSnackBarColor: Ref<string> = ref("");
+const savedSnackBarText: Ref<string> = ref("");
 const isAddGameDialogOpen: Ref<boolean> = ref(false);
 const selectedBoardgame: Ref<CollectionsApiResponse | null> = ref(null);
 
@@ -20,7 +23,19 @@ const handleAddGame = (boardgame: CollectionsApiResponse) => {
   isAddGameDialogOpen.value = true;
 }
 
-onBeforeMount(async ()=> {
+const handleSaveSuccess = (message: string) => {
+  savedSnackBarText.value = message;
+  savedSnackBarColor.value = "success";
+  isSavedSnackBarVisible.value = true;
+}
+
+const handleSaveError = (message: string) => {
+  savedSnackBarText.value = message;
+  savedSnackBarColor.value = "error";
+  isSavedSnackBarVisible.value = true;
+}
+
+onBeforeMount(async () => {
   await fetchCollections();
   console.log(collection.value);
 })
@@ -34,31 +49,45 @@ onBeforeMount(async ()=> {
     <!-- error on the boardgames list initial fetch -->
     <v-row v-if="errorFetchCollections">
       <v-col>
-        <v-alert
-          color="error"
-          title="¡Oh, no! Ocurrió un error"
-          :text="errorFetchCollections"
-        ></v-alert>
+        <v-alert color="error" title="¡Oh, no! Ocurrió un error" :text="errorFetchCollections"></v-alert>
       </v-col>
     </v-row>
 
     <!-- loading -->
-    <LoadingRow v-else-if="loadingList && (!collection || totalBoardgames === 0) && !errorFetchCollections"/>
+    <LoadingRow v-else-if="loadingList && (!collection || totalBoardgames === 0) && !errorFetchCollections" />
 
-    <CardGrid
-      v-else-if="(collection && collection.length > 0) && !errorFetchCollections"
+    <CardGrid 
+      v-else-if="(collection && collection.length > 0) && !errorFetchCollections" 
       :data="collection"
-      type="boardgame"
+      type="boardgame" 
       @add-game="handleAddGame"
     ></CardGrid>
 
-    <AppSnackbar
-      v-model="isSnackBarVisible" 
-    />
+    <AppSnackbar v-model="isSnackBarVisible" />
 
-    <AddGameDialog
-      v-model="isAddGameDialogOpen"
-      :boardgame="selectedBoardgame" 
+    <!-- snackbar for saved game -->
+     <v-snackbar
+      v-model="isSavedSnackBarVisible"
+      :color="savedSnackBarColor"
+      location="bottom center"
+    >
+      {{ savedSnackBarText }}
+
+      <template v-slot:actions>
+        <v-btn
+          variant="text"
+          @click="isSavedSnackBarVisible = false"
+        >
+          Cerrar
+        </v-btn>
+      </template>
+    </v-snackbar>
+
+    <AddGameDialog 
+      v-if="selectedBoardgame" 
+      v-model="isAddGameDialogOpen" 
+      :boardgame="selectedBoardgame"
+      @success="handleSaveSuccess" 
     />
   </v-container>
 </template>

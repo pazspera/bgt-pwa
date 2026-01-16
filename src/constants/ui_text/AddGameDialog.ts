@@ -20,5 +20,13 @@ export const AddGameDialogText = {
     failedLoadTitleSecond: "No sos vos, somos nosotrxs",
     loadFirstTry: "Algo falló en el camino, probá otra vez.",
     loadSecondTry: "Empecemos de nuevo. Por favor, recargá la página."
+  },
+  validationErrors: {
+    dateRequired: "La fecha es obligatoria",
+    dateMax: "No podemos guardar partidas del futuro",
+    playersMin: (minPlayers: number) => `Agregá al menos ${minPlayers} jugadores`,
+    playersMax: (maxPlayers: number) => `Podés agregar hasta ${maxPlayers} jugadores`,
+    winnerRequired: "Elegí quién ganó la partida",
+    notesMax: "Las notas son demasiado extensas"
   }
 }
