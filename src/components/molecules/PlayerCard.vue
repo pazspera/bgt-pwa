@@ -12,6 +12,7 @@ const emit = defineEmits<{
   'delete-player': [player: PlayerApiResponse],
 }>();
 
+
 defineOptions({ name: "PlayerCard" });
 
 const handleEditPlayer = () => {
@@ -31,7 +32,10 @@ const handleDeletePlayer = () => {
     variant="elevated"
     hover
   >
-    <v-card-item class="player-card-text">
+    <v-card-item class="player-card-text ps-2">
+      <v-avatar color="info" size="small" class="me-2">
+        <span>ZE</span>
+      </v-avatar>
       <span data-testid="player-card-name">{{ player.name }}</span>
     </v-card-item>
 
