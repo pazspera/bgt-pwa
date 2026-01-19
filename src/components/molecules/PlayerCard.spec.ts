@@ -58,6 +58,12 @@ describe("rendering",()=> {
     expect(avatar.exists()).toBe(true);
   })
 
+  it.only("renders player initial on avatar", ()=> {
+    const playerInitial = mockSinglePlayer.name.charAt(0);
+    const avatar = wrapper.findComponent({ name: "VAvatar" });
+
+    expect(avatar.text()).toEqual(playerInitial);
+  })
 })
 
 describe("component logic",()=> {

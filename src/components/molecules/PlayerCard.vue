@@ -2,6 +2,7 @@
 import type { PlayerApiResponse } from '../../types/domain/playerApi';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faTrash, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import { findInitials } from '../../utils/findInitials';
 
 const props = defineProps<{
   player: PlayerApiResponse,
@@ -11,7 +12,6 @@ const emit = defineEmits<{
   'edit-player': [player: PlayerApiResponse],
   'delete-player': [player: PlayerApiResponse],
 }>();
-
 
 defineOptions({ name: "PlayerCard" });
 
@@ -33,8 +33,8 @@ const handleDeletePlayer = () => {
     hover
   >
     <v-card-item class="player-card-text ps-2">
-      <v-avatar color="info" size="small" class="me-2">
-        <span>ZE</span>
+      <v-avatar color="info" size="default" class="me-2">
+        <span>{{ findInitials(player.name) }}</span>
       </v-avatar>
       <span data-testid="player-card-name">{{ player.name }}</span>
     </v-card-item>
@@ -71,6 +71,13 @@ const handleDeletePlayer = () => {
   justify-content: space-between;
   align-items: self-start;
   padding: 12px;
+}
+
+.player-card-text :deep(.v-card-item__content) {
+  display: flex !important;
+  flex-direction: row;
+  align-items: center !important;
+  justify-content: center;
 }
 
 .button-edit,
