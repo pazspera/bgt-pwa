@@ -7,3 +7,9 @@ export const findInitials = (name: string) => {
 
   return arrayWords[0].charAt(0) + arrayWords[1].charAt(0);
 }
+
+export const getRandomNumber = (min: number, max: number) => {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max-min) + min);
+}

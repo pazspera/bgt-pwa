@@ -2,7 +2,8 @@
 import type { PlayerApiResponse } from '../../types/domain/playerApi';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faTrash, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
-import { findInitials } from '../../utils/findInitials';
+import { findInitials, getRandomNumber } from '../../utils/generalUtils';
+import { ref, type Ref } from "vue";
 
 const props = defineProps<{
   player: PlayerApiResponse,
@@ -23,6 +24,15 @@ const handleDeletePlayer = () => {
   emit("delete-player", props.player);
 }
 
+const randomBackground = () => {
+  const backgroundColors = ["#D44D5C", "#227C9D", "#0B6E4F", "#F68E5F", "#BBA63A", "#00120B", "#6B7557" ];
+  const colorAmount = backgroundColors.length;
+  
+  return backgroundColors[getRandomNumber(0, colorAmount)];
+}
+
+const backgroundAvatar: Ref<string> = ref(randomBackground());
+
 </script>
 
 <template>
@@ -33,8 +43,8 @@ const handleDeletePlayer = () => {
     hover
   >
     <v-card-item class="player-card-text ps-2">
-      <v-avatar color="info" size="default" class="me-2">
-        <span>{{ findInitials(player.name) }}</span>
+      <v-avatar :color="backgroundAvatar" size="default" class="me-2">
+        <span class="text-white">{{ findInitials(player.name) }}</span>
       </v-avatar>
       <span data-testid="player-card-name">{{ player.name }}</span>
     </v-card-item>
