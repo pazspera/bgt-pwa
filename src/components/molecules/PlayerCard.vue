@@ -25,7 +25,7 @@ const handleDeletePlayer = () => {
 }
 
 const randomBackground = () => {
-  const backgroundColors = ["#D44D5C", "#227C9D", "#0B6E4F", "#F68E5F", "#BBA63A", "#00120B", "#6B7557" ];
+  const backgroundColors = ["#D44D5C", "#227C9D", "#0B6E4F", "#F68E5F", "#BBA63A", "#3F88C5", "#6B7557", "#41B491", "#721817", "#38AECC", "#E2856E", "#800E13", "#3E8989"];
   const colorAmount = backgroundColors.length;
   
   return backgroundColors[getRandomNumber(0, colorAmount)];
