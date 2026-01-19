@@ -3,11 +3,12 @@ import { mount } from "@vue/test-utils";
 import { createVuetifyForTest } from "../../tests/utils/createVuetifyForTest";
 import PlayerCard from "./PlayerCard.vue";
 import { mockSinglePlayer } from "../../mocks/data/playersApi";
-import { VCard, VCardActions, VCardText, VBtn, VCardItem } from "vuetify/components";
+import { VCard, VCardActions, VCardText, VBtn, VCardItem, VAvatar } from "vuetify/components";
 import { faTrash, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { nextTick } from "vue";
+import { findInitials } from "../../utils/generalUtils";
 
-const vuetify = createVuetifyForTest({ VCard, VCardActions, VCardText, VBtn, VCardItem });
+const vuetify = createVuetifyForTest({ VCard, VCardActions, VCardText, VBtn, VCardItem, VAvatar });
 const faTrashText = faTrash.iconName;
 const faPenToSquareText = faPenToSquare.iconName;
 
@@ -52,6 +53,18 @@ describe("rendering",()=> {
   it("renders edit icon", ()=> {
     expect(wrapper.html()).toContain(faPenToSquareText);
   });
+
+  it("renders avatar", ()=> {
+    const avatar = wrapper.findComponent({ name: "VAvatar" });
+    expect(avatar.exists()).toBe(true);
+  })
+
+  it("renders player initial on avatar", ()=> {
+    const playerInitial = findInitials(mockSinglePlayer.name);
+    const avatar = wrapper.findComponent({ name: "VAvatar" });
+
+    expect(avatar.text()).toEqual(playerInitial);
+  })
 })
 
 describe("component logic",()=> {
