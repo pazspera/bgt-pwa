@@ -25,13 +25,6 @@ describe("useServerTime", ()=> {
     // assert
     const currentTime = getSyncedDate();
     expect(currentTime).toEqual(new Date(serverTimeString));
-
-    /* 
-    defino hora del servidor a las 11hs
-    defino la hora del cliente a las 11:10hs
-    llamo a la función de syncWithServer
-    devuelve 11hs
-    */
   });
 
   it("server time is ahead of client time", ()=> {
@@ -48,12 +41,6 @@ describe("useServerTime", ()=> {
     // assert
     const currentTime = getSyncedDate();
     expect(currentTime).toEqual(new Date(serverTimeString));
-    /* 
-    hora servidor: 11:15hs
-    hora cliente: 11hs
-    llamo a syncWithServer
-    devuelve 11:15hs
-    */
   });
 
   it("server and client time are the same", ()=> {
@@ -70,12 +57,6 @@ describe("useServerTime", ()=> {
     // arrange
     const currentTime = getSyncedDate();
     expect(currentTime).toEqual(new Date(serverTimeString));
-    /* 
-    hora servidor: 11hs
-    hora cliente: 11hs
-    llamo a syncWithServer
-    la variable timeOffset = 0
-    */
   });
 
   it("the time difference between server and client is persistent in time", ()=> {
@@ -95,16 +76,6 @@ describe("useServerTime", ()=> {
     const currentDate = getSyncedDate();
     // server time is ahead 10 min from client time
     expect(currentDate).toEqual(new Date("2026-01-20T13:10:00Z"));
-
-    /* 
-    hora servidor: 11hs
-    hora cliente: 11:10hs
-    llamo a syncWithServer
-    devuelve 11:hs
-    adelanto el tiempo a 13hs
-    verificar que timeOffset tiene el mismo valor
-    crear nueva fecha con getSyncedDate, que devuelve 13hs
-    */
   });
 
   it("when syncWithServer receives an invalid string, the client time is used", ()=> {
@@ -120,14 +91,6 @@ describe("useServerTime", ()=> {
     // assert
     const currentTime = getSyncedDate();
     expect(currentTime).toEqual(clientTime);
-
-    /* 
-    la función recibe un string inválido
-    no hay hora de servidor
-    hora de cliente 11hs
-    llamo a syncWithServer
-    devuelve 11hs
-    */
   });
 
   it("getSyncedTime returns the same value when called in different instances", ()=> {
