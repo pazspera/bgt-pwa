@@ -56,7 +56,20 @@ describe("useServerTime", ()=> {
     */
   });
 
-  it.todo("el servidor y el cliente tienen la misma hora", ()=> {
+  it("server and client time are the same", ()=> {
+    // arrange
+    const serverTimeString = "2026-01-20T11:00:00Z";
+    const clientTime = new Date("2026-01-20T11:00:00Z");
+    const { syncWithServer, getSyncedDate } = useServerTime();
+    
+    vi.setSystemTime(clientTime);
+
+    // act
+    syncWithServer(serverTimeString);
+
+    // arrange
+    const currentTime = getSyncedDate();
+    expect(currentTime).toEqual(new Date(serverTimeString));
     /* 
     hora servidor: 11hs
     hora cliente: 11hs
