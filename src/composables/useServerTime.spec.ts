@@ -16,9 +16,10 @@ describe("useServerTime", ()=> {
     const clientTime = new Date("2026-01-20T11:10:00Z");
     const { getSyncedDate, syncWithServer } = useServerTime();
     
+    vi.setSystemTime(clientTime);
+    
     // act
     // set client time
-    vi.setSystemTime(clientTime);
     syncWithServer(serverTimeString);
   
     // assert
@@ -33,7 +34,20 @@ describe("useServerTime", ()=> {
     */
   });
 
-  it("el servidor está adelantado al cliente", ()=> {
+  it("server time is ahead of client time", ()=> {
+    // arrange
+    const serverTimeString = "2026-01-20T11:15:00Z";
+    const clientTime = new Date("2026-01-20T11:00:00Z");
+    const { getSyncedDate, syncWithServer } = useServerTime();
+    
+    vi.setSystemTime(clientTime);
+    
+    // act
+    syncWithServer(serverTimeString);
+
+    // assert
+    const currentTime = getSyncedDate();
+    expect(currentTime).toEqual(new Date(serverTimeString));
     /* 
     hora servidor: 11:15hs
     hora cliente: 11hs
