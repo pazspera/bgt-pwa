@@ -107,7 +107,20 @@ describe("useServerTime", ()=> {
     */
   });
 
-  it.todo("la función recibe fecha inválida, se usa el horario del cliente", ()=> {
+  it("when syncWithServer receives an invalid string, the client time is used", ()=> {
+    // arrange
+    const clientTime = new Date("2026-01-20T11:00:00Z");
+    const { syncWithServer, getSyncedDate } = useServerTime();
+
+    vi.setSystemTime(clientTime);
+
+    // act
+    syncWithServer("Error coming from server");
+
+    // assert
+    const currentTime = getSyncedDate();
+    expect(currentTime).toEqual(clientTime);
+
     /* 
     la función recibe un string inválido
     no hay hora de servidor
