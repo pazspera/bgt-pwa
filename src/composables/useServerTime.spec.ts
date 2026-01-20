@@ -78,7 +78,24 @@ describe("useServerTime", ()=> {
     */
   });
 
-  it.todo("la diferencia de tiempo entre cliente y servidor se mantiene en el tiempo", ()=> {
+  it("the time difference between server and client is persistent in time", ()=> {
+    // arrange
+    const serverTimeString = "2026-01-20T11:10:00Z";
+    const clientTime = new Date("2026-01-20T11:00:00Z");
+    const { syncWithServer, getSyncedDate } = useServerTime();
+
+    vi.setSystemTime(clientTime);
+    syncWithServer(serverTimeString);
+    
+    // act
+    // move currentTime two hours ahead
+    vi.setSystemTime("2026-01-20T13:00:00Z");
+
+    // assert
+    const currentDate = getSyncedDate();
+    // server time is ahead 10 min from client time
+    expect(currentDate).toEqual(new Date("2026-01-20T13:10:00Z"));
+
     /* 
     hora servidor: 11hs
     hora cliente: 11:10hs
