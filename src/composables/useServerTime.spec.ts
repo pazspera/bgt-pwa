@@ -1,8 +1,30 @@
-import { it, describe } from "vitest";
+import { it, describe, beforeEach, afterEach, vi, expect } from "vitest";
+import { useServerTime } from "./useServerTime";
 
 describe("useServerTime", ()=> {
+  beforeEach(()=> {
+    vi.useFakeTimers();
+  })
 
-  it.todo("el cliente está adelantado al servidor", ()=> {
+  afterEach(()=> {
+    vi.useRealTimers();
+  })
+
+  it.only("el cliente está adelantado al servidor", ()=> {
+    // arrange
+    const serverTimeString = "2026-01-20T11:00:00Z";
+    const clientTime = new Date("2026-01-20T11:10:00Z");
+    const { getSyncedDate, syncWithServer } = useServerTime();
+    
+    // act
+    // set client time
+    vi.setSystemTime(clientTime);
+    syncWithServer(serverTimeString);
+  
+    // assert
+    const currentTime = getSyncedDate();
+    expect(currentTime).toEqual(new Date(serverTimeString));
+    
     /* 
     defino hora del servidor a las 11hs
     defino la hora del cliente a las 11:10hs

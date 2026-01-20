@@ -1,8 +1,12 @@
 import { ref } from "vue";
 
-export function useServerTime() {
-  const timeOffset = ref(0);
+const timeOffset = ref(0);
 
+export function useServerTime() {
+
+  const syncWithServer = () => {};
+
+  const getSyncedDate = () => {}; 
   /* 
     recibe la fecha del servidor 
 
@@ -17,4 +21,6 @@ export function useServerTime() {
     ¿Cómo se le sumará el tiempo a la fecha?
   
   */
+
+  return { syncWithServer, getSyncedDate }
 }
