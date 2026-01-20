@@ -130,4 +130,19 @@ describe("useServerTime", ()=> {
     */
   });
 
+  it("getSyncedTime returns the same value when called in different instances", ()=> {
+    // first instance
+    const serverTimeString = "2026-01-20T11:10:00Z";
+    const { syncWithServer } = useServerTime();
+    
+    vi.setSystemTime(new Date("2026-01-20T11:00:00Z"));
+    // server time is 10 min ahead of set time
+    syncWithServer(serverTimeString);
+    
+    // second instance
+    const { getSyncedDate } = useServerTime();
+    
+    const syncronizedTime = getSyncedDate();
+    expect(syncronizedTime).toEqual(new Date(serverTimeString));
+  })
 })
