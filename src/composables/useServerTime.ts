@@ -4,9 +4,16 @@ const timeOffset = ref(0);
 
 export function useServerTime() {
 
-  const syncWithServer = () => {};
+  const syncWithServer = (serverTime: string) => {
+    const serverTimeInMilliseconds = new Date(serverTime).getTime();
+    const clientTimeInMilliseconds = new Date().getTime();
 
-  const getSyncedDate = () => {}; 
+    timeOffset.value = serverTimeInMilliseconds - clientTimeInMilliseconds;
+  };
+
+  const getSyncedDate = () => {
+    return new Date(Date.now() + timeOffset.value);
+  }; 
   /* 
     recibe la fecha del servidor 
 

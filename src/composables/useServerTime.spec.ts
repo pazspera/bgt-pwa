@@ -10,7 +10,7 @@ describe("useServerTime", ()=> {
     vi.useRealTimers();
   })
 
-  it.only("el cliente está adelantado al servidor", ()=> {
+  it("client time is ahead of server time", ()=> {
     // arrange
     const serverTimeString = "2026-01-20T11:00:00Z";
     const clientTime = new Date("2026-01-20T11:10:00Z");
@@ -24,7 +24,7 @@ describe("useServerTime", ()=> {
     // assert
     const currentTime = getSyncedDate();
     expect(currentTime).toEqual(new Date(serverTimeString));
-    
+
     /* 
     defino hora del servidor a las 11hs
     defino la hora del cliente a las 11:10hs
@@ -33,7 +33,7 @@ describe("useServerTime", ()=> {
     */
   });
 
-  it.todo("el servidor está adelantado al cliente", ()=> {
+  it("el servidor está adelantado al cliente", ()=> {
     /* 
     hora servidor: 11:15hs
     hora cliente: 11hs
