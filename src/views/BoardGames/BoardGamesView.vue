@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import AppSnackbar from '../../components/molecules/AppSnackbar.vue';
 import { onBeforeMount, ref, type Ref } from "vue";
 import { useCollectionsApi } from '../../composables/useCollectionsApi';
 import CardGrid from '../../components/organisms/CardGrid.vue';
@@ -9,7 +8,6 @@ import { CollectionsApiResponse } from '../../types/domain/collectionsApi';
 
 defineOptions({ name: "BoardGamesView" });
 
-const isSnackBarVisible: Ref<boolean> = ref(true);
 const isSavedSnackBarVisible: Ref<boolean> = ref(false);
 const savedSnackBarColor: Ref<string> = ref("");
 const savedSnackBarText: Ref<string> = ref("");
@@ -62,8 +60,6 @@ onBeforeMount(async () => {
       type="boardgame" 
       @add-game="handleAddGame"
     ></CardGrid>
-
-    <AppSnackbar v-model="isSnackBarVisible" />
 
     <!-- snackbar for saved game -->
      <v-snackbar
