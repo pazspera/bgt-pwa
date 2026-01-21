@@ -20,5 +20,5 @@ export function useServerTime() {
     return new Date(Date.now() + timeOffset.value);
   }; 
 
-  return { syncWithServer, getSyncedDate }
+  return { syncWithServer, getSyncedDate, timeOffset }
 }
