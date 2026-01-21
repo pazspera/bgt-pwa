@@ -22,6 +22,10 @@ export function useCheckDbHealth() {
       }
       
       if(response.ok) {
+        response.headers.forEach((value, key) => {
+          console.log(`${key}: ${value}`)
+        })
+
         const serverDate = response.headers?.get("Date");
         if(serverDate) {
           console.log(`serverDate: ${serverDate}`);
