@@ -11,14 +11,22 @@ describe("checkHealth()", () => {
   // Arrange
   // simulate env variable
   beforeEach(()=> {
-    import.meta.env.VITE_API_BASE_URL = "http://test-api.test";
+    import.meta.env.VITE_API_HEALTH_BASE_URL = "http://test-api.test";
   });
+
+  afterEach(()=> {
+    vi.restoreAllMocks();
+    vi.unstubAllGlobals();
+  })
 
   it("check success response from fetch", async ()=> {
     // Act
     // mock fetch success response
     vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
       ok: true,
+      headers: {
+        get: vi.fn().mockReturnValue("Wed, 21 Jan 2026 12:00:00 GMT")
+      },
       json: ()=> Promise.resolve({ status: "ok" }),
     }));
 
@@ -35,9 +43,12 @@ describe("checkHealth()", () => {
   it("check HTTP error response from fetch", async ()=> {
     // Act
     // mock fetch server returns error response
-    vi.stubGlobal("fetch", vi.fn().mockRejectedValue({
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
       ok: false,
       status: 500,
+      headers: { 
+        get: (key) => (key === "date" ? "Wed, 21 Jan 2026 12:00:00 GMT" : null) 
+      },
     }))
     
     // call composable

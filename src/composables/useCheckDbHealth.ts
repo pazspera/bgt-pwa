@@ -16,10 +16,18 @@ export function useCheckDbHealth() {
         headers: { "Content-Type": "application/json" },
       });
 
+      
       if(!response.ok) {
         throw new Error(`Error en el servidor: ${response.status}`);
       }
-
+      
+      if(response.ok) {
+        const serverDate = response.headers?.get("Date");
+        if(serverDate) {
+          console.log(`serverDate: ${serverDate}`);
+        }
+      }
+      
       let data = await response.json();
   
       statusMessage.value = "Conectado a la base de datos"
