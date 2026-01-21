@@ -1,5 +1,6 @@
 import { it, describe, beforeEach, afterEach, vi, expect } from "vitest";
 import { useCheckDbHealth } from "./useCheckDbHealth";
+import { useServerTime } from "./useServerTime";
 
 const runCheckHealth = async ()=> {
   const { checkHealth, statusMessage, color, icon, hasRun } = useCheckDbHealth();
@@ -19,18 +20,22 @@ describe("checkHealth()", () => {
     vi.unstubAllGlobals();
   })
 
-  it("check success response from fetch", async ()=> {
+  it("check success response from fetch and syncs server time", async ()=> {
     // Act
+    const { timeOffset } = useServerTime();
+    timeOffset.value = 0;
     // mock fetch success response
     vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
       ok: true,
-      headers: {
-        get: vi.fn().mockReturnValue("Wed, 21 Jan 2026 12:00:00 GMT")
-      },
-      json: ()=> Promise.resolve({ status: "ok" }),
+      json: ()=> Promise.resolve({ 
+        status: "ok",
+        message: "API is running",
+        serverTime: "2026-01-21T17:35:43Z",
+        version: "unknown"
+      }),
     }));
 
-    // call composable
+    // call composable 
     const { statusMessage, color, icon, hasRun } = await runCheckHealth();
 
     // Assert
@@ -38,6 +43,9 @@ describe("checkHealth()", () => {
     expect(color.value).toBe("success");
     expect(icon.value).toBe("faCircleCheck");
     expect(hasRun.value).toBe(true);
+    // checks useServerTime was called successfully
+    expect(timeOffset.value).not.toBe(0);
+    expect(typeof timeOffset.value).toBe("number");
   });
   
   it("check HTTP error response from fetch", async ()=> {
@@ -46,9 +54,6 @@ describe("checkHealth()", () => {
     vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
       ok: false,
       status: 500,
-      headers: { 
-        get: (key) => (key === "date" ? "Wed, 21 Jan 2026 12:00:00 GMT" : null) 
-      },
     }))
     
     // call composable
