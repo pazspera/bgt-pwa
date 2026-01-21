@@ -12,6 +12,7 @@ import { object, string, date, array, boolean } from "yup";
 import { toTypedSchema } from "@vee-validate/yup";
 import { useField, useForm, useFieldArray } from "vee-validate";
 import type { PlayerInGame, CreateGameRequest } from '../../types/domain/gamesApi';
+import { useServerTime } from '../../composables/useServerTime';
 
 const props =  defineProps<{
   modelValue: boolean,
@@ -27,6 +28,7 @@ const emit = defineEmits<{
 
 const { players, totalPlayers, loading, error, fetchPlayers } = usePlayersApi();
 const { loading: saveGameLoading, newGame, errorSaveGame, saveGame } = useGamesApi();
+const { getSyncedDate } = useServerTime();
 
 const selectedPlayers: Ref<PlayerApiResponse[]> = ref([]);
 const gameWinner: Ref<PlayerApiResponse | null> = ref(null);
@@ -41,8 +43,8 @@ const validationSchema = computed(() => {
     object({
       date: date()
         .required(AddGameDialogText.validationErrors.dateRequired)
-        .default(() => new Date())
-        .max(new Date(), AddGameDialogText.validationErrors.dateMax),
+        .default(() => getSyncedDate())
+        .max(getSyncedDate(), AddGameDialogText.validationErrors.dateMax),
       players: array()
         .of(object({
           player_id: string().required(),
