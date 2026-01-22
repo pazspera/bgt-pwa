@@ -1,5 +1,6 @@
 import { ref, type Ref } from "vue";
 import { useServerTime } from "./useServerTime";
+import { API_ERROR_MESSAGES } from "../constants/apiErrorMessages";
 
 export function useCheckDbHealth() {
   const BASE_URL = import.meta.env.VITE_API_HEALTH_BASE_URL;
@@ -16,7 +17,7 @@ export function useCheckDbHealth() {
       });
 
       if(!response.ok) {
-        throw new Error(`Error en el servidor: ${response.status}`);
+        throw new Error(API_ERROR_MESSAGES.HEALTH_ERROR(response.status));
       }
       
       // gets the serverDate and syncs it to use on the whole app
@@ -24,7 +25,7 @@ export function useCheckDbHealth() {
       const serverDate = data.serverTime;
       syncWithServer(serverDate);
 
-      statusMessage.value = "Conectado a la base de datos";
+      statusMessage.value = API_ERROR_MESSAGES.HEALTH_SUCCESS;
       return true;
     } catch(err) {
       statusMessage.value = err.message;
