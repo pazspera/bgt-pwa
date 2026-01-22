@@ -1,30 +1,10 @@
 <script setup lang="ts">
 import { ref, onMounted, watch } from "vue";
-import { useCheckDbHealth } from "../../composables/useCheckDbHealth";
+import { useAppSnackbar } from "../../composables/useAppSnackbar";
 
 defineOptions({ name: "AppSnackbar" });
 
-const { statusMessage, color, icon, checkHealth, hasRun } = useCheckDbHealth();
-const snackbarVisible = ref(false);
-
-// exposed to check on test if watch changes
-// it doesn't render the component without the watch changing 
-defineExpose({ snackbarVisible });
-
-onMounted(()=> {
-  checkHealth();
-})
-
-// Controls the opening and close of snackbar
-watch(hasRun, (newVal) => {
-  if(newVal) {
-    snackbarVisible.value = true;
-  }
-})
-
-const handleClose = () => {
-  snackbarVisible.value = false;
-}
+const { isSnackbarVisible, message, color, timeout, hide } = useAppSnackbar();
 
 </script>
 
@@ -36,17 +16,17 @@ const handleClose = () => {
     the component wasn't closing 
   -->
   <v-snackbar 
-    v-if="snackbarVisible"
-    v-model="snackbarVisible"
+    v-if="isSnackbarVisible"
+    v-model="isSnackbarVisible"
     :color="color"
     location="bottom center"
-    :timeout="-1"
+    :timeout="timeout"
   >
 
-    {{ statusMessage }}
+    {{ message }}
 
     <template v-slot:actions>
-      <v-btn variant="text" @click="handleClose()">
+      <v-btn variant="text" @click="hide()">
         Cerrar
       </v-btn>
     </template>
