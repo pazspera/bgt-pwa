@@ -1,11 +1,16 @@
 <script setup lang="ts">
 import { ref, onMounted, watch } from "vue";
-import { useAppSnackbar } from "../../composables/useAppSnackbar";
 
 defineOptions({ name: "AppSnackbar" });
 
-const { isSnackbarVisible, message, color, timeout, hide } = useAppSnackbar();
+const props = defineProps({
+  visible: Boolean,
+  message: String,
+  color: String,
+  timeout: Number,
+});
 
+const emit = defineEmits(['close']);
 </script>
 
 <template>
@@ -16,17 +21,18 @@ const { isSnackbarVisible, message, color, timeout, hide } = useAppSnackbar();
     the component wasn't closing 
   -->
   <v-snackbar 
-    v-if="isSnackbarVisible"
-    v-model="isSnackbarVisible"
+    v-if="visible"
+    :model-value="visible"
     :color="color"
     location="bottom center"
     :timeout="timeout"
+    @update:model-value="emit('close')"
   >
 
     {{ message }}
 
     <template v-slot:actions>
-      <v-btn variant="text" @click="hide()">
+      <v-btn variant="text" @click="emit('close')">
         Cerrar
       </v-btn>
     </template>

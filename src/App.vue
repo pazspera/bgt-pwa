@@ -6,19 +6,25 @@ import AppSnackbar from "./components/molecules/AppSnackbar.vue";
 import { onMounted, ref, type Ref, watch } from "vue";
 import { useServerTime } from "./composables/useServerTime";
 import { useCheckDbHealth } from "./composables/useCheckDbHealth";
+import { useAppSnackbar } from "./composables/useAppSnackbar";
 
 defineOptions({ name: "App" });
 
 const { width } = useWindowSize();
-const isSnackBarVisible: Ref<boolean> = ref(true);
 
 const { getSyncedDate, timeOffset } = useServerTime();
-const { statusMessage, color, icon, checkHealth, hasRun } = useCheckDbHealth();
+const { statusMessage, checkHealth } = useCheckDbHealth();
+const { isSnackbarVisible, message, color, timeout, hide, success, error, info, warning } = useAppSnackbar();
 
 onMounted(()=> {
-  checkHealth();
-  getSyncedDate();
-  console.log(timeOffset.value);
+  try {
+    checkHealth();
+    success("Conectado a la base de datos");
+    getSyncedDate();
+    console.log(timeOffset.value);
+  } catch (error) {
+    error("Ocurrió un error");
+  }
 })
 
 watch(timeOffset, (newVal)=> {
@@ -33,7 +39,13 @@ watch(timeOffset, (newVal)=> {
     <v-main>
       <v-container class="container-padding">
         <router-view />
-        <AppSnackbar v-model="isSnackBarVisible" />
+        <AppSnackbar 
+          :visible="isSnackbarVisible"
+          :message="message"
+          :color="color"
+          :timeout="timeout"
+          @close="hide()"
+        />
       </v-container>
     </v-main>
     <v-footer app v-if="width <= 768" height="72">
