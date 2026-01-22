@@ -2,6 +2,7 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { VitePWA } from 'vite-plugin-pwa'
 import path from 'path'
+import { copyFileSync } from "fs";
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -23,7 +24,14 @@ export default defineConfig({
           }
         ]
       }
-    })
+    }),
+    {
+      name: "copy-version",
+      closeBundle() { 
+        // Copia VERSION al dist/ para que Nginx lo sirva 
+        copyFileSync("VERSION", "dist/VERSION"); 
+      },
+    },
   ],
   resolve: {
     alias: [
@@ -54,9 +62,9 @@ export default defineConfig({
       }
     },
     server: {
-     deps: {
-      inline: ["vuetify"]
-     } 
+      deps: {
+        inline: ["vuetify"]
+      }
     },
   }
 })

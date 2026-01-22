@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import version from "./../../../VERSION?raw";
 defineOptions({ name: "Logo" });
 </script>
 
@@ -6,6 +7,7 @@ defineOptions({ name: "Logo" });
   <router-link :to="{ name: 'BoardGames' }" data-testid="app-logo">
     <img src="/favicon.ico" class="navbar-icon" />
   </router-link>
+  <span>{{ version }}</span>
 </template>
 
 <style scoped>
