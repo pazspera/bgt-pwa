@@ -5,15 +5,18 @@ import { useWindowSize } from "@vueuse/core";
 import AppSnackbar from "./components/molecules/AppSnackbar.vue";
 import { onMounted, ref, type Ref, watch } from "vue";
 import { useServerTime } from "./composables/useServerTime";
- 
+import { useCheckDbHealth } from "./composables/useCheckDbHealth";
+
 defineOptions({ name: "App" });
 
 const { width } = useWindowSize();
 const isSnackBarVisible: Ref<boolean> = ref(true);
 
-const { getSyncedDate, timeOffset } = useServerTime()
+const { getSyncedDate, timeOffset } = useServerTime();
+const { statusMessage, color, icon, checkHealth, hasRun } = useCheckDbHealth();
 
 onMounted(()=> {
+  checkHealth();
   getSyncedDate();
   console.log(timeOffset.value);
 })
