@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, watch } from "vue";
 import { useCheckDbHealth } from "../../composables/useCheckDbHealth";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faCircleCheck,faCircleExclamation } from "@fortawesome/free-solid-svg-icons";
 
 defineOptions({ name: "AppSnackbar" });
 
@@ -16,11 +14,6 @@ defineExpose({ snackbarVisible });
 onMounted(()=> {
   checkHealth();
 })
-
-const iconsMap = {
-  faCircleCheck: faCircleCheck,
-  faCircleExclamation: faCircleExclamation,
-}
 
 // Controls the opening and close of snackbar
 watch(hasRun, (newVal) => {
@@ -49,7 +42,7 @@ const handleClose = () => {
     location="bottom center"
     :timeout="-1"
   >
-    <FontAwesomeIcon v-if="icon" :icon="iconsMap[icon]" class="mr-3" />
+
     {{ statusMessage }}
 
     <template v-slot:actions>

@@ -11,28 +11,28 @@ export function useAppSnackbar() {
     isSnackbarVisible.value = false;
   }
 
-  const success = (msg) => {
+  const success = (msg: string) => {
     message.value = msg;
     color.value = StatusColors.Success;
     timeout.value = 6000;
     isSnackbarVisible.value = true;
   }
 
-  const error = (msg) => {
+  const error = (msg: string) => {
     message.value = msg;
     color.value = StatusColors.Error;
     timeout.value = 9000;
     isSnackbarVisible.value = true;
   }
 
-  const info = (msg) => {
+  const info = (msg: string) => {
     message.value = msg;
     color.value = StatusColors.Info;
     timeout.value = 4000;
     isSnackbarVisible.value = true;
   }
 
-  const warning = (msg) => {
+  const warning = (msg: string) => {
     message.value = msg;
     color.value = StatusColors.Warning;
     timeout.value = 9000;
