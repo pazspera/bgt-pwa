@@ -1,5 +1,6 @@
 import { it, describe, beforeEach, afterEach, vi, expect } from "vitest";
 import { useCheckDbHealth } from "./useCheckDbHealth";
+import { useServerTime } from "./useServerTime";
 
 const runCheckHealth = async ()=> {
   const { checkHealth, statusMessage, color, icon, hasRun } = useCheckDbHealth();
@@ -11,18 +12,30 @@ describe("checkHealth()", () => {
   // Arrange
   // simulate env variable
   beforeEach(()=> {
-    import.meta.env.VITE_API_BASE_URL = "http://test-api.test";
+    import.meta.env.VITE_API_HEALTH_BASE_URL = "http://test-api.test";
   });
 
-  it("check success response from fetch", async ()=> {
+  afterEach(()=> {
+    vi.restoreAllMocks();
+    vi.unstubAllGlobals();
+  })
+
+  it("check success response from fetch and syncs server time", async ()=> {
     // Act
+    const { timeOffset } = useServerTime();
+    timeOffset.value = 0;
     // mock fetch success response
     vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
       ok: true,
-      json: ()=> Promise.resolve({ status: "ok" }),
+      json: ()=> Promise.resolve({ 
+        status: "ok",
+        message: "API is running",
+        serverTime: "2026-01-21T17:35:43Z",
+        version: "unknown"
+      }),
     }));
 
-    // call composable
+    // call composable 
     const { statusMessage, color, icon, hasRun } = await runCheckHealth();
 
     // Assert
@@ -30,12 +43,15 @@ describe("checkHealth()", () => {
     expect(color.value).toBe("success");
     expect(icon.value).toBe("faCircleCheck");
     expect(hasRun.value).toBe(true);
+    // checks useServerTime was called successfully
+    expect(timeOffset.value).not.toBe(0);
+    expect(typeof timeOffset.value).toBe("number");
   });
   
   it("check HTTP error response from fetch", async ()=> {
     // Act
     // mock fetch server returns error response
-    vi.stubGlobal("fetch", vi.fn().mockRejectedValue({
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
       ok: false,
       status: 500,
     }))

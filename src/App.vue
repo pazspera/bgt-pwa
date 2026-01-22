@@ -1,9 +1,36 @@
+<script setup lang="ts">
+import BottomNavigation from "./components/organisms/BottomNavigation.vue";
+import NavBar from "./components/organisms/NavBar.vue";
+import { useWindowSize } from "@vueuse/core";
+import AppSnackbar from "./components/molecules/AppSnackbar.vue";
+import { onMounted, ref, type Ref, watch } from "vue";
+import { useServerTime } from "./composables/useServerTime";
+ 
+defineOptions({ name: "App" });
+
+const { width } = useWindowSize();
+const isSnackBarVisible: Ref<boolean> = ref(true);
+
+const { getSyncedDate, timeOffset } = useServerTime()
+
+onMounted(()=> {
+  getSyncedDate();
+  console.log(timeOffset.value);
+})
+
+watch(timeOffset, (newVal)=> {
+  console.log(`Cambio en timeOffset: ${newVal}`)
+})
+
+</script>
+
 <template>
   <v-app>
     <NavBar v-if="width > 768" />
     <v-main>
       <v-container class="container-padding">
         <router-view />
+        <AppSnackbar v-model="isSnackBarVisible" />
       </v-container>
     </v-main>
     <v-footer app v-if="width <= 768" height="72">
@@ -11,17 +38,6 @@
     </v-footer>
   </v-app>
 </template>
-
-<script setup>
-import BottomNavigation from "./components/organisms/BottomNavigation.vue";
-import NavBar from "@/components/organisms/NavBar.vue";
-import { useWindowSize } from "@vueuse/core";
-
-const { width } = useWindowSize();
-
-defineOptions({ name: "App" });
-
-</script>
 
 <style scoped>
 #app {

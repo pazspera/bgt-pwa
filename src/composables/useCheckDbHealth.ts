@@ -1,13 +1,16 @@
 import { ref } from "vue";
+import { useServerTime } from "./useServerTime";
 
 export function useCheckDbHealth() {
   const BASE_URL = import.meta.env.VITE_API_HEALTH_BASE_URL;
-  const uri = BASE_URL + "/health";
+  const uri = BASE_URL + "health";
   
   const statusMessage = ref("");
   const color = ref("info");
   const icon = ref(null);
   const hasRun = ref(false);
+
+  const { syncWithServer, timeOffset } = useServerTime();
 
   const checkHealth = async ()=> {
     try {
@@ -19,9 +22,12 @@ export function useCheckDbHealth() {
       if(!response.ok) {
         throw new Error(`Error en el servidor: ${response.status}`);
       }
-
+      
+      // gets the serverDate and syncs it to use on the whole app
       let data = await response.json();
-  
+      const serverDate = data.serverTime;
+      syncWithServer(serverDate);
+
       statusMessage.value = "Conectado a la base de datos"
       color.value = "success";
       icon.value = "faCircleCheck";
