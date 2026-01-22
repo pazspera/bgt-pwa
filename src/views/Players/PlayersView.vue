@@ -9,6 +9,8 @@ import type { CreatePlayerRequest, PlayerApiResponse, UpdatePlayerRequest } from
 import { PLAYER_STATUS, CONFIRM_DELETE_PLAYER } from "../../constants/ui_feedback/players";
 import { capitalize } from "../../utils/formatters";
 import LoadingRow from "../../components/molecules/LoadingRow.vue";
+import AppSnackbar from "../../components/molecules/AppSnackbar.vue";
+import { useAppSnackbar } from "../../composables/useAppSnackbar";
 
 const isSheetVisible: Ref<boolean> = ref(false);
 const errorText: Ref<string> = ref("");
@@ -20,14 +22,12 @@ const isDeleteDialogVisible: Ref<boolean> = ref(false);
 const deleteDialogText : Ref<string> = ref(""); 
 const selectedPlayer: Ref<PlayerApiResponse | null> = ref(null);
 
-const snackbar = ref(false);
-const snackbarText = ref("");
-const snackbarColor = ref("");
-
-defineOptions({ name: "PlayersView" });
+const { isSnackbarVisible, message, color, timeout, hide, success, error } = useAppSnackbar(); 
 
 const { players, totalPlayers, loading: loadingList, error: errorList, errorCreatePlayer, errorDeletePlayer, fetchPlayers, createPlayer, deletePlayer } = usePlayersApi();
 const { updatePlayer: updatePlayerAction, errorUpdate, loading: updating } = usePlayerApi();
+
+defineOptions({ name: "PlayersView" });
 
 onBeforeMount(async ()=> {
   await fetchPlayers();
@@ -56,10 +56,10 @@ const confirmDelete = async () => {
     players.value = players.value.filter(player => player.id !== selectedPlayer.value?.id);
 
     isDeleteDialogVisible.value = false;
-    showSnackbar(PLAYER_STATUS.DELETED(selectedPlayer.value.name), "success");
+    success(PLAYER_STATUS.DELETED(selectedPlayer.value.name))
   } catch (error) {
     isDeleteDialogVisible.value = false;
-    showSnackbar(PLAYER_STATUS.ERROR.DELETE(selectedPlayer.value.name), "error");
+    error(PLAYER_STATUS.ERROR.DELETE(selectedPlayer.value.name))
   } finally {
     selectedPlayer.value = null;
   }
@@ -82,9 +82,9 @@ const handlePlayerAdded = async (newPlayer: CreatePlayerRequest)=> {
     // faster ui update for the user
     players.value.push(playerCreated);
     isSheetVisible.value = false;
-    showSnackbar(PLAYER_STATUS.CREATED(formattedName), "success");
+    success(PLAYER_STATUS.CREATED(formattedName));
   } catch (error) {
-    errorText.value = PLAYER_STATUS.ERROR.CREATE;
+    error(PLAYER_STATUS.ERROR.CREATE);
   }
 }
 
@@ -107,21 +107,15 @@ const handlePlayerUpdated = async (updatedPlayer: { id: string, name: UpdatePlay
     }
 
     isEditSheetVisible.value = false;
-    showSnackbar(PLAYER_STATUS.UPDATED(formattedRequest.name), "success");
+    success(PLAYER_STATUS.UPDATED(formattedRequest.name)) 
   } catch (error) {
-    errorText.value = errorUpdate.value || PLAYER_STATUS.ERROR.UPDATE;
+    error(errorUpdate.value || PLAYER_STATUS.ERROR.UPDATE)
   }
 
 }
 
 const doesPlayerExist = (name: string) => {
   return players.value.some(player => player.name === name);
-}
-
-const showSnackbar = (text: string, color: string) => {
-  snackbarText.value = text;
-  snackbarColor.value = color;
-  snackbar.value = true;
 }
 
 const showAddPlayerSheet = () => {
@@ -194,22 +188,13 @@ const sortedPlayers = computed(()=> {
     </v-row>
 
     <!-- shows status of actions -->
-    <v-snackbar
-      v-model="snackbar"
-      :color="snackbarColor"
-      location="bottom center"
-    >
-      {{ snackbarText }}
-
-      <template v-slot:actions>
-        <v-btn
-          variant="text"
-          @click="snackbar = false"
-        >
-          Cerrar
-        </v-btn>
-      </template>
-    </v-snackbar>
+    <AppSnackbar
+      :visible="isSnackbarVisible"
+      :message="message"
+      :color="color"
+      :timeout="timeout"
+      @close="hide()"
+    />
 
     <!-- confirm delete dialog -->
     <v-dialog
