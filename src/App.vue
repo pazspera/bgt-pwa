@@ -13,17 +13,17 @@ defineOptions({ name: "App" });
 const { width } = useWindowSize();
 
 const { getSyncedDate, timeOffset } = useServerTime();
-const { statusMessage, checkHealth } = useCheckDbHealth();
-const { isSnackbarVisible, message, color, timeout, hide, success, error, info, warning } = useAppSnackbar();
+const { checkHealth, statusMessage } = useCheckDbHealth();
+const { isSnackbarVisible, message, color, timeout, hide, success, error } = useAppSnackbar();
 
-onMounted(()=> {
-  try {
-    checkHealth();
-    success("Conectado a la base de datos");
+onMounted(async ()=> {
+  const healthOk = await checkHealth(); 
+  if(healthOk) {
+    success(statusMessage.value);
     getSyncedDate();
     console.log(timeOffset.value);
-  } catch (error) {
-    error("Ocurrió un error");
+  } else {
+    error(statusMessage.value);
   }
 })
 
