@@ -4,5 +4,3 @@ export enum StatusColors {
   Info = "info",
   Warning = "warning"
 }
-
-export type IconKey = "check" | "error" | "info" | "warning";
