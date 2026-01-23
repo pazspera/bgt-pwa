@@ -1,13 +1,13 @@
 import { describe, expect, it } from "vitest";
 import { useAppSnackbar } from "./useAppSnackbar";
 import { API_ERROR_MESSAGES } from "../constants/apiErrorMessages";
-import { StatusColors } from "../types/general";
+import { StatusColors, SnackbarDisplayTimes } from "../types/general";
 
 const expectInitialValues = (isSnackbarVisible: boolean, message: string, color: string, timeout: number) => {
   expect(isSnackbarVisible).toBe(false);
   expect(message).toBe("");
-  expect(color).toBe("info");
-  expect(timeout).toBe(5000);
+  expect(color).toBe(StatusColors.Info);
+  expect(timeout).toBe(SnackbarDisplayTimes.Short);
 }
 
 describe("useAppSnackbar", () => {
@@ -22,7 +22,7 @@ describe("useAppSnackbar", () => {
     expect(isSnackbarVisible.value).toBe(true);
     expect(message.value).toBe(API_ERROR_MESSAGES.HEALTH_SUCCESS);
     expect(color.value).toBe(StatusColors.Success);
-    expect(timeout.value).toBe(5000);
+    expect(timeout.value).toBe(SnackbarDisplayTimes.Short);
   });
 
   it.todo("error() returns the correct values ", async () => {});
