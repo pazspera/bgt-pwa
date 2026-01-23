@@ -5,16 +5,19 @@ import CardGrid from '../../components/organisms/CardGrid.vue';
 import LoadingRow from '../../components/molecules/LoadingRow.vue';
 import AddGameDialog from '../../components/organisms/AddGameDialog.vue';
 import { CollectionsApiResponse } from '../../types/domain/collectionsApi';
+import AppSnackbar from "../../components/molecules/AppSnackbar.vue";
+import { useAppSnackbar } from "../../composables/useAppSnackbar";
 
 defineOptions({ name: "BoardGamesView" });
 
-const isSavedSnackBarVisible: Ref<boolean> = ref(false);
-const savedSnackBarColor: Ref<string> = ref("");
-const savedSnackBarText: Ref<string> = ref("");
+// const isSavedSnackBarVisible: Ref<boolean> = ref(false);
+// const savedSnackBarColor: Ref<string> = ref("");
+// const savedSnackBarText: Ref<string> = ref("");
 const isAddGameDialogOpen: Ref<boolean> = ref(false);
 const selectedBoardgame: Ref<CollectionsApiResponse | null> = ref(null);
 
 const { collection, totalBoardgames, loading: loadingList, errorFetchCollections, fetchCollections } = useCollectionsApi();
+const { isSnackbarVisible, message, color, timeout, hide, success, error } = useAppSnackbar();
 
 const handleAddGame = (boardgame: CollectionsApiResponse) => {
   selectedBoardgame.value = boardgame;
@@ -22,15 +25,11 @@ const handleAddGame = (boardgame: CollectionsApiResponse) => {
 }
 
 const handleSaveSuccess = (message: string) => {
-  savedSnackBarText.value = message;
-  savedSnackBarColor.value = "success";
-  isSavedSnackBarVisible.value = true;
+  success(message);
 }
 
 const handleSaveError = (message: string) => {
-  savedSnackBarText.value = message;
-  savedSnackBarColor.value = "error";
-  isSavedSnackBarVisible.value = true;
+  error(message);
 }
 
 onBeforeMount(async () => {
@@ -62,28 +61,20 @@ onBeforeMount(async () => {
     ></CardGrid>
 
     <!-- snackbar for saved game -->
-     <v-snackbar
-      v-model="isSavedSnackBarVisible"
-      :color="savedSnackBarColor"
-      location="bottom center"
-    >
-      {{ savedSnackBarText }}
-
-      <template v-slot:actions>
-        <v-btn
-          variant="text"
-          @click="isSavedSnackBarVisible = false"
-        >
-          Cerrar
-        </v-btn>
-      </template>
-    </v-snackbar>
+    <AppSnackbar
+      :visible="isSnackbarVisible"
+      :message="message"
+      :color="color"
+      :timeout="timeout"
+      @close="hide()"
+    />
 
     <AddGameDialog 
       v-if="selectedBoardgame" 
       v-model="isAddGameDialogOpen" 
       :boardgame="selectedBoardgame"
-      @success="handleSaveSuccess" 
+      @success="handleSaveSuccess"
+      @error="handleSaveError" 
     />
   </v-container>
 </template>
