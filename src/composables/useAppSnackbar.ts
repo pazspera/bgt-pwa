@@ -5,7 +5,7 @@ export function useAppSnackbar() {
   const isSnackbarVisible: Ref<boolean> = ref(false);
   const message: Ref<string> = ref("");
   const color: Ref<StatusColors> = ref(StatusColors.Info); 
-  const timeout: Ref<number> = ref(SnackbarDisplayTimes.Short);
+  const timeout: Ref<SnackbarDisplayTimes> = ref(SnackbarDisplayTimes.Short);
 
   const hide = () => {
     isSnackbarVisible.value = false;
