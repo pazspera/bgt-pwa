@@ -22,4 +22,5 @@ export const API_ERROR_MESSAGES = {
 
   HEALTH_SUCCESS: "Conectado a la base de datos",
   HEALTH_ERROR: (error: number) =>  `Error en el servidor: ${error}`,
+  HEALTH_NETWORK_ERROR: "Falló la conexión con el servidor"
 };
