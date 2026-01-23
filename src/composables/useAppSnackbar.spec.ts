@@ -69,7 +69,31 @@ describe("useAppSnackbar", () => {
     expect(timeout.value).toBe(SnackbarDisplayTimes.Long);
   });
 
-  it.todo("hide() changes visibility of snackbar", () => {});
-  it.todo("hide() changes visibility of snackbar after success() has been called", () => {});
+  it("hide() changes visibility of snackbar", () => {
+    const { isSnackbarVisible, message, color, timeout, hide } = useAppSnackbar();
+
+    // test default state
+    expectInitialValues(isSnackbarVisible.value, message.value, color.value, timeout.value);
+
+    hide();
+
+    expect(isSnackbarVisible.value).toBe(false);
+  });
+
+  it("hide() changes visibility of snackbar after success() has been called", () => {
+    const { isSnackbarVisible, message, color, timeout, hide, success } = useAppSnackbar();
+
+    // test default state
+    expectInitialValues(isSnackbarVisible.value, message.value, color.value, timeout.value);
+
+    success(API_ERROR_MESSAGES.HEALTH_SUCCESS);
+
+    expect(isSnackbarVisible.value).toBe(true);
+
+    hide();
+
+    expect(isSnackbarVisible.value).toBe(false);
+  });
+  
   it.todo("values change after multiple calls: success() then error() is called", () => {});
 })
