@@ -10,6 +10,20 @@ const expectInitialValues = (isSnackbarVisible: boolean, message: string, color:
   expect(timeout).toBe(SnackbarDisplayTimes.Short);
 }
 
+const expectSuccess = (isSnackbarVisible: boolean, message: string, color: string, timeout: number) => {
+  expect(isSnackbarVisible).toBe(true);
+  expect(message).toBe(API_ERROR_MESSAGES.HEALTH_SUCCESS);
+  expect(color).toBe(StatusColors.Success);
+  expect(timeout).toBe(SnackbarDisplayTimes.Short);
+}
+
+const expectError = (isSnackbarVisible: boolean, message: string, color: string, timeout: number) => {
+  expect(isSnackbarVisible).toBe(true);
+  expect(message).toBe(API_ERROR_MESSAGES.HEALTH_ERROR(500));
+  expect(color).toBe(StatusColors.Error);
+  expect(timeout).toBe(SnackbarDisplayTimes.Long);
+}
+
 describe("useAppSnackbar", () => {
   it("success() returns the correct values", () => {
     const { isSnackbarVisible, message, color, timeout, success } = useAppSnackbar();
@@ -19,10 +33,7 @@ describe("useAppSnackbar", () => {
     
     success(API_ERROR_MESSAGES.HEALTH_SUCCESS);
 
-    expect(isSnackbarVisible.value).toBe(true);
-    expect(message.value).toBe(API_ERROR_MESSAGES.HEALTH_SUCCESS);
-    expect(color.value).toBe(StatusColors.Success);
-    expect(timeout.value).toBe(SnackbarDisplayTimes.Short);
+    expectSuccess(isSnackbarVisible.value, message.value, color.value, timeout.value);
   });
 
   it("error() returns the correct values ", () => {
@@ -33,10 +44,7 @@ describe("useAppSnackbar", () => {
 
     error(API_ERROR_MESSAGES.HEALTH_ERROR(500));
 
-    expect(isSnackbarVisible.value).toBe(true);
-    expect(message.value).toBe(API_ERROR_MESSAGES.HEALTH_ERROR(500));
-    expect(color.value).toBe(StatusColors.Error);
-    expect(timeout.value).toBe(SnackbarDisplayTimes.Long);
+    expectError(isSnackbarVisible.value, message.value, color.value, timeout.value);
   });
   
   it("info() returns the correct values ", () => {
@@ -95,5 +103,16 @@ describe("useAppSnackbar", () => {
     expect(isSnackbarVisible.value).toBe(false);
   });
   
-  it.todo("values change after multiple calls: success() then error() is called", () => {});
+  it("values change after multiple calls: success() then error() is called", () => {
+    const { isSnackbarVisible, message, color, timeout, error , success } = useAppSnackbar();
+
+    // test default state
+    expectInitialValues(isSnackbarVisible.value, message.value, color.value, timeout.value);
+
+    success(API_ERROR_MESSAGES.HEALTH_SUCCESS);
+    expectSuccess(isSnackbarVisible.value, message.value, color.value, timeout.value);
+    
+    error(API_ERROR_MESSAGES.HEALTH_ERROR(500));
+    expectError(isSnackbarVisible.value, message.value, color.value, timeout.value);
+  });
 })
