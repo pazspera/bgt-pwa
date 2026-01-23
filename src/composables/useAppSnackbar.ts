@@ -21,7 +21,7 @@ export function useAppSnackbar() {
   const error = (msg: string) => {
     message.value = msg;
     color.value = StatusColors.Error;
-    timeout.value = 1000;
+    timeout.value = 10000;
     isSnackbarVisible.value = true;
   }
 
@@ -35,7 +35,7 @@ export function useAppSnackbar() {
   const warning = (msg: string) => {
     message.value = msg;
     color.value = StatusColors.Warning;
-    timeout.value = 1000;
+    timeout.value = 10000;
     isSnackbarVisible.value = true;
   }
 
