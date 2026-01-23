@@ -28,7 +28,7 @@ export function useAppSnackbar() {
   const info = (msg: string) => {
     message.value = msg;
     color.value = StatusColors.Info;
-    timeout.value = SnackbarDisplayTimes.Short;
+    timeout.value = SnackbarDisplayTimes.Long;
     isSnackbarVisible.value = true;
   }
 

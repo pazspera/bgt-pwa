@@ -59,7 +59,7 @@ describe("useAppSnackbar", () => {
     expect(isSnackbarVisible.value).toBe(true);
     expect(message.value).toBe(API_ERROR_MESSAGES.HEALTH_OTHER(infoMessage));
     expect(color.value).toBe(StatusColors.Info);
-    expect(timeout.value).toBe(SnackbarDisplayTimes.Short);
+    expect(timeout.value).toBe(SnackbarDisplayTimes.Long);
   });
 
   it("warning() returns the correct values ", () => {
