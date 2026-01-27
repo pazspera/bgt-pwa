@@ -4,13 +4,24 @@ defineOptions({ name: "Logo" });
 </script>
 
 <template>
-  <router-link :to="{ name: 'BoardGames' }" data-testid="app-logo">
-    <img src="/favicon.ico" class="navbar-icon" />
-  </router-link>
-  <span>{{ version }}</span>
+  <div class="logo">
+    <router-link :to="{ name: 'BoardGames' }" data-testid="app-logo">
+      <img src="/favicon.ico" class="navbar-icon" />
+    </router-link>
+    <span class="pb-2">{{ version }}</span>
+  </div>
 </template>
 
 <style scoped>
+.logo {
+  display: flex;
+  flex-direction: row;
+  align-items: end;
+  gap: 6px;
+  font-weight: 700;
+  font-size: var(--font-size-xs);
+}
+
 .navbar-icon {
   width: 36px;
   height: 36px;
