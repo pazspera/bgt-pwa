@@ -8,7 +8,7 @@ defineOptions({ name: "Logo" });
     <router-link :to="{ name: 'BoardGames' }" data-testid="app-logo">
       <img src="/favicon.ico" class="navbar-icon" />
     </router-link>
-    <span class="pb-2">{{ version }}</span>
+    <v-chip size="x-small" class="mb-1" color="primary" variant="tonal">v{{ version }}</v-chip>
   </div>
 </template>
 
