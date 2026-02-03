@@ -13,6 +13,7 @@ defineOptions({ name: "BlockHeading" });
   font-family: var(--font-title);
   font-weight: 700;
   line-height: 1.25;
+  margin-bottom: 0.5rem;
 }
 
 @media (max-width: 600px) {

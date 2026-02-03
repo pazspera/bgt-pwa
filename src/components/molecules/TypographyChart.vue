@@ -4,6 +4,7 @@ import SectionTitle from '../atoms/typography/SectionTitle.vue';
 import SubsectionTitle from '../atoms/typography/SubsectionTitle.vue';
 import BlockHeading from '../atoms/typography/BlockHeading.vue';
 import CardHeading from '../atoms/typography/CardHeading.vue';
+import MinorHeading from '../atoms/typography/MinorHeading.vue';
 
 </script>
 
@@ -38,11 +39,15 @@ import CardHeading from '../atoms/typography/CardHeading.vue';
           <td><block-heading>Block Heading</block-heading></td>
           <td>Block heading</td>
         </tr>
-        
         <tr>
           <td>H5</td>
           <td><card-heading>Card Heading</card-heading></td>
           <td>Card heading</td>
+        </tr>
+        <tr>
+          <td>H6</td>
+          <td><minor-heading>Minor Heading</minor-heading></td>
+          <td>Minor heading</td>
         </tr>
       </tbody>
     </v-table>

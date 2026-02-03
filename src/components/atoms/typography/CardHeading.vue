@@ -13,6 +13,7 @@ defineOptions({ name: "CardHeading" });
   font-family: var(--font-title);
   font-weight: 600;
   line-height: 1.2;
+  margin-bottom: 0.5rem;
 }
 
 @media (max-width: 600px) {
