@@ -1,7 +1,7 @@
 <template>
-  <p class="detail-text">
+  <span class="detail-text">
     <slot />
-  </p>
+  </span>
 </template>
 
 <script setup lang="ts">

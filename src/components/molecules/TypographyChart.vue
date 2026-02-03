@@ -83,10 +83,10 @@ import ExternalLink from '../atoms/typography/ExternalLink.vue';
           <td></td>
         </tr>
         <tr>
-          <td>P</td>
+          <td>Span</td>
           <td><DetailText>Detail Text</DetailText></td>
           <td>Detail text</td>
-          <td></td>
+          <td>AppSnackbar</td>
         </tr>
         <tr>
           <td>P</td>
@@ -98,7 +98,7 @@ import ExternalLink from '../atoms/typography/ExternalLink.vue';
           <td>Span</td>
           <td><ButtonLabel>Button Label</ButtonLabel></td>
           <td>Button label</td>
-          <td>AppButton</td>
+          <td>AppButton, AppSnackbar</td>
         </tr>
         <tr>
           <td>Span</td>
