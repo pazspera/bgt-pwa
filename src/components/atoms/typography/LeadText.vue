@@ -13,7 +13,6 @@ defineOptions({ name: "LeadText" });
   font-family: var(--font-text);
   font-weight: 400;
   line-height: 1.4;
-  margin-bottom: 0.5em;
 }
 
 @media (max-width: 600px) {

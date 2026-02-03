@@ -6,6 +6,7 @@ import BlockHeading from '../atoms/typography/BlockHeading.vue';
 import CardHeading from '../atoms/typography/CardHeading.vue';
 import MinorHeading from '../atoms/typography/MinorHeading.vue';
 import LeadText from '../atoms/typography/LeadText.vue';
+import SupportText from '../atoms/typography/SupportText.vue';
 
 </script>
 
@@ -54,6 +55,11 @@ import LeadText from '../atoms/typography/LeadText.vue';
           <td>P</td>
           <td><lead-text>Lead Text</lead-text></td>
           <td>Subtitle 1</td>
+        </tr>
+        <tr>
+          <td>P</td>
+          <td><support-text>Support Text</support-text></td>
+          <td>Subtitle 2</td>
         </tr>
       </tbody>
     </v-table>
