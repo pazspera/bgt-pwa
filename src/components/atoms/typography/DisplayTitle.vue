@@ -12,7 +12,7 @@ defineOptions({ name: "DisplayTitle" });
 .display-title {
   font-family: var(--font-title);
   font-weight: 600;
-  line-height: 1.05;
+  line-height: 1.1;
   margin-bottom: 0.5em;
 }
 
