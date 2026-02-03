@@ -8,6 +8,7 @@ import MinorHeading from '../atoms/typography/MinorHeading.vue';
 import LeadText from '../atoms/typography/LeadText.vue';
 import SupportText from '../atoms/typography/SupportText.vue';
 import BodyText from '../atoms/typography/BodyText.vue';
+import DetailText from '../atoms/typography/DetailText.vue';
 
 </script>
 
@@ -66,6 +67,11 @@ import BodyText from '../atoms/typography/BodyText.vue';
           <td>P</td>
           <td><body-text>Body Text</body-text></td>
           <td>Body text</td>
+        </tr>
+        <tr>
+          <td>P</td>
+          <td><detail-text>Detail Text</detail-text></td>
+          <td>Detail text</td>
         </tr>
       </tbody>
     </v-table>
