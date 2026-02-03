@@ -5,6 +5,7 @@ import SubsectionTitle from '../atoms/typography/SubsectionTitle.vue';
 import BlockHeading from '../atoms/typography/BlockHeading.vue';
 import CardHeading from '../atoms/typography/CardHeading.vue';
 import MinorHeading from '../atoms/typography/MinorHeading.vue';
+import LeadText from '../atoms/typography/LeadText.vue';
 
 </script>
 
@@ -48,6 +49,11 @@ import MinorHeading from '../atoms/typography/MinorHeading.vue';
           <td>H6</td>
           <td><minor-heading>Minor Heading</minor-heading></td>
           <td>Minor heading</td>
+        </tr>
+        <tr>
+          <td>P</td>
+          <td><lead-text>Lead Text</lead-text></td>
+          <td>Subtitle 1</td>
         </tr>
       </tbody>
     </v-table>
