@@ -151,7 +151,7 @@ const sortedPlayers = computed(()=> {
   <v-container class="mt-4 container">
     <v-row>
       <v-col>
-        <display-title>Jugadores</display-title>
+        <DisplayTitle>Jugadores</DisplayTitle>
         <v-btn 
           @click="showAddPlayerSheet"
           color="primary"

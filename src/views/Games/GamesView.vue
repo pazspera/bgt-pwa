@@ -46,8 +46,8 @@ console.log(`errorSaveGame: ${errorSaveGame.value}`);
 
 <template>
   <v-container class="mt-4">
-    <display-title>Partidas</display-title>
-    <typography-chart></typography-chart>
+    <DisplayTitle>Partidas</DisplayTitle>
+    <TypographyChart></TypographyChart>
   </v-container>
 </template>
 

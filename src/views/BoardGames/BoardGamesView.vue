@@ -43,7 +43,7 @@ onBeforeMount(async () => {
 
 <template>
   <v-container class="mt-4">
-    <display-title>Ludoteca</display-title>
+    <DisplayTitle>Ludoteca</DisplayTitle>
 
     <!-- error on the boardgames list initial fetch -->
     <v-row v-if="errorFetchCollections">
