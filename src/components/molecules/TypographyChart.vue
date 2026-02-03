@@ -9,6 +9,7 @@ import LeadText from '../atoms/typography/LeadText.vue';
 import SupportText from '../atoms/typography/SupportText.vue';
 import BodyText from '../atoms/typography/BodyText.vue';
 import DetailText from '../atoms/typography/DetailText.vue';
+import CaptionText from '../atoms/typography/CaptionText.vue';
 
 </script>
 
@@ -72,6 +73,11 @@ import DetailText from '../atoms/typography/DetailText.vue';
           <td>P</td>
           <td><detail-text>Detail Text</detail-text></td>
           <td>Detail text</td>
+        </tr>
+        <tr>
+          <td>P</td>
+          <td><caption-text>Caption Text</caption-text></td>
+          <td>Caption text</td>
         </tr>
       </tbody>
     </v-table>
