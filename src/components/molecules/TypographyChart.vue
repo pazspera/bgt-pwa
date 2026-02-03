@@ -2,6 +2,7 @@
 import DisplayTitle from '../atoms/typography/DisplayTitle.vue';
 import SectionTitle from '../atoms/typography/SectionTitle.vue';
 import SubsectionTitle from '../atoms/typography/SubsectionTitle.vue';
+import BlockHeading from '../atoms/typography/BlockHeading.vue';
 
 </script>
 
@@ -30,6 +31,11 @@ import SubsectionTitle from '../atoms/typography/SubsectionTitle.vue';
           <td>H3</td>
           <td><subsection-title>Subsection title</subsection-title></td>
           <td>Subsection title</td>
+        </tr>
+        <tr>
+          <td>H4</td>
+          <td><block-heading>Block heading</block-heading></td>
+          <td>Block heading</td>
         </tr>
       </tbody>
     </v-table>

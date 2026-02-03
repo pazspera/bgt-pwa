@@ -11,7 +11,7 @@ defineOptions({ name: "DisplayTitle" });
 <style scoped>
 .display-title {
   font-family: var(--font-title);
-  font-weight: 600;
+  font-weight: 900;
   line-height: 1.1;
   margin-bottom: 0.5em;
 }
