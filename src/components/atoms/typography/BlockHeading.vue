@@ -11,10 +11,8 @@ defineOptions({ name: "BlockHeading" });
 <style scoped>
 .block-heading {
   font-family: var(--font-title);
-  font-size: var(--font-size-4xl);
-  font-weight: 500;
+  font-weight: 700;
   line-height: 1.25;
-  margin-bottom: 0.5em;
 }
 
 @media (max-width: 600px) {
@@ -25,13 +23,13 @@ defineOptions({ name: "BlockHeading" });
 
 @media (min-width: 601px) and (max-width: 960px) {
   .block-heading  {
-    font-size: var(--font-size-xl);
+    font-size: var(--font-size-2xl);
   }
 }
 
 @media (min-width: 961px) and (max-width: 1280px) { 
   .block-heading  {
-    font-size: var(--font-size-2xl);
+    font-size: var(--font-size-3xl);
   }
 }
 
@@ -43,7 +41,7 @@ defineOptions({ name: "BlockHeading" });
 
 @media (min-width: 1921px) {
   .block-heading  {
-    font-size: var(--font-size-4xl);
+    font-size: var(--font-size-3xl);
   }
 }
 </style>
