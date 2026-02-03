@@ -101,6 +101,12 @@ import ExternalLink from '../atoms/typography/ExternalLink.vue';
           <td>AppButton</td>
         </tr>
         <tr>
+          <td>Span</td>
+          <td><bottom-nav-label>Bottom Nav Label</bottom-nav-label></td>
+          <td>Bottom nav label</td>
+          <td>BottomNavButton</td>
+        </tr>
+        <tr>
           <td>Router Link</td>
           <td><navigation-link :to="{ name: 'BoardGames' }">Navigation Link</navigation-link></td>
           <td>Navigation Link</td>
