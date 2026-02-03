@@ -9,6 +9,7 @@ import type { CreatePlayerRequest, PlayerApiResponse, UpdatePlayerRequest } from
 import { PLAYER_STATUS, CONFIRM_DELETE_PLAYER } from "../../constants/ui_feedback/players";
 import { capitalize } from "../../utils/formatters";
 import LoadingRow from "../../components/molecules/LoadingRow.vue";
+import DisplayTitle from "../../components/atoms/typography/DisplayTitle.vue";
 
 const isSheetVisible: Ref<boolean> = ref(false);
 const errorText: Ref<string> = ref("");
@@ -150,7 +151,7 @@ const sortedPlayers = computed(()=> {
   <v-container class="mt-4 container">
     <v-row>
       <v-col>
-        <h1>Jugadores</h1>
+        <display-title>Jugadores</display-title>
         <v-btn 
           @click="showAddPlayerSheet"
           color="primary"

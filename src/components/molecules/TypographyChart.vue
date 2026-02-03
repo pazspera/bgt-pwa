@@ -32,7 +32,7 @@ import ExternalLink from '../atoms/typography/ExternalLink.vue';
           <td>H1</td>
           <td><display-title>Display Title</display-title></td>
           <td>Page title</td>
-          <td></td>
+          <td>Vistas de la app</td>
         </tr>
         <tr>
           <td>H2</td>
