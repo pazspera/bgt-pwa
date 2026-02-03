@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import DisplayTitle from '../atoms/typography/DisplayTitle.vue';
+import SectionTitle from '../atoms/typography/SectionTitle.vue';
 
 </script>
 
@@ -18,6 +19,11 @@ import DisplayTitle from '../atoms/typography/DisplayTitle.vue';
           <td>H1</td>
           <td><display-title>Display Title</display-title></td>
           <td>Page title</td>
+        </tr>
+        <tr>
+          <td>H2</td>
+          <td><section-title>Section Title</section-title></td>
+          <td>Section title</td>
         </tr>
       </tbody>
     </v-table>
