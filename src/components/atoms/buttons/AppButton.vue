@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
- 
+import ButtonLabel from '../typography/ButtonLabel.vue';
+
 interface Props {
   color?: string,
   variant?: "elevated" | "flat" | "tonal" | "outlined" | "text" | "plain",
@@ -31,7 +32,7 @@ const props = withDefaults(defineProps<Props>(),{
     <template v-if="icon" #prepend>
       <FontAwesomeIcon :icon="icon" />
     </template>
-    <span>{{ label }}</span>
+    <button-label>{{ label }}</button-label>
     <slot></slot>
   </v-btn>
 </template>

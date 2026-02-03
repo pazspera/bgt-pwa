@@ -98,7 +98,7 @@ import ExternalLink from '../atoms/typography/ExternalLink.vue';
           <td>Span</td>
           <td><button-label>Button Label</button-label></td>
           <td>Button label</td>
-          <td></td>
+          <td>AppButton</td>
         </tr>
         <tr>
           <td>Router Link</td>
