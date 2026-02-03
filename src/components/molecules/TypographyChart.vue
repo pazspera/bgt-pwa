@@ -29,12 +29,12 @@ import BlockHeading from '../atoms/typography/BlockHeading.vue';
         </tr>
         <tr>
           <td>H3</td>
-          <td><subsection-title>Subsection title</subsection-title></td>
+          <td><subsection-title>Subsection Title</subsection-title></td>
           <td>Subsection title</td>
         </tr>
         <tr>
           <td>H4</td>
-          <td><block-heading>Block heading</block-heading></td>
+          <td><block-heading>Block Heading</block-heading></td>
           <td>Block heading</td>
         </tr>
       </tbody>
