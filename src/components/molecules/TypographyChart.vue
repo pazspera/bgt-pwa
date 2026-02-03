@@ -7,11 +7,12 @@ import CardHeading from '../atoms/typography/CardHeading.vue';
 import MinorHeading from '../atoms/typography/MinorHeading.vue';
 import LeadText from '../atoms/typography/LeadText.vue';
 import SupportText from '../atoms/typography/SupportText.vue';
+import BodyText from '../atoms/typography/BodyText.vue';
 
 </script>
 
 <template>
-  <v-container>
+  <v-container class="mt-8 mb-16">
     <v-table>
       <thead>
         <tr>
@@ -60,6 +61,11 @@ import SupportText from '../atoms/typography/SupportText.vue';
           <td>P</td>
           <td><support-text>Support Text</support-text></td>
           <td>Subtitle 2</td>
+        </tr>
+        <tr>
+          <td>P</td>
+          <td><body-text>Body Text</body-text></td>
+          <td>Body text</td>
         </tr>
       </tbody>
     </v-table>
