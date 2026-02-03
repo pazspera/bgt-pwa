@@ -3,6 +3,11 @@ import { mount } from "@vue/test-utils";
 import Logo from "./Logo.vue";
 import { router } from "../../tests/utils/createRouterMock";
 import { routerLinkStub } from "../../tests/utils/stubRouterLink";
+import { VChip } from "vuetify/components";
+import { createVuetifyForTest } from "../../tests/utils/createVuetifyForTest";
+
+const vuetify = createVuetifyForTest({ VChip });
+
 
 const mountLogo = ( props = {} ) => {
   return mount(Logo, {
@@ -12,6 +17,7 @@ const mountLogo = ( props = {} ) => {
     },
     global: {
       // adding 'plugins: [router]' is not needed as createRouterMock handles it
+      plugins: [vuetify],
       stubs: {
         RouterLink: {
           props: ["to"],
@@ -23,6 +29,13 @@ const mountLogo = ( props = {} ) => {
               <slot />
             </a>
           `,
+        },
+        "VChip": {
+          template: `
+            <div v-bind="$attrs">
+              <slot/>
+            </div>
+          `
         }
       }
     }
