@@ -11,6 +11,8 @@ import BodyText from '../atoms/typography/BodyText.vue';
 import DetailText from '../atoms/typography/DetailText.vue';
 import CaptionText from '../atoms/typography/CaptionText.vue';
 import ButtonLabel from '../atoms/typography/ButtonLabel.vue';
+import NavigationLink from '../atoms/typography/NavigationLink.vue';
+import ExternalLink from '../atoms/typography/ExternalLink.vue';
 
 </script>
 
@@ -84,6 +86,16 @@ import ButtonLabel from '../atoms/typography/ButtonLabel.vue';
           <td>Span</td>
           <td><button-label>Button Label</button-label></td>
           <td>Button label</td>
+        </tr>
+        <tr>
+          <td>Router Link</td>
+          <td><navigation-link :to="{ name: 'BoardGames' }">Navigation Link</navigation-link></td>
+          <td>Navigation Link</td>
+        </tr>
+        <tr>
+          <td>A</td>
+          <td><external-link :href="'#'" :target="'_blank'">External Link</external-link></td>
+          <td>External link</td>
         </tr>
       </tbody>
     </v-table>

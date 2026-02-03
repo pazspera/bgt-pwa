@@ -19,7 +19,7 @@ defineOptions({ name: "ButtonLabel" });
 
 @media (max-width: 600px) {
   .button-label {
-    font-size: var(--font-size-xs);
+    font-size: var(--font-size-xxs);
   }
 }
 
