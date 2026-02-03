@@ -3,6 +3,12 @@ import { mount } from "@vue/test-utils";
 import Logo from "./Logo.vue";
 import { router } from "../../tests/utils/createRouterMock";
 import { routerLinkStub } from "../../tests/utils/stubRouterLink";
+import { VChip } from "vuetify/components";
+import { createVuetifyForTest } from "../../tests/utils/createVuetifyForTest";
+import version from "./../../../VERSION?raw";
+
+const vuetify = createVuetifyForTest({ VChip });
+
 
 const mountLogo = ( props = {} ) => {
   return mount(Logo, {
@@ -12,6 +18,7 @@ const mountLogo = ( props = {} ) => {
     },
     global: {
       // adding 'plugins: [router]' is not needed as createRouterMock handles it
+      plugins: [vuetify],
       stubs: {
         RouterLink: {
           props: ["to"],
@@ -23,6 +30,13 @@ const mountLogo = ( props = {} ) => {
               <slot />
             </a>
           `,
+        },
+        "VChip": {
+          template: `
+            <div v-bind="$attrs">
+              <slot/>
+            </div>
+          `
         }
       }
     }
@@ -69,4 +83,9 @@ it("renders the correct :to route on the link", ()=> {
   expect(logoStub.attributes("href")).toContain("[object Object]");
 });
 
+it("renders correct version number", ()=> {
+  let wrapper = mountLogo();
+
+  expect(wrapper.text()).toContain(version);
+})
 
