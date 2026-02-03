@@ -10,6 +10,7 @@ import SupportText from '../atoms/typography/SupportText.vue';
 import BodyText from '../atoms/typography/BodyText.vue';
 import DetailText from '../atoms/typography/DetailText.vue';
 import CaptionText from '../atoms/typography/CaptionText.vue';
+import ButtonLabel from '../atoms/typography/ButtonLabel.vue';
 
 </script>
 
@@ -78,6 +79,11 @@ import CaptionText from '../atoms/typography/CaptionText.vue';
           <td>P</td>
           <td><caption-text>Caption Text</caption-text></td>
           <td>Caption text</td>
+        </tr>
+        <tr>
+          <td>Span</td>
+          <td><button-label>Button Label</button-label></td>
+          <td>Button label</td>
         </tr>
       </tbody>
     </v-table>
