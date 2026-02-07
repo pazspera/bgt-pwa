@@ -62,7 +62,7 @@ import ExternalLink from '../atoms/typography/ExternalLink.vue';
           <td>H6</td>
           <td><MinorHeading>Minor Heading</MinorHeading></td>
           <td>Minor heading</td>
-          <td></td>
+          <td>PlayerCard</td>
         </tr>
         <tr>
           <td>P</td>
@@ -80,7 +80,7 @@ import ExternalLink from '../atoms/typography/ExternalLink.vue';
           <td>P</td>
           <td><BodyText>Body Text</BodyText></td>
           <td>Body text</td>
-          <td>PlayerCard</td>
+          <td></td>
         </tr>
         <tr>
           <td>Span</td>

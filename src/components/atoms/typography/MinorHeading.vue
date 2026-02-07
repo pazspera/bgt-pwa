@@ -18,25 +18,25 @@ defineOptions({ name: "MinorHeading" });
 
 @media (max-width: 600px) {
   .minor-heading {
-    font-size: var(--font-size-md);
+    font-size: var(--font-size-sm);
   }
 }
 
 @media (min-width: 601px) and (max-width: 960px) {
   .minor-heading  {
-    font-size: var(--font-size-lg);
+    font-size: var(--font-size-md);
   }
 }
 
 @media (min-width: 961px) and (max-width: 1280px) { 
   .minor-heading  {
-    font-size: var(--font-size-xl);
+    font-size: var(--font-size-lg);
   }
 }
 
 @media (min-width: 1281px) and (max-width: 1920px) {
   .minor-heading  {
-    font-size: var(--font-size-xl);
+    font-size: var(--font-size-lg);
   }
 }
 

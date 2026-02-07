@@ -4,7 +4,7 @@ import { faTrash, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { findInitials, getRandomNumber } from '../../utils/generalUtils';
 import { ref, type Ref } from "vue";
 import AppButton from '../atoms/buttons/AppButton.vue';
-import BodyText from '../atoms/typography/BodyText.vue';
+import MinorHeading from '../atoms/typography/MinorHeading.vue';
 
 const props = defineProps<{
   player: PlayerApiResponse,
@@ -47,7 +47,12 @@ const backgroundAvatar: Ref<string> = ref(randomBackground());
       <v-avatar :color="backgroundAvatar" size="default" class="me-2">
         <span class="text-white">{{ findInitials(player.name) }}</span>
       </v-avatar>
-      <BodyText data-testid="player-card-name">{{ player.name }}</BodyText>
+      <MinorHeading 
+        data-testid="player-card-name"
+        class="player-card-title"
+        >
+          {{ player.name }}
+      </MinorHeading>
     </v-card-item>
 
     <v-card-actions class="player-card-actions">
@@ -92,6 +97,10 @@ const backgroundAvatar: Ref<string> = ref(randomBackground());
 .button-edit,
 .button-delete {
   cursor: pointer;
+}
+
+.player-card-title {
+  margin-bottom: 0 !important;
 }
 
 </style>
