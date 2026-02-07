@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import type { PlayerApiResponse } from '../../types/domain/playerApi';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faTrash, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { findInitials, getRandomNumber } from '../../utils/generalUtils';
 import { ref, type Ref } from "vue";
+import AppButton from '../atoms/buttons/AppButton.vue';
+import MinorHeading from '../atoms/typography/MinorHeading.vue';
 
 const props = defineProps<{
   player: PlayerApiResponse,
@@ -46,30 +47,33 @@ const backgroundAvatar: Ref<string> = ref(randomBackground());
       <v-avatar :color="backgroundAvatar" size="default" class="me-2">
         <span class="text-white">{{ findInitials(player.name) }}</span>
       </v-avatar>
-      <span data-testid="player-card-name">{{ player.name }}</span>
+      <MinorHeading 
+        data-testid="player-card-name"
+        class="player-card-title"
+        >
+          {{ player.name }}
+      </MinorHeading>
     </v-card-item>
 
     <v-card-actions class="player-card-actions">
-      <v-btn 
+      <AppButton
+        color="primary"
+        variant="flat"
         data-testid="player-card-edit-btn"
         @click="handleEditPlayer"  
         class="action-btn button-edit"
-        color="primary"
-        variant="flat"
-      >
-        <FontAwesomeIcon :icon="faPenToSquare" class="icon-edit" />
-        <span>Editar</span>
-      </v-btn>
-      <v-btn 
+        label="Editar"
+        :icon="faPenToSquare"
+      />
+      <AppButton 
+        color="error"
+        variant="text"
+        label="Borrar"
+        :icon="faTrash"
         data-testid="player-card-delete-btn"
         @click="handleDeletePlayer"
         class="action-btn button-delete"
-        color="error"
-        variant="text" 
-      >
-        <FontAwesomeIcon :icon="faTrash" class="icon-delete" />
-        <span>Borrar</span>
-      </v-btn>
+      />
     </v-card-actions>
   </v-card>
 </template>
@@ -93,6 +97,10 @@ const backgroundAvatar: Ref<string> = ref(randomBackground());
 .button-edit,
 .button-delete {
   cursor: pointer;
+}
+
+.player-card-title {
+  margin-bottom: 0 !important;
 }
 
 </style>

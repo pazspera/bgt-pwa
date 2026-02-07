@@ -43,6 +43,11 @@ const emit = defineEmits(['close']);
   --v-layout-bottom: 96px !important;
 }
 
+.snackbar .v-snackbar__wrapper .v-snackbar__content {
+  display: flex !important;
+  align-items: center !important;
+}
+
 @media(min-width: 768px) {
   .v-overlay.v-snackbar {
     --v-layout-bottom: 24px !important;

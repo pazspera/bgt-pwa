@@ -2,6 +2,8 @@
 import { useGamesApi } from "../../composables/useGamesApi";
 import { onBeforeMount } from "vue";
 import { CreateGameRequest } from "../../types/domain/gamesApi";
+import TypographyChart from "../../components/molecules/TypographyChart.vue";
+import DisplayTitle from "../../components/atoms/typography/DisplayTitle.vue";
 
 defineOptions({ name: "GamesView" });
 
@@ -44,7 +46,8 @@ console.log(`errorSaveGame: ${errorSaveGame.value}`);
 
 <template>
   <v-container class="mt-4">
-    <h1>Partidas</h1>
+    <DisplayTitle>Partidas</DisplayTitle>
+    <TypographyChart></TypographyChart>
   </v-container>
 </template>
 

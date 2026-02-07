@@ -5,8 +5,12 @@ import CardGrid from '../../components/organisms/CardGrid.vue';
 import LoadingRow from '../../components/molecules/LoadingRow.vue';
 import AddGameDialog from '../../components/organisms/AddGameDialog.vue';
 import { CollectionsApiResponse } from '../../types/domain/collectionsApi';
+<<<<<<< HEAD
 import AppSnackbar from "../../components/molecules/AppSnackbar.vue";
 import { useAppSnackbar } from "../../composables/useAppSnackbar";
+=======
+import DisplayTitle from "../../components/atoms/typography/DisplayTitle.vue";
+>>>>>>> 7a6aae9b59ec727645bdda963a5b07095a654e9f
 
 defineOptions({ name: "BoardGamesView" });
 
@@ -41,7 +45,7 @@ onBeforeMount(async () => {
 
 <template>
   <v-container class="mt-4">
-    <h1>Ludoteca</h1>
+    <DisplayTitle>Ludoteca</DisplayTitle>
 
     <!-- error on the boardgames list initial fetch -->
     <v-row v-if="errorFetchCollections">

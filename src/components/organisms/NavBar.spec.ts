@@ -6,12 +6,12 @@ import { createVuetifyForTest } from "../../tests/utils/createVuetifyForTest";
 import { mockViewportForVueUse } from "../../tests/utils/mockViewportForVueUse";
 import { expectNavigationLinks } from "../../tests/utils/expectNavigationLinks";
 import { NavigationLinkStub } from "../../tests/utils/stubNavigationLink";
-import { VAppBar, VNavigationDrawer, VBtn, VRow, VContainer, VList, VTooltip } from "vuetify/components";
+import { VAppBar, VNavigationDrawer, VBtn, VRow, VContainer, VList, VTooltip, VChip } from "vuetify/components";
 import NavBar from "./NavBar.vue";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 
 
-const vuetify = createVuetifyForTest({ VAppBar, VNavigationDrawer, VBtn, VRow, VContainer, VList, VTooltip });
+const vuetify = createVuetifyForTest({ VAppBar, VNavigationDrawer, VBtn, VRow, VContainer, VList, VTooltip, VChip });
 const faBarsText = faBars.iconName;
 
 // Data to verify NavigationLinks

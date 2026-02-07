@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, computed } from 'vue';
+import { computed } from 'vue';
 
 defineOptions({ name: "ExternalLink" });
 
@@ -18,9 +18,37 @@ const rel = computed(() => (target.value === '_blank' ? 'noopener noreferrer' : 
 <style scoped>
 .external-link {
   font-family: var(--font-text);
-  font-size: var(--font-size-md);
   font-weight: 500;
-  color: var(--text-color-default);
   text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+  .external-link {
+    font-size: var(--font-size-md);
+  }
+}
+
+@media (min-width: 601px) and (max-width: 960px) {
+  .external-link  {
+    font-size: var(--font-size-md);
+  }
+}
+
+@media (min-width: 961px) and (max-width: 1280px) { 
+  .external-link  {
+    font-size: var(--font-size-md);
+  }
+}
+
+@media (min-width: 1281px) and (max-width: 1920px) {
+  .external-link  {
+    font-size: var(--font-size-md);
+  }
+}
+
+@media (min-width: 1921px) {
+  .external-link  {
+    font-size: var(--font-size-lg);
+  }
 }
 </style>
