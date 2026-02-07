@@ -13,6 +13,9 @@ import { toTypedSchema } from "@vee-validate/yup";
 import { useField, useForm, useFieldArray } from "vee-validate";
 import type { PlayerInGame, CreateGameRequest } from '../../types/domain/gamesApi';
 import { useServerTime } from '../../composables/useServerTime';
+import BlockHeading from '../atoms/typography/BlockHeading.vue';
+import DetailText from '../atoms/typography/DetailText.vue';
+import AppButton from '../atoms/buttons/AppButton.vue';
 
 const props =  defineProps<{
   modelValue: boolean,
@@ -258,10 +261,14 @@ const onSubmit = handleSubmit(async (values) => {
         <div :class="{ 'hidden-on-loading': loading || error }" class="content-wrapper">
           <v-card-item class="mb-4" >
             <v-card-title class="dialog-title">
-              {{ AddGameDialogText.title }}
+              <BlockHeading>
+                {{ AddGameDialogText.title }}
+              </BlockHeading>
             </v-card-title>
             <v-card-subtitle>
-              {{ boardgame.name }}
+              <DetailText>
+                {{ boardgame.name }}
+              </DetailText>
             </v-card-subtitle>
           </v-card-item>
            
@@ -339,23 +346,23 @@ const onSubmit = handleSubmit(async (values) => {
           </v-card-text>
   
           <v-card-actions class="dialog-actions mt-3">
-            <v-btn
+            <AppButton
               type="submit"
-              @click="onSubmit" 
+              @click="onSubmit"
               color="primary"
-              variant="elevated"
+              variant="flat"
+              density="default"
               :loading="savingGame"
-            >
-              <FontAwesomeIcon :icon="faFloppyDisk" />
-              <span>{{ AddGameDialogText.buttons.save }}</span>
-            </v-btn>
-            <v-btn
+              :icon="faFloppyDisk"
+              :label="AddGameDialogText.buttons.save"
+            />
+            <AppButton
               color="error"
               variant="text"
+              density="default"
               @click="closeDialog"
-            >
-              {{ AddGameDialogText.buttons.cancel }}
-            </v-btn>
+              :label="AddGameDialogText.buttons.cancel"
+            />
           </v-card-actions>
         </div>
       </v-card>

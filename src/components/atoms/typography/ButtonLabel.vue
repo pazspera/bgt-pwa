@@ -10,7 +10,7 @@ defineOptions({ name: "ButtonLabel" });
 
 <style scoped>
 .button-label {
-  font-family: var(--font-title);
+  font-family: var(--font-text);
   font-weight: 400;
   line-height: 1.2;
   text-transform: uppercase;

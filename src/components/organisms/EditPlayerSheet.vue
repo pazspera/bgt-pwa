@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import SubsectionTitle from '../atoms/typography/SubsectionTitle.vue';
+import AppButton from '../atoms/buttons/AppButton.vue';
 import { object, string } from "yup";
 import { toTypedSchema } from '@vee-validate/yup';
 import { useForm, useField } from 'vee-validate';
@@ -96,19 +97,23 @@ defineExpose({
             data-testid="input-player-name"
           ></v-text-field>
           <div class="sheet-buttons">
-            <v-btn 
+            <AppButton
               type="submit" 
               color="primary"
               @click="submitForm"
-              variant="elevated"
+              variant="flat"
+              density="default"
               :disabled="!isNameChanged"
+              :label="EditPlayerSheetText.buttons.save"
               data-testid="btn-add-player"
-            >{{ EditPlayerSheetText.buttons.save }}</v-btn>
-            <v-btn 
+            />
+            <AppButton
               variant="text"
+              density="default"
               @click="closeSheet" 
               data-testid="btn-cancel"
-            >{{ EditPlayerSheetText.buttons.cancel }}</v-btn>
+              :label="EditPlayerSheetText.buttons.cancel"
+            />
           </div>
         </form>
 

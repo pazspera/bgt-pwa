@@ -30,85 +30,91 @@ import ExternalLink from '../atoms/typography/ExternalLink.vue';
       <tbody>
         <tr>
           <td>H1</td>
-          <td><display-title>Display Title</display-title></td>
+          <td><DisplayTitle>Display Title</DisplayTitle></td>
           <td>Page title</td>
-          <td></td>
+          <td>Vistas de la app</td>
         </tr>
         <tr>
           <td>H2</td>
-          <td><section-title>Section Title</section-title></td>
+          <td><SectionTitle>Section Title</SectionTitle></td>
           <td>Section title</td>
           <td></td>
         </tr>
         <tr>
           <td>H3</td>
-          <td><subsection-title>Subsection Title</subsection-title></td>
+          <td><SubsectionTitle>Subsection Title</SubsectionTitle></td>
           <td>Subsection title</td>
-          <td></td>
+          <td>AddPlayerSheet, PlayersView</td>
         </tr>
         <tr>
           <td>H4</td>
-          <td><block-heading>Block Heading</block-heading></td>
+          <td><BlockHeading>Block Heading</BlockHeading></td>
           <td>Block heading</td>
-          <td></td>
+          <td>AddGameDialog</td>
         </tr>
         <tr>
           <td>H5</td>
-          <td><card-heading>Card Heading</card-heading></td>
+          <td><CardHeading>Card Heading</CardHeading></td>
           <td>Card heading</td>
-          <td></td>
+          <td>BoardgameCard</td>
         </tr>
         <tr>
           <td>H6</td>
-          <td><minor-heading>Minor Heading</minor-heading></td>
+          <td><MinorHeading>Minor Heading</MinorHeading></td>
           <td>Minor heading</td>
-          <td></td>
+          <td>PlayerCard</td>
         </tr>
         <tr>
           <td>P</td>
-          <td><lead-text>Lead Text</lead-text></td>
+          <td><LeadText>Lead Text</LeadText></td>
           <td>Subtitle 1</td>
           <td></td>
         </tr>
         <tr>
           <td>P</td>
-          <td><support-text>Support Text</support-text></td>
+          <td><SupportText>Support Text</SupportText></td>
           <td>Subtitle 2</td>
           <td></td>
         </tr>
         <tr>
           <td>P</td>
-          <td><body-text>Body Text</body-text></td>
+          <td><BodyText>Body Text</BodyText></td>
           <td>Body text</td>
-          <td></td>
+          <td>PlayersView</td>
         </tr>
         <tr>
-          <td>P</td>
-          <td><detail-text>Detail Text</detail-text></td>
+          <td>Span</td>
+          <td><DetailText>Detail Text</DetailText></td>
           <td>Detail text</td>
-          <td></td>
+          <td>AppSnackbar, AddGameDialog</td>
         </tr>
         <tr>
           <td>P</td>
-          <td><caption-text>Caption Text</caption-text></td>
+          <td><CaptionText>Caption Text</CaptionText></td>
           <td>Caption text</td>
           <td></td>
         </tr>
         <tr>
           <td>Span</td>
-          <td><button-label>Button Label</button-label></td>
+          <td><ButtonLabel>Button Label</ButtonLabel></td>
           <td>Button label</td>
-          <td></td>
+          <td>AppButton, AppSnackbar</td>
+        </tr>
+        <tr>
+          <td>Span</td>
+          <td><BottomNavLabel>Bottom Nav Label</BottomNavLabel></td>
+          <td>Bottom nav label</td>
+          <td>BottomNavButton</td>
         </tr>
         <tr>
           <td>Router Link</td>
-          <td><navigation-link :to="{ name: 'BoardGames' }">Navigation Link</navigation-link></td>
+          <td><NavigationLink :to="{ name: 'BoardGames' }">Navigation Link</NavigationLink></td>
           <td>Navigation Link</td>
           <td></td>
         </tr>
         <tr>
           <td>A</td>
-          <td><external-link :href="'#'" :target="'_blank'">External Link</external-link></td>
+          <td><ExternalLink :href="'#'" :target="'_blank'">External Link</ExternalLink></td>
           <td>External link</td>
           <td></td>
         </tr>
