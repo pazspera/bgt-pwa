@@ -1,12 +1,9 @@
 <script setup lang="ts">
 import type { PlayerApiResponse } from '../../types/domain/playerApi';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faTrash, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { findInitials, getRandomNumber } from '../../utils/generalUtils';
 import { ref, type Ref } from "vue";
 import AppButton from '../atoms/buttons/AppButton.vue';
-import CardHeading from '../atoms/typography/CardHeading.vue';
-import MinorHeading from '../atoms/typography/MinorHeading.vue';
 import BodyText from '../atoms/typography/BodyText.vue';
 
 const props = defineProps<{

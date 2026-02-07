@@ -50,13 +50,13 @@ import ExternalLink from '../atoms/typography/ExternalLink.vue';
           <td>H4</td>
           <td><BlockHeading>Block Heading</BlockHeading></td>
           <td>Block heading</td>
-          <td></td>
+          <td>AddGameDialog</td>
         </tr>
         <tr>
           <td>H5</td>
           <td><CardHeading>Card Heading</CardHeading></td>
           <td>Card heading</td>
-          <td></td>
+          <td>BoardgameCard</td>
         </tr>
         <tr>
           <td>H6</td>
@@ -80,13 +80,13 @@ import ExternalLink from '../atoms/typography/ExternalLink.vue';
           <td>P</td>
           <td><BodyText>Body Text</BodyText></td>
           <td>Body text</td>
-          <td></td>
+          <td>PlayerCard</td>
         </tr>
         <tr>
           <td>Span</td>
           <td><DetailText>Detail Text</DetailText></td>
           <td>Detail text</td>
-          <td>AppSnackbar</td>
+          <td>AppSnackbar, AddGameDialog</td>
         </tr>
         <tr>
           <td>P</td>
