@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import version from "./../../../VERSION?raw";
-defineOptions({ name: "Logo" });
 import BottomNavLabel from "./typography/BottomNavLabel.vue";
+defineOptions({ name: "Logo" });
+
 </script>
 
 <template>
@@ -10,7 +11,7 @@ import BottomNavLabel from "./typography/BottomNavLabel.vue";
       <img src="/favicon.ico" class="navbar-icon" />
     </router-link>
     <v-chip size="x-small" class="mb-1" color="primary" variant="tonal">
-      <ButtonNavLabel>v{{ version }}</ButtonNavLabel>
+      <BottomNavLabel>v{{ version }}</BottomNavLabel>
     </v-chip>
   </div>
 </template>
