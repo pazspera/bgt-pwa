@@ -44,7 +44,7 @@ import ExternalLink from '../atoms/typography/ExternalLink.vue';
           <td>H3</td>
           <td><SubsectionTitle>Subsection Title</SubsectionTitle></td>
           <td>Subsection title</td>
-          <td>AddPlayerSheet</td>
+          <td>AddPlayerSheet, PlayersView</td>
         </tr>
         <tr>
           <td>H4</td>
@@ -80,7 +80,7 @@ import ExternalLink from '../atoms/typography/ExternalLink.vue';
           <td>P</td>
           <td><BodyText>Body Text</BodyText></td>
           <td>Body text</td>
-          <td></td>
+          <td>PlayersView</td>
         </tr>
         <tr>
           <td>Span</td>

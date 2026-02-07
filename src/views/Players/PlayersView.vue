@@ -10,6 +10,9 @@ import { PLAYER_STATUS, CONFIRM_DELETE_PLAYER } from "../../constants/ui_feedbac
 import { capitalize } from "../../utils/formatters";
 import LoadingRow from "../../components/molecules/LoadingRow.vue";
 import DisplayTitle from "../../components/atoms/typography/DisplayTitle.vue";
+import SubsectionTitle from "../../components/atoms/typography/SubsectionTitle.vue";
+import BodyText from "../../components/atoms/typography/BodyText.vue";
+import AppButton from "../../components/atoms/buttons/AppButton.vue";
 
 const isSheetVisible: Ref<boolean> = ref(false);
 const errorText: Ref<string> = ref("");
@@ -189,8 +192,8 @@ const sortedPlayers = computed(()=> {
     <!-- no players -->
     <v-row v-else-if="!errorList">
       <v-col>
-        <h2>No hay jugadores</h2>
-        <p>Creá tu primer jugador haciendo click en el botón "Agregar jugador".</p>
+        <SubsectionTitle>No hay jugadores</SubsectionTitle>
+        <BodyText>Creá tu primer jugador haciendo click en el botón "Agregar jugador".</BodyText>
       </v-col>
     </v-row>
 
@@ -226,21 +229,21 @@ const sortedPlayers = computed(()=> {
         <template v-slot:actions>
           <v-spacer></v-spacer>
           
-          <v-btn
+          <AppButton
+            density="default"
             color="error" 
             variant="plain"
+            :label="CONFIRM_DELETE_PLAYER.CONFIRM_BTN_TEXT"
             @click="confirmDelete"
-          >
-            {{ CONFIRM_DELETE_PLAYER.CONFIRM_BTN_TEXT }}
-          </v-btn>
+          />
 
-          <v-btn
+          <AppButton
+            density="default"
             color="primary" 
             variant="plain"
+            :label="CONFIRM_DELETE_PLAYER.CANCEL_BTN_TEXT"
             @click="isDeleteDialogVisible = false"
-          >
-            {{ CONFIRM_DELETE_PLAYER.CANCEL_BTN_TEXT }}
-          </v-btn>
+          />
         </template>
       </v-card>
     </v-dialog>
