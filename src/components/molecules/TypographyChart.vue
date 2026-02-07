@@ -44,7 +44,7 @@ import ExternalLink from '../atoms/typography/ExternalLink.vue';
           <td>H3</td>
           <td><SubsectionTitle>Subsection Title</SubsectionTitle></td>
           <td>Subsection title</td>
-          <td></td>
+          <td>AddPlayerSheet</td>
         </tr>
         <tr>
           <td>H4</td>
