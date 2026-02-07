@@ -81,6 +81,13 @@ const mountAppSnackbar = ()=> {
   });
 }
 
+describe("", ()=> {
+  it("", ()=> {})
+  it("", ()=> {})
+  it("", ()=> {})
+  it("", ()=> {})
+})
+
 describe("mock response from useCheckDbHealth()", ()=> {
 
   it.skip("shows correct info on success response", async ()=> {
