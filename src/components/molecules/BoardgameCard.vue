@@ -2,6 +2,8 @@
 import { CollectionsApiResponse } from '../../types/domain/collectionsApi';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import CardHeading from '../atoms/typography/CardHeading.vue';
+import AppButton from '../atoms/buttons/AppButton.vue';
 
 const props = defineProps<{
   boardgame: CollectionsApiResponse
@@ -22,19 +24,23 @@ const emit = defineEmits<{
     variant="elevated"
     hover
   >
-    <v-card-title>
-      {{ boardgame.name }}
+
+    <v-card-title class="ps-2">
+      <CardHeading>
+        {{ boardgame.name }}
+      </CardHeading>
     </v-card-title>
 
     <v-card-actions>
-      <v-btn
+      <AppButton
         color="primary"
         variant="flat"
+        label="Agregar Partida"
+        density="default"
+        :icon="faPlus"
         @click="emit('add-game', boardgame)"
       >
-        <FontAwesomeIcon :icon="faPlus" />
-        <span>Agregar partida</span>
-      </v-btn>
+      </AppButton>
     </v-card-actions>
 
   </v-card>
@@ -47,4 +53,5 @@ const emit = defineEmits<{
   align-items: self-start;
   padding: 12px;
 }
+
 </style>

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import version from "./../../../VERSION?raw";
 defineOptions({ name: "Logo" });
+import BottomNavLabel from "./typography/BottomNavLabel.vue";
 </script>
 
 <template>
@@ -8,7 +9,9 @@ defineOptions({ name: "Logo" });
     <router-link :to="{ name: 'BoardGames' }" data-testid="app-logo">
       <img src="/favicon.ico" class="navbar-icon" />
     </router-link>
-    <v-chip size="x-small" class="mb-1" color="primary" variant="tonal">v{{ version }}</v-chip>
+    <v-chip size="x-small" class="mb-1" color="primary" variant="tonal">
+      <ButtonNavLabel>v{{ version }}</ButtonNavLabel>
+    </v-chip>
   </div>
 </template>
 
