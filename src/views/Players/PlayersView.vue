@@ -9,7 +9,10 @@ import type { CreatePlayerRequest, PlayerApiResponse, UpdatePlayerRequest } from
 import { PLAYER_STATUS, CONFIRM_DELETE_PLAYER } from "../../constants/ui_feedback/players";
 import { capitalize } from "../../utils/formatters";
 import LoadingRow from "../../components/molecules/LoadingRow.vue";
-import AppSnackbar from "../../components/molecules/AppSnackbar.vue";
+import DisplayTitle from "../../components/atoms/typography/DisplayTitle.vue";
+import SubsectionTitle from "../../components/atoms/typography/SubsectionTitle.vue";
+import BodyText from "../../components/atoms/typography/BodyText.vue";
+import AppButton from "../../components/atoms/buttons/AppButton.vue";
 import { useAppSnackbar } from "../../composables/useAppSnackbar";
 
 const isSheetVisible: Ref<boolean> = ref(false);
