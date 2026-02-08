@@ -31,7 +31,11 @@ const emit = defineEmits(['close']);
     {{ message }}
 
     <template v-slot:actions>
-      <v-btn variant="text" @click="emit('close')">
+      <v-btn 
+        variant="text"
+        data-testid="appsnackbar-button" 
+        @click="emit('close')"
+      >
         Cerrar
       </v-btn>
     </template>

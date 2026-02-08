@@ -69,28 +69,28 @@ const mountAppSnackbar = (props = {})=> {
 
 describe("rendering", ()=> {
   let wrapper;
+  let button;
 
   beforeEach(()=> {
     wrapper = mountAppSnackbar();
+    button = wrapper.find('[data-testid="appsnackbar-button"]');
   })
 
 
-  it.only("renders correct message", ()=> {
+  it("renders correct message", ()=> {
     expect(wrapper.text()).toContain(snackbarMessage);
   })
 
-  it.only("renders correct color", ()=> {
-    console.log(wrapper.html())
-    console.log(wrapper.text())
+  it("renders correct color", ()=> {
     expect(wrapper.html()).toContain(`data-color="${snackbarColor}"`);
   })
 
-  it.only("renders correct timeout value", ()=> {
+  it("renders correct timeout value", ()=> {
     expect(wrapper.html()).toContain(`timeout="${snackbarTimeout}"`);
   })
 
-  it.only("renders the 'close' button", ()=> {
-
+  it("renders the 'close' button", ()=> {
+    expect(button.exists()).toBe(true);
   })
 })
 
