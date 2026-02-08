@@ -54,6 +54,7 @@
   --font-title: "Ruda", sans-serif;
   --font-text: "Lato", sans-serif;
 
+  --font-size-2xs: clamp(0.5rem, 0.7vw, 10px);
   --font-size-xxs: clamp(0.7rem, 0.8vw, 12px);
   --font-size-xs:  clamp(0.8rem, 0.9vw, 14px);
   --font-size-sm:  clamp(0.9rem, 1vw, 16px);

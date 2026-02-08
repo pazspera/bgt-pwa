@@ -22,7 +22,7 @@ defineOptions({ name: "BottomNavLabel" });
 
 @media(max-width: 350px) {
   .bottom-nav-label {
-    display: none !important;
+    font-size: var(--font-size-2xs);
   }
 }
 </style>
