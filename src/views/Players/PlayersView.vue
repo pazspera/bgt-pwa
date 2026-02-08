@@ -148,13 +148,13 @@ const sortedPlayers = computed(()=> {
     <v-row>
       <v-col>
         <DisplayTitle>Jugadores</DisplayTitle>
-        <v-btn 
+        <AppButton
           @click="showAddPlayerSheet"
           color="primary"
           variant="elevated"
-        >
-          Agregar jugador
-        </v-btn>
+          density="default"
+          label="Agregar jugador"
+        />
         <br/>
         <br/>
       </v-col>
