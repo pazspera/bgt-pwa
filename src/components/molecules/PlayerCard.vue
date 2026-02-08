@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { PlayerApiResponse } from '../../types/domain/playerApi';
-import { faTrash, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faTrash, faPenToSquare, faCircleCheck } from "@fortawesome/free-solid-svg-icons";
 import { findInitials, getRandomNumber } from '../../utils/generalUtils';
 import { ref, type Ref } from "vue";
 import AppButton from '../atoms/buttons/AppButton.vue';
@@ -52,7 +53,12 @@ const backgroundAvatar: Ref<string> = ref(randomBackground());
         class="player-card-title"
         >
           {{ player.name }}
-      </MinorHeading>
+      </MinorHeading> 
+      <FontAwesomeIcon
+        v-if="player.is_registered" 
+        :icon="faCircleCheck"
+        class="ms-1"
+      />
     </v-card-item>
 
     <v-card-actions class="player-card-actions">

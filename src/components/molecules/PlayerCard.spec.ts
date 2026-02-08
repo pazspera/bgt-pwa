@@ -2,20 +2,22 @@ import { it, describe, beforeEach, expect } from "vitest";
 import { mount } from "@vue/test-utils";
 import { createVuetifyForTest } from "../../tests/utils/createVuetifyForTest";
 import PlayerCard from "./PlayerCard.vue";
-import { mockSinglePlayer } from "../../mocks/data/playersApi";
+import { mockSinglePlayer, mockRegisteredSinglePlayer } from "../../mocks/data/playersApi";
 import { VCard, VCardActions, VCardText, VBtn, VCardItem, VAvatar } from "vuetify/components";
-import { faTrash, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import { faTrash, faPenToSquare, faCircleCheck } from "@fortawesome/free-solid-svg-icons";
 import { nextTick } from "vue";
 import { findInitials } from "../../utils/generalUtils";
 
 const vuetify = createVuetifyForTest({ VCard, VCardActions, VCardText, VBtn, VCardItem, VAvatar });
 const faTrashText = faTrash.iconName;
 const faPenToSquareText = faPenToSquare.iconName;
+const faCircleCheckText = faCircleCheck.iconName;
 
-const mountPlayerCard = ()=> {
+const mountPlayerCard = (props = {})=> {
   return mount(PlayerCard, {
     props: {
       player: mockSinglePlayer,
+      ...props,
     },
     global: {
       plugins: [vuetify],
@@ -64,6 +66,14 @@ describe("rendering",()=> {
     const avatar = wrapper.findComponent({ name: "VAvatar" });
 
     expect(avatar.text()).toEqual(playerInitial);
+  })
+
+  it("displays check icon if the player is registered", ()=> {
+    const testWrapper = mountPlayerCard({ player: mockRegisteredSinglePlayer});
+    
+    expect(testWrapper.html()).toContain(faCircleCheckText);
+    // checks circle check is not present on non registered players
+    expect(wrapper.html()).not.toContain(faCircleCheckText);
   })
 })
 

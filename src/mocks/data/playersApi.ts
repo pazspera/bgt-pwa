@@ -44,3 +44,12 @@ export const mockSinglePlayer: PlayerApiResponse = {
   updated_at: "1999-10-10-0:00:00Z",
   is_registered: false,
 };
+
+export const mockRegisteredSinglePlayer: PlayerApiResponse = { 
+  id: "1", 
+  name: "Zeuchi", 
+  created_at: "1999-10-10-0:00:00Z",
+  updated_at: "1999-10-10-0:00:00Z",
+  is_registered: true,
+};
+
