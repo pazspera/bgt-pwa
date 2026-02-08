@@ -1,29 +1,20 @@
-import { it, describe, beforeEach, afterEach, vi, expect } from "vitest";
+import { it, describe, afterEach, vi, expect } from "vitest";
 import { useCheckDbHealth } from "./useCheckDbHealth";
 import { useServerTime } from "./useServerTime";
-
-const runCheckHealth = async ()=> {
-  const { checkHealth, statusMessage, color, icon, hasRun } = useCheckDbHealth();
-  await checkHealth()
-  return { statusMessage, color, icon, hasRun };
-}
+import { API_ERROR_MESSAGES } from "../constants/apiErrorMessages";
 
 describe("checkHealth()", () => {
   // Arrange
-  // simulate env variable
-  beforeEach(()=> {
-    import.meta.env.VITE_API_HEALTH_BASE_URL = "http://test-api.test";
-  });
-
   afterEach(()=> {
     vi.restoreAllMocks();
-    vi.unstubAllGlobals();
+    vi.clearAllMocks();
   })
 
   it("check success response from fetch and syncs server time", async ()=> {
     // Act
     const { timeOffset } = useServerTime();
     timeOffset.value = 0;
+    const { checkHealth, statusMessage } = useCheckDbHealth();
     // mock fetch success response
     vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
       ok: true,
@@ -36,13 +27,11 @@ describe("checkHealth()", () => {
     }));
 
     // call composable 
-    const { statusMessage, color, icon, hasRun } = await runCheckHealth();
+    const result = await checkHealth();
 
     // Assert
-    expect(statusMessage.value).toBe("Conectado a la base de datos");
-    expect(color.value).toBe("success");
-    expect(icon.value).toBe("faCircleCheck");
-    expect(hasRun.value).toBe(true);
+    expect(statusMessage.value).toBe(API_ERROR_MESSAGES.HEALTH_SUCCESS);
+    expect(result).toBe(true);
     // checks useServerTime was called successfully
     expect(timeOffset.value).not.toBe(0);
     expect(typeof timeOffset.value).toBe("number");
@@ -57,13 +46,13 @@ describe("checkHealth()", () => {
     }))
     
     // call composable
-    const { statusMessage, color, icon, hasRun } = await runCheckHealth();
+    const { checkHealth, statusMessage } = useCheckDbHealth();
+
+    const result = await checkHealth();
 
     // Assert
-    expect(statusMessage.value).toContain("Error de conexión");
-    expect(color.value).toBe("error");
-    expect(icon.value).toBe("faCircleExclamation");
-    expect(hasRun.value).toBe(true);
+    expect(result).toBe(false);
+    expect(statusMessage.value).toBe(API_ERROR_MESSAGES.HEALTH_ERROR(500));
   });
 
   it("check network error response from fetch", async ()=> {
@@ -72,17 +61,13 @@ describe("checkHealth()", () => {
     vi.stubGlobal("fetch", vi.fn().mockRejectedValue(new Error("Falló la conexión con el servidor")));
 
     // call composable
-    const { statusMessage, color, icon, hasRun } = await runCheckHealth();
+    const { checkHealth, statusMessage } = useCheckDbHealth();
+
+    const result = await checkHealth();
 
     // Assert
-    expect(statusMessage.value).toContain("Error de conexión");
-    expect(color.value).toBe("error");
-    expect(icon.value).toBe("faCircleExclamation");
-    expect(hasRun.value).toBe(true);
-  })
-
-  afterEach(()=> {
-    vi.restoreAllMocks();
+    expect(result).toBe(false);
+    expect(statusMessage.value).toBe(API_ERROR_MESSAGES.HEALTH_NETWORK_ERROR);
   })
 })
 

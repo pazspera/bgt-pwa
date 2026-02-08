@@ -18,5 +18,10 @@ export const API_ERROR_MESSAGES = {
 
   GET_COLLECTIONS_FAILED: (status: number) => `Error ${status}: No se pudo obtener la ludoteca`,
 
-  CREATE_GAME_ERROR: (stats: number) => `Error ${status}: No se pudo crear la partida`,
+  CREATE_GAME_ERROR: (status: number) => `Error ${status}: No se pudo crear la partida`,
+
+  HEALTH_SUCCESS: "Conectado a la base de datos",
+  HEALTH_ERROR: (error: number) =>  `Error en el servidor: ${error}`,
+  HEALTH_NETWORK_ERROR: "Falló la conexión con el servidor",
+  HEALTH_OTHER: (message: string) => `${message}`,
 };

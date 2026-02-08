@@ -1,40 +1,15 @@
 <script setup lang="ts">
-import { ref, onMounted, watch } from "vue";
-import { useCheckDbHealth } from "../../composables/useCheckDbHealth";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faCircleCheck,faCircleExclamation } from "@fortawesome/free-solid-svg-icons";
-import DetailText from "../atoms/typography/DetailText.vue";
-import ButtonLabel from "../atoms/typography/ButtonLabel.vue";
 
 defineOptions({ name: "AppSnackbar" });
 
-const { statusMessage, color, icon, checkHealth, hasRun } = useCheckDbHealth();
-const snackbarVisible = ref(false);
+const props = defineProps({
+  visible: Boolean,
+  message: String,
+  color: String,
+  timeout: Number,
+});
 
-// exposed to check on test if watch changes
-// it doesn't render the component without the watch changing 
-defineExpose({ snackbarVisible });
-
-onMounted(()=> {
-  checkHealth();
-})
-
-const iconsMap = {
-  faCircleCheck: faCircleCheck,
-  faCircleExclamation: faCircleExclamation,
-}
-
-// Controls the opening and close of snackbar
-watch(hasRun, (newVal) => {
-  if(newVal) {
-    snackbarVisible.value = true;
-  }
-})
-
-const handleClose = () => {
-  snackbarVisible.value = false;
-}
-
+const emit = defineEmits(['close']);
 </script>
 
 <template>
@@ -45,19 +20,23 @@ const handleClose = () => {
     the component wasn't closing 
   -->
   <v-snackbar 
-    v-if="snackbarVisible"
-    class="snackbar"
-    v-model="snackbarVisible"
+    v-if="visible && message"
+    :model-value="visible"
     :color="color"
     location="bottom center"
-    :timeout="-1"
+    :timeout="timeout"
+    @update:model-value="emit('close')"
   >
-    <FontAwesomeIcon v-if="icon" :icon="iconsMap[icon]" class="mr-3" />
-    <DetailText>{{ statusMessage }}</DetailText>
+
+    {{ message }}
 
     <template v-slot:actions>
-      <v-btn variant="text" @click="handleClose()">
-        <ButtonLabel>Cerrar</ButtonLabel>
+      <v-btn 
+        variant="text"
+        data-testid="appsnackbar-button" 
+        @click="emit('close')"
+      >
+        Cerrar
       </v-btn>
     </template>
   </v-snackbar>

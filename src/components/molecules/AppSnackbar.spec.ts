@@ -1,11 +1,4 @@
-import { ref, nextTick } from "vue";
-import { it, expect, vi, describe } from "vitest";
-const flushPromises = require("flush-promises");
-
-/* 
-  These tests are skipped. After many, many tries, the
-  component doesn't rendered correctly. 
-*/
+import { it, expect, vi, describe, beforeEach } from "vitest";
 
 // The snackbar is not stubbed and needs this object to work
 globalThis.visualViewport = {
@@ -23,47 +16,34 @@ globalThis.visualViewport = {
   dispatchEvent: (_event: Event) => true
 };
 
-/* 
-  IMPORTANT
-  - the watch in AppSnackbar doesn't activate, so it renders
-  the v-if instead of the component
-  - sharedHasRun has to be here to make sure the test doesn't break
-  - what worked was wrapper.vm.snackbarVisible = true;
-  - this changes the value of the watch directly
-*/
-const sharedHasRun = ref(false);
-
-// initial mock
-vi.mock("@/composables/useCheckDbHealth", ()=> ({
-  useCheckDbHealth: ()=> ({
-    statusMessage: ref("Conectado a la base de datos"),
-    color: ref("success"),
-    icon: ref("faCircleCheck"),
-    hasRun: sharedHasRun,
-    checkHealth: vi.fn(),
-  })
-}));
-
 import { mount } from "@vue/test-utils";
 import AppSnackbar from "./AppSnackbar.vue";
 import { createVuetifyForTest } from "../../tests/utils/createVuetifyForTest";
 import { VSnackbar } from "vuetify/components";
-// the composable still needs to be imported
-// when it's used later on, the mock will be used instead
-import { useCheckDbHealth } from "../../composables/useCheckDbHealth";
+import { nextTick } from "vue";
+import { afterEach } from "node:test";
+import { faLessThanEqual } from "@fortawesome/free-solid-svg-icons";
 
-const vuetify = createVuetifyForTest();
+const vuetify = createVuetifyForTest({ VSnackbar });
+
+let snackbarMessage = "Test message";
+const snackbarColor = "success";
+const snackbarTimeout = 5000;
 
 // Arrange
 // function to mount component
-const mountAppSnackbar = ()=> {
+const mountAppSnackbar = (props = {})=> {
   return mount(AppSnackbar, {
     attachTo: document.body,
+    props: {
+      visible: true,
+      message: snackbarMessage,
+      color: snackbarColor,
+      timeout: snackbarTimeout,
+      ...props
+    },
     global: {
       plugins: [vuetify],
-      components: {
-        VSnackbar
-      },
       stubs: {        
         "v-btn": {
           template: `
@@ -72,6 +52,13 @@ const mountAppSnackbar = ()=> {
             </button>
           `
         },
+        "v-snackbar": {
+            name: "VSnackbarStub", 
+            props: ["modelValue", "color"], 
+            template: `
+              <div v-if="modelValue" class="mock-snackbar" :data-color="color"> 
+                <slot /> <slot name="actions" /> 
+              </div>` },
         FontAwesomeIcon: {
           props: ["icon"],
           template: `<i :data-icon="icon"></i>`
@@ -81,50 +68,88 @@ const mountAppSnackbar = ()=> {
   });
 }
 
-describe("mock response from useCheckDbHealth()", ()=> {
 
-  it.skip("shows correct info on success response", async ()=> {
-    // Act
-    // Fixes teleporting issue
-    const teleportTarget = document.createElement("div");
-    teleportTarget.setAttribute("data-app", "true");
-    document.body.appendChild(teleportTarget);
 
-    sharedHasRun.value = false;
-    const wrapper = mountAppSnackbar();
-    // changes the value of the watch directly 
-    wrapper.vm.snackbarVisible = true;
-    sharedHasRun.value = true;
+describe("rendering", ()=> {
+  let wrapper;
+  let button;
 
-    await flushPromises();
+  beforeEach(()=> {
+    wrapper = mountAppSnackbar();
+    button = wrapper.find('[data-testid="appsnackbar-button"]');
+    vi.useFakeTimers();
+  });
+
+  afterEach(()=> {
+    vi.useRealTimers();
+  })
+
+
+  it("renders correct message", ()=> {
+    expect(wrapper.text()).toContain(snackbarMessage);
+  })
+
+  it("renders correct color", ()=> {
+    expect(wrapper.html()).toContain(`data-color="${snackbarColor}"`);
+  })
+
+  it("renders correct timeout value", ()=> {
+    expect(wrapper.html()).toContain(`timeout="${snackbarTimeout}"`);
+  })
+
+  it("renders the 'close' button", ()=> {
+    expect(button.exists()).toBe(true);
+  })
+})
+
+describe("component logic", ()=> {
+  let wrapper;
+  let button;
+
+  beforeEach(()=> {
+    wrapper = mountAppSnackbar();
+    button = wrapper.find('[data-testid="appsnackbar-button"]');
+  })
+
+  it("emits 'close' event when close button is clicked", async ()=> {
+    await button.trigger("click");
     await nextTick();
 
-    console.log("snackbarVisible:", wrapper.vm.snackbarVisible);
-    // Since it teleports, wrapper.html() doesn't show the component
-    // Need to use document.body.innerHTML and document.body.textContent
-    console.log("document.body.innerHTML:");
-    console.log(document.body.innerHTML);
+    const emittedEvents = wrapper.emitted("close");
 
-    console.log("document.body.textContent:");
-    console.log(document.body.textContent);
+    expect(emittedEvents).toBeTruthy();
+    expect(emittedEvents).toHaveLength(1);
+  })
+
+  it("emits 'close' event on timeout", async ()=> {
+    expect(wrapper.emitted("close")).toBeFalsy();
     
-    // Assert
+    // need to find the vuetify component to trigger an event
+    // the stubbed div isn't able to do it
+    const snackbarMock = wrapper.findComponent({ name: "VSnackbarStub" });
+
+    expect(snackbarMock.exists()).toBe(true);
     
-    // The component doesn't render correctly
-    // Can't test statusMessage or that the color change
-    // Got this far, I'm done. This component will be deleted anyway
-
-
-  });
-
-  it.skip("shows correct info on error response", ()=> {
-    // Assert
-    // función mock error response
-    // llamada a función mount
+    await snackbarMock.vm.$emit('update:model-value', false);
     
-    // Act
+    expect(wrapper.emitted("close")).toBeTruthy();
+  })
 
-    // Assert
-  });
+  it("AppSnackbar is not visible if message is null, undefined or an empty string", ()=> {
+    // check message undefined, null or ""
+    const invalidMessages = [null, undefined, ""];
+    
+    invalidMessages.forEach((invalidMsg) => {
+      const wrapperEmpty = mountAppSnackbar({
+        message: invalidMsg,
+      })
+
+      const snackbarMock = wrapperEmpty.findComponent({ name: "VSnackbarStub" });
+
+      expect(snackbarMock.exists()).toBe(false);
+      expect(wrapperEmpty.text().trim()).toBe("");
+    })
+
+  })
 })
-it.skip("closes when close button is clicked", ()=> {});
+
