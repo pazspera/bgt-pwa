@@ -1,6 +1,5 @@
 import { it, expect, vi, describe, beforeEach } from "vitest";
 
-
 // The snackbar is not stubbed and needs this object to work
 globalThis.visualViewport = {
   width: 1024,
@@ -21,10 +20,13 @@ import { mount } from "@vue/test-utils";
 import AppSnackbar from "./AppSnackbar.vue";
 import { createVuetifyForTest } from "../../tests/utils/createVuetifyForTest";
 import { VSnackbar } from "vuetify/components";
+import { nextTick } from "vue";
+import { afterEach } from "node:test";
+import { faLessThanEqual } from "@fortawesome/free-solid-svg-icons";
 
 const vuetify = createVuetifyForTest({ VSnackbar });
 
-const snackbarMessage = "Test message";
+let snackbarMessage = "Test message";
 const snackbarColor = "success";
 const snackbarTimeout = 5000;
 
@@ -50,7 +52,8 @@ const mountAppSnackbar = (props = {})=> {
             </button>
           `
         },
-        "v-snackbar": { 
+        "v-snackbar": {
+            name: "VSnackbarStub", 
             props: ["modelValue", "color"], 
             template: `
               <div v-if="modelValue" class="mock-snackbar" :data-color="color"> 
@@ -74,6 +77,11 @@ describe("rendering", ()=> {
   beforeEach(()=> {
     wrapper = mountAppSnackbar();
     button = wrapper.find('[data-testid="appsnackbar-button"]');
+    vi.useFakeTimers();
+  });
+
+  afterEach(()=> {
+    vi.useRealTimers();
   })
 
 
@@ -95,11 +103,53 @@ describe("rendering", ()=> {
 })
 
 describe("component logic", ()=> {
-  it.todo("emits 'close' event when close button is clicked", ()=> {})
-  it.todo("updates model-value when close button is clicked", ()=> {});
-  it.todo("emits 'close' event on timeout", ()=> {})
-  it.todo("AppSnackbar is not visible if no message is received", ()=> {
+  let wrapper;
+  let button;
+
+  beforeEach(()=> {
+    wrapper = mountAppSnackbar();
+    button = wrapper.find('[data-testid="appsnackbar-button"]');
+  })
+
+  it("emits 'close' event when close button is clicked", async ()=> {
+    await button.trigger("click");
+    await nextTick();
+
+    const emittedEvents = wrapper.emitted("close");
+
+    expect(emittedEvents).toBeTruthy();
+    expect(emittedEvents).toHaveLength(1);
+  })
+
+  it("emits 'close' event on timeout", async ()=> {
+    expect(wrapper.emitted("close")).toBeFalsy();
+    
+    // need to find the vuetify component to trigger an event
+    // the stubbed div isn't able to do it
+    const snackbarMock = wrapper.findComponent({ name: "VSnackbarStub" });
+
+    expect(snackbarMock.exists()).toBe(true);
+    
+    await snackbarMock.vm.$emit('update:model-value', false);
+    
+    expect(wrapper.emitted("close")).toBeTruthy();
+  })
+
+  it("AppSnackbar is not visible if message is null, undefined or an empty string", ()=> {
     // check message undefined, null or ""
+    const invalidMessages = [null, undefined, ""];
+    
+    invalidMessages.forEach((invalidMsg) => {
+      const wrapperEmpty = mountAppSnackbar({
+        message: invalidMsg,
+      })
+
+      const snackbarMock = wrapperEmpty.findComponent({ name: "VSnackbarStub" });
+
+      expect(snackbarMock.exists()).toBe(false);
+      expect(wrapperEmpty.text().trim()).toBe("");
+    })
+
   })
 })
 

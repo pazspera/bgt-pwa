@@ -20,7 +20,7 @@ const emit = defineEmits(['close']);
     the component wasn't closing 
   -->
   <v-snackbar 
-    v-if="visible"
+    v-if="visible && message"
     :model-value="visible"
     :color="color"
     location="bottom center"
