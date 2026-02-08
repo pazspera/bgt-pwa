@@ -24,6 +24,10 @@ import { VSnackbar } from "vuetify/components";
 
 const vuetify = createVuetifyForTest({ VSnackbar });
 
+const snackbarMessage = "Test message";
+const snackbarColor = "success";
+const snackbarTimeout = 5000;
+
 // Arrange
 // function to mount component
 const mountAppSnackbar = (props = {})=> {
@@ -31,9 +35,9 @@ const mountAppSnackbar = (props = {})=> {
     attachTo: document.body,
     props: {
       visible: true,
-      message: "Test message",
-      color: "info",
-      timeout: 5000,
+      message: snackbarMessage,
+      color: snackbarColor,
+      timeout: snackbarTimeout,
       ...props
     },
     global: {
@@ -71,19 +75,30 @@ describe("rendering", ()=> {
   })
 
 
-  it("renders correct message", ()=> {
-    console.log(wrapper.html())
+  it.only("renders correct message", ()=> {
+    expect(wrapper.text()).toContain(snackbarMessage);
   })
-  it("renders correct color", ()=> {})
-  it("renders correct timeout value", ()=> {})
-  it("renders the 'close' button", ()=> {})
+
+  it.only("renders correct color", ()=> {
+    console.log(wrapper.html())
+    console.log(wrapper.text())
+    expect(wrapper.html()).toContain(`data-color="${snackbarColor}"`);
+  })
+
+  it.only("renders correct timeout value", ()=> {
+    expect(wrapper.html()).toContain(`timeout="${snackbarTimeout}"`);
+  })
+
+  it.only("renders the 'close' button", ()=> {
+
+  })
 })
 
 describe("component logic", ()=> {
-  it("emits 'close' event when close button is clicked", ()=> {})
-  it("updates model-value when close button is clicked", ()=> {});
-  it("emits 'close' event on timeout", ()=> {})
-  it("AppSnackbar is not visible if no message is received", ()=> {
+  it.todo("emits 'close' event when close button is clicked", ()=> {})
+  it.todo("updates model-value when close button is clicked", ()=> {});
+  it.todo("emits 'close' event on timeout", ()=> {})
+  it.todo("AppSnackbar is not visible if no message is received", ()=> {
     // check message undefined, null or ""
   })
 })
