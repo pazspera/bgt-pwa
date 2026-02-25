@@ -7,6 +7,7 @@ import NavigationLink from '@/components/atoms/typography/NavigationLink.vue';
 import ThemeToggler from '@/components/molecules/ThemeToggler.vue';
 import Logo from '@/components/atoms/Logo.vue';
 import { NAVIGATION_TEXT } from '@/constants/navigationText';
+import { useCurrentUser } from '@/composables/useCurrentUser';
 
 const drawer = ref(false);
 const breakpoints = useBreakpoints({
@@ -15,6 +16,8 @@ const breakpoints = useBreakpoints({
   desktop: 1024
 })
 const isDesktop = breakpoints.greaterOrEqual("desktop");
+
+const { user, loading } = useCurrentUser();
 
 defineOptions({ name: 'NavBar' });
 defineExpose({ drawer });
@@ -42,11 +45,15 @@ defineExpose({ drawer });
               {{ NAVIGATION_TEXT.GAMES }}
             </NavigationLink>
             <ThemeToggler class="theme-toggler-desktop" icon-size="var(--font-size-lg)"/>
+            <span v-if="!loading && user" class="username">{{ user.username }}</span>
+            <a v-else-if="!loading && !user" href="/login" class="username">Entrar</a>
           </div>
 
           <!-- Mobile / Tablet toggle: visible <1025px -->
           <div v-if="!isDesktop" class="nav-drawer-icons" data-testid="nav-drawer-icons">
             <ThemeToggler class="show-mobile" icon-size="var(--font-size-lg)" />
+            <span v-if="!loading && user" class="username show-mobile">{{ user.username }}</span>
+            <a v-else-if="!loading && !user" href="/login" class="username show-mobile">Entrar</a>
             <v-btn icon class="show-mobile" @click="drawer = !drawer" data-testid="mobile-toggler">
               <FontAwesomeIcon :icon="faBars" color="on-surface" />
             </v-btn>
