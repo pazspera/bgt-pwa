@@ -347,6 +347,7 @@ const onSubmit = handleSubmit(async (values) => {
   
           <v-card-actions class="dialog-actions mt-3">
             <AppButton
+              class="dialog-button"
               type="submit"
               @click="onSubmit"
               color="primary"
@@ -357,6 +358,7 @@ const onSubmit = handleSubmit(async (values) => {
               :label="AddGameDialogText.buttons.save"
             />
             <AppButton
+              class="dialog-button"
               color="error"
               variant="text"
               density="default"
@@ -410,7 +412,17 @@ const onSubmit = handleSubmit(async (values) => {
   z-index: 9;
   display: flex;
   align-items: center;
-  justify-content: center;  
+  justify-content: center;
 }
 
+@media (max-width: 370px) {
+  .dialog-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .dialog-button {
+    width: 100%;
+  }
+}
 </style>
