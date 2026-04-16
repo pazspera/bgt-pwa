@@ -7,15 +7,12 @@ import DisplayTitle from "../../components/atoms/typography/DisplayTitle.vue";
 
 defineOptions({ name: "GamesView" });
 
-onBeforeMount(async ()=> {
-const today = new Date().toISOString();
-console.log(today);
+const { loading, gamesList, errorGetGames, getGames } = useGamesApi();
 
-const { loading, newGame, errorSaveGame, saveGame, getGames, errorGetGames, gamesList } =  useGamesApi();
-
-await getGames();
-console.log(gamesList.value);
-console.log(errorGetGames.value);
+onBeforeMount(async () => {
+  await getGames();
+  console.log(gamesList.value);
+  console.log(errorGetGames.value);
 })
 
 
@@ -26,7 +23,7 @@ console.log(errorGetGames.value);
   <v-container class="mt-4">
     <DisplayTitle>Partidas</DisplayTitle>
     <div v-if="gamesList">
-      <div v-for="game in gamesList" :key="game.boardgame_id">
+      <div v-for="game in gamesList.data" :key="game.boardgame_id">
         <p>{{ game.start_date }}</p>
         <p>{{ game.notes }}</p>
       </div>

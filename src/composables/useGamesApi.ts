@@ -27,7 +27,7 @@ export function useGamesApi() {
 
   const getGames = async () => {
     loading.value = true;
-    errorSaveGame.value = null;
+    errorGetGames.value = null;
 
     try {
       const response = await GamesApiService.getGames();
