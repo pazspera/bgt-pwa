@@ -23,9 +23,7 @@ export interface GamesListResponse {
 export interface PlayerInGame {
   player_id: string,
   is_winner: boolean,
-  // agregaría el name para no tener que 
-  // hacer una 2da request para buscarlo
-  // o el player entero
+  player_name: string,
   is_registered?: boolean,
 }
 
