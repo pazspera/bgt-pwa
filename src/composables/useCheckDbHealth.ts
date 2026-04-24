@@ -13,6 +13,7 @@ export function useCheckDbHealth() {
     try {
       const response = await fetch(uri,{
         method: "GET",
+        credentials: "include", // importante: enviar cookie de sesión
         headers: { "Content-Type": "application/json" },
       });
 
