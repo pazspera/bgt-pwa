@@ -7,6 +7,8 @@ import CardHeading from '../atoms/typography/CardHeading.vue';
 import MinorHeading from '../atoms/typography/MinorHeading.vue';
 import BodyText from '../atoms/typography/BodyText.vue';
 import AppButton from '../atoms/buttons/AppButton.vue';
+import EditButton from '../atoms/buttons/EditButton.vue';
+import DeleteButton from '../atoms/buttons/DeleteButton.vue';
 
 defineOptions({ name: "GameCard" });
 
@@ -72,13 +74,16 @@ const formatDate = (dateString?: string) => {
       </div>
     </v-card-item>
 
-    <v-card-actions>
-      <AppButton
-        color="primary"
-        variant="flat"
-        label="Editar"
-      />
+    <v-divider></v-divider>
+
+    <v-card-actions class="card-actions">
+      <div>
+        <EditButton/>
+        <DeleteButton class="ml-3" />
+      </div>
+
       <v-btn
+        icon
         @click="showDetails = !showDetails"
       >
         <FontAwesomeIcon
@@ -149,5 +154,11 @@ const formatDate = (dateString?: string) => {
 .winner-icon {
   color: #fbbf24;
   font-size: 1rem;
+}
+
+.card-actions {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 }
 </style>
