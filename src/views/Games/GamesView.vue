@@ -35,9 +35,11 @@ onBeforeMount(async () => {
     <!-- loading -->
     <LoadingRow v-else-if="loading && !gamesList && !errorGetGames" />
 
-    <div v-else-if="gamesList">
-      <GameCard v-for="game in gamesList.data" :key="game.boardgame_id" :game="game"></GameCard>
-    </div>
+    <v-row v-else-if="gamesList">
+      <v-col v-for="game in gamesList.data" :key="game.boardgame_id">
+        <GameCard :game="game"></GameCard>
+      </v-col>
+    </v-row>
     <TypographyChart></TypographyChart>
   </v-container>
 </template>
