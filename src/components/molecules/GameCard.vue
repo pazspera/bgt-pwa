@@ -6,10 +6,10 @@ import { faTrophy, faChevronDown, faChevronUp, } from '@fortawesome/free-solid-s
 import CardHeading from '../atoms/typography/CardHeading.vue';
 import MinorHeading from '../atoms/typography/MinorHeading.vue';
 import BodyText from '../atoms/typography/BodyText.vue';
-import AppButton from '../atoms/buttons/AppButton.vue';
 import EditButton from '../atoms/buttons/EditButton.vue';
 import DeleteButton from '../atoms/buttons/DeleteButton.vue';
 import DetailText from '../atoms/typography/DetailText.vue';
+import { formatDate } from '../../utils/formatters';
 
 defineOptions({ name: "GameCard" });
 
@@ -19,15 +19,6 @@ const props = defineProps<{
 
 const showDetails = ref(false);
 
-const formatDate = (dateString?: string) => {
-  if (!dateString) return '';
-  const date = new Date(dateString);
-  return date.toLocaleDateString('es-ES', {
-    day: '2-digit',
-    month: '2-digit',
-    year: 'numeric',
-  });
-};
 </script>
 
 <template>
