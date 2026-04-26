@@ -5,6 +5,7 @@ import { CreateGameRequest } from "../../types/domain/gamesApi";
 import TypographyChart from "../../components/molecules/TypographyChart.vue";
 import DisplayTitle from "../../components/atoms/typography/DisplayTitle.vue";
 import GameCard from "../../components/molecules/GameCard.vue";
+import CardGrid from "../../components/organisms/CardGrid.vue";
 import LoadingRow from "../../components/molecules/LoadingRow.vue";
 
 defineOptions({ name: "GamesView" });
@@ -35,11 +36,12 @@ onBeforeMount(async () => {
     <!-- loading -->
     <LoadingRow v-else-if="loading && !gamesList && !errorGetGames" />
 
-    <v-row v-else-if="gamesList">
-      <v-col v-for="game in gamesList.data" :key="game.boardgame_id">
-        <GameCard :game="game"></GameCard>
-      </v-col>
-    </v-row>
+    <CardGrid
+      v-else-if="gamesList && !errorGetGames"
+      :data="gamesList.data"
+      type="game"
+    ></CardGrid>
+
     <TypographyChart></TypographyChart>
   </v-container>
 </template>
