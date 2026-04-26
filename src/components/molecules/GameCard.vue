@@ -9,6 +9,7 @@ import BodyText from '../atoms/typography/BodyText.vue';
 import AppButton from '../atoms/buttons/AppButton.vue';
 import EditButton from '../atoms/buttons/EditButton.vue';
 import DeleteButton from '../atoms/buttons/DeleteButton.vue';
+import DetailText from '../atoms/typography/DetailText.vue';
 
 defineOptions({ name: "GameCard" });
 
@@ -25,8 +26,6 @@ const formatDate = (dateString?: string) => {
     day: '2-digit',
     month: '2-digit',
     year: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit'
   });
 };
 </script>
@@ -39,19 +38,16 @@ const formatDate = (dateString?: string) => {
     hover
   >
     <v-card-title class="ps-2">
-      <CardHeading>
+      <CardHeading class="mb-n3">
         {{ game.boardgame_name }}
       </CardHeading>
     </v-card-title>
 
-    <v-card-item v-if="game.start_date" class="game-card-date ps-2">
-      <MinorHeading class="date-label">
-        Fecha:
-      </MinorHeading>
-      <BodyText class="date-value">
-        {{ formatDate(game.start_date) }}
-      </BodyText>
-    </v-card-item>
+    <v-card-subtitle v-if="game.start_date" class="game-card-date ps-2">
+      <DetailText>
+        Fecha: {{ formatDate(game.start_date) }}
+      </DetailText>
+    </v-card-subtitle>
 
     <v-card-item class="game-card-players ps-2">
       <MinorHeading class="players-label">
