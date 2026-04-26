@@ -14,8 +14,6 @@ defineComponent({
 
 const theme = useTheme();
 const isDark = computed(() => theme.global.current.value.dark);
-const icon = computed(() => isDark.value ? "faSun" : "faMoon");
-const tooltipText = computed(() => isDark.value ? "Cambiar a modo claro" : "Cambiar a modo oscuro");
 
 const toggleTheme = () => {
   theme.change(isDark.value ? "lightTheme" : "darkTheme");
@@ -24,7 +22,7 @@ const toggleTheme = () => {
 </script>
 
 <template>
-  <v-tooltip :text="tooltipText" location="bottom" data-testid="v-tooltip">
+  <v-tooltip :text="isDark ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'" location="bottom" data-testid="v-tooltip">
     <template v-slot:activator="{ props }">
       <v-btn 
         v-bind="props"
