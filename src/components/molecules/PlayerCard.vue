@@ -7,6 +7,7 @@ import { ref, type Ref } from "vue";
 import AppButton from '../atoms/buttons/AppButton.vue';
 import MinorHeading from '../atoms/typography/MinorHeading.vue';
 import EditButton from '../atoms/buttons/EditButton.vue';
+import DeleteButton from '../atoms/buttons/DeleteButton.vue';
 
 const props = defineProps<{
   player: PlayerApiResponse,
@@ -67,14 +68,9 @@ const backgroundAvatar: Ref<string> = ref(randomBackground());
         data-testid="player-card-edit-btn"
         @click="handleEditPlayer"
       />
-      <AppButton
-        color="error"
-        variant="text"
-        label="Borrar"
-        :icon="faTrash"
+      <DeleteButton
         data-testid="player-card-delete-btn"
         @click="handleDeletePlayer"
-        class="action-btn button-delete"
       />
     </v-card-actions>
   </v-card>
