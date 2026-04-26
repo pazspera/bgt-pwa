@@ -19,6 +19,15 @@ const props = defineProps<{
 
 const showDetails = ref(false);
 
+const countPlayers = () => {
+  return props.game.players.length;
+}
+
+const getWinner = () => {
+  const winner = props.game.players.find((player) => player.is_winner);
+  return winner.player_name;
+}
+
 </script>
 
 <template>
@@ -41,24 +50,8 @@ const showDetails = ref(false);
     </v-card-subtitle>
 
     <v-card-item class="game-card-players ps-2">
-      <MinorHeading class="players-label">
-        Jugadores:
-      </MinorHeading>
-      <div class="players-list">
-        <div
-          v-for="player in game.players"
-          :key="player.player_id"
-          class="player-item"
-          :class="{ 'winner-player': player.is_winner }"
-        >
-          <span class="player-name">{{ player.player_name }}</span>
-          <FontAwesomeIcon
-            v-if="player.is_winner"
-            :icon="faTrophy"
-            class="winner-icon"
-          />
-        </div>
-      </div>
+      <BodyText>Partida con {{ countPlayers() }} jugadorxs</BodyText>
+      <BodyText>Ganó {{ getWinner() }}</BodyText>
     </v-card-item>
 
     <v-divider></v-divider>
@@ -82,6 +75,25 @@ const showDetails = ref(false);
     <v-expand-transition>
       <div v-if="showDetails">
         <v-divider></v-divider>
+
+        <MinorHeading class="players-label">
+          Jugadores:
+        </MinorHeading>
+        <div class="players-list">
+          <div
+            v-for="player in game.players"
+            :key="player.player_id"
+            class="player-item"
+            :class="{ 'winner-player': player.is_winner }"
+          >
+            <span class="player-name">{{ player.player_name }}</span>
+            <FontAwesomeIcon
+              v-if="player.is_winner"
+              :icon="faTrophy"
+              class="winner-icon"
+            />
+          </div>
+        </div>
 
         <v-card-item v-if="game.notes" class="game-card-notes ps-2">
           <MinorHeading class="notes-label">
