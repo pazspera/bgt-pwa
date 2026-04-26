@@ -2,7 +2,7 @@
 import type { GameApiResponse } from '../../types/domain/gamesApi';
 import { ref } from "vue";
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faTrophy, faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
+import { faTrophy, faChevronDown, faChevronUp, } from '@fortawesome/free-solid-svg-icons';
 import CardHeading from '../atoms/typography/CardHeading.vue';
 import MinorHeading from '../atoms/typography/MinorHeading.vue';
 import BodyText from '../atoms/typography/BodyText.vue';
