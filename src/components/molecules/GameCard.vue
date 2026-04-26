@@ -1,16 +1,20 @@
 <script setup lang="ts">
 import type { GameApiResponse } from '../../types/domain/gamesApi';
+import { ref } from "vue";
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faTrophy } from '@fortawesome/free-solid-svg-icons';
+import { faTrophy, faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import CardHeading from '../atoms/typography/CardHeading.vue';
 import MinorHeading from '../atoms/typography/MinorHeading.vue';
 import BodyText from '../atoms/typography/BodyText.vue';
+import AppButton from '../atoms/buttons/AppButton.vue';
 
 defineOptions({ name: "GameCard" });
 
 const props = defineProps<{
   game: GameApiResponse
 }>();
+
+const showDetails = ref(false);
 
 const formatDate = (dateString?: string) => {
   if (!dateString) return '';
@@ -52,30 +56,53 @@ const formatDate = (dateString?: string) => {
         Jugadores:
       </MinorHeading>
       <div class="players-list">
-        <div 
-          v-for="player in game.players" 
+        <div
+          v-for="player in game.players"
           :key="player.player_id"
           class="player-item"
           :class="{ 'winner-player': player.is_winner }"
         >
           <span class="player-name">{{ player.player_name }}</span>
-          <FontAwesomeIcon 
-            v-if="player.is_winner" 
-            :icon="faTrophy" 
+          <FontAwesomeIcon
+            v-if="player.is_winner"
+            :icon="faTrophy"
             class="winner-icon"
           />
         </div>
       </div>
     </v-card-item>
 
-    <v-card-item v-if="game.notes" class="game-card-notes ps-2">
-      <MinorHeading class="notes-label">
-        Notas:
-      </MinorHeading>
-      <BodyText>
-        {{ game.notes }}
-      </BodyText>
-    </v-card-item>
+    <v-card-actions>
+      <AppButton
+        color="primary"
+        variant="flat"
+        label="Editar"
+      />
+      <v-btn
+        @click="showDetails = !showDetails"
+      >
+        <FontAwesomeIcon
+          :icon="showDetails ? faChevronUp : faChevronDown"
+        />
+      </v-btn>
+    </v-card-actions>
+
+    <v-expand-transition>
+      <div v-if="showDetails">
+        <v-divider></v-divider>
+
+        <v-card-item v-if="game.notes" class="game-card-notes ps-2">
+          <MinorHeading class="notes-label">
+            Notas:
+          </MinorHeading>
+          <BodyText>
+            {{ game.notes }}
+          </BodyText>
+        </v-card-item>
+
+      </div>
+    </v-expand-transition>
+
   </v-card>
 </template>
 
