@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import { useGamesApi } from "../../composables/useGamesApi";
 import { onBeforeMount } from "vue";
-import { CreateGameRequest } from "../../types/domain/gamesApi";
 import TypographyChart from "../../components/molecules/TypographyChart.vue";
 import DisplayTitle from "../../components/atoms/typography/DisplayTitle.vue";
-import GameCard from "../../components/molecules/GameCard.vue";
 import CardGrid from "../../components/organisms/CardGrid.vue";
 import LoadingRow from "../../components/molecules/LoadingRow.vue";
+import { GENERAL_UI_TEXT } from "../../constants/generalText";
 
 defineOptions({ name: "GamesView" });
 
@@ -29,7 +28,7 @@ onBeforeMount(async () => {
     <!-- error on games initial fetch -->
     <v-row v-if="errorGetGames">
       <v-col>
-        <v-alert color="error" title="¡Oh, no! Ocurrió un error" :text="errorGetGames"></v-alert>
+        <v-alert color="error" :title="GENERAL_UI_TEXT.ALERT_ERROR" :text="errorGetGames"></v-alert>
       </v-col>
     </v-row>
 
