@@ -76,7 +76,7 @@ const getWinner = () => {
           Jugadores:
         </MinorHeading>
 
-        <div class="players-list">
+        <div class="players-list mb-2">
           <ul
             v-for="player in game.players"
             :key="player.player_id"
@@ -98,13 +98,13 @@ const getWinner = () => {
           </ul>
         </div>
 
-        <v-card-item v-if="game.notes" class="game-card-notes ps-2">
-          <MinorHeading class="notes-label">
+        <v-card-item v-if="game.notes" class="game-card-notes">
+          <MinorHeading>
             Notas:
           </MinorHeading>
-          <BodyText>
+          <DetailText>
             {{ game.notes }}
-          </BodyText>
+          </DetailText>
         </v-card-item>
 
       </div>
