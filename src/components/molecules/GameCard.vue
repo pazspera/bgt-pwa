@@ -32,7 +32,6 @@ const getWinner = () => {
 
 <template>
   <v-card
-    data-testid="game-card"
     class="game-card"
     variant="elevated"
     hover
@@ -45,13 +44,13 @@ const getWinner = () => {
 
     <v-card-subtitle v-if="game.start_date" class="game-card-date ps-2">
       <DetailText>
-        Fecha: {{ formatDate(game.start_date) }}
+        {{ formatDate(game.start_date) }}
       </DetailText>
     </v-card-subtitle>
 
     <v-card-item class="game-card-players ps-2">
-      <BodyText>Partida con {{ countPlayers() }} jugadorxs</BodyText>
-      <BodyText>Ganó {{ getWinner() }}</BodyText>
+      <DetailText class="detail-text">Partida con {{ countPlayers() }} jugadorxs</DetailText>
+      <DetailText class="detail-text">Ganó {{ getWinner() }}</DetailText>
     </v-card-item>
 
     <v-divider></v-divider>
@@ -62,10 +61,7 @@ const getWinner = () => {
         <DeleteButton class="ml-3" />
       </div>
 
-      <v-btn
-        icon
-        @click="showDetails = !showDetails"
-      >
+      <v-btn icon @click="showDetails = !showDetails">
         <FontAwesomeIcon
           :icon="showDetails ? faChevronUp : faChevronDown"
         />
@@ -73,26 +69,33 @@ const getWinner = () => {
     </v-card-actions>
 
     <v-expand-transition>
-      <div v-if="showDetails">
-        <v-divider></v-divider>
+      <div v-if="showDetails" class="ps-2 w-100">
+        <v-divider class="mb-4"></v-divider>
 
-        <MinorHeading class="players-label">
+        <MinorHeading>
           Jugadores:
         </MinorHeading>
+
         <div class="players-list">
-          <div
+          <ul
             v-for="player in game.players"
             :key="player.player_id"
-            class="player-item"
-            :class="{ 'winner-player': player.is_winner }"
           >
-            <span class="player-name">{{ player.player_name }}</span>
-            <FontAwesomeIcon
-              v-if="player.is_winner"
-              :icon="faTrophy"
-              class="winner-icon"
-            />
-          </div>
+            <li class="ms-4">
+              <div class="player-item">
+                <DetailText
+                  class="detail-text"
+                  :class="{ 'winner-player': player.is_winner }">
+                    {{ player.player_name }}
+                </DetailText>
+                <FontAwesomeIcon
+                  v-if="player.is_winner"
+                  :icon="faTrophy"
+                  class="ps-1 text-primary"
+                />
+              </div>
+            </li>
+          </ul>
         </div>
 
         <v-card-item v-if="game.notes" class="game-card-notes ps-2">
@@ -124,30 +127,8 @@ const getWinner = () => {
   padding: 8px 0;
 }
 
-.date-label,
-.players-label,
-.notes-label {
-  font-size: 0.875rem;
-  color: rgba(0, 0, 0, 0.6);
-  margin-bottom: 4px;
-}
-
-.players-list {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  width: 100%;
-}
-
-.player-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
 .winner-player {
   font-weight: 600;
-  color: #fbbf24;
 }
 
 .winner-icon {
@@ -160,4 +141,21 @@ const getWinner = () => {
   justify-content: space-between;
   width: 100%;
 }
+
+.detail-text {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.player-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.player-item .detail-text {
+  margin-bottom: 0px;
+}
+
 </style>
