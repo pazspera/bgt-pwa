@@ -23,6 +23,11 @@ export const routes: RouteRecordRaw[] = [
     component: () => import(/*webpackChunkName: "Tipografia" */"@/views/Typography.vue"),
   },
   {
+path: "/callback",
+    name: "Callback",
+    component: () => import("@/views/Callback/CallbackView.vue"),
+  },
+  {
     path: "/:catchAll(.*)*",
     name: "Not-Found",
     component: () => import(/*webpackChunkName: "Not-Found" */"@/views/NotFound.vue"),
