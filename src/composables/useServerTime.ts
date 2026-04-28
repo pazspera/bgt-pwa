@@ -17,9 +17,7 @@ export function useServerTime() {
   };
 
   const getSyncedDate = () => {
-    const now = new Date(Date.now() + timeOffset.value);
-    now.setHours(0, 0, 0, 0);
-    return now;
+    return new Date(Date.now() + timeOffset.value);
   }; 
 
   return { syncWithServer, getSyncedDate, timeOffset }
