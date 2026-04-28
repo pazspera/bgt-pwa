@@ -4,6 +4,7 @@ const OIDC_CONFIG = {
   scope: import.meta.env.VITE_OIDC_SCOPE || 'openid profile email groups offline_access',
   authorization_endpoint: import.meta.env.VITE_OIDC_AUTH_ENDPOINT || 'https://auth.bgt-auth.local/api/oidc/authorization',
   token_endpoint: import.meta.env.VITE_OIDC_TOKEN_ENDPOINT || 'https://auth.bgt-auth.local/api/oidc/token',
+  end_session_endpoint: import.meta.env.VITE_OIDC_LOGOUT_URL || 'https://auth.bgt-auth.local/logout',
   audience: import.meta.env.VITE_OIDC_AUDIENCE || 'bgt-auth',
   response_type: 'code',
   code_challenge_method: 'S256',
@@ -119,12 +120,12 @@ export async function refreshToken() {
   const tokens = await response.json();
   localStorage.setItem('access_token', tokens.access_token);
   localStorage.setItem('refresh_token', tokens.refresh_token || refreshToken);
+  localStorage.setItem('id_token', tokens.id_token || localStorage.getItem('id_token'));
   localStorage.setItem('token_expiry', Date.now() + tokens.expires_in * 1000);
 }
 
 export async function logout() {
-  const idToken = localStorage.getItem('id_token');
-
+  // Revocar refresh token
   await fetch('/auth/api/oidc/revocation', {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -134,17 +135,12 @@ export async function logout() {
     }),
   }).catch(() => {});
 
+  // Limpiar storage local
   localStorage.removeItem('access_token');
   localStorage.removeItem('refresh_token');
   localStorage.removeItem('token_expiry');
   localStorage.removeItem('id_token');
 
-  const params = new URLSearchParams({
-    post_logout_redirect_uri: import.meta.env.VITE_APP_URL || 'http://localhost:3000',
-  });
-  if (idToken) {
-    params.set('id_token_hint', idToken);
-  }
-
-  window.location.href = `${OIDC_CONFIG.authorization_endpoint.replace('/authorization', '/logout')}?${params}`;
+  // Logout nativo de Authelia (destruye la sesión SSO)
+  window.location.href = `${OIDC_CONFIG.end_session_endpoint}?rd=http://localhost:3000`;
 }
