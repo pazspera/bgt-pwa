@@ -8,6 +8,7 @@ import { CollectionsApiResponse } from '../../types/domain/collectionsApi';
 import AppSnackbar from "../../components/molecules/AppSnackbar.vue";
 import { useAppSnackbar } from "../../composables/useAppSnackbar";
 import DisplayTitle from "../../components/atoms/typography/DisplayTitle.vue";
+import { GENERAL_UI_TEXT } from "../../constants/generalText";
 
 defineOptions({ name: "BoardGamesView" });
 
@@ -47,7 +48,7 @@ onBeforeMount(async () => {
     <!-- error on the boardgames list initial fetch -->
     <v-row v-if="errorFetchCollections">
       <v-col>
-        <v-alert color="error" title="¡Oh, no! Ocurrió un error" :text="errorFetchCollections"></v-alert>
+        <v-alert color="error" :title="GENERAL_UI_TEXT.ALERT_ERROR" :text="errorFetchCollections"></v-alert>
       </v-col>
     </v-row>
 

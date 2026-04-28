@@ -7,6 +7,7 @@ import { usePlayerApi } from "../../composables/usePlayerApi";
 import CardGrid from "../../components/organisms/CardGrid.vue";
 import type { CreatePlayerRequest, PlayerApiResponse, UpdatePlayerRequest } from "../../types/domain/playerApi";
 import { PLAYER_STATUS, CONFIRM_DELETE_PLAYER } from "../../constants/ui_feedback/players";
+import { GENERAL_UI_TEXT } from "../../constants/generalText";
 import { capitalize } from "../../utils/formatters";
 import LoadingRow from "../../components/molecules/LoadingRow.vue";
 import DisplayTitle from "../../components/atoms/typography/DisplayTitle.vue";
@@ -14,6 +15,7 @@ import SubsectionTitle from "../../components/atoms/typography/SubsectionTitle.v
 import BodyText from "../../components/atoms/typography/BodyText.vue";
 import AppButton from "../../components/atoms/buttons/AppButton.vue";
 import { useAppSnackbar } from "../../composables/useAppSnackbar";
+
 
 const isSheetVisible: Ref<boolean> = ref(false);
 const errorText: Ref<string> = ref("");
@@ -165,7 +167,7 @@ const sortedPlayers = computed(()=> {
       <v-col>
         <v-alert
           color="error"
-          title="¡Oh, no! Ocurrió un error"
+          :title="GENERAL_UI_TEXT.ALERT_ERROR"
           :text="errorList"
         ></v-alert>
       </v-col>

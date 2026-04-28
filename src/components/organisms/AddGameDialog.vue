@@ -5,14 +5,13 @@ import { faFloppyDisk } from "@fortawesome/free-solid-svg-icons";
 import { CollectionsApiResponse } from '../../types/domain/collectionsApi';
 import { usePlayersApi } from '../../composables/usePlayersApi';
 import { useGamesApi } from '../../composables/useGamesApi'; 
-import { onBeforeMount, ref, type Ref, watch, computed } from 'vue';
+import { onBeforeMount, ref, type Ref, watch } from 'vue';
 import LoadingRow from '../molecules/LoadingRow.vue';
 import { PlayerApiResponse } from '../../types/domain/playerApi';
 import { object, string, date, array, boolean } from "yup";
 import { toTypedSchema } from "@vee-validate/yup";
 import { useField, useForm, useFieldArray } from "vee-validate";
 import type { PlayerInGame, CreateGameRequest } from '../../types/domain/gamesApi';
-import { useServerTime } from '../../composables/useServerTime';
 import BlockHeading from '../atoms/typography/BlockHeading.vue';
 import DetailText from '../atoms/typography/DetailText.vue';
 import AppButton from '../atoms/buttons/AppButton.vue';
@@ -31,23 +30,24 @@ const emit = defineEmits<{
 
 const { players, totalPlayers, loading, error, fetchPlayers } = usePlayersApi();
 const { loading: saveGameLoading, newGame, errorSaveGame, saveGame } = useGamesApi();
-const { getSyncedDate } = useServerTime();
 
 const selectedPlayers: Ref<PlayerApiResponse[]> = ref([]);
 const gameWinner: Ref<PlayerApiResponse | null> = ref(null);
 const errorCount: Ref<number> = ref(0);
 const savingGame: Ref<boolean> = ref(false);
 
-const validationSchema = computed(() => {
+const validationSchema = () => {
   const minPlayer = props.boardgame?.min_players ?? 1;
   const maxPlayer = props.boardgame?.max_players ?? 9;
+
+  const maxDate = new Date();
+  maxDate.setHours(0, 0, 0, 0);
 
   return toTypedSchema(
     object({
       date: date()
         .required(AddGameDialogText.validationErrors.dateRequired)
-        .default(() => getSyncedDate())
-        .max(getSyncedDate(), AddGameDialogText.validationErrors.dateMax),
+        .max(maxDate, AddGameDialogText.validationErrors.dateMax),
       players: array()
         .of(object({
           player_id: string().required(),
@@ -70,12 +70,16 @@ const validationSchema = computed(() => {
         .max(500, AddGameDialogText.validationErrors.notesMax)
     })
   )
-})
+}
 
-const { handleSubmit, resetForm, errors: formErrors, submitCount } = useForm({
+const { handleSubmit, resetForm, errors: formErrors, submitCount, setFieldValue } = useForm({
   validationSchema,
   initialValues: {
-    date: new Date(),
+    date: (() => {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      return today;
+    })(),
     players: [],
     winner: null,
     notes: ""
@@ -192,17 +196,27 @@ const onSubmit = handleSubmit(async (values) => {
       is_winner: player.player_id === gameWinner.value?.id,
     }))
 
-    const payload: CreateGameRequest = {
-      boardgame_id: props.boardgame.id,
-      // NO ENTIENDO DONDE ESTÁ LA COLLECTION_ID
-      // está hardcodeado en GamesView
-      collection_id: 'b6acc73a-6b7a-4c67-937a-e1a6169f173f',
-      player_group_id: null,
-      start_date: values.date.toISOString(),
-      end_date: new Date(new Date(values.date).setHours(values.date.getHours() + 1)).toISOString(),
-      notes: values.notes,
-      players: mappedPlayers,
-    };
+    const formatLocalISODate = (date: Date) => {
+  const offset = -date.getTimezoneOffset();
+  const sign = offset >= 0 ? '+' : '-';
+  const absOffset = Math.abs(offset);
+  const hours = String(Math.floor(absOffset / 60)).padStart(2, '0');
+  const minutes = String(absOffset % 60).padStart(2, '0');
+  const isoDate = date.toISOString().slice(0, 19);
+  return `${isoDate}${sign}${hours}:${minutes}`;
+};
+
+const payload: CreateGameRequest = {
+  boardgame_id: props.boardgame.id,
+  // NO ENTIENDO DONDE ESTÁ LA COLLECTION_ID
+  // está hardcodeado en GamesView
+  collection_id: 'b6acc73a-6b7a-4c67-937a-e1a6169f173f',
+  player_group_id: null,
+  start_date: formatLocalISODate(values.date),
+  end_date: formatLocalISODate(new Date(values.date.getTime() + 3600000)),
+  notes: values.notes,
+  players: mappedPlayers,
+};
     console.log(payload)
     
     await saveGame(payload);

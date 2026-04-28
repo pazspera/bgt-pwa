@@ -6,6 +6,8 @@ import { findInitials, getRandomNumber } from '../../utils/generalUtils';
 import { ref, type Ref } from "vue";
 import AppButton from '../atoms/buttons/AppButton.vue';
 import MinorHeading from '../atoms/typography/MinorHeading.vue';
+import EditButton from '../atoms/buttons/EditButton.vue';
+import DeleteButton from '../atoms/buttons/DeleteButton.vue';
 
 const props = defineProps<{
   player: PlayerApiResponse,
@@ -29,7 +31,7 @@ const handleDeletePlayer = () => {
 const randomBackground = () => {
   const backgroundColors = ["#D44D5C", "#227C9D", "#0B6E4F", "#F68E5F", "#BBA63A", "#3F88C5", "#6B7557", "#41B491", "#721817", "#38AECC", "#E2856E", "#800E13", "#3E8989"];
   const colorAmount = backgroundColors.length;
-  
+
   return backgroundColors[getRandomNumber(0, colorAmount)];
 }
 
@@ -48,37 +50,27 @@ const backgroundAvatar: Ref<string> = ref(randomBackground());
       <v-avatar :color="backgroundAvatar" size="default" class="me-2">
         <span class="text-white">{{ findInitials(player.name) }}</span>
       </v-avatar>
-      <MinorHeading 
+      <MinorHeading
         data-testid="player-card-name"
         class="player-card-title"
         >
           {{ player.name }}
-      </MinorHeading> 
+      </MinorHeading>
       <FontAwesomeIcon
-        v-if="player.is_registered" 
+        v-if="player.is_registered"
         :icon="faCircleCheck"
         class="ms-1"
       />
     </v-card-item>
 
     <v-card-actions class="player-card-actions">
-      <AppButton
-        color="primary"
-        variant="flat"
+      <EditButton
         data-testid="player-card-edit-btn"
-        @click="handleEditPlayer"  
-        class="action-btn button-edit"
-        label="Editar"
-        :icon="faPenToSquare"
+        @click="handleEditPlayer"
       />
-      <AppButton 
-        color="error"
-        variant="text"
-        label="Borrar"
-        :icon="faTrash"
+      <DeleteButton
         data-testid="player-card-delete-btn"
         @click="handleDeletePlayer"
-        class="action-btn button-delete"
       />
     </v-card-actions>
   </v-card>

@@ -1,24 +1,35 @@
 <script setup lang="ts">
 import type { PlayerApiResponse } from '../../types/domain/playerApi';
+import { CollectionsApiResponse } from '../../types/domain/collectionsApi';
+import { GameApiResponse } from '../../types/domain/gamesApi';
 import { onBeforeMount } from 'vue';
 import PlayerCard from '../molecules/PlayerCard.vue';
 import BoardgameCard from '../molecules/BoardgameCard.vue';
-import { CollectionsApiResponse } from '../../types/domain/collectionsApi';
+import GameCard from '../molecules/GameCard.vue';
 
-// definir un or con los distintos tipos de card que puede recibir
-type GridItem = PlayerApiResponse | CollectionsApiResponse;
+type GridItem = PlayerApiResponse | CollectionsApiResponse | GameApiResponse;
 
 const props = defineProps<{
   data: GridItem[],
   type: "player" | "boardgame" | "game",
 }>();
 
+function getItemId(item: GridItem): string {
+  if ("id" in item) return item.id;
+  if ("boardgame_id" in item) return item.boardgame_id;
+  return "";
+}
+
 function isPlayer(item: GridItem): item is PlayerApiResponse {
   return props.type === "player" && "is_registered" in item;
 }
 
-function isBoardgame(item: CollectionsApiResponse): item is CollectionsApiResponse {
+function isBoardgame(item: GridItem): item is CollectionsApiResponse {
   return props.type === "boardgame" && "bgg_id" in item;
+}
+
+function isGame(item: GridItem): item is GameApiResponse {
+  return props.type === "game" && "start_date" in item;
 }
 
 const emit = defineEmits<{
@@ -38,7 +49,7 @@ onBeforeMount(()=> {
     <v-row>
       <v-col
         v-for="item in data"
-        :key="item.id"
+        :key="getItemId(item)"
         cols="12"
         sm="6"
         lg="4"
@@ -53,6 +64,8 @@ onBeforeMount(()=> {
           :boardgame="item"
           @add-game="(boardgame) => $emit('add-game', boardgame)"
         />
+
+        <GameCard v-else-if="isGame(item)" :game="item" />
       </v-col>
     </v-row>
   </v-container>

@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { useGamesApi } from "../../composables/useGamesApi";
 import { onBeforeMount } from "vue";
-import { CreateGameRequest } from "../../types/domain/gamesApi";
 import TypographyChart from "../../components/molecules/TypographyChart.vue";
 import DisplayTitle from "../../components/atoms/typography/DisplayTitle.vue";
+import CardGrid from "../../components/organisms/CardGrid.vue";
+import LoadingRow from "../../components/molecules/LoadingRow.vue";
+import { GENERAL_UI_TEXT } from "../../constants/generalText";
 
 defineOptions({ name: "GamesView" });
 
@@ -22,12 +24,23 @@ onBeforeMount(async () => {
 <template>
   <v-container class="mt-4">
     <DisplayTitle>Partidas</DisplayTitle>
-    <div v-if="gamesList">
-      <div v-for="game in gamesList.data" :key="game.boardgame_id">
-        <p>{{ game.start_date }}</p>
-        <p>{{ game.notes }}</p>
-      </div>
-    </div>
+
+    <!-- error on games initial fetch -->
+    <v-row v-if="errorGetGames">
+      <v-col>
+        <v-alert color="error" :title="GENERAL_UI_TEXT.ALERT_ERROR" :text="errorGetGames"></v-alert>
+      </v-col>
+    </v-row>
+
+    <!-- loading -->
+    <LoadingRow v-else-if="loading && !gamesList && !errorGetGames" />
+
+    <CardGrid
+      v-else-if="gamesList && !errorGetGames"
+      :data="gamesList.data"
+      type="game"
+    ></CardGrid>
+
     <TypographyChart></TypographyChart>
   </v-container>
 </template>
