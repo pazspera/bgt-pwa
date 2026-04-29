@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { useGamesApi } from "../../composables/useGamesApi";
 import { onBeforeMount } from "vue";
-import TypographyChart from "../../components/molecules/TypographyChart.vue";
 import DisplayTitle from "../../components/atoms/typography/DisplayTitle.vue";
 import CardGrid from "../../components/organisms/CardGrid.vue";
 import LoadingRow from "../../components/molecules/LoadingRow.vue";
@@ -41,7 +40,7 @@ onBeforeMount(async () => {
       type="game"
     ></CardGrid>
 
-    <TypographyChart></TypographyChart>
+
   </v-container>
 </template>
 
