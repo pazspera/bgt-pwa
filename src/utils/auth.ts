@@ -28,6 +28,7 @@ async function generatePKCE() {
 }
 
 export async function login() {
+  console.trace('[Auth] login() called from:');
   const { verifier, challenge } = await generatePKCE();
   sessionStorage.setItem('pkce_verifier', verifier);
   console.log('[Auth] pkce_verifier saved:', verifier ? 'yes' : 'NO');
@@ -142,5 +143,13 @@ export async function logout() {
   localStorage.removeItem('id_token');
 
   // Logout nativo de Authelia (destruye la sesión SSO)
-  window.location.href = `${OIDC_CONFIG.end_session_endpoint}?rd=http://localhost:3000`;
+  // Solo usar rd si es https (producción), en http dejamos que Authelia use su default
+  const postLogoutUrl = OIDC_CONFIG.redirect_uri.replace('/callback', '');
+  const isHttps = postLogoutUrl.startsWith('https://');
+  
+  const logoutUrl = isHttps
+    ? `${OIDC_CONFIG.end_session_endpoint}?rd=${encodeURIComponent(postLogoutUrl)}`
+    : OIDC_CONFIG.end_session_endpoint;
+
+  window.location.href = logoutUrl;
 }
