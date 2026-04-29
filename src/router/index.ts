@@ -25,7 +25,7 @@ export const routes: RouteRecordRaw[] = [
   {
 path: "/callback",
     name: "Callback",
-    component: () => import("@/views/Callback/CallbackView.vue"),
+    component: () => import(/*webpackChunkName: "Callback" */"@/views/Callback/CallbackView.vue"),
   },
   {
     path: "/:catchAll(.*)*",
