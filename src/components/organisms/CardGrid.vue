@@ -53,6 +53,7 @@ onBeforeMount(()=> {
         cols="12"
         sm="6"
         lg="4"
+        xl="3"
       >
         <PlayerCard v-if="isPlayer(item)" 
           :player="item"

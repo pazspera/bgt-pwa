@@ -28,7 +28,7 @@ export async function createGame(newGame: CreateGameRequest) {
 
 }
 
-export async function getGames(limit: number = 10, offset: number = 0) {
+export async function getGames(limit: number = 12, offset: number = 0) {
   try {
     const response = await fetch(`${API_BASE_URL}v1/games?limit=${limit}&offset=${offset}&include=players`, { method: "GET" });
 

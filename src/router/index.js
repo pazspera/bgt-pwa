@@ -29,6 +29,11 @@ export const routes = [
     component: () => import(/*webpackChunkName: "AddGame" */ "@/views/Games/AddGame.vue"),
     props: true,
   },
+  {
+    path: "/tipografia",
+    name: "Typography",
+    component: () => import(/*webpackChunkName: "Tipografia" */"@/views/Typography.vue"),
+  }
 ];
 
 const router = createRouter({
