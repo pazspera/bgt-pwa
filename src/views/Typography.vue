@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import TypographyChart from '../components/molecules/TypographyChart.vue';
+import TypographyChart from '@/components/molecules/TypographyChart.vue';
 
 </script>
 
