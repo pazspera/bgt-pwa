@@ -1,7 +1,7 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHistory, type RouteRecordRaw } from "vue-router";
 import BoardGamesView from "@/views/BoardGames/BoardGamesView.vue";
 
-export const routes = [
+export const routes: RouteRecordRaw[] = [
   {
     path: "/",
     name: "BoardGames",

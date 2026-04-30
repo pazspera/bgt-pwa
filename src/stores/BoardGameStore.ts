@@ -1,8 +1,14 @@
 import { defineStore } from "pinia";
-import { ref } from "vue";
+import { ref, type Ref } from "vue";
+
+interface BoardGame {
+  id: string;
+  name: string;
+  // Add other properties as needed
+}
 
 export const useBoardGameStore = defineStore("boardgames", () => {
-  const items = ref([]);
+  const items: Ref<BoardGame[]> = ref([]);
 
   function load() {
     const raw = localStorage.getItem("boardgames");
