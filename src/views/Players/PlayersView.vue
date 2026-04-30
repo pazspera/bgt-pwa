@@ -15,6 +15,7 @@ import SubsectionTitle from "../../components/atoms/typography/SubsectionTitle.v
 import BodyText from "../../components/atoms/typography/BodyText.vue";
 import AppButton from "../../components/atoms/buttons/AppButton.vue";
 import { useAppSnackbar } from "../../composables/useAppSnackbar";
+import { GENERAL_UI_TEXT } from "../../constants/generalText";
 
 
 const isSheetVisible: Ref<boolean> = ref(false);
@@ -187,8 +188,8 @@ const sortedPlayers = computed(()=> {
     <!-- no players -->
     <v-row v-else-if="!errorList">
       <v-col>
-        <SubsectionTitle>No hay jugadores</SubsectionTitle>
-        <BodyText>Creá tu primer jugador haciendo click en el botón "Agregar jugador".</BodyText>
+        <SubsectionTitle>{{ GENERAL_UI_TEXT.NO_DATA_PLAYERS_TITLE }}</SubsectionTitle>
+        <BodyText>{{ GENERAL_UI_TEXT.NO_DATA_PLAYERS_CTA }}</BodyText>
       </v-col>
     </v-row>
 
