@@ -16,11 +16,6 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faDice, faUsers, faBoxArchive, faBars, faSun, faMoon, faTrash, faPenToSquare, faPlus, faTriangleExclamation, faSquare, faCaretDown, faCheck, faCheckSquare, faCalendar, faChevronLeft, faChevronRight, faChevronDown, faChevronUp, faFloppyDisk, faCircleCheck, faTrophy } from "@fortawesome/free-solid-svg-icons";
 import { VDateInput } from "vuetify/labs/VDateInput";
 
-import VueSweetalert2 from "vue-sweetalert2";
-
-import VueDatePicker from "@vuepic/vue-datepicker";
-import "@vuepic/vue-datepicker/dist/main.css";
-
 const COLOR = {
   TEXT_DARK: "#2D153D",
   TEXT_LIGHT: "#fcfffe",
@@ -160,8 +155,6 @@ let app = createApp(App);
 app.use(vuetify);
 app.use(router);
 app.use(createPinia());
-app.use(VueSweetalert2);
-app.component("VueDatePicker", VueDatePicker);
 app.component("font-awesome-icon", FontAwesomeIcon);
 
 prepareApp().then(()=> {
