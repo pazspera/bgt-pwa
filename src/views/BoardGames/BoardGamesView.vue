@@ -55,12 +55,18 @@ onBeforeMount(async () => {
     <!-- loading -->
     <LoadingRow v-else-if="loadingList && (!collection || totalBoardgames === 0) && !errorFetchCollections" />
 
-    <CardGrid 
-      v-else-if="(collection && collection.length > 0) && !errorFetchCollections" 
+    <CardGrid
+      v-else-if="(collection && collection.length > 0) && !errorFetchCollections"
       :data="collection"
-      type="boardgame" 
+      type="boardgame"
       @add-game="handleAddGame"
     ></CardGrid>
+
+    <!-- no boardgames to show -->
+    <v-row v-else-if="!errorFetchCollections">
+      <SubsectionTitle>{{ GENERAL_UI_TEXT.NO_DATA_BOARDGAMES_TITLE }}</SubsectionTitle>
+      <BodyText>{{ GENERAL_UI_TEXT.NO_DATA_BOARDGAMES_CTA }}</BodyText>
+    </v-row>
 
     <!-- snackbar for saved game -->
     <AppSnackbar
@@ -71,12 +77,12 @@ onBeforeMount(async () => {
       @close="hide()"
     />
 
-    <AddGameDialog 
-      v-if="selectedBoardgame" 
-      v-model="isAddGameDialogOpen" 
+    <AddGameDialog
+      v-if="selectedBoardgame"
+      v-model="isAddGameDialogOpen"
       :boardgame="selectedBoardgame"
       @success="handleSaveSuccess"
-      @error="handleSaveError" 
+      @error="handleSaveError"
     />
   </v-container>
 </template>
