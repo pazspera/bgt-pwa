@@ -174,10 +174,10 @@ const sortedPlayers = computed(()=> {
     </v-row>
 
     <!-- loading -->
-    <LoadingRow v-if="loadingList && (!players || players.length === 0) && !errorList"/>
+    <LoadingRow v-else-if="loadingList"/>
 
     <CardGrid 
-      v-else-if="(players && players.length > 0) && !errorList"
+      v-else-if="players && players.length > 0"
       :data="sortedPlayers"
       type="player"
       @delete-player="handleDeletePlayer"
@@ -185,7 +185,7 @@ const sortedPlayers = computed(()=> {
     ></CardGrid>
 
     <!-- no players -->
-    <v-row v-else-if="!errorList">
+    <v-row v-else>
       <v-col>
         <SubsectionTitle>{{ GENERAL_UI_TEXT.NO_DATA_PLAYERS_TITLE }}</SubsectionTitle>
         <BodyText>{{ GENERAL_UI_TEXT.NO_DATA_PLAYERS_CTA }}</BodyText>

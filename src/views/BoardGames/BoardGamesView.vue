@@ -53,17 +53,17 @@ onBeforeMount(async () => {
     </v-row>
 
     <!-- loading -->
-    <LoadingRow v-else-if="loadingList && (!collection || totalBoardgames === 0) && !errorFetchCollections" />
+    <LoadingRow v-else-if="loadingList" />
 
     <CardGrid
-      v-else-if="(collection && collection.length > 0) && !errorFetchCollections"
+      v-else-if="collection && collection.length > 0"
       :data="collection"
       type="boardgame"
       @add-game="handleAddGame"
     ></CardGrid>
 
     <!-- no boardgames to show -->
-    <v-row v-else-if="!errorFetchCollections">
+    <v-row v-else>
       <SubsectionTitle>{{ GENERAL_UI_TEXT.NO_DATA_BOARDGAMES_TITLE }}</SubsectionTitle>
       <BodyText>{{ GENERAL_UI_TEXT.NO_DATA_BOARDGAMES_CTA }}</BodyText>
     </v-row>

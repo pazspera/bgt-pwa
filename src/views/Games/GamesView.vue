@@ -30,16 +30,16 @@ onBeforeMount(async () => {
     </v-row>
 
     <!-- loading -->
-    <LoadingRow v-else-if="loading && (!gamesList?.data || gamesList.data.length === 0) && !errorGetGames" />
+    <LoadingRow v-else-if="loading" />
 
     <CardGrid
-      v-else-if="(gamesList && gamesList.data.length > 0) && !errorGetGames"
+      v-else-if="gamesList && gamesList.data.length > 0"
       :data="gamesList.data"
       type="game"
     ></CardGrid>
 
     <!-- no games to show -->
-    <v-row v-else-if="!errorGetGames">
+    <v-row v-else>
       <v-col>
         <SubsectionTitle>{{ GENERAL_UI_TEXT.NO_DATA_GAMES_TITLE }}</SubsectionTitle>
         <BodyText>{{ GENERAL_UI_TEXT.NO_DATA_GAMES_CTA }}</BodyText>
