@@ -1,10 +1,10 @@
 import { describe, it, expect, vi, afterEach } from "vitest";
-import * as PlayerApiService from "../api/playerApiService";
-import { mockPlayersApi, mockPlayersListResponse } from "../mocks/data/playersApi";
-import { API_ERROR_MESSAGES } from "../constants/apiErrorMessages";
+import * as PlayerApiService from "@/api/playerApiService";
+import { mockPlayersApi, mockPlayersListResponse } from "@/mocks/data/playersApi";
+import { API_ERROR_MESSAGES } from "@/constants/apiErrorMessages";
 import { usePlayersApi } from "./usePlayersApi";
-import { CreatePlayerRequest, PlayerApiResponse } from "../types/domain/playerApi";
-import { expectSharedInitialState, expectLoadingState, expectSharedEndState } from "../tests/utils/apiComposables";
+import { CreatePlayerRequest, PlayerApiResponse } from "@/types/domain/playerApi";
+import { expectSharedInitialState, expectLoadingState, expectSharedEndState } from "@/tests/utils/apiComposables";
 
 describe("usePlayersApi", ()=> {
   afterEach(()=> {

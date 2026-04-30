@@ -1,6 +1,6 @@
-import * as PlayerApiService from "../api/playerApiService";
+import * as PlayerApiService from "@/api/playerApiService";
 import { ref, type Ref } from "vue";
-import type { PlayerApiResponse, PlayersListResponse, CreatePlayerRequest } from "../types/domain/playerApi";
+import type { PlayerApiResponse, PlayersListResponse, CreatePlayerRequest } from "@/types/domain/playerApi";
 
 export function usePlayersApi() {
   const players: Ref<PlayerApiResponse[]> = ref([]);

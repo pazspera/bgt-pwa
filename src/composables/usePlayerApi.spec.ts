@@ -1,9 +1,9 @@
 import { describe, it, expect, vi, afterEach } from "vitest";
-import * as PlayerApiService from "../api/playerApiService";
-import { mockSinglePlayer } from "../mocks/data/playersApi";
-import { API_ERROR_MESSAGES } from "../constants/apiErrorMessages";
+import * as PlayerApiService from "@/api/playerApiService";
+import { mockSinglePlayer } from "@/mocks/data/playersApi";
+import { API_ERROR_MESSAGES } from "@/constants/apiErrorMessages";
 import { usePlayerApi } from "./usePlayerApi";
-import { expectSharedInitialState, expectLoadingState, expectSharedEndState } from "../tests/utils/apiComposables";
+import { expectSharedInitialState, expectLoadingState, expectSharedEndState } from "@/tests/utils/apiComposables";
 import { updateRelative } from "vuetify/lib/labs/VCalendar/util/timestamp";
 
 describe("usePlayerApi", ()=> {

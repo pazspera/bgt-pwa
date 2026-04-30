@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { useAppSnackbar } from "./useAppSnackbar";
-import { API_ERROR_MESSAGES } from "../constants/apiErrorMessages";
-import { StatusColors, SnackbarDisplayTimes } from "../types/general";
+import { API_ERROR_MESSAGES } from "@/constants/apiErrorMessages";
+import { StatusColors, SnackbarDisplayTimes } from "@/types/general";
 
 const expectInitialValues = (isSnackbarVisible: boolean, message: string, color: string, timeout: number) => {
   expect(isSnackbarVisible).toBe(false);

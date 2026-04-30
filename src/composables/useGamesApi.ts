@@ -1,6 +1,6 @@
-import * as GamesApiService from "../api/gameApiService";
+import * as GamesApiService from "@/api/gameApiService";
 import { ref, type Ref } from "vue";
-import { CreateGameRequest, GameApiResponse, GamesListResponse } from "../types/domain/gamesApi";
+import { CreateGameRequest, GameApiResponse, GamesListResponse } from "@/types/domain/gamesApi";
 
 export function useGamesApi() {
   const loading: Ref<boolean> = ref(false);
