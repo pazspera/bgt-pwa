@@ -16,8 +16,6 @@ onBeforeMount(async () => {
   console.log(errorGetGames.value);
 })
 
-
-
 </script>
 
 <template>
@@ -35,11 +33,18 @@ onBeforeMount(async () => {
     <LoadingRow v-else-if="loading && !gamesList && !errorGetGames" />
 
     <CardGrid
-      v-else-if="gamesList && !errorGetGames"
+      v-else-if="(gamesList && gamesList.length > 0) && !errorGetGames"
       :data="gamesList.data"
       type="game"
     ></CardGrid>
 
+    <!-- no games to show -->
+    <v-row>
+      <v-col>
+        <SubsectionTitle>{{ GENERAL_UI_TEXT.NO_DATA_GAMES_TITLE }}</SubsectionTitle>
+        <BodyText>{{ GENERAL_UI_TEXT.NO_DATA_GAMES_CTA }}</BodyText>
+      </v-col>
+    </v-row>
 
   </v-container>
 </template>
