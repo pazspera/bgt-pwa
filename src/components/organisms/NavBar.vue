@@ -3,9 +3,9 @@ import { ref } from 'vue';
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { useBreakpoints } from '@vueuse/core';
-import NavigationLink from '../atoms/typography/NavigationLink.vue';
-import ThemeToggler from '../molecules/ThemeToggler.vue';
-import Logo from '../atoms/Logo.vue';
+import NavigationLink from '@/components/atoms/typography/NavigationLink.vue';
+import ThemeToggler from '@/components/molecules/ThemeToggler.vue';
+import Logo from '@/components/atoms/Logo.vue';
 
 const drawer = ref(false);
 const breakpoints = useBreakpoints({

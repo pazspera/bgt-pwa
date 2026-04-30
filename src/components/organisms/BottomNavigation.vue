@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { faDice, faUsers, faBoxArchive } from "@fortawesome/free-solid-svg-icons";
 import { NavButton } from "../../types/navigation";
-import BottomNavButton from "../atoms/buttons/BottomNavButton.vue";
-import ThemeToggler from "../molecules/ThemeToggler.vue";
+import BottomNavButton from '@/components/atoms/buttons/BottomNavButton.vue';
+import ThemeToggler from '@/components/molecules/ThemeToggler.vue';
 
 defineOptions({ name: "BottomNavigation" });
 

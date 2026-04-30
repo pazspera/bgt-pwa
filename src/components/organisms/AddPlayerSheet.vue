@@ -1,12 +1,12 @@
 <script lang="ts" setup>
-import SubsectionTitle from '../atoms/typography/SubsectionTitle.vue';
-import AppButton from '../atoms/buttons/AppButton.vue';
+import SubsectionTitle from '@/components/atoms/typography/SubsectionTitle.vue';
+import AppButton from '@/components/atoms/buttons/AppButton.vue';
 import { object, string } from "yup";
 import { toTypedSchema } from '@vee-validate/yup';
 import { useForm, useField } from 'vee-validate';
 import { computed } from "vue";
 import { VExpandTransition } from 'vuetify/components';
-import { AddPlayerSheetText } from '../../constants/ui_text/AddPlayerSheet';
+import { AddPlayerSheetText } from '@/constants/ui_text/AddPlayerSheet';
 
 defineProps<{
   modelValue: boolean,

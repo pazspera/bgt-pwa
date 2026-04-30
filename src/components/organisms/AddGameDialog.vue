@@ -1,20 +1,20 @@
 <script setup lang="ts">
-import { AddGameDialogText } from '../../constants/ui_text/AddGameDialog';
+import { AddGameDialogText } from '@/constants/ui_text/AddGameDialog';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faFloppyDisk } from "@fortawesome/free-solid-svg-icons";
 import { CollectionsApiResponse } from '../../types/domain/collectionsApi';
-import { usePlayersApi } from '../../composables/usePlayersApi';
-import { useGamesApi } from '../../composables/useGamesApi'; 
+import { usePlayersApi } from '@/composables/usePlayersApi';
+import { useGamesApi } from '@/composables/useGamesApi'; 
 import { onBeforeMount, ref, type Ref, watch } from 'vue';
-import LoadingRow from '../molecules/LoadingRow.vue';
+import LoadingRow from '@/components/molecules/LoadingRow.vue';
 import { PlayerApiResponse } from '../../types/domain/playerApi';
 import { object, string, date, array, boolean } from "yup";
 import { toTypedSchema } from "@vee-validate/yup";
 import { useField, useForm, useFieldArray } from "vee-validate";
 import type { PlayerInGame, CreateGameRequest } from '../../types/domain/gamesApi';
-import BlockHeading from '../atoms/typography/BlockHeading.vue';
-import DetailText from '../atoms/typography/DetailText.vue';
-import AppButton from '../atoms/buttons/AppButton.vue';
+import BlockHeading from '@/components/atoms/typography/BlockHeading.vue';
+import DetailText from '@/components/atoms/typography/DetailText.vue';
+import AppButton from '@/components/atoms/buttons/AppButton.vue';
 
 const props =  defineProps<{
   modelValue: boolean,
