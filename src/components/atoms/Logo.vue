@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import version from "./../../../VERSION?raw";
-import BottomNavLabel from "./typography/BottomNavLabel.vue";
+import BottomNavLabel from "@/components/atoms/typography/BottomNavLabel.vue";
 defineOptions({ name: "Logo" });
 
 </script>
