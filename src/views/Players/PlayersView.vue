@@ -15,7 +15,6 @@ import SubsectionTitle from "../../components/atoms/typography/SubsectionTitle.v
 import BodyText from "../../components/atoms/typography/BodyText.vue";
 import AppButton from "../../components/atoms/buttons/AppButton.vue";
 import { useAppSnackbar } from "../../composables/useAppSnackbar";
-import { GENERAL_UI_TEXT } from "../../constants/generalText";
 
 
 const isSheetVisible: Ref<boolean> = ref(false);
