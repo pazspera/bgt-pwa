@@ -18,7 +18,7 @@ globalThis.visualViewport = {
 
 import { mount } from "@vue/test-utils";
 import AppSnackbar from "./AppSnackbar.vue";
-import { createVuetifyForTest } from "../../tests/utils/createVuetifyForTest";
+import { createVuetifyForTest } from "@/tests/utils/createVuetifyForTest";
 import { VSnackbar } from "vuetify/components";
 import { nextTick } from "vue";
 import { afterEach } from "node:test";

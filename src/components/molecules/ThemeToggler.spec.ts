@@ -1,9 +1,9 @@
 import { it, describe, expect, beforeEach } from "vitest";
 import { mount } from "@vue/test-utils";
 import { nextTick } from "vue";
-import { createVuetifyForTest } from "../../tests/utils/createVuetifyForTest";
+import { createVuetifyForTest } from "@/tests/utils/createVuetifyForTest";
 import ThemeToggler from "./ThemeToggler.vue";
-import { VBtn, VTooltip } from "vuetify/components";
+import { VBtn, VTooltip} from "vuetify/components";
 import { faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
 import { consoleError } from "vuetify/lib/util";
 

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { NavButton } from "@/types/navigation";
+import { NavButton } from "../../../types/navigation";
 import BottomNavLabel from "@/components/atoms/typography/BottomNavLabel.vue";
 import { useRoute } from "vue-router";
 
