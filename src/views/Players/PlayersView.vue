@@ -1,20 +1,20 @@
 <script setup lang="ts">
 import { ref, type Ref, onBeforeMount, computed } from "vue";
-import AddPlayerSheet from "../../components/organisms/AddPlayerSheet.vue";
-import EditPlayerSheet from "../../components/organisms/EditPlayerSheet.vue";
-import { usePlayersApi } from "../../composables/usePlayersApi";
-import { usePlayerApi } from "../../composables/usePlayerApi";
-import CardGrid from "../../components/organisms/CardGrid.vue";
+import AddPlayerSheet from "@/components/organisms/AddPlayerSheet.vue";
+import EditPlayerSheet from "@/components/organisms/EditPlayerSheet.vue";
+import { usePlayersApi } from "@/composables/usePlayersApi";
+import { usePlayerApi } from "@/composables/usePlayerApi";
+import CardGrid from "@/components/organisms/CardGrid.vue";
 import type { CreatePlayerRequest, PlayerApiResponse, UpdatePlayerRequest } from "../../types/domain/playerApi";
-import { PLAYER_STATUS, CONFIRM_DELETE_PLAYER } from "../../constants/ui_feedback/players";
-import { GENERAL_UI_TEXT } from "../../constants/generalText";
-import { capitalize } from "../../utils/formatters";
-import LoadingRow from "../../components/molecules/LoadingRow.vue";
-import DisplayTitle from "../../components/atoms/typography/DisplayTitle.vue";
-import SubsectionTitle from "../../components/atoms/typography/SubsectionTitle.vue";
-import BodyText from "../../components/atoms/typography/BodyText.vue";
-import AppButton from "../../components/atoms/buttons/AppButton.vue";
-import { useAppSnackbar } from "../../composables/useAppSnackbar";
+import { PLAYER_STATUS, CONFIRM_DELETE_PLAYER } from "@/constants/ui_feedback/players";
+import { GENERAL_UI_TEXT } from "@/constants/generalText";
+import { capitalize } from "@/utils/formatters";
+import LoadingRow from "@/components/molecules/LoadingRow.vue";
+import DisplayTitle from "@/components/atoms/typography/DisplayTitle.vue";
+import SubsectionTitle from "@/components/atoms/typography/SubsectionTitle.vue";
+import BodyText from "@/components/atoms/typography/BodyText.vue";
+import AppButton from "@/components/atoms/buttons/AppButton.vue";
+import { useAppSnackbar } from "@/composables/useAppSnackbar";
 
 
 const isSheetVisible: Ref<boolean> = ref(false);

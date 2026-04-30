@@ -1,7 +1,7 @@
 import { it, vi, describe, expect, afterEach } from "vitest";
-import { mockCollectionsListResponse } from "../mocks/data/collectionsApi";
+import { mockCollectionsListResponse } from "@/mocks/data/collectionsApi";
 import { getCollections } from "./collectionApiService";
-import { API_ERROR_MESSAGES } from "../constants/apiErrorMessages";
+import { API_ERROR_MESSAGES } from "@/constants/apiErrorMessages";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 

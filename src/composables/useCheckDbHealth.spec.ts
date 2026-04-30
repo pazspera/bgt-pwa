@@ -1,7 +1,7 @@
 import { it, describe, afterEach, vi, expect } from "vitest";
 import { useCheckDbHealth } from "./useCheckDbHealth";
 import { useServerTime } from "./useServerTime";
-import { API_ERROR_MESSAGES } from "../constants/apiErrorMessages";
+import { API_ERROR_MESSAGES } from "@/constants/apiErrorMessages";
 
 describe("checkHealth()", () => {
   // Arrange

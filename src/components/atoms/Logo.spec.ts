@@ -1,10 +1,10 @@
 import { it, expect, describe, beforeEach } from "vitest";
 import { mount } from "@vue/test-utils";
 import Logo from "./Logo.vue";
-import { router } from "../../tests/utils/createRouterMock";
-import { routerLinkStub } from "../../tests/utils/stubRouterLink";
+import { router } from "@/tests/utils/createRouterMock";
+import { routerLinkStub } from "@/tests/utils/stubRouterLink";
 import { VChip } from "vuetify/components";
-import { createVuetifyForTest } from "../../tests/utils/createVuetifyForTest";
+import { createVuetifyForTest } from "@/tests/utils/createVuetifyForTest";
 import version from "./../../../VERSION?raw";
 
 const vuetify = createVuetifyForTest({ VChip });

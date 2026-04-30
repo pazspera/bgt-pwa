@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { useGamesApi } from "../../composables/useGamesApi";
+import { useGamesApi } from "@/composables/useGamesApi";
 import { onBeforeMount } from "vue";
-import DisplayTitle from "../../components/atoms/typography/DisplayTitle.vue";
-import CardGrid from "../../components/organisms/CardGrid.vue";
-import LoadingRow from "../../components/molecules/LoadingRow.vue";
-import { GENERAL_UI_TEXT } from "../../constants/generalText";
+import DisplayTitle from "@/components/atoms/typography/DisplayTitle.vue";
+import CardGrid from "@/components/organisms/CardGrid.vue";
+import LoadingRow from "@/components/molecules/LoadingRow.vue";
+import { GENERAL_UI_TEXT } from "@/constants/generalText";
 
 defineOptions({ name: "GamesView" });
 

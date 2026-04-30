@@ -3,9 +3,9 @@ import type { PlayerApiResponse } from '../../types/domain/playerApi';
 import { CollectionsApiResponse } from '../../types/domain/collectionsApi';
 import { GameApiResponse } from '../../types/domain/gamesApi';
 import { onBeforeMount } from 'vue';
-import PlayerCard from '../molecules/PlayerCard.vue';
-import BoardgameCard from '../molecules/BoardgameCard.vue';
-import GameCard from '../molecules/GameCard.vue';
+import PlayerCard from '@/components/molecules/PlayerCard.vue';
+import BoardgameCard from '@/components/molecules/BoardgameCard.vue';
+import GameCard from '@/components/molecules/GameCard.vue';
 
 type GridItem = PlayerApiResponse | CollectionsApiResponse | GameApiResponse;
 

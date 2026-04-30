@@ -1,11 +1,11 @@
 import { it, describe, beforeEach, expect, vi } from "vitest";
 import { mount } from "@vue/test-utils";
-import { router } from "../../tests/utils/createRouterMock";
+import { router } from "@/tests/utils/createRouterMock";
 import { nextTick } from "vue";
-import { createVuetifyForTest } from "../../tests/utils/createVuetifyForTest";
-import { mockViewportForVueUse } from "../../tests/utils/mockViewportForVueUse";
-import { expectNavigationLinks } from "../../tests/utils/expectNavigationLinks";
-import { NavigationLinkStub } from "../../tests/utils/stubNavigationLink";
+import { createVuetifyForTest } from "@/tests/utils/createVuetifyForTest";
+import { mockViewportForVueUse } from "@/tests/utils/mockViewportForVueUse";
+import { expectNavigationLinks } from "@/tests/utils/expectNavigationLinks";
+import { NavigationLinkStub } from "@/tests/utils/stubNavigationLink";
 import { VAppBar, VNavigationDrawer, VBtn, VRow, VContainer, VList, VTooltip, VChip } from "vuetify/components";
 import NavBar from "./NavBar.vue";
 import { faBars } from "@fortawesome/free-solid-svg-icons";

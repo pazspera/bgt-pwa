@@ -93,3 +93,8 @@ npm run test:coverage # Coverage de tests
 - Dockerfile: Producción (multi-stage)
 - Dockerfile.dev: Desarrollo con hot-reload
 - Puerto de desarrollo: 3000
+
+## Desarrollo
+
+- Se usa el alias @ para las rutas de componentes
+- Se mantiene el uso de rutas relativas para types usados en defineProps(), sino genera un error

@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import BottomNavigation from "./components/organisms/BottomNavigation.vue";
-import NavBar from "./components/organisms/NavBar.vue";
+import BottomNavigation from "@/components/organisms/BottomNavigation.vue";
+import NavBar from "@/components/organisms/NavBar.vue";
 import { useWindowSize } from "@vueuse/core";
-import AppSnackbar from "./components/molecules/AppSnackbar.vue";
+import AppSnackbar from "@/components/molecules/AppSnackbar.vue";
 import { onMounted, ref, type Ref, watch } from "vue";
-import { useServerTime } from "./composables/useServerTime";
-import { useCheckDbHealth } from "./composables/useCheckDbHealth";
-import { useAppSnackbar } from "./composables/useAppSnackbar";
+import { useServerTime } from "@/composables/useServerTime";
+import { useCheckDbHealth } from "@/composables/useCheckDbHealth";
+import { useAppSnackbar } from "@/composables/useAppSnackbar";
 
 defineOptions({ name: "App" });
 

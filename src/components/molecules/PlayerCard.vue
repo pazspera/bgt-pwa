@@ -2,12 +2,12 @@
 import type { PlayerApiResponse } from '../../types/domain/playerApi';
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faTrash, faPenToSquare, faCircleCheck } from "@fortawesome/free-solid-svg-icons";
-import { findInitials, getRandomNumber } from '../../utils/generalUtils';
+import { findInitials, getRandomNumber } from '@/utils/generalUtils';
 import { ref, type Ref } from "vue";
-import AppButton from '../atoms/buttons/AppButton.vue';
-import MinorHeading from '../atoms/typography/MinorHeading.vue';
-import EditButton from '../atoms/buttons/EditButton.vue';
-import DeleteButton from '../atoms/buttons/DeleteButton.vue';
+import AppButton from '@/components/atoms/buttons/AppButton.vue';
+import MinorHeading from '@/components/atoms/typography/MinorHeading.vue';
+import EditButton from '@/components/atoms/buttons/EditButton.vue';
+import DeleteButton from '@/components/atoms/buttons/DeleteButton.vue';
 
 const props = defineProps<{
   player: PlayerApiResponse,

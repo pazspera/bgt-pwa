@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, afterEach } from "vitest";
 import { getPlayers, getPlayer, deletePlayer, createPlayer, updatePlayer } from "./playerApiService";
-import { API_ERROR_MESSAGES } from "../constants/apiErrorMessages";
-import type { PlayersListResponse, PlayerApiResponse, CreatePlayerRequest, UpdatePlayerRequest } from "../types/domain/playerApi";
+import { API_ERROR_MESSAGES } from "@/constants/apiErrorMessages";
+import type { PlayersListResponse, PlayerApiResponse, CreatePlayerRequest, UpdatePlayerRequest } from "@/types/domain/playerApi";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 

@@ -1,11 +1,11 @@
 import { it, describe, expect, beforeEach } from "vitest";
 import { createWrapperError, mount } from "@vue/test-utils";
-import { setTextInputValue } from "../../tests/utils/form-helpers";
+import { setTextInputValue } from "@/tests/utils/form-helpers";
 import { nextTick } from "vue";
-import { createVuetifyForTest } from "../../tests/utils/createVuetifyForTest";
+import { createVuetifyForTest } from "@/tests/utils/createVuetifyForTest";
 import { VBottomSheet, VContainer, VTextField, VBtn, VSheet, VAlert } from "vuetify/components";
 import AddPlayerSheet from "./AddPlayerSheet.vue";
-import { AddPlayerSheetText } from "../../constants/ui_text/AddPlayerSheet";
+import { AddPlayerSheetText } from "@/constants/ui_text/AddPlayerSheet";
  
 const vuetify = createVuetifyForTest({ VBottomSheet, VContainer, VTextField, VBtn, VSheet, VAlert });
  

@@ -1,18 +1,18 @@
 <script setup lang="ts">
-import DisplayTitle from '../atoms/typography/DisplayTitle.vue';
-import SectionTitle from '../atoms/typography/SectionTitle.vue';
-import SubsectionTitle from '../atoms/typography/SubsectionTitle.vue';
-import BlockHeading from '../atoms/typography/BlockHeading.vue';
-import CardHeading from '../atoms/typography/CardHeading.vue';
-import MinorHeading from '../atoms/typography/MinorHeading.vue';
-import LeadText from '../atoms/typography/LeadText.vue';
-import SupportText from '../atoms/typography/SupportText.vue';
-import BodyText from '../atoms/typography/BodyText.vue';
-import DetailText from '../atoms/typography/DetailText.vue';
-import CaptionText from '../atoms/typography/CaptionText.vue';
-import ButtonLabel from '../atoms/typography/ButtonLabel.vue';
-import NavigationLink from '../atoms/typography/NavigationLink.vue';
-import ExternalLink from '../atoms/typography/ExternalLink.vue';
+import DisplayTitle from '@/components/atoms/typography/DisplayTitle.vue';
+import SectionTitle from '@/components/atoms/typography/SectionTitle.vue';
+import SubsectionTitle from '@/components/atoms/typography/SubsectionTitle.vue';
+import BlockHeading from '@/components/atoms/typography/BlockHeading.vue';
+import CardHeading from '@/components/atoms/typography/CardHeading.vue';
+import MinorHeading from '@/components/atoms/typography/MinorHeading.vue';
+import LeadText from '@/components/atoms/typography/LeadText.vue';
+import SupportText from '@/components/atoms/typography/SupportText.vue';
+import BodyText from '@/components/atoms/typography/BodyText.vue';
+import DetailText from '@/components/atoms/typography/DetailText.vue';
+import CaptionText from '@/components/atoms/typography/CaptionText.vue';
+import ButtonLabel from '@/components/atoms/typography/ButtonLabel.vue';
+import NavigationLink from '@/components/atoms/typography/NavigationLink.vue';
+import ExternalLink from '@/components/atoms/typography/ExternalLink.vue';
 
 </script>
 

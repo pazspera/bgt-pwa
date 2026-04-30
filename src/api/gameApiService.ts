@@ -1,5 +1,5 @@
-import { API_ERROR_MESSAGES } from "../constants/apiErrorMessages";
-import type { GameApiResponse, GamesListResponse, PlayerInGame, CreateGameRequest } from "../types/domain/gamesApi";
+import { API_ERROR_MESSAGES } from "@/constants/apiErrorMessages";
+import type { GameApiResponse, GamesListResponse, PlayerInGame, CreateGameRequest } from "@/types/domain/gamesApi";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 

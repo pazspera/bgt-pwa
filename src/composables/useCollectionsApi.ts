@@ -1,6 +1,6 @@
-import * as CollectionApiService from "../api/collectionApiService";
+import * as CollectionApiService from "@/api/collectionApiService";
 import { ref, type Ref } from "vue";
-import { CollectionsApiResponse, CollectionsListResponse } from "../types/domain/collectionsApi";
+import { CollectionsApiResponse, CollectionsListResponse } from "@/types/domain/collectionsApi";
 
 export function useCollectionsApi() {
   const collection: Ref<CollectionsApiResponse[]> = ref([]);

@@ -1,9 +1,9 @@
 import { describe, it, afterEach, vi, expect } from "vitest";
-import * as CollectionApiService from "../api/collectionApiService";
-import { API_ERROR_MESSAGES } from "../constants/apiErrorMessages";
-import { mockCollectionsListResponse, mockCollectionsEmptyListResponse } from "../mocks/data/collectionsApi";
+import * as CollectionApiService from "@/api/collectionApiService";
+import { API_ERROR_MESSAGES } from "@/constants/apiErrorMessages";
+import { mockCollectionsListResponse, mockCollectionsEmptyListResponse } from "@/mocks/data/collectionsApi";
 import { useCollectionsApi } from "./useCollectionsApi";
-import { expectSharedInitialState, expectLoadingState, expectSharedEndState } from "../tests/utils/apiComposables";
+import { expectSharedInitialState, expectLoadingState, expectSharedEndState } from "@/tests/utils/apiComposables";
 
 describe("fetchCollections", ()=> {
   afterEach(()=> {

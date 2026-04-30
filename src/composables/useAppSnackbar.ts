@@ -1,5 +1,5 @@
 import { ref, type Ref } from "vue";
-import { StatusColors, SnackbarDisplayTimes } from "../types/general";
+import { StatusColors, SnackbarDisplayTimes } from "@/types/general";
  
 export function useAppSnackbar() {
   const isSnackbarVisible: Ref<boolean> = ref(false);

@@ -1,6 +1,6 @@
 import { ref, type Ref } from "vue";
 import { useServerTime } from "./useServerTime";
-import { API_ERROR_MESSAGES } from "../constants/apiErrorMessages";
+import { API_ERROR_MESSAGES } from "@/constants/apiErrorMessages";
 
 export function useCheckDbHealth() {
   const BASE_URL = import.meta.env.VITE_API_HEALTH_BASE_URL;

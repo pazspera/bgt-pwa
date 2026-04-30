@@ -1,12 +1,12 @@
 import { it, describe, beforeEach, expect } from "vitest";
 import { mount } from "@vue/test-utils";
-import { createVuetifyForTest } from "../../tests/utils/createVuetifyForTest";
+import { createVuetifyForTest } from "@/tests/utils/createVuetifyForTest";
 import PlayerCard from "./PlayerCard.vue";
-import { mockSinglePlayer, mockRegisteredSinglePlayer } from "../../mocks/data/playersApi";
+import { mockSinglePlayer, mockRegisteredSinglePlayer } from "@/mocks/data/playersApi";
 import { VCard, VCardActions, VCardText, VBtn, VCardItem, VAvatar } from "vuetify/components";
 import { faTrash, faPenToSquare, faCircleCheck } from "@fortawesome/free-solid-svg-icons";
 import { nextTick } from "vue";
-import { findInitials } from "../../utils/generalUtils";
+import { findInitials } from "@/utils/generalUtils";
 
 const vuetify = createVuetifyForTest({ VCard, VCardActions, VCardText, VBtn, VCardItem, VAvatar });
 const faTrashText = faTrash.iconName;

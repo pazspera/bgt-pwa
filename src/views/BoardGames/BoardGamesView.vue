@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { onBeforeMount, ref, type Ref } from "vue";
-import { useCollectionsApi } from '../../composables/useCollectionsApi';
-import CardGrid from '../../components/organisms/CardGrid.vue';
-import LoadingRow from '../../components/molecules/LoadingRow.vue';
-import AddGameDialog from '../../components/organisms/AddGameDialog.vue';
+import { useCollectionsApi } from '@/composables/useCollectionsApi';
+import CardGrid from '@/components/organisms/CardGrid.vue';
+import LoadingRow from '@/components/molecules/LoadingRow.vue';
+import AddGameDialog from '@/components/organisms/AddGameDialog.vue';
 import { CollectionsApiResponse } from '../../types/domain/collectionsApi';
-import AppSnackbar from "../../components/molecules/AppSnackbar.vue";
-import { useAppSnackbar } from "../../composables/useAppSnackbar";
-import DisplayTitle from "../../components/atoms/typography/DisplayTitle.vue";
-import { GENERAL_UI_TEXT } from "../../constants/generalText";
+import AppSnackbar from "@/components/molecules/AppSnackbar.vue";
+import { useAppSnackbar } from "@/composables/useAppSnackbar";
+import DisplayTitle from "@/components/atoms/typography/DisplayTitle.vue";
+import { GENERAL_UI_TEXT } from "@/constants/generalText";
 
 defineOptions({ name: "BoardGamesView" });
 

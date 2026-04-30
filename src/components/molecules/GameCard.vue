@@ -3,13 +3,12 @@ import type { GameApiResponse } from '../../types/domain/gamesApi';
 import { ref } from "vue";
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faTrophy, faChevronDown, faChevronUp, } from '@fortawesome/free-solid-svg-icons';
-import CardHeading from '../atoms/typography/CardHeading.vue';
-import MinorHeading from '../atoms/typography/MinorHeading.vue';
-import BodyText from '../atoms/typography/BodyText.vue';
-import EditButton from '../atoms/buttons/EditButton.vue';
-import DeleteButton from '../atoms/buttons/DeleteButton.vue';
-import DetailText from '../atoms/typography/DetailText.vue';
-import { formatDate } from '../../utils/formatters';
+import CardHeading from '@/components/atoms/typography/CardHeading.vue';
+import MinorHeading from '@/components/atoms/typography/MinorHeading.vue';
+import EditButton from '@/components/atoms/buttons/EditButton.vue';
+import DeleteButton from '@/components/atoms/buttons/DeleteButton.vue';
+import DetailText from '@/components/atoms/typography/DetailText.vue';
+import { formatDate } from '@/utils/formatters';
 
 defineOptions({ name: "GameCard" });
 

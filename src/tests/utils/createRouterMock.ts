@@ -5,7 +5,7 @@ import {
 } from 'vue-router-mock';
 import { config } from '@vue/test-utils';
 import { beforeEach, vi } from "vitest";
-import { routes as actualRoutes } from "../../router/index.js";
+import { routes as actualRoutes } from "@/router/index.js";
 
 // create one router per test file
 const router = createRouterMock({

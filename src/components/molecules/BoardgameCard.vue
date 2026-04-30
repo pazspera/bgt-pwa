@@ -2,8 +2,8 @@
 import { CollectionsApiResponse } from '../../types/domain/collectionsApi';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import CardHeading from '../atoms/typography/CardHeading.vue';
-import AppButton from '../atoms/buttons/AppButton.vue';
+import CardHeading from '@/components/atoms/typography/CardHeading.vue';
+import AppButton from '@/components/atoms/buttons/AppButton.vue';
 
 const props = defineProps<{
   boardgame: CollectionsApiResponse

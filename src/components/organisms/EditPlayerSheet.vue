@@ -1,12 +1,12 @@
 <script lang="ts" setup>
-import SubsectionTitle from '../atoms/typography/SubsectionTitle.vue';
-import AppButton from '../atoms/buttons/AppButton.vue';
+import SubsectionTitle from '@/components/atoms/typography/SubsectionTitle.vue';
+import AppButton from '@/components/atoms/buttons/AppButton.vue';
 import { object, string } from "yup";
 import { toTypedSchema } from '@vee-validate/yup';
 import { useForm, useField } from 'vee-validate';
 import { ref, computed, watch } from "vue";
 import { VExpandTransition } from 'vuetify/components';
-import { EditPlayerSheetText } from '../../constants/ui_text/EditPlayerSheet';
+import { EditPlayerSheetText } from '@/constants/ui_text/EditPlayerSheet';
 import { PlayerApiResponse, UpdatePlayerRequest } from "../../types/domain/playerApi"
 
 const props = defineProps<{

@@ -3,7 +3,11 @@
     "target": "es2020", 
     "module": "esnext",
     "moduleResolution": "node",
-    "allowJs": true
+    "allowJs": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
   },
   // le dice a VS code que mire en src
   "include": ["src/**/*", "env.d.ts"] 

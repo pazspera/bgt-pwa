@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import ButtonLabel from '../typography/ButtonLabel.vue';
+import ButtonLabel from '@/components/atoms/typography/ButtonLabel.vue';
 
 interface Props {
   color?: string,

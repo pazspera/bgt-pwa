@@ -1,11 +1,11 @@
 import { it, expect, beforeEach, describe } from "vitest";
 import { mount } from "@vue/test-utils";
-import { createVuetifyForTest } from "../../../tests/utils/createVuetifyForTest";
+import { createVuetifyForTest } from "@/tests/utils/createVuetifyForTest";
 import { faVial } from "@fortawesome/free-solid-svg-icons";
-import { NavButton } from "../../../types/navigation";
+import { NavButton } from "@/types/navigation";
 import BottomNavButton from "./BottomNavButton.vue";
 import { VBtn } from "vuetify/components";
-import { router } from "../../../tests/utils/createRouterMock";
+import { router } from "@/tests/utils/createRouterMock";
 
 const vuetify = createVuetifyForTest({ VBtn });
 const faVialText = faVial.iconName;
