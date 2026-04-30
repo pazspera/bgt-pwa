@@ -80,7 +80,7 @@ describe("active link logic", ()=> {
   
   it("doesn't display 'aria-current=page' when the current route doesn't match the 'to' prop", async ()=> {
     // Arrange
-    const testRoute = { name: "EditPlayer" };
+    const testRoute = { name: "Players" };
 
     // Act
     await router.push(testRoute);
