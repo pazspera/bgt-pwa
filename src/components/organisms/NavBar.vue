@@ -6,6 +6,7 @@ import { useBreakpoints } from '@vueuse/core';
 import NavigationLink from '@/components/atoms/typography/NavigationLink.vue';
 import ThemeToggler from '@/components/molecules/ThemeToggler.vue';
 import Logo from '@/components/atoms/Logo.vue';
+import { NAVIGATION_TEXT } from '@/constants/navigationText';
 
 const drawer = ref(false);
 const breakpoints = useBreakpoints({
@@ -31,12 +32,18 @@ defineExpose({ drawer });
         <div class="d-flex align-center">
           <!-- Desktop links: visible >=1024px -->
           <div v-if="isDesktop" class="nav-links" data-testid="desktop-nav-links">
-            <NavigationLink :to="{ name: 'BoardGames' }">Ludoteca</NavigationLink>
-            <NavigationLink :to="{ name: 'Players' }">Jugadores</NavigationLink>
-            <NavigationLink :to="{ name: 'Games' }">Partidas</NavigationLink>
+            <NavigationLink :to="{ name: 'BoardGames' }">
+              {{ NAVIGATION_TEXT.BOARDGAMES }}
+            </NavigationLink>
+            <NavigationLink :to="{ name: 'Players' }">
+              {{ NAVIGATION_TEXT.PLAYERS }}
+            </NavigationLink>
+            <NavigationLink :to="{ name: 'Games' }">
+              {{ NAVIGATION_TEXT.GAMES }}
+            </NavigationLink>
             <ThemeToggler class="theme-toggler-desktop" icon-size="var(--font-size-lg)"/>
           </div>
-  
+
           <!-- Mobile / Tablet toggle: visible <1025px -->
           <div v-if="!isDesktop" class="nav-drawer-icons" data-testid="nav-drawer-icons">
             <ThemeToggler class="show-mobile" icon-size="var(--font-size-lg)" />
@@ -53,13 +60,13 @@ defineExpose({ drawer });
   <v-navigation-drawer v-model="drawer" temporary location="right" class="nav-drawer" data-testid="navigation-drawer">
     <v-list nav class="nav-drawer-list">
       <NavigationLink :to="{ name: 'BoardGames' }" link @click="drawer = false">
-        Ludoteca
+        {{ NAVIGATION_TEXT.BOARDGAMES }}
       </NavigationLink>
       <NavigationLink :to="{ name: 'Players' }" link @click="drawer = false">
-        Jugadores
+        {{ NAVIGATION_TEXT.PLAYERS }}
       </NavigationLink>
       <NavigationLink :to="{ name: 'Games' }" link @click="drawer = false">
-        Partidas 
+        {{ NAVIGATION_TEXT.GAMES }}
       </NavigationLink>
     </v-list>
   </v-navigation-drawer>
