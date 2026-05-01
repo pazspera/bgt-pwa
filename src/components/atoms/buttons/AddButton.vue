@@ -1,12 +1,6 @@
-<template>
-  <router-link :to="{ name: route }">
-    <v-btn class="btn-add" color="primary">
-      <v-icon icon="mdi:mdi-plus" /> <span>{{ text }}</span>
-    </v-btn>
-  </router-link>
-</template>
-
 <script setup>
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+
 const props = defineProps({
   text: {
     type: String,
@@ -20,6 +14,14 @@ const props = defineProps({
 
 defineOptions({ name: "AddGameButton" });
 </script>
+
+<template>
+  <router-link :to="{ name: route }">
+    <v-btn class="btn-add" color="primary">
+      <v-icon :icon="faPlus" /> <span>{{ text }}</span>
+    </v-btn>
+  </router-link>
+</template>
 
 <style scoped>
 .btn-add {
