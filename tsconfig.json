@@ -1,14 +1,17 @@
 {
   "compilerOptions": {
-    "target": "es2020", 
+    "target": "es2020",
     "module": "esnext",
     "moduleResolution": "node",
+    "strict": false,
     "allowJs": true,
+    "noEmit": true,
+    "isolatedModules": true,
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]
     }
   },
   // le dice a VS code que mire en src
-  "include": ["src/**/*", "src/env.d.ts"] 
+  "include": ["src/**/*", "src/env.d.ts"]
 }
