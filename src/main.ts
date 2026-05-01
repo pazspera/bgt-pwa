@@ -8,15 +8,13 @@ import { createVuetify, useTheme } from "vuetify";
 import * as components from "vuetify/components";
 import * as directives from "vuetify/directives";
 import { aliases, fa } from "vuetify/iconsets/fa-svg";
-import { mdi } from "vuetify/iconsets/mdi";
-// FontAwesome, only icons to be used
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { 
-  faDice, faUsers, faBoxArchive, faBars, faSun, faMoon, faTrash, faPenToSquare, 
-  faPlus, faTriangleExclamation, faSquare, faCaretDown, faCheck, 
-  faCheckSquare, faCalendar, faChevronLeft, faChevronRight, faChevronDown, 
-  faChevronUp, faFloppyDisk, faCircleCheck, faTrophy 
+import {
+  faDice, faUsers, faBoxArchive, faBars, faSun, faMoon, faTrash, faPenToSquare,
+  faPlus, faTriangleExclamation, faSquare, faCaretDown, faCheck,
+  faCheckSquare, faCalendar, faChevronLeft, faChevronRight, faChevronDown,
+  faChevronUp, faFloppyDisk, faCircleCheck, faTrophy
 } from "@fortawesome/free-solid-svg-icons";
 import { VDateInput } from "vuetify/labs/VDateInput";
 
@@ -40,7 +38,7 @@ const COLOR = {
   ERROR_DARK: "#FF8A80",
   SUCCESS_DARK: "#81C784",
   INFO_DARK: "#64B5F6",
-  WARNING_DARK: "#FFD740", 
+  WARNING_DARK: "#FFD740",
 }
 
 // Theme definitions
@@ -145,9 +143,9 @@ async function prepareApp(): Promise<void> {
 
 // Font Awesome
 library.add(
-  faDice, faUsers, faBoxArchive, faBars, faSun, faMoon, faTrash, faPenToSquare, 
-  faPlus, faTriangleExclamation, faSquare, faCaretDown, faCheck, faCheckSquare, 
-  faCalendar, faChevronLeft, faChevronRight, faChevronDown, faChevronUp, 
+  faDice, faUsers, faBoxArchive, faBars, faSun, faMoon, faTrash, faPenToSquare,
+  faPlus, faTriangleExclamation, faSquare, faCaretDown, faCheck, faCheckSquare,
+  faCalendar, faChevronLeft, faChevronRight, faChevronDown, faChevronUp,
   faFloppyDisk, faCircleCheck, faTrophy
 );
 
