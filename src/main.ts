@@ -120,12 +120,6 @@ const vuetify = createVuetify({
       lightTheme,
     },
   },
-  variables: {
-    'button-hover-opacity': 0.12,
-    'button-focused-opacity': 0.16,
-    'button-disabled-opacity': 0.38,
-    'button-pressed-opacity': 0.2,
-  },
   defaults: {
     VBtn: {
       ripple: false,
@@ -142,7 +136,8 @@ async function prepareApp(): Promise<void> {
   if (SHOULD_MOCK) {
     const { worker } = await import("./mocks/browser");
     console.log("start mock")
-    return worker.start();
+    await worker.start();
+    return;
   }
   console.log("Conectando a la API");
   return Promise.resolve();
