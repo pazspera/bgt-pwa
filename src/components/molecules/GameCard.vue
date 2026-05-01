@@ -9,6 +9,7 @@ import EditButton from '@/components/atoms/buttons/EditButton.vue';
 import DeleteButton from '@/components/atoms/buttons/DeleteButton.vue';
 import DetailText from '@/components/atoms/typography/DetailText.vue';
 import { formatDate } from '@/utils/formatters';
+import { GAME_CARD_TEXT } from '@/constants/ui_text/GameCard';
 
 defineOptions({ name: "GameCard" });
 
@@ -19,37 +20,44 @@ const props = defineProps<{
 const showDetails = ref(false);
 
 const countPlayers = () => {
-  return props.game.players.length;
+  return props.game.players.length ?? 0;
 }
 
 const getWinner = () => {
   const winner = props.game.players.find((player) => player.is_winner);
-  return winner.player_name;
+  return winner.player_name ?? GAME_CARD_TEXT.NO_WINNER;
 }
 
 </script>
 
 <template>
   <v-card
-    class="game-card"
+    class="game-card h-100"
     variant="elevated"
     hover
   >
-    <v-card-title class="ps-2">
-      <CardHeading class="mb-n3">
-        {{ game.boardgame_name }}
-      </CardHeading>
-    </v-card-title>
+    <div>
+      <v-card-title class="ps-2">
+        <CardHeading class="mb-n3">
+          {{ game.boardgame_name }}
+        </CardHeading>
+      </v-card-title>
+  
+      <v-card-subtitle v-if="game.start_date" class="game-card-date ps-2">
+        <DetailText>
+          {{ formatDate(game.start_date) }}
+        </DetailText>
+      </v-card-subtitle>
+    </div>
 
-    <v-card-subtitle v-if="game.start_date" class="game-card-date ps-2">
-      <DetailText>
-        {{ formatDate(game.start_date) }}
-      </DetailText>
-    </v-card-subtitle>
+    <v-card-item v-if="game.players?.length" class="game-card-players ps-2">
+      <DetailText class="detail-text">{{ GAME_CARD_TEXT.PLAYERS_COUNT_TEXT(countPlayers()) }}</DetailText>
+      <DetailText class="detail-text">{{ GAME_CARD_TEXT.WINNER_TEXT(getWinner()) }}</DetailText>
+    </v-card-item>
 
-    <v-card-item class="game-card-players ps-2">
-      <DetailText class="detail-text">Partida con {{ countPlayers() }} jugadorxs</DetailText>
-      <DetailText class="detail-text">Ganó {{ getWinner() }}</DetailText>
+    <!-- edge case where the card has no players attached -->
+    <v-card-item v-else class="game-card-players ps-2">
+      <DetailText class="detail-text">{{ GAME_CARD_TEXT.NO_PLAYERS }}</DetailText>
     </v-card-item>
 
     <v-divider></v-divider>
@@ -77,6 +85,7 @@ const getWinner = () => {
 
         <div class="players-list mb-2">
           <ul
+            v-if="game.players?.length"
             v-for="player in game.players"
             :key="player.player_id"
           >
@@ -95,6 +104,7 @@ const getWinner = () => {
               </div>
             </li>
           </ul>
+          <DetailText v-else class="detailText">{{ GAME_CARD_TEXT.NO_PLAYERS }}</DetailText>
         </div>
 
         <v-card-item v-if="game.notes" class="game-card-notes">
@@ -118,6 +128,7 @@ const getWinner = () => {
   flex-direction: column;
   align-items: self-start;
   padding: 12px;
+  justify-content: space-between;
 }
 
 .game-card-date,
@@ -139,6 +150,7 @@ const getWinner = () => {
   display: flex;
   justify-content: space-between;
   width: 100%;
+
 }
 
 .detail-text {
