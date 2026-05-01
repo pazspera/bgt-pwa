@@ -7,6 +7,7 @@ import { usePlayerApi } from "@/composables/usePlayerApi";
 import CardGrid from "@/components/organisms/CardGrid.vue";
 import type { CreatePlayerRequest, PlayerApiResponse, UpdatePlayerRequest } from "../../types/domain/playerApi";
 import { PLAYER_STATUS, CONFIRM_DELETE_PLAYER } from "@/constants/ui_feedback/players";
+import { BUTTONS_TEXT } from "@/constants/buttonsText";
 import { GENERAL_UI_TEXT } from "@/constants/generalText";
 import { capitalize } from "@/utils/formatters";
 import LoadingRow from "@/components/molecules/LoadingRow.vue";
@@ -84,7 +85,7 @@ const handlePlayerAdded = async (newPlayer: CreatePlayerRequest)=> {
   try {
     const playerToSave = { ...newPlayer, name: formattedName };
     const playerCreated = await createPlayer(playerToSave);
-    
+
     // updates players locally, if the code gets here, it was ok
     // faster ui update for the user
     players.value.push(playerCreated);
@@ -103,7 +104,7 @@ const handlePlayerUpdated = async (updatedPlayer: { id: string, name: UpdatePlay
   const formattedRequest: UpdatePlayerRequest = {
     name: formattedEditName,
   }
-  
+
   try {
     await updatePlayerAction(updatedPlayer.id, formattedRequest);
 
@@ -114,7 +115,7 @@ const handlePlayerUpdated = async (updatedPlayer: { id: string, name: UpdatePlay
     }
 
     isEditSheetVisible.value = false;
-    success(PLAYER_STATUS.UPDATED(formattedRequest.name)) 
+    success(PLAYER_STATUS.UPDATED(formattedRequest.name))
   } catch (error) {
     error(errorUpdate.value || PLAYER_STATUS.ERROR.UPDATE)
   }
@@ -127,8 +128,8 @@ const doesPlayerExist = (name: string) => {
 
 const showAddPlayerSheet = () => {
   errorText.value = "";
-  isSheetVisible.value = !isSheetVisible.value; 
-} 
+  isSheetVisible.value = !isSheetVisible.value;
+}
 
 const showEditPlayerSheet = () => {
   editErrorText.value = "";
@@ -157,7 +158,7 @@ const sortedPlayers = computed(()=> {
           color="primary"
           variant="elevated"
           density="default"
-          label="Agregar jugador"
+          :label="BUTTONS_TEXT.ADD_PLAYER"
         />
         <br/>
         <br/>
