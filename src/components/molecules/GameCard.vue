@@ -32,7 +32,7 @@ const getWinner = () => {
 
 <template>
   <v-card
-    class="game-card"
+    class="game-card h-100"
     variant="elevated"
     hover
   >
@@ -126,6 +126,7 @@ const getWinner = () => {
   flex-direction: column;
   align-items: self-start;
   padding: 12px;
+  justify-content: space-between;
 }
 
 .game-card-date,
@@ -147,6 +148,7 @@ const getWinner = () => {
   display: flex;
   justify-content: space-between;
   width: 100%;
+
 }
 
 .detail-text {
