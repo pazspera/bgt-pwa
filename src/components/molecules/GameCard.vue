@@ -25,7 +25,7 @@ const countPlayers = () => {
 
 const getWinner = () => {
   const winner = props.game.players.find((player) => player.is_winner);
-  return winner.player_name ?? "Desconocido";
+  return winner.player_name ?? GAME_CARD_TEXT.NO_WINNER;
 }
 
 </script>
@@ -51,8 +51,8 @@ const getWinner = () => {
     </div>
 
     <v-card-item v-if="game.players?.length" class="game-card-players ps-2">
-      <DetailText class="detail-text">Partida con {{ countPlayers() }} jugadorxs</DetailText>
-      <DetailText class="detail-text">Ganó {{ getWinner() }}</DetailText>
+      <DetailText class="detail-text">{{ GAME_CARD_TEXT.PLAYERS_COUNT_TEXT(countPlayers()) }}</DetailText>
+      <DetailText class="detail-text">{{ GAME_CARD_TEXT.WINNER_TEXT(getWinner()) }}</DetailText>
     </v-card-item>
 
     <!-- edge case where the card has no players attached -->
