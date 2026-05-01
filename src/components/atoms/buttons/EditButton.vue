@@ -15,7 +15,7 @@ const props = withDefaults(defineProps<{
     color="primary"
     variant="flat"
     class="action-btn button-edit"
-    label="Editar"
+    :label="label"
     :icon="faPenToSquare"
   />
 </template>

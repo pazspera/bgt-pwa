@@ -17,6 +17,7 @@ import BodyText from "@/components/atoms/typography/BodyText.vue";
 import AppButton from "@/components/atoms/buttons/AppButton.vue";
 import { useAppSnackbar } from "@/composables/useAppSnackbar";
 import { useDocumentTitle } from "@/composables/useDocumentTitle";
+import { DOCUMENT_TITLES } from "@/constants/documentTitles";
 
 const isSheetVisible: Ref<boolean> = ref(false);
 const errorText: Ref<string> = ref("");
@@ -35,7 +36,7 @@ const { updatePlayer: updatePlayerAction, errorUpdate, loading: updating } = use
 
 defineOptions({ name: "PlayersView" });
 
-useDocumentTitle("Jugadores - BGT");
+useDocumentTitle(DOCUMENT_TITLES.PLAYERS);
 
 onBeforeMount(async ()=> {
   await fetchPlayers();
