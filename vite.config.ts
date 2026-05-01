@@ -46,6 +46,7 @@ export default defineConfig({
     port: 3000,
     // permite probar en mobile
   },
+  // @ts-ignore - test property is from Vitest, not included in base Vite types
   test: {
     globals: true,
     environment: "jsdom",
