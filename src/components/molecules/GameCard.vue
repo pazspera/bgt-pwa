@@ -36,17 +36,19 @@ const getWinner = () => {
     variant="elevated"
     hover
   >
-    <v-card-title class="ps-2">
-      <CardHeading class="mb-n3">
-        {{ game.boardgame_name }}
-      </CardHeading>
-    </v-card-title>
-
-    <v-card-subtitle v-if="game.start_date" class="game-card-date ps-2">
-      <DetailText>
-        {{ formatDate(game.start_date) }}
-      </DetailText>
-    </v-card-subtitle>
+    <div>
+      <v-card-title class="ps-2">
+        <CardHeading class="mb-n3">
+          {{ game.boardgame_name }}
+        </CardHeading>
+      </v-card-title>
+  
+      <v-card-subtitle v-if="game.start_date" class="game-card-date ps-2">
+        <DetailText>
+          {{ formatDate(game.start_date) }}
+        </DetailText>
+      </v-card-subtitle>
+    </div>
 
     <v-card-item v-if="game.players?.length" class="game-card-players ps-2">
       <DetailText class="detail-text">Partida con {{ countPlayers() }} jugadorxs</DetailText>
