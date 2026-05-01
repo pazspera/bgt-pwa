@@ -38,6 +38,7 @@ export async function getGames(limit: number = 12, offset: number = 0) {
     }
 
     const data: GamesListResponse = await response.json();
+    console.log(data)
     return data;
   } catch (err) {
     throw new Error(API_ERROR_MESSAGES.UNKNOWN_ERROR(err?.message));

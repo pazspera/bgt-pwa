@@ -9,6 +9,10 @@ export function useGamesApi() {
   const errorSaveGame: Ref<string | null> = ref(null);
   const errorGetGames: Ref<string | null> = ref(null);
 
+  const currentPage: Ref<number> = ref(1);
+  const itemsPerPage: Ref<number> = ref(12);
+  const totalPages: Ref<number> = ref(0);
+
   const saveGame = async (gameData: CreateGameRequest) => {
     loading.value =  true;
     errorSaveGame.value = null;
@@ -25,13 +29,18 @@ export function useGamesApi() {
     }
   }
 
-  const getGames = async () => {
+  const getGames = async (limit?: number, offset?: number) => {
     loading.value = true;
     errorGetGames.value = null;
 
     try {
-      const response = await GamesApiService.getGames();
+      const response = await GamesApiService.getGames(
+        limit ?? itemsPerPage.value,
+        offset ?? (currentPage.value - 1) * itemsPerPage.value
+      );
       gamesList.value = response;
+      console.log(gamesList.value);
+      totalPages.value = Math.ceil(response.total / response.limit);
       return response;
     } catch (err) {
       errorGetGames.value = err.message;
@@ -41,5 +50,5 @@ export function useGamesApi() {
     }
   }
 
-  return { loading, newGame, errorSaveGame, gamesList, errorGetGames, saveGame, getGames }
+  return { loading, newGame, errorSaveGame, gamesList, errorGetGames, currentPage, totalPages, itemsPerPage, saveGame, getGames }
 }
