@@ -12,18 +12,24 @@ defineOptions({ name: "GamesView" });
 
 useDocumentTitle(DOCUMENT_TITLES.GAMES);
 
-const { loading, gamesList, errorGetGames, getGames } = useGamesApi();
+const { loading, gamesList, errorGetGames, currentPage, totalPages, itemsPerPage, getGames } = useGamesApi();
 
 onBeforeMount(async () => {
   await getGames();
   console.log(gamesList.value);
   console.log(errorGetGames.value);
+  console.log(totalPages.value);
 })
+
+const onPageChange = async () => {
+  await getGames();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
 
 </script>
 
 <template>
-  <v-container class="mt-4">
+  <v-container class="my-4">
     <DisplayTitle>Partidas</DisplayTitle>
 
     <!-- error on games initial fetch -->
@@ -47,6 +53,18 @@ onBeforeMount(async () => {
       <v-col>
         <SubsectionTitle>{{ GENERAL_UI_TEXT.NO_DATA_GAMES_TITLE }}</SubsectionTitle>
         <BodyText>{{ GENERAL_UI_TEXT.NO_DATA_GAMES_CTA }}</BodyText>
+      </v-col>
+    </v-row>
+
+    <!-- pagination -->
+    <v-row v-if="totalPages > 1 && !loading" class="mt-4">
+      <v-col>
+        <v-pagination
+          v-model="currentPage"
+          :length="totalPages"
+          @update:modelValue="onPageChange"
+          :disabled="loading"
+        />
       </v-col>
     </v-row>
 
