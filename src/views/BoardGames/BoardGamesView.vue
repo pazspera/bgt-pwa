@@ -9,8 +9,11 @@ import AppSnackbar from "@/components/molecules/AppSnackbar.vue";
 import { useAppSnackbar } from "@/composables/useAppSnackbar";
 import DisplayTitle from "@/components/atoms/typography/DisplayTitle.vue";
 import { GENERAL_UI_TEXT } from "@/constants/generalText";
+import { useDocumentTitle } from "@/composables/useDocumentTitle";
 
 defineOptions({ name: "BoardGamesView" });
+
+useDocumentTitle("Ludoteca - BGT");
 
 // const isSavedSnackBarVisible: Ref<boolean> = ref(false);
 // const savedSnackBarColor: Ref<string> = ref("");

@@ -15,7 +15,7 @@ import SubsectionTitle from "@/components/atoms/typography/SubsectionTitle.vue";
 import BodyText from "@/components/atoms/typography/BodyText.vue";
 import AppButton from "@/components/atoms/buttons/AppButton.vue";
 import { useAppSnackbar } from "@/composables/useAppSnackbar";
-
+import { useDocumentTitle } from "@/composables/useDocumentTitle";
 
 const isSheetVisible: Ref<boolean> = ref(false);
 const errorText: Ref<string> = ref("");
@@ -24,15 +24,17 @@ const editErrorText: Ref<string> = ref("");
 const playerToEdit: Ref<PlayerApiResponse | null> = ref(null);
 
 const isDeleteDialogVisible: Ref<boolean> = ref(false);
-const deleteDialogText : Ref<string> = ref(""); 
+const deleteDialogText : Ref<string> = ref("");
 const selectedPlayer: Ref<PlayerApiResponse | null> = ref(null);
 
-const { isSnackbarVisible, message, color, timeout, hide, success, error } = useAppSnackbar(); 
+const { isSnackbarVisible, message, color, timeout, hide, success, error } = useAppSnackbar();
 
 const { players, totalPlayers, loading: loadingList, error: errorList, errorCreatePlayer, errorDeletePlayer, fetchPlayers, createPlayer, deletePlayer } = usePlayersApi();
 const { updatePlayer: updatePlayerAction, errorUpdate, loading: updating } = usePlayerApi();
 
 defineOptions({ name: "PlayersView" });
+
+useDocumentTitle("Jugadores - BGT");
 
 onBeforeMount(async ()=> {
   await fetchPlayers();
