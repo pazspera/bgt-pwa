@@ -10,5 +10,5 @@
     }
   },
   // le dice a VS code que mire en src
-  "include": ["src/**/*", "env.d.ts"] 
+  "include": ["src/**/*", "src/env.d.ts"] 
 }
