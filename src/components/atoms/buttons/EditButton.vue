@@ -1,7 +1,13 @@
 <script setup lang="ts">
 import AppButton from './AppButton.vue';
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import { BUTTONS_TEXT } from '@/constants/buttonsText';
 
+const props = withDefaults(defineProps<{
+  label?: string,
+}>(), {
+  label: BUTTONS_TEXT.EDIT,
+})
 </script>
 
 <template>
@@ -9,7 +15,7 @@ import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
     color="primary"
     variant="flat"
     class="action-btn button-edit"
-    label="Editar"
+    :label="label"
     :icon="faPenToSquare"
   />
 </template>

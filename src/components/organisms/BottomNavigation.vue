@@ -3,25 +3,26 @@ import { faDice, faUsers, faBoxArchive } from "@fortawesome/free-solid-svg-icons
 import { NavButton } from "../../types/navigation";
 import BottomNavButton from '@/components/atoms/buttons/BottomNavButton.vue';
 import ThemeToggler from '@/components/molecules/ThemeToggler.vue';
+import { NAVIGATION_TEXT } from "@/constants/navigationText";
 
 defineOptions({ name: "BottomNavigation" });
 
 const BottomNav: NavButton[] = [
   {
     value: "ludoteca",
-    label: "Ludoteca",
+    label: NAVIGATION_TEXT.BOARDGAMES,
     to: { name: 'BoardGames' },
     icon: faDice
   },
   {
     value: "jugadores",
-    label: "Jugadores",
+    label: NAVIGATION_TEXT.PLAYERS,
     to: { name: 'Players' },
     icon: faUsers
   },
   {
     value: "partidas",
-    label: "Partidas",
+    label: NAVIGATION_TEXT.GAMES,
     to: { name: 'Games' },
     icon: faBoxArchive
   },

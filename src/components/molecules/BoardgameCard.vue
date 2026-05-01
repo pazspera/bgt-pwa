@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import CardHeading from '@/components/atoms/typography/CardHeading.vue';
 import AppButton from '@/components/atoms/buttons/AppButton.vue';
+import { BUTTONS_TEXT } from '@/constants/buttonsText';
 
 const props = defineProps<{
   boardgame: CollectionsApiResponse
@@ -35,7 +36,7 @@ const emit = defineEmits<{
       <AppButton
         color="primary"
         variant="flat"
-        label="Agregar Partida"
+        :label="BUTTONS_TEXT.ADD_GAME"
         density="default"
         :icon="faPlus"
         @click="emit('add-game', boardgame)"

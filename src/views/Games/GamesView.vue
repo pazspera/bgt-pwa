@@ -6,10 +6,11 @@ import CardGrid from "@/components/organisms/CardGrid.vue";
 import LoadingRow from "@/components/molecules/LoadingRow.vue";
 import { GENERAL_UI_TEXT } from "@/constants/generalText";
 import { useDocumentTitle } from "@/composables/useDocumentTitle";
+import { DOCUMENT_TITLES } from "@/constants/documentTitles";
 
 defineOptions({ name: "GamesView" });
 
-useDocumentTitle("Partidas - BGT");
+useDocumentTitle(DOCUMENT_TITLES.GAMES);
 
 const { loading, gamesList, errorGetGames, getGames } = useGamesApi();
 
