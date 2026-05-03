@@ -63,9 +63,9 @@ const getWinner = () => {
     <v-divider></v-divider>
 
     <v-card-actions class="card-actions">
-      <div>
+      <div class="container-action-buttons">
         <EditButton/>
-        <DeleteButton class="ml-3" />
+        <DeleteButton class="ml-sm-1 ml-md-3" />
       </div>
 
       <v-btn icon @click="showDetails = !showDetails">
@@ -169,4 +169,10 @@ const getWinner = () => {
   margin-bottom: 0px;
 }
 
+@media only screen and (min-width: 600px) and (max-width: 960px) {
+  .container-action-buttons {
+    display: flex;
+    flex-direction: row;
+  }
+}
 </style>
