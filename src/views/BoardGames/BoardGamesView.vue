@@ -46,7 +46,7 @@ onBeforeMount(async () => {
 </script>
 
 <template>
-  <v-container class="mt-4">
+  <v-container class="my-4 my-md-6 my-lg-8">
     <DisplayTitle>Ludoteca</DisplayTitle>
 
     <!-- error on the boardgames list initial fetch -->

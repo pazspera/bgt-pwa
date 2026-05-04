@@ -29,7 +29,7 @@ const onPageChange = async () => {
 </script>
 
 <template>
-  <v-container class="my-4">
+  <v-container class="my-4 my-md-6 my-lg-8">
     <DisplayTitle>Partidas</DisplayTitle>
 
     <!-- error on games initial fetch -->

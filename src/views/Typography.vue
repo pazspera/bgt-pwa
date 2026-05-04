@@ -8,7 +8,7 @@ useDocumentTitle("Tipografía - BGT");
 
 
 <template>
-  <v-container>
+  <v-container class="my-4 my-md-6 my-lg-8">
     <TypographyChart></TypographyChart>
   </v-container>
 </template>
