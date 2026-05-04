@@ -14,7 +14,7 @@ import {
   faDice, faUsers, faBoxArchive, faBars, faSun, faMoon, faTrash, faPenToSquare,
   faPlus, faTriangleExclamation, faSquare, faCaretDown, faCheck,
   faCheckSquare, faCalendar, faChevronLeft, faChevronRight, faChevronDown,
-  faChevronUp, faFloppyDisk, faCircleCheck, faTrophy
+  faChevronUp, faFloppyDisk, faCircleCheck, faTrophy, faUserGroup, faClock
 } from "@fortawesome/free-solid-svg-icons";
 import { VDateInput } from "vuetify/labs/VDateInput";
 
@@ -146,7 +146,7 @@ library.add(
   faDice, faUsers, faBoxArchive, faBars, faSun, faMoon, faTrash, faPenToSquare,
   faPlus, faTriangleExclamation, faSquare, faCaretDown, faCheck, faCheckSquare,
   faCalendar, faChevronLeft, faChevronRight, faChevronDown, faChevronUp,
-  faFloppyDisk, faCircleCheck, faTrophy
+  faFloppyDisk, faCircleCheck, faTrophy, faUserGroup, faClock
 );
 
 // Initialize app
