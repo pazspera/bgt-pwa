@@ -150,7 +150,7 @@ const sortedPlayers = computed(()=> {
 </script>
 
 <template>
-  <v-container class="mt-4 container">
+  <v-container class="my-4 my-md-6 my-lg-8 container">
     <v-row>
       <v-col>
         <DisplayTitle>Jugadores</DisplayTitle>
