@@ -8,6 +8,7 @@ import { BUTTONS_TEXT } from '@/constants/buttonsText';
 import DetailText from '../atoms/typography/DetailText.vue';
 import { BOARDGAME_CARD_TEXT } from '@/constants/ui_text/BoardGameCard';
 import { getBoardgameComplexity } from '@/utils/boardgame';
+import CardInfo from '../atoms/typography/CardInfo.vue';
 
 const props = defineProps<{
   boardgame: CollectionsApiResponse
@@ -44,17 +45,17 @@ const emit = defineEmits<{
     <div class="ps-2 pt-3 pb-2 boardgame-card-info">
       <div class="mb-1">
         <FontAwesomeIcon :icon="faUserGroup" class="me-1" />
-        <DetailText>{{ BOARDGAME_CARD_TEXT.MIN_MAX_PLAYERS(boardgame.min_players, boardgame.max_players) }}</DetailText>
+        <CardInfo>{{ BOARDGAME_CARD_TEXT.MIN_MAX_PLAYERS(boardgame.min_players, boardgame.max_players) }}</CardInfo>
       </div>
       <div class="playtime-item">
         <FontAwesomeIcon :icon="faClock" class="me-1" />
-        <DetailText>{{ BOARDGAME_CARD_TEXT.PLAYING_TIME(boardgame.playing_time) }}</DetailText>
+        <CardInfo>{{ BOARDGAME_CARD_TEXT.PLAYING_TIME(boardgame.playing_time) }}</CardInfo>
       </div>
     </div>
 
     <div class="ps-2 pb-3">
       <v-chip>
-        <DetailText>{{ getBoardgameComplexity(boardgame.complexity) }}</DetailText>
+        <CardInfo>{{ getBoardgameComplexity(boardgame.complexity) }}</CardInfo>
       </v-chip>
     </div>
 

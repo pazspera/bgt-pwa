@@ -15,14 +15,12 @@ defineOptions({ name: "CardInfo" });
   font-size: var(--font-size-xxs);
   font-weight: 500;
   line-height: 1;
-  display: block;
 }
 
-/* @media(min-width: 960px) {
+@media(min-width: 961px) {
   .card-info {
     font-size: var(--font-size-xs);
   }
-} */
-
+}
 
 </style>
