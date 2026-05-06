@@ -32,7 +32,7 @@ const getWinner = () => {
 
 <template>
   <v-card
-    class="game-card h-100"
+    class="game-card"
     variant="elevated"
     hover
   >
@@ -58,6 +58,7 @@ const getWinner = () => {
     <!-- edge case where the card has no players attached -->
     <v-card-item v-else class="game-card-players ps-2">
       <DetailText class="detail-text">{{ GAME_CARD_TEXT.NO_PLAYERS }}</DetailText>
+      <DetailText class="hidden-text">-</DetailText>
     </v-card-item>
 
     <v-divider></v-divider>
@@ -167,6 +168,10 @@ const getWinner = () => {
 
 .player-item .detail-text {
   margin-bottom: 0px;
+}
+
+.hidden-text {
+  visibility: hidden;
 }
 
 @media only screen and (min-width: 600px) and (max-width: 960px) {
