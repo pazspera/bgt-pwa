@@ -87,6 +87,8 @@ const emit = defineEmits<{
   flex-direction: column;
 }
 
+
+
 @media (min-width: 750px) {
   .boardgame-card-info {
     flex-direction: row;
@@ -102,4 +104,9 @@ const emit = defineEmits<{
     margin-left: 24px;
   }
 }
+
+:deep(.v-card--hover) {
+  cursor: default;
+}
+
 </style>
