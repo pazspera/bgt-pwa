@@ -13,7 +13,7 @@ describe("useGamesApi", ()=> {
 
   describe("saveGame", ()=> {
 
-    it.only("success: saves new game, updates loading, no errors", async () => {
+    it("success: saves new game, updates loading, no errors", async () => {
       // mockear respuesta del saved game
       // desestructurar useGamesApi con lo que necesito
       // check shared initial status
@@ -50,7 +50,7 @@ describe("useGamesApi", ()=> {
     // expect end state
     // confirmar que el error sea el mismo
     // confirmar que newGame sea null
-    it.only("error: bad request (400)", async () => {
+    it("error: bad request (400)", async () => {
       const errorMessage = API_ERROR_MESSAGES.CREATE_GAME_ERROR(400);
       const spyCreateGame = vi.spyOn(GamesApiService, "createGame").mockRejectedValue(new Error(errorMessage));
       const { loading, errorSaveGame, newGame, saveGame } = useGamesApi();
@@ -70,7 +70,7 @@ describe("useGamesApi", ()=> {
       expect(newGame.value).toBeNull();
     });
 
-    it.only("error: internal server error (500)", async () => {
+    it("error: internal server error (500)", async () => {
       const errorMessage = API_ERROR_MESSAGES.CREATE_GAME_ERROR(500);
       const spyCreateGame = vi.spyOn(GamesApiService, "createGame").mockRejectedValueOnce(new Error(errorMessage));
       const { loading, errorSaveGame, newGame, saveGame } = useGamesApi();
@@ -90,7 +90,7 @@ describe("useGamesApi", ()=> {
       expect(newGame.value).toBeNull();
     });
 
-    it.only("error: network error ", async () => {
+    it("error: network error ", async () => {
       const errorMessage = API_ERROR_MESSAGES.NETWORK_ERROR;
       const spyCreateGame = vi.spyOn(GamesApiService, "createGame").mockRejectedValueOnce(new Error(errorMessage));
       const { loading, errorSaveGame, newGame, saveGame } = useGamesApi();
@@ -102,7 +102,7 @@ describe("useGamesApi", ()=> {
       expectLoadingState(loading.value, errorSaveGame.value);
 
       try {
-       await response; 
+       await response;
       } catch (error) { };
 
       expectSharedEndState(spyCreateGame, loading.value);
