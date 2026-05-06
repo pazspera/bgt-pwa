@@ -13,6 +13,7 @@ import CaptionText from '@/components/atoms/typography/CaptionText.vue';
 import ButtonLabel from '@/components/atoms/typography/ButtonLabel.vue';
 import NavigationLink from '@/components/atoms/typography/NavigationLink.vue';
 import ExternalLink from '@/components/atoms/typography/ExternalLink.vue';
+import CardInfo from '@/components/atoms/typography/CardInfo.vue';
 
 </script>
 
@@ -99,6 +100,12 @@ import ExternalLink from '@/components/atoms/typography/ExternalLink.vue';
           <td><ButtonLabel>Button Label</ButtonLabel></td>
           <td>Button label</td>
           <td>AppButton, AppSnackbar</td>
+        </tr>
+        <tr>
+          <td>Span</td>
+          <td><CardInfo>Card Info</CardInfo></td>
+          <td>Details in Card</td>
+          <td>BoardGameCard, </td>
         </tr>
         <tr>
           <td>Span</td>
