@@ -1,7 +1,7 @@
 import { describe, it, vi, afterEach, beforeEach, expect } from "vitest";
-import { mockNewGameRequest, mockCreatedGameResponse } from "../mocks/data/gameApi";
+import { mockNewGameRequest, mockCreatedGameResponse } from "@/mocks/data/gameApi";
 import { createGame } from "./gameApiService";
-import { API_ERROR_MESSAGES } from "../constants/apiErrorMessages";
+import { API_ERROR_MESSAGES } from "@/constants/apiErrorMessages";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 

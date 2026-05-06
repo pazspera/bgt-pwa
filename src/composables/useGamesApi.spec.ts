@@ -1,9 +1,9 @@
 import { it, vi, describe, afterEach, expect } from "vitest";
-import * as GamesApiService from "../api/gameApiService";
+import * as GamesApiService from "@/api/gameApiService";
 import { useGamesApi } from "./useGamesApi";
-import { mockNewGameRequest, mockCreatedGameResponse } from "../mocks/data/gameApi";
-import { API_ERROR_MESSAGES } from "../constants/apiErrorMessages";
-import { expectSharedInitialState, expectLoadingState, expectSharedEndState } from "../tests/utils/apiComposables";
+import { mockNewGameRequest, mockCreatedGameResponse } from "@/mocks/data/gameApi";
+import { API_ERROR_MESSAGES } from "@/constants/apiErrorMessages";
+import { expectSharedInitialState, expectLoadingState, expectSharedEndState } from "@/tests/utils/apiComposables";
 
 describe("useGamesApi", ()=> {
   afterEach(()=> {

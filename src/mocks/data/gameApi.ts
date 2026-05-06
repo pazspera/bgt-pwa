@@ -1,4 +1,4 @@
-import { CreateGameRequest, CreatedGameResponse } from "../../types/domain/gamesApi"
+import { CreateGameRequest, CreatedGameResponse } from "@/types/domain/gamesApi"
 
 export const mockNewGameRequest: CreateGameRequest = {
   boardgame_id: "bcae2afc-f027-489d-8f70-fd8f79d10533",
