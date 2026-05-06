@@ -10,10 +10,12 @@ export const mockNewGameRequest: CreateGameRequest = {
   players: [
     {
       player_id: "3a28cf09-0506-4d1d-aba7-414702eb690c",
+      player_name: "Zeuchi",
       is_winner: true,
     },
     {
       player_id: "2b0164f7-1a93-491e-aced-ba04c4034157",
+      player_name: "Mareita",
       is_winner: false,
     }
   ]
