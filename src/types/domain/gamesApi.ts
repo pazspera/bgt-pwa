@@ -36,3 +36,15 @@ export interface CreateGameRequest {
   notes: string,
   players: PlayerInGame[],
 }
+
+export interface CreatedGameResponse {
+  id: string,
+  boardgame_id: string,
+  collection_id: string,
+  start_date: string,
+  end_date: string,
+  notes: string,
+  duration: string,
+  created_at: string,
+  updated_at: string,
+}
