@@ -118,16 +118,7 @@ const setupAddGameDialogTest = (options: Record<string, any> = {}) => {
   const dialogContent = wrapper.find('[data-testid="add-game-dialog"]');
 
   return {
-    wrapper,
-    dateInput,
-    playersSelect,
-    winnerSelect,
-    notesTextarea,
-    btnSave,
-    btnCancel,
-    loadingRow,
-    errorAlert,
-    dialogContent
+    wrapper, dateInput, playersSelect, winnerSelect, notesTextarea, btnSave, btnCancel, loadingRow,errorAlert, dialogContent
   };
 };
 
@@ -144,10 +135,13 @@ describe("Rendering", () => {
     expect(dialogContent.exists()).toBe(true);
    });
 
-  // TODO: Implement test 1.2
-  it("1.2 - No renderiza cuando modelValue es false", () => {
-    // Verificar que el componente no muestra contenido
-    // O que el dialog no está presente
+  // test 1.2
+  it.only("doesn't render component when modelValue is false", () => {
+    const { dialogContent } = setupAddGameDialogTest({
+      props: { modelValue: false },
+    });
+
+    expect(dialogContent.exists()).toBe(false);
   });
 
   // TODO: Implement test 1.3
