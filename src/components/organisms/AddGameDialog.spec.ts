@@ -4,7 +4,7 @@ import { nextTick } from "vue";
 import { createVuetifyForTest } from "@/tests/utils/createVuetifyForTest";
 import { setTextInputValue } from "@/tests/utils/form-helpers";
 import AddGameDialog from "@/components/organisms/AddGameDialog.vue";
-import { VDialog, VCard, VSelect, VTextarea, VBtn, VAlert, VRow, VCol } from "vuetify/components";
+import { VDialog, VCard, VSelect, VTextarea, VBtn, VAlert, VRow, VCol, VCardTitle, VCardSubtitle, VCardItem, VForm, VCardText, VCardActions } from "vuetify/components";
 import { VDateInput } from "vuetify/labs/VDateInput";
 import { AddGameDialogText } from "@/constants/ui_text/AddGameDialog";
 import type { CollectionsApiResponse } from "@/types/domain/collectionsApi";
@@ -17,15 +17,7 @@ vi.mock("@/composables/usePlayersApi");
 vi.mock("@/composables/useGamesApi");
 
 const vuetify = createVuetifyForTest({
-  VDialog,
-  VCard,
-  VSelect,
-  VDateInput,
-  VTextarea,
-  VBtn,
-  VAlert,
-  VRow,
-  VCol
+  VDialog, VCard, VSelect, VDateInput, VTextarea, VBtn, VAlert, VRow, VCol, VCardTitle, VCardSubtitle, VCardItem, VForm, VCardText, VCardActions
 });
 
 
@@ -41,9 +33,10 @@ const mountAddGameDialog = (options: Record<string, any> = {}) => {
       plugins: [vuetify],
       stubs: {
         "v-dialog": {
-          template: `<div v-bind="$attrs" data-testid="add-game-dialog">
+          template: `<div v-if="modelValue" v-bind="$attrs" data-testid="add-game-dialog">
             <slot/>
           </div>`,
+          props: ["modelValue"],
           emits: ["update:modelValue"]
         },
         "v-date-input": {
@@ -138,16 +131,18 @@ const setupAddGameDialogTest = (options: Record<string, any> = {}) => {
   };
 };
 
-describe("AddGameDialog - Rendering", () => {
+describe("Rendering", () => {
+  let dialogContent;
+  let wrapper;
+
   beforeEach(() => {
     vi.clearAllMocks();
+    ({ wrapper, dialogContent } = setupAddGameDialogTest());
   });
 
-  // TODO: Implement test 1.1
-  it("1.1 - Renderiza cuando modelValue es true", () => {
-    // Verificar que el dialog es visible
-    // Verificar que todos los campos están presentes
-  });
+  it.only("renders component when modelValue is true", () => {
+    expect(dialogContent.exists()).toBe(true);
+   });
 
   // TODO: Implement test 1.2
   it("1.2 - No renderiza cuando modelValue es false", () => {
