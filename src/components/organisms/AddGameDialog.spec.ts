@@ -129,17 +129,23 @@ describe("Rendering", () => {
   let dialogContent;
   let wrapper;
   let loadingRow;
+  let dateInput;
+  let playersSelect;
+  let winnerSelect;
+  let notesTextarea;
+  let btnSave;
+  let btnCancel;
 
   beforeEach(() => {
     vi.clearAllMocks();
-    ({ wrapper, dialogContent, loadingRow } = setupAddGameDialogTest());
+    ({ wrapper, dialogContent, loadingRow, dateInput, playersSelect, winnerSelect, notesTextarea, btnSave, btnCancel } = setupAddGameDialogTest());
   });
 
-  it.only("renders component when modelValue is true", () => {
+  it("renders component when modelValue is true", () => {
     expect(dialogContent.exists()).toBe(true);
    });
 
-  it.only("doesn't render component when modelValue is false", () => {
+  it("doesn't render component when modelValue is false", () => {
     const { dialogContent } = setupAddGameDialogTest({
       props: { modelValue: false },
     });
@@ -147,7 +153,7 @@ describe("Rendering", () => {
     expect(dialogContent.exists()).toBe(false);
   });
 
-  it.only("when loading is true, renders LoadingRow and doesn't render dialog", () => {
+  it("when loading is true, renders LoadingRow and doesn't render dialog", () => {
     vi.mocked(usePlayersApi).mockReturnValue({
       players: ref([]),
       totalPlayers: ref(0),
@@ -164,21 +170,12 @@ describe("Rendering", () => {
     expect(contentWrapper.classes()).toContain("hidden-on-loading");
   });
 
-  // TODO: Implement test 1.4
-  it("1.4 - Muestra error state (primer intento)", () => {
-    // Verificar que cuando error está presente y errorCount=1
-    // Muestra alerta con mensaje de reintento
-  });
-
-  // TODO: Implement test 1.5
-  it("1.5 - Muestra error state (segundo intento)", () => {
-    // Verificar que cuando errorCount>1
-    // Muestra mensaje de recargar página
-  });
-
-  // TODO: Implement test 1.6
-  it("1.6 - Renderiza todos los campos del formulario", () => {
-    // Verificar que están presentes:
-    // Date input, players select, winner select, notes textarea, botones
+  it("renders all input fields", () => {
+    expect(dateInput.exists()).toBe(true);
+    expect(playersSelect.exists()).toBe(true);
+    expect(winnerSelect.exists()).toBe(true);
+    expect(notesTextarea.exists()).toBe(true);
+    expect(btnSave.exists()).toBe(true);
+    expect(btnCancel.exists()).toBe(true);
   });
 });
