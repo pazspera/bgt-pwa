@@ -9,6 +9,8 @@ import { VDateInput } from "vuetify/labs/VDateInput";
 import { AddGameDialogText } from "@/constants/ui_text/AddGameDialog";
 import type { CollectionsApiResponse } from "@/types/domain/collectionsApi";
 import type { PlayerApiResponse } from "@/types/domain/playerApi";
+import { mockCollectionsApiResponse } from "@/mocks/data/collectionsApi";
+import { mockPlayersListResponse } from "@/mocks/data/playersApi";
 
 // Mock composables
 vi.mock("@/composables/usePlayersApi");
@@ -26,29 +28,13 @@ const vuetify = createVuetifyForTest({
   VCol
 });
 
-// Mock data
-const mockBoardgame: CollectionsApiResponse = {
-  id: "game-123",
-  name: "Catan",
-  bgg_id: 333,
-  min_players: 2,
-  max_players: 4,
-  playing_time: 90,
-  complexity: 1.1,
-};
-
-const mockPlayers: PlayerApiResponse[] = [
-  { id: "player-1", name: "Jugador 1", is_registered: true },
-  { id: "player-2", name: "Jugador 2", is_registered: true },
-  { id: "player-3", name: "Jugador 3", is_registered: false },
-];
 
 // Mount function
 const mountAddGameDialog = (options: Record<string, any> = {}) => {
   return mount(AddGameDialog, {
     props: {
       modelValue: true,
-      boardgame: mockBoardgame,
+      boardgame: mockCollectionsApiResponse,
       ...options.props || {},
     },
     global: {
