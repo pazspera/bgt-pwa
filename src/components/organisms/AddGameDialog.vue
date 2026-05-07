@@ -110,6 +110,7 @@ watch(selectedPlayers, (newPlayers) => {
   newPlayers.forEach((player) => {
     push({
       player_id: player.id,
+      player_name: player.name,
       is_winner: gameWinner.value?.id === player.id,
       is_registered: player.is_registered ?? false,
     })
@@ -125,6 +126,7 @@ watch(selectedPlayers, (newPlayers) => {
   // if there is a winner, we send the object formated to schema
   winnerValue.value = gameWinner.value ? {
     player_id: gameWinner.value.id,
+    player_name: gameWinner.value.name,
     is_winner: true,
     is_registered: gameWinner.value.is_registered ?? false,
   } : null;
@@ -138,6 +140,7 @@ watch(selectedPlayers, (newPlayers) => {
 watch(gameWinner, (newWinner)=> {
   winnerValue.value = newWinner ? {
     player_id: newWinner.id,
+    player_name: newWinner.name,
     is_winner: true,
     is_registered: newWinner.is_registered ?? false,
   } : null;
@@ -193,7 +196,9 @@ const onSubmit = handleSubmit(async (values) => {
     // it was showing all players as winner false
     const mappedPlayers = values.players.map((player) => ({
       player_id: player.player_id,
+      player_name: player.player_name,
       is_winner: player.player_id === gameWinner.value?.id,
+      is_registered: player.is_registered ?? false,
     }))
 
     const formatLocalISODate = (date: Date) => {
