@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faFloppyDisk } from "@fortawesome/free-solid-svg-icons";
 import { CollectionsApiResponse } from '../../types/domain/collectionsApi';
 import { usePlayersApi } from '@/composables/usePlayersApi';
-import { useGamesApi } from '@/composables/useGamesApi'; 
+import { useGamesApi } from '@/composables/useGamesApi';
 import { onBeforeMount, ref, type Ref, watch } from 'vue';
 import LoadingRow from '@/components/molecules/LoadingRow.vue';
 import { PlayerApiResponse } from '../../types/domain/playerApi';
@@ -16,16 +16,16 @@ import BlockHeading from '@/components/atoms/typography/BlockHeading.vue';
 import DetailText from '@/components/atoms/typography/DetailText.vue';
 import AppButton from '@/components/atoms/buttons/AppButton.vue';
 
-const props =  defineProps<{
+const props = defineProps<{
   modelValue: boolean,
   boardgame: CollectionsApiResponse | null,
 }>();
 defineOptions({ name: "AddGameDialog" });
 
 const emit = defineEmits<{
-  "update:modelValue": [ dialogVisibility: boolean ],
-  "success": [ message: string],
-  "error": [ message: string ]
+  "update:modelValue": [dialogVisibility: boolean],
+  "success": [message: string],
+  "error": [message: string]
 }>();
 
 const { players, totalPlayers, loading, error, fetchPlayers } = usePlayersApi();
@@ -102,7 +102,7 @@ const { fields, push, remove } = useFieldArray<PlayerInGame>('players');
 watch(selectedPlayers, (newPlayers) => {
   // cleans current array in vee-validate
   // if a player is added and deleted, the array has to be repopulated from scratch
-  while(fields.value.length > 0) {
+  while (fields.value.length > 0) {
     remove(0);
   }
 
@@ -117,7 +117,7 @@ watch(selectedPlayers, (newPlayers) => {
   })
 
   // if the selected winner is no longer in the players array, remove it
-  if(gameWinner.value && !newPlayers.some(p => p.id === gameWinner.value.id)) {
+  if (gameWinner.value && !newPlayers.some(p => p.id === gameWinner.value.id)) {
     gameWinner.value = null;
   }
 
@@ -137,7 +137,7 @@ watch(selectedPlayers, (newPlayers) => {
 
 // WATCH FOR WINNER SELECT
 // checks if the player changes the winner without touching the players
-watch(gameWinner, (newWinner)=> {
+watch(gameWinner, (newWinner) => {
   winnerValue.value = newWinner ? {
     player_id: newWinner.id,
     player_name: newWinner.name,
@@ -146,7 +146,7 @@ watch(gameWinner, (newWinner)=> {
   } : null;
 })
 
-onBeforeMount(async ()=> {
+onBeforeMount(async () => {
   await fetchPlayers();
 })
 
@@ -155,7 +155,7 @@ const closeDialog = () => {
   resetForm();
 
   // reset variables
-  selectedPlayers.value= [];
+  selectedPlayers.value = [];
   gameWinner.value = null;
   errorCount.value = 0;
 
@@ -168,17 +168,17 @@ const closeDialog = () => {
   message instructs the user to reload the page.
 */
 watch(error, (newValue) => {
-  if(newValue !== null) {
+  if (newValue !== null) {
     errorCount.value++;
   }
 })
 
 const handleReloadOnError = async () => {
-  if(errorCount.value === 1) {
+  if (errorCount.value === 1) {
     await fetchPlayers();
 
     // resets errorCount if it loads correctly
-    if(!error.value) {
+    if (!error.value) {
       errorCount.value = 0;
     }
   } else {
@@ -202,28 +202,28 @@ const onSubmit = handleSubmit(async (values) => {
     }))
 
     const formatLocalISODate = (date: Date) => {
-  const offset = -date.getTimezoneOffset();
-  const sign = offset >= 0 ? '+' : '-';
-  const absOffset = Math.abs(offset);
-  const hours = String(Math.floor(absOffset / 60)).padStart(2, '0');
-  const minutes = String(absOffset % 60).padStart(2, '0');
-  const isoDate = date.toISOString().slice(0, 19);
-  return `${isoDate}${sign}${hours}:${minutes}`;
-};
+      const offset = -date.getTimezoneOffset();
+      const sign = offset >= 0 ? '+' : '-';
+      const absOffset = Math.abs(offset);
+      const hours = String(Math.floor(absOffset / 60)).padStart(2, '0');
+      const minutes = String(absOffset % 60).padStart(2, '0');
+      const isoDate = date.toISOString().slice(0, 19);
+      return `${isoDate}${sign}${hours}:${minutes}`;
+    };
 
-const payload: CreateGameRequest = {
-  boardgame_id: props.boardgame.id,
-  // NO ENTIENDO DONDE ESTÁ LA COLLECTION_ID
-  // está hardcodeado en GamesView
-  collection_id: 'b6acc73a-6b7a-4c67-937a-e1a6169f173f',
-  player_group_id: null,
-  start_date: formatLocalISODate(values.date),
-  end_date: formatLocalISODate(new Date(values.date.getTime() + 3600000)),
-  notes: values.notes,
-  players: mappedPlayers,
-};
+    const payload: CreateGameRequest = {
+      boardgame_id: props.boardgame.id,
+      // NO ENTIENDO DONDE ESTÁ LA COLLECTION_ID
+      // está hardcodeado en GamesView
+      collection_id: 'b6acc73a-6b7a-4c67-937a-e1a6169f173f',
+      player_group_id: null,
+      start_date: formatLocalISODate(values.date),
+      end_date: formatLocalISODate(new Date(values.date.getTime() + 3600000)),
+      notes: values.notes,
+      players: mappedPlayers,
+    };
     console.log(payload)
-    
+
     await saveGame(payload);
 
     emit("success", "¡La partida fue guardada exitosamente!");
@@ -237,161 +237,97 @@ const payload: CreateGameRequest = {
 </script>
 
 <template>
-  <v-dialog
-      :model-value="modelValue"
-      @update:model-value="emit('update:modelValue', $event)"
-      max-width="1100px"
-      scrollable
-      data-testid="add-game-dialog"
-    >
+  <v-dialog :model-value="modelValue" @update:model-value="emit('update:modelValue', $event)" max-width="1100px"
+    scrollable data-testid="add-game-dialog">
 
-      <v-card class="dialog">
-        <!-- loading -->
-        <div v-if="loading || error" class="overlay-container">
-          <div class="d-flex flex-column justify-center align-center w-100">
-            <LoadingRow v-if="loading" class="ma-0"></LoadingRow>
+    <v-card class="dialog">
+      <!-- loading -->
+      <div v-if="loading || error" class="overlay-container">
+        <div class="d-flex flex-column justify-center align-center w-100">
+          <LoadingRow data-testid="loading-row" v-if="loading" class="ma-0"></LoadingRow>
 
-            <v-row v-if="error" class="w-66 flex-grow-0">
+          <v-row v-if="error" class="w-66 flex-grow-0">
+            <v-col cols="12">
+              <v-alert data-testid="error-alert" color="error"
+                :title="errorCount === 1 ? AddGameDialogText.errors.failedLoadTitleFirst : AddGameDialogText.errors.failedLoadTitleSecond"
+                class="error-container">
+                <div>
+                  <span class="mt-4">{{ errorCount === 1 ? AddGameDialogText.errors.loadFirstTry :
+                    AddGameDialogText.errors.loadSecondTry }}</span>
+                </div>
+                <template #append>
+                  <v-btn color="white" variant="flat" size="small" @click="handleReloadOnError">
+                    {{ errorCount === 1 ? AddGameDialogText.buttons.retryFirstTry :
+                      AddGameDialogText.buttons.retrySecondTry }}
+                  </v-btn>
+                </template>
+              </v-alert>
+            </v-col>
+          </v-row>
+        </div>
+      </div>
+
+      <div :class="{ 'hidden-on-loading': loading || error }" class="content-wrapper">
+        <v-card-item class="mb-4">
+          <v-card-title class="dialog-title">
+            <BlockHeading>
+              {{ AddGameDialogText.title }}
+            </BlockHeading>
+          </v-card-title>
+          <v-card-subtitle>
+            <DetailText>
+              {{ boardgame.name }}
+            </DetailText>
+          </v-card-subtitle>
+        </v-card-item>
+
+        <v-card-text>
+          <v-form>
+            <v-row>
+              <v-col cols="12" md="4">
+                <v-date-input data-testid="date-input" :label="AddGameDialogText.labels.selectDate" v-model="dateValue"
+                  :error-messages="dateError" prepend-icon="" prepend-inner-icon="$calendar"
+                  variant="outlined"></v-date-input>
+              </v-col>
+              <v-col cols="12" sm="6" md="4">
+                <v-select data-testid="players-select" chips :label="AddGameDialogText.labels.selectPlayers"
+                  :hint="selectedPlayers.length === 0 ? AddGameDialogText.hints.selectPlayers : ''"
+                  v-model="selectedPlayers"
+                  :error-messages="selectedPlayers.length > 0 || submitCount > 0 ? formErrors.players : ''"
+                  :items="players" item-title="name" item-value="id" variant="outlined" density="comfortable" multiple
+                  persistent-hint return-object>
+                </v-select>
+              </v-col>
+              <v-col cols="12" sm="6" md="4">
+                <v-select data-testid="winner-select" chips variant="outlined" density="comfortable"
+                  v-model="gameWinner"
+                  :error-messages="selectedPlayers.length > 0 && (winnerMeta.touched || submitCount > 0) ? winnerError : ''"
+                  :disabled="selectedPlayers.length === 0" :label="AddGameDialogText.labels.selectWinner"
+                  :items="selectedPlayers" item-title="name" item-value="id" return-object></v-select>
+              </v-col>
               <v-col cols="12">
-                <v-alert
-                  color="error"
-                  :title="errorCount === 1 ? AddGameDialogText.errors.failedLoadTitleFirst : AddGameDialogText.errors.failedLoadTitleSecond"
-                  class="error-container"
-                >
-                  <div>
-                      <span class="mt-4">{{ errorCount === 1 ? AddGameDialogText.errors.loadFirstTry : AddGameDialogText.errors.loadSecondTry }}</span>
-                  </div>
-                  <template #append>
-                    <v-btn
-                      color="white"
-                      variant="flat"
-                      size="small"
-                      @click="handleReloadOnError"
-                    >
-                      {{ errorCount === 1 ? AddGameDialogText.buttons.retryFirstTry : AddGameDialogText.buttons.retrySecondTry }}
-                    </v-btn>
-                  </template>
-                </v-alert>
+                <v-textarea data-testid="notes-textarea" variant="outlined" v-model="notesValue"
+                  :error-messages="notesError" :label="AddGameDialogText.labels.notes" no-resize
+                  max-rows="3"></v-textarea>
               </v-col>
             </v-row>
-          </div>
-        </div>
+          </v-form>
+        </v-card-text>
 
-        <div :class="{ 'hidden-on-loading': loading || error }" class="content-wrapper">
-          <v-card-item class="mb-4" >
-            <v-card-title class="dialog-title">
-              <BlockHeading>
-                {{ AddGameDialogText.title }}
-              </BlockHeading>
-            </v-card-title>
-            <v-card-subtitle>
-              <DetailText>
-                {{ boardgame.name }}
-              </DetailText>
-            </v-card-subtitle>
-          </v-card-item>
-           
-          <v-card-text>
-            <v-form>
-              <v-row>
-                <v-col
-                  cols="12"
-                  md="4"
-                >
-                  <v-date-input
-                    :label="AddGameDialogText.labels.selectDate"
-                    v-model="dateValue"
-                    :error-messages="dateError"
-                    prepend-icon=""
-                    prepend-inner-icon="$calendar"
-                    variant="outlined"
-                  ></v-date-input>
-                </v-col>
-                <v-col
-                  cols="12"
-                  sm="6"
-                  md="4"  
-                >
-                  <v-select
-                    chips
-                    :label="AddGameDialogText.labels.selectPlayers"
-                    :hint="selectedPlayers.length === 0 ? AddGameDialogText.hints.selectPlayers : ''"
-                    v-model="selectedPlayers"
-                    :error-messages="selectedPlayers.length > 0 || submitCount > 0 ? formErrors.players : ''"
-                    :items="players"
-                    item-title="name"
-                    item-value="id"
-                    variant="outlined"
-                    density="comfortable"
-                    multiple
-                    persistent-hint
-                    return-object
-                  >
-                  </v-select>
-                </v-col>
-                <v-col
-                  cols="12"
-                  sm="6"
-                  md="4"
-                >
-                  <v-select
-                    chips
-                    variant="outlined"
-                    density="comfortable"
-                    v-model="gameWinner"
-                    :error-messages="selectedPlayers.length > 0 && (winnerMeta.touched || submitCount > 0) ? winnerError : ''"
-                    :disabled="selectedPlayers.length === 0"
-                    :label="AddGameDialogText.labels.selectWinner"
-                    :items="selectedPlayers"
-                    item-title="name"
-                    item-value="id"
-                    return-object
-                  ></v-select>
-                </v-col>
-                <v-col
-                  cols="12"
-                >
-                  <v-textarea
-                    variant="outlined"
-                    v-model="notesValue"
-                    :error-messages="notesError"
-                    :label="AddGameDialogText.labels.notes"
-                    no-resize
-                    max-rows="3"
-                  ></v-textarea>
-                </v-col>
-              </v-row>
-            </v-form>
-          </v-card-text>
-  
-          <v-card-actions class="dialog-actions mt-3">
-            <AppButton
-              class="dialog-button"
-              type="submit"
-              @click="onSubmit"
-              color="primary"
-              variant="flat"
-              density="default"
-              :loading="savingGame"
-              :icon="faFloppyDisk"
-              :label="AddGameDialogText.buttons.save"
-            />
-            <AppButton
-              class="dialog-button"
-              color="error"
-              variant="text"
-              density="default"
-              @click="closeDialog"
-              :label="AddGameDialogText.buttons.cancel"
-            />
-          </v-card-actions>
-        </div>
-      </v-card>
-    </v-dialog>
+        <v-card-actions class="dialog-actions mt-3">
+          <AppButton data-testid="btn-save" class="dialog-button" type="submit" @click="onSubmit" color="primary"
+            variant="flat" density="default" :loading="savingGame" :icon="faFloppyDisk"
+            :label="AddGameDialogText.buttons.save" />
+          <AppButton data-testid="btn-cancel" class="dialog-button" color="error" variant="text" density="default"
+            @click="closeDialog" :label="AddGameDialogText.buttons.cancel" />
+        </v-card-actions>
+      </div>
+    </v-card>
+  </v-dialog>
 </template>
 
 <style scoped>
-.dialog{
+.dialog {
   position: relative !important;
   padding: 12px;
   display: flex;
