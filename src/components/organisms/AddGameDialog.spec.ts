@@ -11,6 +11,9 @@ import type { CollectionsApiResponse } from "@/types/domain/collectionsApi";
 import type { PlayerApiResponse } from "@/types/domain/playerApi";
 import { mockCollectionsApiResponse } from "@/mocks/data/collectionsApi";
 import { mockPlayersListResponse } from "@/mocks/data/playersApi";
+import { usePlayerApi } from "@/composables/usePlayerApi";
+import { usePlayersApi } from "@/composables/usePlayersApi";
+import { ref } from "vue";
 
 // Mock composables
 vi.mock("@/composables/usePlayersApi");
@@ -125,17 +128,17 @@ const setupAddGameDialogTest = (options: Record<string, any> = {}) => {
 describe("Rendering", () => {
   let dialogContent;
   let wrapper;
+  let loadingRow;
 
   beforeEach(() => {
     vi.clearAllMocks();
-    ({ wrapper, dialogContent } = setupAddGameDialogTest());
+    ({ wrapper, dialogContent, loadingRow } = setupAddGameDialogTest());
   });
 
   it.only("renders component when modelValue is true", () => {
     expect(dialogContent.exists()).toBe(true);
    });
 
-  // test 1.2
   it.only("doesn't render component when modelValue is false", () => {
     const { dialogContent } = setupAddGameDialogTest({
       props: { modelValue: false },
@@ -144,10 +147,21 @@ describe("Rendering", () => {
     expect(dialogContent.exists()).toBe(false);
   });
 
-  // TODO: Implement test 1.3
-  it("1.3 - Muestra loading state", () => {
-    // Verificar que cuando loading=true, muestra LoadingRow
-    // Verificar que oculta el formulario
+  it.only("when loading is true, renders LoadingRow and doesn't render dialog", () => {
+    vi.mocked(usePlayersApi).mockReturnValue({
+      players: ref([]),
+      totalPlayers: ref(0),
+      loading: ref(true),
+      error: ref(null),
+      fetchPlayers: vi.fn().mockResolvedValue(undefined),
+    } as any);
+
+    // the dialog is always visible when modelValue is true
+    // it's hidden by adding the class .hidden-on-loading to the content wrapper
+    const contentWrapper = wrapper.find(".content-wrapper");
+
+    expect(loadingRow.exists()).toBe(true);
+    expect(contentWrapper.classes()).toContain("hidden-on-loading");
   });
 
   // TODO: Implement test 1.4
