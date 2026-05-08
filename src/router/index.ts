@@ -21,6 +21,11 @@ export const routes: RouteRecordRaw[] = [
     path: "/tipografia",
     name: "Typography",
     component: () => import(/*webpackChunkName: "Tipografia" */"@/views/Typography.vue"),
+  },
+  {
+    path: "/:catchAll(.*)*",
+    name: "Not-Found",
+    component: () => import(/*webpackChunkName: "Not-Found" */"@/views/NotFound.vue"),
   }
 ];
 
