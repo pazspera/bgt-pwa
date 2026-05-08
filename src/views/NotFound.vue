@@ -3,6 +3,7 @@ import DisplayTitle from '@/components/atoms/typography/DisplayTitle.vue';
 import LeadText from '@/components/atoms/typography/LeadText.vue';
 import AppButton from '@/components/atoms/buttons/AppButton.vue';
 import { NOT_FOUND } from '@/constants/ui_text/NotFound';
+
 </script>
 
 <template>
