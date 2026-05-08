@@ -8,7 +8,8 @@ interface Props {
   density?: "compact" | "comfortable" | "default",
   size?: "x-small" | "small" | undefined| "large" | "x-large",
   icon?: any,
-  label: string
+  label: string,
+  to?: any,
 }
 
 const props = withDefaults(defineProps<Props>(),{
@@ -22,6 +23,7 @@ const props = withDefaults(defineProps<Props>(),{
 <template>
   <v-btn
     v-bind="$attrs"
+    :to="to"
     :color="color"
     :variant="variant"
     :density="density"
@@ -36,7 +38,3 @@ const props = withDefaults(defineProps<Props>(),{
     <slot></slot>
   </v-btn>
 </template>
-
-<style scoped>
-
-</style>

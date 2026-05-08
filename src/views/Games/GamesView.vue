@@ -30,7 +30,11 @@ const onPageChange = async () => {
 
 <template>
   <v-container class="my-4 my-md-6 my-lg-8">
-    <DisplayTitle>Partidas</DisplayTitle>
+    <v-row>
+      <v-col>
+        <DisplayTitle>Partidas</DisplayTitle>
+      </v-col>
+    </v-row>
 
     <!-- error on games initial fetch -->
     <v-row v-if="errorGetGames">
