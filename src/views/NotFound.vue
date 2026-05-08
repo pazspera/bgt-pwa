@@ -16,6 +16,7 @@ import { NOT_FOUND } from '@/constants/ui_text/NotFound';
         </div>
         <AppButton
           size="large"
+          :to="{ name: 'BoardGames' }"
           :label="NOT_FOUND.BTN_TEXT"
         />
       </v-col>
