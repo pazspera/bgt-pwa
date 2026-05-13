@@ -10,6 +10,11 @@ export default defineConfig({
     vue(),
     VitePWA({
       registerType: 'autoUpdate',
+        workbox: {
+        navigateFallback: '/index.html',
+        navigateFallbackDenylist: [/^\/callback/],
+        runtimeCaching: [],
+      },
       includeAssets: ['favicon.ico', 'vite.svg'],
       manifest: {
         name: 'BGT PWA',
