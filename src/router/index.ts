@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory, type RouteRecordRaw } from "vue-router";
 import BoardGamesView from "@/views/BoardGames/BoardGamesView.vue";
+import CallbackView from "@/views/Callback/CallbackView.vue";
 
 export const routes: RouteRecordRaw[] = [
   {
@@ -25,7 +26,7 @@ export const routes: RouteRecordRaw[] = [
   {
 path: "/callback",
     name: "Callback",
-    component: () => import(/*webpackChunkName: "Callback" */"@/views/Callback/CallbackView.vue"),
+    component: CallbackView,
   },
   {
     path: "/:catchAll(.*)*",
