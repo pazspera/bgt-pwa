@@ -44,3 +44,13 @@ export async function getGames(limit: number = 12, offset: number = 0) {
     throw new Error(API_ERROR_MESSAGES.UNKNOWN_ERROR(err?.message));
   }
 }
+
+export async function deleteGame(gameId: string) {
+  try {
+    const response = await fetch(`${API_BASE_URL}v1/games/${gameId}`, { method: "DELETE" });
+
+    return true;
+  } catch (error) {
+    
+  }
+}

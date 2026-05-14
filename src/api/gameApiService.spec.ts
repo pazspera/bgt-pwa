@@ -2,6 +2,7 @@ import { describe, it, vi, afterEach, beforeEach, expect } from "vitest";
 import { mockNewGameRequest, mockCreatedGameResponse } from "@/mocks/data/gameApi";
 import { createGame } from "./gameApiService";
 import { API_ERROR_MESSAGES } from "@/constants/apiErrorMessages";
+import { deleteGame } from "./gameApiService";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -78,11 +79,24 @@ describe("gameApiService: deleteGame()", ()=> {
     vi.clearAllMocks();
   })
 
-  it("success: delete returns 200", ()=> {});
+  const gameId = "exampleOfAGameId";
 
-  it("error: requested game not found (404)", ()=> {});
+  it.each([200, 204])("success: delete returns %s", async (status)=> {
+    vi.spyOn(global, "fetch").mockResolvedValueOnce({
+      ok: true,
+      status,
+    } as unknown as Response);
 
-  it("error: internal server error (500)", ()=> {});
+    const result = await deleteGame(gameId);
 
-  it("error: network error", ()=> {});
+    expect(global.fetch).toHaveBeenCalledWith(`${API_BASE_URL}v1/games/${gameId}`, { method: "DELETE" });
+    expect(global.fetch).toHaveBeenCalledTimes(1);
+    expect(result).toBeTruthy();
+  });
+
+  it.todo("error: requested game not found (404)", ()=> {});
+
+  it.todo("error: internal server error (500)", ()=> {});
+
+  it.todo("error: network error", ()=> {});
 })
