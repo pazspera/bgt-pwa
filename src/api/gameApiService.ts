@@ -53,6 +53,10 @@ export async function deleteGame(gameId: string) {
       throw new Error(API_ERROR_MESSAGES.DELETE_GAME_NOT_FOUND(gameId));
     }
 
+    if(response.status !== 200 && response.status !== 204) {
+      throw new Error(API_ERROR_MESSAGES.DELETE_GAME_ERROR(response.status, gameId));
+    }
+
     return true;
   } catch (error) {
     throw new Error(API_ERROR_MESSAGES.UNKNOWN_ERROR(error?.message));

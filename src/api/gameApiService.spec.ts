@@ -103,7 +103,18 @@ describe("gameApiService: deleteGame()", ()=> {
     await expect(deleteGame(gameId)).rejects.toThrow(API_ERROR_MESSAGES.DELETE_GAME_NOT_FOUND(gameId));
   });
 
-  it.todo("error: internal server error (500)", ()=> {});
+  it("error: internal server error (500)", async ()=> {
+    vi.spyOn(global, "fetch").mockResolvedValueOnce({
+      ok: false,
+      status: 500,
+    } as unknown as Response);
 
-  it.todo("error: network error", ()=> {});
+    await expect(deleteGame(gameId)).rejects.toThrow(API_ERROR_MESSAGES.DELETE_GAME_ERROR(500, gameId));
+  });
+
+  it("error: network error", async ()=> {
+    vi.spyOn(global, "fetch").mockRejectedValueOnce(new TypeError(API_ERROR_MESSAGES.NETWORK_ERROR));
+
+    await expect(deleteGame(gameId)).rejects.toThrow(API_ERROR_MESSAGES.NETWORK_ERROR)
+  });
 })
