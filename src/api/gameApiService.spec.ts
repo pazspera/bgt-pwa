@@ -71,3 +71,18 @@ describe("gameApiService: createGame()", ()=> {
     await expect(createGame(mockNewGameRequest)).rejects.toThrow(API_ERROR_MESSAGES.NETWORK_ERROR);
   });
 })
+
+describe("gameApiService: deleteGame()", ()=> {
+  afterEach(()=> {
+    vi.restoreAllMocks();
+    vi.clearAllMocks();
+  })
+
+  it("success: delete returns 200", ()=> {});
+
+  it("error: requested game not found (404)", ()=> {});
+
+  it("error: internal server error (500)", ()=> {});
+
+  it("error: network error", ()=> {});
+})
