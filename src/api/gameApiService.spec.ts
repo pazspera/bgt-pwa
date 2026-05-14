@@ -94,7 +94,14 @@ describe("gameApiService: deleteGame()", ()=> {
     expect(result).toBeTruthy();
   });
 
-  it.todo("error: requested game not found (404)", ()=> {});
+  it("error: requested game not found (404)", async ()=> {
+    vi.spyOn(global, "fetch").mockResolvedValueOnce({
+      ok: false,
+      status: 404,
+    } as unknown as Response);
+
+    await expect(deleteGame(gameId)).rejects.toThrow(API_ERROR_MESSAGES.DELETE_GAME_NOT_FOUND(gameId));
+  });
 
   it.todo("error: internal server error (500)", ()=> {});
 

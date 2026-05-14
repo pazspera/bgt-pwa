@@ -49,8 +49,12 @@ export async function deleteGame(gameId: string) {
   try {
     const response = await fetch(`${API_BASE_URL}v1/games/${gameId}`, { method: "DELETE" });
 
+    if(response.status === 404) {
+      throw new Error(API_ERROR_MESSAGES.DELETE_GAME_NOT_FOUND(gameId));
+    }
+
     return true;
   } catch (error) {
-    
+    throw new Error(API_ERROR_MESSAGES.UNKNOWN_ERROR(error?.message));
   }
 }
