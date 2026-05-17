@@ -114,7 +114,7 @@ describe("useGamesApi", ()=> {
   describe("deleteGame", ()=> {
     const gameId = "eXaMpLeOfId";
 
-    it.only("sucess: deleted player, loading and error updated correctly", async ()=> {
+    it("sucess: deleted player, loading and error updated correctly", async ()=> {
       const deleteGameSpy = vi.spyOn(GamesApiService, "deleteGame").mockResolvedValueOnce(true);
 
       const { loading, errorDeleteGame, deleted, deleteGame } = useGamesApi();
@@ -133,7 +133,28 @@ describe("useGamesApi", ()=> {
       expect(errorDeleteGame.value).toBe(null);
     });
 
-    it.todo("error not found(404): updates error and loading", async ()=> {});
+    it.only("error not found(404): updates error and loading", async ()=> {
+      const errorMessage = API_ERROR_MESSAGES.DELETE_GAME_NOT_FOUND(gameId);
+      const deletePlayerSpy =  vi.spyOn(GamesApiService, "deleteGame").mockRejectedValueOnce(new Error(errorMessage));
+
+      const { loading, errorDeleteGame, deleted, deleteGame } = useGamesApi();
+
+      expectSharedInitialState(loading.value, errorDeleteGame.value);
+      expect(deleted.value).toBe(false);
+
+      const promise = deleteGame(gameId);
+
+      expectLoadingState(loading.value, errorDeleteGame.value);
+
+      // need to catch the thrown error or test fails
+      try {
+        await promise;
+      } catch (error) { }
+
+      expectSharedEndState(deletePlayerSpy, loading.value);
+      expect(deleted.value).toBe(false);
+      expect(errorDeleteGame.value).toBe(errorMessage);
+    });
 
     it.todo("internal server error(500): updates error and laoding", async ()=> {});
 

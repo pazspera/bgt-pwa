@@ -59,8 +59,9 @@ export function useGamesApi() {
     try {
       await GamesApiService.deleteGame(id);
       deleted.value = true;
-    } catch (error) {
-      
+    } catch (err) {
+      errorDeleteGame.value = err.message;
+      throw err;
     } finally {
       loading.value = false;
     }
