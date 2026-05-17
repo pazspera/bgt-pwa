@@ -110,4 +110,33 @@ describe("useGamesApi", ()=> {
       expect(newGame.value).toBeNull();
     });
   })
+
+  describe("deleteGame", ()=> {
+    const gameId = "eXaMpLeOfId";
+
+    it.only("sucess: deleted player, loading and error updated correctly", async ()=> {
+      const deleteGameSpy = vi.spyOn(GamesApiService, "deleteGame").mockResolvedValueOnce(true);
+
+      const { loading, errorDeleteGame, deleted, deleteGame } = useGamesApi();
+
+      expectSharedInitialState(loading.value, errorDeleteGame.value);
+      expect(deleted.value).toBe(false);
+
+      const promise = deleteGame(gameId);
+
+      expectLoadingState(loading.value, errorDeleteGame.value);
+
+      await promise;
+
+      expectSharedEndState(deleteGameSpy, loading.value);
+      expect(deleted.value).toBe(true);
+      expect(errorDeleteGame.value).toBe(null);
+    });
+
+    it.todo("error not found(404): updates error and loading", async ()=> {});
+
+    it.todo("internal server error(500): updates error and laoding", async ()=> {});
+
+    it.todo("network error: updates error and loading", async ()=> {});
+  })
 })
