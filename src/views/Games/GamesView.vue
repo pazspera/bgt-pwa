@@ -4,10 +4,12 @@ import { onBeforeMount, ref, type Ref } from "vue";
 import DisplayTitle from "@/components/atoms/typography/DisplayTitle.vue";
 import CardGrid from "@/components/organisms/CardGrid.vue";
 import LoadingRow from "@/components/molecules/LoadingRow.vue";
+import AppButton from "@/components/atoms/buttons/AppButton.vue";
 import { GENERAL_UI_TEXT } from "@/constants/generalText";
 import { useDocumentTitle } from "@/composables/useDocumentTitle";
 import { DOCUMENT_TITLES } from "@/constants/documentTitles";
 import { GameApiResponse } from "@/types/domain/gamesApi";
+import { CONFIRM_DELETE_GAME } from "@/constants/ui_feedback/games";
 
 defineOptions({ name: "GamesView" });
 
@@ -83,9 +85,33 @@ const handleDeleteGame = (game: GameApiResponse) => {
     <!-- confirm delete dialog -->
     <v-dialog
       v-model="isDeleteDialogVisible"
+      max-width="400"
+      persistent
     >
-      <v-card>
-        <p>Hola</p>
+      <v-card
+        prepend-icon="fas fa-triangle-exclamation"
+        :text="CONFIRM_DELETE_GAME.TEXT"
+        :title="CONFIRM_DELETE_GAME.TITLE"
+      >
+        <template v-slot:actions>
+          <v-spacer></v-spacer>
+
+          <AppButton
+            density="default"
+            color="error"
+            variant="plain"
+            :label="CONFIRM_DELETE_GAME.CONFIRM_BTN_TEXT"
+            @click=""
+          />
+
+          <AppButton
+            density="default"
+            color="primary"
+            variant="plain"
+            :label="CONFIRM_DELETE_GAME.CANCEL_BTN_TEXT"
+            @click="isDeleteDialogVisible = false"
+          />
+        </template>
       </v-card>
     </v-dialog>
   </v-container>
