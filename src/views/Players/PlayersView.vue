@@ -59,7 +59,7 @@ const confirmDelete = async () => {
   if(!selectedPlayer.value) return;
 
   try {
-    await deletePlayer(selectedPlayer.value.id); 
+    await deletePlayer(selectedPlayer.value.id);
 
     //updates ui
     players.value = players.value.filter(player => player.id !== selectedPlayer.value?.id);
@@ -180,7 +180,7 @@ const sortedPlayers = computed(()=> {
     <!-- loading -->
     <LoadingRow v-else-if="loadingList"/>
 
-    <CardGrid 
+    <CardGrid
       v-else-if="players && players.length > 0"
       :data="sortedPlayers"
       type="player"
@@ -210,7 +210,7 @@ const sortedPlayers = computed(()=> {
       v-model="isDeleteDialogVisible"
       max-width="400"
       persistent
-    > 
+    >
       <v-card
         prepend-icon="fas fa-triangle-exclamation"
         :text="deleteDialogText"
@@ -218,10 +218,10 @@ const sortedPlayers = computed(()=> {
       >
         <template v-slot:actions>
           <v-spacer></v-spacer>
-          
+
           <AppButton
             density="default"
-            color="error" 
+            color="error"
             variant="plain"
             :label="CONFIRM_DELETE_PLAYER.CONFIRM_BTN_TEXT"
             @click="confirmDelete"
@@ -229,7 +229,7 @@ const sortedPlayers = computed(()=> {
 
           <AppButton
             density="default"
-            color="primary" 
+            color="primary"
             variant="plain"
             :label="CONFIRM_DELETE_PLAYER.CANCEL_BTN_TEXT"
             @click="isDeleteDialogVisible = false"
@@ -238,10 +238,10 @@ const sortedPlayers = computed(()=> {
       </v-card>
     </v-dialog>
 
-    <AddPlayerSheet 
-      v-model="isSheetVisible" 
-      :errorMessage="errorText" 
-      @playerAdded="handlePlayerAdded" 
+    <AddPlayerSheet
+      v-model="isSheetVisible"
+      :errorMessage="errorText"
+      @playerAdded="handlePlayerAdded"
     />
 
     <EditPlayerSheet

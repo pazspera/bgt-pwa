@@ -17,6 +17,16 @@ const props = defineProps<{
   game: GameApiResponse
 }>();
 
+const emit = defineEmits<{
+  'delete-game': [game: GameApiResponse],
+}>();
+
+const handleDeleteGame = () => {
+  console.log("emit delete-game");
+  console.log(props.game);
+  emit('delete-game', props.game);
+}
+
 const showDetails = ref(false);
 
 const countPlayers = () => {
@@ -66,7 +76,10 @@ const getWinner = () => {
     <v-card-actions class="card-actions">
       <div class="container-action-buttons">
         <EditButton/>
-        <DeleteButton class="ml-sm-1 ml-md-3" />
+        <DeleteButton
+          class="ml-sm-1 ml-md-3"
+          @click="handleDeleteGame"
+        />
       </div>
 
       <v-btn icon @click="showDetails = !showDetails">

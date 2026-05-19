@@ -1,18 +1,21 @@
 <script setup lang="ts">
 import { useGamesApi } from "@/composables/useGamesApi";
-import { onBeforeMount } from "vue";
+import { onBeforeMount, ref, type Ref } from "vue";
 import DisplayTitle from "@/components/atoms/typography/DisplayTitle.vue";
 import CardGrid from "@/components/organisms/CardGrid.vue";
 import LoadingRow from "@/components/molecules/LoadingRow.vue";
 import { GENERAL_UI_TEXT } from "@/constants/generalText";
 import { useDocumentTitle } from "@/composables/useDocumentTitle";
 import { DOCUMENT_TITLES } from "@/constants/documentTitles";
+import { GameApiResponse } from "@/types/domain/gamesApi";
 
 defineOptions({ name: "GamesView" });
 
 useDocumentTitle(DOCUMENT_TITLES.GAMES);
 
 const { loading, gamesList, errorGetGames, currentPage, totalPages, itemsPerPage, getGames } = useGamesApi();
+
+const isDeleteDialogVisible: Ref<boolean> = ref(false);
 
 onBeforeMount(async () => {
   await getGames();
@@ -24,6 +27,10 @@ onBeforeMount(async () => {
 const onPageChange = async () => {
   await getGames();
   window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+const handleDeleteGame = (game: GameApiResponse) => {
+  isDeleteDialogVisible.value = true;
 }
 
 </script>
@@ -50,6 +57,7 @@ const onPageChange = async () => {
       v-else-if="gamesList && gamesList.data.length > 0"
       :data="gamesList.data"
       type="game"
+      @delete-game="handleDeleteGame"
     ></CardGrid>
 
     <!-- no games to show -->
@@ -72,6 +80,14 @@ const onPageChange = async () => {
       </v-col>
     </v-row>
 
+    <!-- confirm delete dialog -->
+    <v-dialog
+      v-model="isDeleteDialogVisible"
+    >
+      <v-card>
+        <p>Hola</p>
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>
 
