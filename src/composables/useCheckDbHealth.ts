@@ -3,8 +3,8 @@ import { useServerTime } from "./useServerTime";
 import { API_ERROR_MESSAGES } from "@/constants/apiErrorMessages";
 
 export function useCheckDbHealth() {
-  const BASE_URL = import.meta.env.VITE_API_HEALTH_BASE_URL;
-  const uri = BASE_URL + "health";
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+  const uri = BASE_URL + "v1/health";
 
   const { syncWithServer } = useServerTime();
   const statusMessage: Ref<string> = ref(""); 
