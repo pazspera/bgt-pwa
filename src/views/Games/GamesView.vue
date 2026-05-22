@@ -10,6 +10,7 @@ import { useDocumentTitle } from "@/composables/useDocumentTitle";
 import { DOCUMENT_TITLES } from "@/constants/documentTitles";
 import { GameApiResponse } from "@/types/domain/gamesApi";
 import { CONFIRM_DELETE_GAME } from "@/constants/ui_feedback/games";
+import { deleteGame } from "@/api/gameApiService";
 
 defineOptions({ name: "GamesView" });
 
@@ -18,6 +19,7 @@ useDocumentTitle(DOCUMENT_TITLES.GAMES);
 const { loading, gamesList, errorGetGames, currentPage, totalPages, itemsPerPage, getGames } = useGamesApi();
 
 const isDeleteDialogVisible: Ref<boolean> = ref(false);
+const selectedGame: Ref<GameApiResponse | null> = ref(null);
 
 onBeforeMount(async () => {
   await getGames();
@@ -32,7 +34,18 @@ const onPageChange = async () => {
 }
 
 const handleDeleteGame = (game: GameApiResponse) => {
+  selectedGame.value = game;
   isDeleteDialogVisible.value = true;
+}
+
+const confirmDelete = async () => {
+  if(!selectedGame.value) return;
+
+  try {
+    await deleteGame(selectedGame.value.id);
+  } catch (error) {
+    
+  }
 }
 
 </script>
