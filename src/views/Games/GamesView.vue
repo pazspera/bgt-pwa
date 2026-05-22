@@ -45,7 +45,7 @@ const confirmDelete = async () => {
     await deleteGame(selectedGame.value.id);
 
     // updates ui
-    gamesList.value.data = gamesList.value.data.filter(game => game.id !== selectedGame.value?.id);
+    await getGames();
   } catch (err) {
     console.log(GAME_STATUS.ERROR.GENERAL);
   } finally {
