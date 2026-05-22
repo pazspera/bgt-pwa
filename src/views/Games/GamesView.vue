@@ -1,22 +1,26 @@
 <script setup lang="ts">
-import { useGamesApi } from "@/composables/useGamesApi";
 import { onBeforeMount, ref, type Ref } from "vue";
+import { deleteGame } from "@/api/gameApiService";
+import { useGamesApi } from "@/composables/useGamesApi";
+import { useDocumentTitle } from "@/composables/useDocumentTitle";
+import { useAppSnackbar } from "@/composables/useAppSnackbar";
+import { GameApiResponse } from "@/types/domain/gamesApi";
+import { GENERAL_UI_TEXT } from "@/constants/generalText";
+import { DOCUMENT_TITLES } from "@/constants/documentTitles";
+import { CONFIRM_DELETE_GAME, GAME_STATUS } from "@/constants/ui_feedback/games";
 import DisplayTitle from "@/components/atoms/typography/DisplayTitle.vue";
 import CardGrid from "@/components/organisms/CardGrid.vue";
 import LoadingRow from "@/components/molecules/LoadingRow.vue";
 import AppButton from "@/components/atoms/buttons/AppButton.vue";
-import { GENERAL_UI_TEXT } from "@/constants/generalText";
-import { useDocumentTitle } from "@/composables/useDocumentTitle";
-import { DOCUMENT_TITLES } from "@/constants/documentTitles";
-import { GameApiResponse } from "@/types/domain/gamesApi";
-import { CONFIRM_DELETE_GAME, GAME_STATUS } from "@/constants/ui_feedback/games";
-import { deleteGame } from "@/api/gameApiService";
+import AppSnackbar from "@/components/molecules/AppSnackbar.vue";
 
 defineOptions({ name: "GamesView" });
 
 useDocumentTitle(DOCUMENT_TITLES.GAMES);
 
 const { loading, gamesList, errorGetGames, currentPage, totalPages, itemsPerPage, getGames } = useGamesApi();
+
+const { isSnackbarVisible, message, color, timeout, hide, error, success } = useAppSnackbar();
 
 const isDeleteDialogVisible: Ref<boolean> = ref(false);
 const selectedGame: Ref<GameApiResponse | null> = ref(null);
@@ -46,8 +50,11 @@ const confirmDelete = async () => {
 
     // updates ui
     await getGames();
+
+    success(GAME_STATUS.DELETED)
   } catch (err) {
-    console.log(GAME_STATUS.ERROR.GENERAL);
+    error(GAME_STATUS.ERROR.DELETE);
+    console.log(GAME_STATUS.ERROR.DELETE);
   } finally {
     isDeleteDialogVisible.value = false;
     selectedGame.value = null;
@@ -100,6 +107,15 @@ const confirmDelete = async () => {
         />
       </v-col>
     </v-row>
+
+    <!-- shows status of actions -->
+    <AppSnackbar
+      :visible="isSnackbarVisible"
+      :message="message"
+      :color="color"
+      :timeout="timeout"
+      @close="hide()"
+    />
 
     <!-- confirm delete dialog -->
     <v-dialog

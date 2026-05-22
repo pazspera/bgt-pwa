@@ -6,7 +6,8 @@ export const CONFIRM_DELETE_GAME = {
 }
 
 export const GAME_STATUS = {
+  DELETED: "Partida eliminada correctamente",
   ERROR: {
-    GENERAL: "No se pudo eliminar la partida",
+    DELETE: "No se pudo eliminar la partida",
   }
 }
