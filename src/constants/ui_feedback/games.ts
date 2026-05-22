@@ -4,3 +4,9 @@ export const CONFIRM_DELETE_GAME = {
   CONFIRM_BTN_TEXT: "Borrar partida",
   CANCEL_BTN_TEXT: "Cancelar"
 }
+
+export const GAME_STATUS = {
+  ERROR: {
+    GENERAL: "No se pudo eliminar la partida",
+  }
+}

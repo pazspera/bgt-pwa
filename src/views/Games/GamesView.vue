@@ -9,7 +9,7 @@ import { GENERAL_UI_TEXT } from "@/constants/generalText";
 import { useDocumentTitle } from "@/composables/useDocumentTitle";
 import { DOCUMENT_TITLES } from "@/constants/documentTitles";
 import { GameApiResponse } from "@/types/domain/gamesApi";
-import { CONFIRM_DELETE_GAME } from "@/constants/ui_feedback/games";
+import { CONFIRM_DELETE_GAME, GAME_STATUS } from "@/constants/ui_feedback/games";
 import { deleteGame } from "@/api/gameApiService";
 
 defineOptions({ name: "GamesView" });
@@ -43,8 +43,14 @@ const confirmDelete = async () => {
 
   try {
     await deleteGame(selectedGame.value.id);
-  } catch (error) {
-    
+
+    // updates ui
+    gamesList.value.data = gamesList.value.data.filter(game => game.id !== selectedGame.value?.id);
+  } catch (err) {
+    console.log(GAME_STATUS.ERROR.GENERAL);
+  } finally {
+    isDeleteDialogVisible.value = false;
+    selectedGame.value = null;
   }
 }
 
@@ -114,7 +120,7 @@ const confirmDelete = async () => {
             color="error"
             variant="plain"
             :label="CONFIRM_DELETE_GAME.CONFIRM_BTN_TEXT"
-            @click=""
+            @click="confirmDelete"
           />
 
           <AppButton

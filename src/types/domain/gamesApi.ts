@@ -6,7 +6,7 @@ export interface GameApiResponse {
   start_date?: string,
   end_date?: string,
   players: PlayerInGame[],
-  
+
   // PROPS NOT USED
   // se usa el collection_id?
   // si, se usa. viene en la rta, es el id de CollectionsListResponse
