@@ -12,7 +12,7 @@ export const PLAYER_STATUS = {
 
 export const CONFIRM_DELETE_PLAYER = {
   TITLE: "¿Estás segurx?",
-  TEXT: (name: string) => `Vas a eliminar al jugador "${name}". Está acción no puede revertirse.`, 
+  TEXT: (name: string) => `Vas a eliminar al jugador "${name}". Esta acción no puede revertirse.`,
   CONFIRM_BTN_TEXT: "Borrar jugador",
   CANCEL_BTN_TEXT: "Cancelar"
 }

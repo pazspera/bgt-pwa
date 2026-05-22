@@ -44,3 +44,21 @@ export async function getGames(limit: number = 12, offset: number = 0) {
     throw new Error(API_ERROR_MESSAGES.UNKNOWN_ERROR(err?.message));
   }
 }
+
+export async function deleteGame(gameId: string) {
+  try {
+    const response = await fetch(`${API_BASE_URL}v1/games/${gameId}`, { method: "DELETE" });
+
+    if(response.status === 404) {
+      throw new Error(API_ERROR_MESSAGES.DELETE_GAME_NOT_FOUND(gameId));
+    }
+
+    if(response.status !== 200 && response.status !== 204) {
+      throw new Error(API_ERROR_MESSAGES.DELETE_GAME_ERROR(response.status, gameId));
+    }
+
+    return true;
+  } catch (error) {
+    throw new Error(API_ERROR_MESSAGES.UNKNOWN_ERROR(error?.message));
+  }
+}

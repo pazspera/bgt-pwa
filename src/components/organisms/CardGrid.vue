@@ -15,8 +15,9 @@ const props = defineProps<{
 }>();
 
 function getItemId(item: GridItem): string {
-  if ("id" in item) return item.id;
+  if ("bgg_id" in item) return item.id;
   if ("boardgame_id" in item) return item.boardgame_id;
+  if ("notes" in item) return item.id;
   return "";
 }
 
@@ -36,6 +37,7 @@ const emit = defineEmits<{
   'edit-player': [player: PlayerApiResponse],
   'delete-player': [player: PlayerApiResponse],
   'add-game': [boardgame: CollectionsApiResponse],
+  'delete-game': [game: GameApiResponse],
 }>();
 
 onBeforeMount(()=> {
@@ -55,7 +57,7 @@ onBeforeMount(()=> {
         lg="4"
         xl="3"
       >
-        <PlayerCard v-if="isPlayer(item)" 
+        <PlayerCard v-if="isPlayer(item)"
           :player="item"
           @edit-player="(player) => $emit('edit-player', player)"
           @delete-player="(player) => $emit('delete-player', player)"
@@ -66,7 +68,10 @@ onBeforeMount(()=> {
           @add-game="(boardgame) => $emit('add-game', boardgame)"
         />
 
-        <GameCard v-else-if="isGame(item)" :game="item" />
+        <GameCard v-else-if="isGame(item)"
+          :game="item"
+          @delete-game="(game) => $emit('delete-game', game)"
+        />
       </v-col>
     </v-row>
   </v-container>

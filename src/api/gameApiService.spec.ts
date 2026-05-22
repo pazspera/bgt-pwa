@@ -2,6 +2,7 @@ import { describe, it, vi, afterEach, beforeEach, expect } from "vitest";
 import { mockNewGameRequest, mockCreatedGameResponse } from "@/mocks/data/gameApi";
 import { createGame } from "./gameApiService";
 import { API_ERROR_MESSAGES } from "@/constants/apiErrorMessages";
+import { deleteGame } from "./gameApiService";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -69,5 +70,51 @@ describe("gameApiService: createGame()", ()=> {
     vi.spyOn(global, "fetch").mockRejectedValue(new Error(API_ERROR_MESSAGES.NETWORK_ERROR));
 
     await expect(createGame(mockNewGameRequest)).rejects.toThrow(API_ERROR_MESSAGES.NETWORK_ERROR);
+  });
+})
+
+describe("gameApiService: deleteGame()", ()=> {
+  afterEach(()=> {
+    vi.restoreAllMocks();
+    vi.clearAllMocks();
+  })
+
+  const gameId = "exampleOfAGameId";
+
+  it.each([200, 204])("success: delete returns %s", async (status)=> {
+    vi.spyOn(global, "fetch").mockResolvedValueOnce({
+      ok: true,
+      status,
+    } as unknown as Response);
+
+    const result = await deleteGame(gameId);
+
+    expect(global.fetch).toHaveBeenCalledWith(`${API_BASE_URL}v1/games/${gameId}`, { method: "DELETE" });
+    expect(global.fetch).toHaveBeenCalledTimes(1);
+    expect(result).toBeTruthy();
+  });
+
+  it("error: requested game not found (404)", async ()=> {
+    vi.spyOn(global, "fetch").mockResolvedValueOnce({
+      ok: false,
+      status: 404,
+    } as unknown as Response);
+
+    await expect(deleteGame(gameId)).rejects.toThrow(API_ERROR_MESSAGES.DELETE_GAME_NOT_FOUND(gameId));
+  });
+
+  it("error: internal server error (500)", async ()=> {
+    vi.spyOn(global, "fetch").mockResolvedValueOnce({
+      ok: false,
+      status: 500,
+    } as unknown as Response);
+
+    await expect(deleteGame(gameId)).rejects.toThrow(API_ERROR_MESSAGES.DELETE_GAME_ERROR(500, gameId));
+  });
+
+  it("error: network error", async ()=> {
+    vi.spyOn(global, "fetch").mockRejectedValueOnce(new TypeError(API_ERROR_MESSAGES.NETWORK_ERROR));
+
+    await expect(deleteGame(gameId)).rejects.toThrow(API_ERROR_MESSAGES.NETWORK_ERROR)
   });
 })

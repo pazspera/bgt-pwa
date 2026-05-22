@@ -8,6 +8,8 @@ export function useGamesApi() {
   const gamesList: Ref<GamesListResponse | null> = ref(null);
   const errorSaveGame: Ref<string | null> = ref(null);
   const errorGetGames: Ref<string | null> = ref(null);
+  const errorDeleteGame: Ref<string | null> = ref(null);
+  const deleted: Ref<boolean> = ref(false);
 
   const currentPage: Ref<number> = ref(1);
   const itemsPerPage: Ref<number> = ref(12);
@@ -50,5 +52,20 @@ export function useGamesApi() {
     }
   }
 
-  return { loading, newGame, errorSaveGame, gamesList, errorGetGames, currentPage, totalPages, itemsPerPage, saveGame, getGames }
+  const deleteGame = async(id: string) => {
+    loading.value = true;
+    errorDeleteGame.value = null;
+
+    try {
+      await GamesApiService.deleteGame(id);
+      deleted.value = true;
+    } catch (err) {
+      errorDeleteGame.value = err.message;
+      throw err;
+    } finally {
+      loading.value = false;
+    }
+  }
+
+  return { loading, newGame, errorSaveGame, errorDeleteGame, deleted, gamesList, errorGetGames, currentPage, totalPages, itemsPerPage, saveGame, getGames, deleteGame }
 }
