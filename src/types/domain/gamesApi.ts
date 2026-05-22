@@ -1,4 +1,5 @@
 export interface GameApiResponse {
+  id: string,
   boardgame_id: string,
   notes: string,
   boardgame_name: string,

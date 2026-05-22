@@ -15,8 +15,9 @@ const props = defineProps<{
 }>();
 
 function getItemId(item: GridItem): string {
-  if ("id" in item) return item.id;
+  if ("bgg_id" in item) return item.id;
   if ("boardgame_id" in item) return item.boardgame_id;
+  if ("notes" in item) return item.id;
   return "";
 }
 
