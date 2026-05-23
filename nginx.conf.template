@@ -4,26 +4,7 @@ server {
     root /usr/share/nginx/html;
     index index.html;
 
-    location / {
-        try_files $uri $uri/ /index.html;
-    }
-
-    location /assets/ {
-        expires 1y;
-        add_header Cache-Control "public, immutable";
-    }
-
-    location /api/ {
-        proxy_pass ${NGINX_API_UPSTREAM};
-        proxy_set_header Host              ${NGINX_API_HOST};
-        proxy_set_header X-Real-IP         $remote_addr;
-        proxy_set_header X-Forwarded-For   $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-
-        # Solo tiene efecto si el upstream es https, ignorado en http
-        proxy_ssl_verify off;
-    }
-
+    # Authelia - todo lo relacionado a auth
     location /auth/ {
         proxy_pass ${NGINX_AUTH_UPSTREAM};
         proxy_set_header Host              auth.bgt-auth.local;
@@ -34,9 +15,27 @@ server {
         proxy_buffering off;
     }
 
+    # Callback OAuth2 - debe ir al frontend SPA
+    location /callback {
+        try_files $uri /index.html;
+    }
+
+    location /api/ {
+        proxy_pass ${NGINX_API_UPSTREAM};
+        proxy_set_header Host              ${NGINX_API_HOST};
+        proxy_set_header X-Real-IP         $remote_addr;
+        proxy_set_header X-Forwarded-For   $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_ssl_verify off;
+    }
+
     location /jwks.json {
         proxy_pass ${NGINX_AUTH_UPSTREAM}jwks.json;
         proxy_set_header Host auth.bgt-auth.local;
         proxy_ssl_verify off;
+    }
+
+    location / {
+        try_files $uri $uri/ /index.html;
     }
 }
