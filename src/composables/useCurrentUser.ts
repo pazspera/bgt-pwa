@@ -1,5 +1,5 @@
 import { ref, onMounted } from "vue";
-import { authFetch } from "../utils/apiUtils";
+import { apiClient } from "@/utils/apiClient";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -10,7 +10,7 @@ export function useCurrentUser() {
   async function load() {
     loading.value = true;
     try {
-      const res = await authFetch(`${API_BASE_URL}v1/users/me`, {
+      const res = await apiClient(`${API_BASE_URL}v1/users/me`, {
         method: "GET",
         headers: { "Accept": "application/json" },
       });

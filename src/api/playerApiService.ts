@@ -1,6 +1,6 @@
 import { API_ERROR_MESSAGES } from "@/constants/apiErrorMessages";
 import type { PlayerApiResponse, PlayersListResponse, CreatePlayerRequest, UpdatePlayerRequest } from "@/types/domain/playerApi";
-import { authFetch } from "@/utils/apiUtils";
+import { apiClient } from "@/utils/apiClient";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -11,7 +11,7 @@ export async function getPlayers(sortBy: string = "created_at", order: string = 
   })
 
   try {
-    const response = await authFetch(`${API_BASE_URL}v1/players?${params.toString()}`, { method: "GET" });
+    const response = await apiClient(`${API_BASE_URL}v1/players?${params.toString()}`, { method: "GET" });
 
     if(!response.ok) {
       throw new Error(API_ERROR_MESSAGES.GET_PLAYERS_FAILED(response.status));
@@ -26,7 +26,7 @@ export async function getPlayers(sortBy: string = "created_at", order: string = 
 
 export async function getPlayer(id: string) {
   try {
-    const response = await authFetch(`${API_BASE_URL}v1/players/${id}`, { method: "GET" });
+    const response = await apiClient(`${API_BASE_URL}v1/players/${id}`, { method: "GET" });
 
     if(response.status === 404){
       throw new Error(API_ERROR_MESSAGES.GET_PLAYER_NOT_FOUND(id));
@@ -45,7 +45,7 @@ export async function getPlayer(id: string) {
 
 export async function createPlayer(newPlayer: CreatePlayerRequest) {
   try {
-    const response = await authFetch(`${API_BASE_URL}v1/players`, {
+    const response = await apiClient(`${API_BASE_URL}v1/players`, {
       method: "POST",
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(newPlayer),
@@ -68,7 +68,7 @@ export async function createPlayer(newPlayer: CreatePlayerRequest) {
 
 export async function updatePlayer(id: string, updatedData: UpdatePlayerRequest) {
   try {
-    const response = await authFetch(`${API_BASE_URL}v1/players/${id}`, {
+    const response = await apiClient(`${API_BASE_URL}v1/players/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(updatedData),
@@ -99,7 +99,7 @@ export async function updatePlayer(id: string, updatedData: UpdatePlayerRequest)
 
 export async function deletePlayer(id: string) {
   try {
-    const response = await authFetch(`${API_BASE_URL}v1/players/${id}`, { method: "DELETE" });
+    const response = await apiClient(`${API_BASE_URL}v1/players/${id}`, { method: "DELETE" });
 
     if(response.status === 404) {
       throw new Error(API_ERROR_MESSAGES.DELETE_PLAYER_NOT_FOUND(id));

@@ -45,7 +45,19 @@ export default defineConfig({
   server: {
     host: '0.0.0.0',
     port: 3000,
-    // permite probar en mobile
+    proxy: {
+      '/auth': {
+        target: 'https://auth.bgt-auth.local',
+        rewrite: (path) => path.replace(/^\/auth/, ''),
+        secure: false,
+        changeOrigin: true,
+      },
+      '/api': {
+        target: 'https://api.bgt-auth.local',
+        secure: false,
+        changeOrigin: true,
+      },
+    },
   },
   // @ts-ignore - test property is from Vitest, not included in base Vite types
   test: {

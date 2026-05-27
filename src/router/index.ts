@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory, type RouteRecordRaw } from "vue-router";
 import BoardGamesView from "@/views/BoardGames/BoardGamesView.vue";
 import CallbackView from "@/views/Callback/CallbackView.vue";
+import { useAuthStore } from "@/stores/AuthStore";
+import { login } from "@/utils/auth";
 
 export const routes: RouteRecordRaw[] = [
   {
@@ -35,9 +37,23 @@ path: "/callback",
   }
 ];
 
+const publicRoutes = ['/callback'];
+
 const router = createRouter({
   history: createWebHistory(),
   routes,
+});
+
+router.beforeEach(async (to) => {
+  if (publicRoutes.includes(to.path)) return;
+
+  const authStore = useAuthStore();
+
+  if (!authStore.isAuthenticated) {
+    sessionStorage.setItem('redirect_after_login', to.fullPath);
+    await login();
+    return false;
+  }
 });
 
 export default router;

@@ -1,12 +1,12 @@
 import { API_ERROR_MESSAGES } from "@/constants/apiErrorMessages";
 import type { GameApiResponse, GamesListResponse, PlayerInGame, CreateGameRequest } from "@/types/domain/gamesApi";
-import { authFetch } from "@/utils/apiUtils";
+import { apiClient } from "@/utils/apiClient";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export async function createGame(newGame: CreateGameRequest) {
   try {
-    const response = await authFetch(`${API_BASE_URL}v1/games`, {
+    const response = await apiClient(`${API_BASE_URL}v1/games`, {
       method: "POST",
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(newGame),

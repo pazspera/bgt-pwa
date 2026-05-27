@@ -9,27 +9,26 @@
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { handleCallback } from '@/utils/auth';
+import { useAuthStore } from '@/stores/AuthStore';
 
 const router = useRouter();
 const error = ref(null);
+const authStore = useAuthStore();
 
 onMounted(async () => {
-  console.log('[Callback] Mounted, processing...');
-  
-  // Si ya tenemos tokens válidos, no reprocesar
-  const token = localStorage.getItem('access_token');
+  const token = authStore.accessToken;
   if (token) {
-    console.log('[Callback] Already authenticated, redirecting...');
     router.push('/');
     return;
   }
 
   try {
-    await handleCallback();
-    console.log('[Callback] Tokens saved, redirecting to /');
-    router.push('/');
+    const tokens = await handleCallback();
+    authStore.setTokens(tokens);
+    const redirect = sessionStorage.getItem('redirect_after_login') || '/';
+    sessionStorage.removeItem('redirect_after_login');
+    await router.replace(redirect);
   } catch (e) {
-    console.log('[Callback] Error:', e.message);
     error.value = e.message;
   }
 });

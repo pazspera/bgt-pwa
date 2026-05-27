@@ -89,13 +89,16 @@ export async function handleCallback() {
   }
 
   const tokens = await response.json();
-  localStorage.setItem('access_token', tokens.access_token);
-  localStorage.setItem('refresh_token', tokens.refresh_token);
-  localStorage.setItem('id_token', tokens.id_token);
-  localStorage.setItem('token_expiry', Date.now() + tokens.expires_in * 1000);
 
   sessionStorage.removeItem('pkce_verifier');
   sessionStorage.removeItem('oidc_state');
+
+  return {
+    access_token: tokens.access_token,
+    refresh_token: tokens.refresh_token,
+    id_token: tokens.id_token,
+    expires_in: tokens.expires_in,
+  };
 }
 
 export async function refreshToken() {
@@ -114,15 +117,16 @@ export async function refreshToken() {
   });
 
   if (!response.ok) {
-    localStorage.clear();
     throw new Error('Token refresh failed');
   }
 
   const tokens = await response.json();
-  localStorage.setItem('access_token', tokens.access_token);
-  localStorage.setItem('refresh_token', tokens.refresh_token || refreshToken);
-  localStorage.setItem('id_token', tokens.id_token || localStorage.getItem('id_token'));
-  localStorage.setItem('token_expiry', Date.now() + tokens.expires_in * 1000);
+  return {
+    access_token: tokens.access_token,
+    refresh_token: tokens.refresh_token,
+    id_token: tokens.id_token,
+    expires_in: tokens.expires_in,
+  };
 }
 
 export async function logout() {
