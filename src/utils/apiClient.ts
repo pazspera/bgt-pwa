@@ -20,6 +20,10 @@ async function getValidToken() {
     return accessToken;
   }
 
+  if (!authStore.refreshToken) {
+    throw new Error('No refresh token');
+  }
+
   if (isRefreshing) {
     return new Promise<string>((resolve) => {
       subscribeTokenRefresh(resolve);
@@ -33,10 +37,9 @@ async function getValidToken() {
     const newToken = authStore.accessToken || '';
     onTokenRefreshed(newToken);
     return newToken;
-  } catch {
+  } catch (e) {
     onTokenRefreshed('');
-    authStore.logout();
-    throw new Error('Token refresh failed');
+    throw e;
   } finally {
     isRefreshing = false;
   }
@@ -82,7 +85,6 @@ export async function apiClient(
       const retryToken = authStore.accessToken || '';
       return fetchWithAuth(url, options, retryToken);
     } catch {
-      authStore.logout();
       throw new Error('Unauthorized');
     }
   }
