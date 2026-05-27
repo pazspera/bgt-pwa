@@ -61,6 +61,11 @@ const confirmDelete = async () => {
   }
 }
 
+const cancelDelete = () => {
+  selectedGame.value = null;
+  isDeleteDialogVisible.value = false;
+}
+
 </script>
 
 <template>
@@ -144,7 +149,7 @@ const confirmDelete = async () => {
             color="primary"
             variant="plain"
             :label="CONFIRM_DELETE_GAME.CANCEL_BTN_TEXT"
-            @click="isDeleteDialogVisible = false"
+            @click="cancelDelete"
           />
         </template>
       </v-card>
