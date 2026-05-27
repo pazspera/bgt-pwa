@@ -54,21 +54,36 @@ async function fetchWithAuth(url: string, options: RequestInit, token: string): 
   });
 }
 
+const publicPaths = ['/v1/health'];
+
+function isPublicPath(url: string) {
+  const normalized = url.replace(/\/$/, '');
+  return publicPaths.some(p => normalized.endsWith(p));
+}
+
 export async function apiClient(
   url: string,
   options: RequestInit = {}
 ): Promise<Response> {
+  if (isPublicPath(url)) {
+    return fetch(url, {
+      ...options,
+      credentials: 'include',
+    });
+  }
+
   const token = await getValidToken();
   const response = await fetchWithAuth(url, options, token);
 
   if (response.status === 401) {
+    const authStore = useAuthStore();
     try {
-      const authStore = useAuthStore();
       await authStore.refreshAccessToken();
       const retryToken = authStore.accessToken || '';
       return fetchWithAuth(url, options, retryToken);
     } catch {
-      throw new Error('Unauthorized and refresh failed');
+      authStore.logout();
+      throw new Error('Unauthorized');
     }
   }
 

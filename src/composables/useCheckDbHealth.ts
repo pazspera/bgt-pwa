@@ -1,20 +1,19 @@
 import { ref, type Ref } from "vue";
 import { useServerTime } from "./useServerTime";
 import { API_ERROR_MESSAGES } from "@/constants/apiErrorMessages";
+import { apiClient } from "@/utils/apiClient";
 
 export function useCheckDbHealth() {
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const uri = BASE_URL + "v1/health";
 
   const { syncWithServer } = useServerTime();
-  const statusMessage: Ref<string> = ref(""); 
+  const statusMessage: Ref<string> = ref("");
 
-  const checkHealth = async ()=> {
+  const checkHealth = async () => {
     try {
-      const response = await fetch(uri,{
+      const response = await apiClient(uri, {
         method: "GET",
-        credentials: "include", // importante: enviar cookie de sesión
-        headers: { "Content-Type": "application/json" },
       });
 
       if(!response.ok) {
