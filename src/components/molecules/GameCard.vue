@@ -19,12 +19,19 @@ const props = defineProps<{
 
 const emit = defineEmits<{
   'delete-game': [game: GameApiResponse],
+  'edit-game': [game: GameApiResponse],
 }>();
 
 const handleDeleteGame = () => {
   console.log("emit delete-game");
   console.log(props.game);
   emit('delete-game', props.game);
+}
+
+const handleEditGame = () => {
+  console.log("emit handleEditGame");
+  console.log(props.game)
+  emit('edit-game', props.game);
 }
 
 const showDetails = ref(false);
@@ -75,7 +82,9 @@ const getWinner = () => {
 
     <v-card-actions class="card-actions">
       <div class="container-action-buttons">
-        <EditButton/>
+        <EditButton
+          @click="handleEditGame"
+        />
         <DeleteButton
           class="ml-sm-1 ml-md-3"
           @click="handleDeleteGame"
