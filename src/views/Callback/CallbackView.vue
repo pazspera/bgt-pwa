@@ -16,15 +16,17 @@ const error = ref(null);
 const authStore = useAuthStore();
 
 onMounted(async () => {
-  const token = authStore.accessToken;
-  if (token) {
-    router.push('/');
+  if (authStore.isAuthenticated) {
+    await router.replace('/');
     return;
   }
 
   try {
     const tokens = await handleCallback();
     authStore.setTokens(tokens);
+
+    console.log('isAuthenticated:', authStore.isAuthenticated);
+
     const redirect = sessionStorage.getItem('redirect_after_login') || '/';
     sessionStorage.removeItem('redirect_after_login');
     await router.replace(redirect);

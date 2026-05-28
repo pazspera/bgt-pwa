@@ -45,15 +45,15 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to) => {
-  if (publicRoutes.includes(to.path)) return;
+  if (publicRoutes.includes(to.path)) return true;
 
   const authStore = useAuthStore();
 
-  if (!authStore.isAuthenticated) {
-    sessionStorage.setItem('redirect_after_login', to.fullPath);
-    await login();
-    return false;
-  }
+  if (authStore.isAuthenticated) return true;
+
+  sessionStorage.setItem('redirect_after_login', to.fullPath);
+  await login();
+  return false;
 });
 
 export default router;
