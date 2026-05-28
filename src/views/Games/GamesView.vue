@@ -84,6 +84,7 @@ const confirmDelete = async () => {
       } else {
         router.push({ query: { page: String(lastPage) } });
       }
+      await getGames(lastPage);
     }
 
     success(GAME_STATUS.DELETED)
@@ -100,7 +101,7 @@ watch(() => route.query.page, (newPage) => {
   // doesn't run until first load
   if(!initialized) return;
 
-  const page = Number(newPage) || 1;
+  const page = parseInt(String(newPage)) || 1;
   if(page !== currentPage.value) {
     getGames(page);
   }
