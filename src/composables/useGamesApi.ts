@@ -31,14 +31,17 @@ export function useGamesApi() {
     }
   }
 
-  const getGames = async (limit?: number, offset?: number) => {
+  const getGames = async (page?: number) => {
     loading.value = true;
     errorGetGames.value = null;
 
+    const p = page ?? 1;
+    currentPage.value = p;
+    const offset = (p - 1) * itemsPerPage.value;
+
     try {
       const response = await GamesApiService.getGames(
-        limit ?? itemsPerPage.value,
-        offset ?? (currentPage.value - 1) * itemsPerPage.value
+        itemsPerPage.value, offset
       );
       gamesList.value = response;
       console.log(gamesList.value);
