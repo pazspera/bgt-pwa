@@ -12,15 +12,15 @@ export const useAuthStore = defineStore('auth', () => {
     () => !!accessToken.value && Date.now() < tokenExpiry.value
   );
 
-  function setTokens({ access, refresh, id, expiresIn }) {
-    accessToken.value = access;
-    refreshToken.value = refresh;
-    idToken.value = id;
-    tokenExpiry.value = Date.now() + expiresIn * 1000;
+  function setTokens({ access_token, refresh_token, id_token, expires_in }) {
+    accessToken.value = access_token;
+    refreshToken.value = refresh_token;
+    idToken.value = id_token;
+    tokenExpiry.value = Date.now() + expires_in * 1000;
 
-    localStorage.setItem('access_token', access);
-    localStorage.setItem('refresh_token', refresh);
-    localStorage.setItem('id_token', id);
+    localStorage.setItem('access_token', access_token);
+    localStorage.setItem('refresh_token', refresh_token);
+    localStorage.setItem('id_token', id_token);
     localStorage.setItem('token_expiry', String(tokenExpiry.value));
   }
 
