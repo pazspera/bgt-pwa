@@ -39,7 +39,11 @@ onBeforeMount(async () => {
 
 // page is coming from v-pagination
 const onPageChange = async (page: number) => {
-  router.push({ query: { page: String(page) }});
+  if(page === 1) {
+    router.push({ query: {} });
+  } else {
+    router.push({ query: { page: String(page) }});
+  }
   await getGames(page);
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
