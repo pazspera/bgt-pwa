@@ -45,7 +45,6 @@ export async function login() {
     code_challenge: challenge,
     code_challenge_method: OIDC_CONFIG.code_challenge_method,
     state,
-    audience: 'bgt-auth',
   });
 
   window.location.href = `${OIDC_CONFIG.authorization_endpoint}?${params}`;
