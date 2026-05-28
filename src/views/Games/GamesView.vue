@@ -32,7 +32,7 @@ const isDeleteDialogVisible: Ref<boolean> = ref(false);
 const selectedGame: Ref<GameApiResponse | null> = ref(null);
 
 onBeforeMount(async () => {
-  const pageFromUrl = Number(route.query.page) || 1;
+  const pageFromUrl = parseInt(String((route.query.page))) || 1;
   await getGames(pageFromUrl);
 
   // edge case where the page from the url is larger than
