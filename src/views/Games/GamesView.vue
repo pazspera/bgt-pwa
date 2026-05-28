@@ -19,6 +19,8 @@ defineOptions({ name: "GamesView" });
 
 const route = useRoute();
 const router = useRouter();
+// flag to only have watch active after initial load
+let initialized = false;
 
 useDocumentTitle(DOCUMENT_TITLES.GAMES);
 
@@ -32,9 +34,20 @@ const selectedGame: Ref<GameApiResponse | null> = ref(null);
 onBeforeMount(async () => {
   const pageFromUrl = Number(route.query.page) || 1;
   await getGames(pageFromUrl);
-  console.log(gamesList.value);
-  console.log(errorGetGames.value);
-  console.log(totalPages.value);
+
+  // edge case where the page from the url is larger than
+  // the actual amount of totalPages
+  // example: /partidas?page=999
+  if(pageFromUrl > totalPages.value && totalPages.value > 0) {
+    const lastPage = totalPages.value;
+    if(lastPage === 1) {
+      router.replace({ query: {} });
+    } else {
+      router.replace({ query: { page: String(lastPage) }});
+    }
+  }
+
+  initialized = true;
 })
 
 // page is coming from v-pagination
@@ -84,6 +97,9 @@ const confirmDelete = async () => {
 }
 
 watch(() => route.query.page, (newPage) => {
+  // doesn't run until first load
+  if(!initialized) return;
+
   const page = Number(newPage) || 1;
   if(page !== currentPage.value) {
     getGames(page);
