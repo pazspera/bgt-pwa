@@ -60,7 +60,7 @@ const confirmDelete = async () => {
     await deleteGame(selectedGame.value.id);
 
     // updates ui
-    await getGames();
+    await getGames(currentPage.value);
 
     success(GAME_STATUS.DELETED)
   } catch (err) {
