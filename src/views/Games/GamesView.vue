@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { onBeforeMount, ref, type Ref } from "vue";
+import { onBeforeMount, ref, type Ref, watch } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import { deleteGame } from "@/api/gameApiService";
 import { useGamesApi } from "@/composables/useGamesApi";
 import { useDocumentTitle } from "@/composables/useDocumentTitle";
@@ -16,6 +17,9 @@ import AppSnackbar from "@/components/molecules/AppSnackbar.vue";
 
 defineOptions({ name: "GamesView" });
 
+const route = useRoute();
+const router = useRouter();
+
 useDocumentTitle(DOCUMENT_TITLES.GAMES);
 
 const { loading, gamesList, errorGetGames, currentPage, totalPages, itemsPerPage, getGames } = useGamesApi();
@@ -26,14 +30,17 @@ const isDeleteDialogVisible: Ref<boolean> = ref(false);
 const selectedGame: Ref<GameApiResponse | null> = ref(null);
 
 onBeforeMount(async () => {
-  await getGames();
+  const pageFromUrl = Number(route.query.page) || 1;
+  await getGames(pageFromUrl);
   console.log(gamesList.value);
   console.log(errorGetGames.value);
   console.log(totalPages.value);
 })
 
-const onPageChange = async () => {
-  await getGames();
+// page is coming from v-pagination
+const onPageChange = async (page: number) => {
+  router.push({ query: { page: String(page) }});
+  await getGames(page);
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -60,6 +67,13 @@ const confirmDelete = async () => {
     selectedGame.value = null;
   }
 }
+
+watch(() => route.query.page, (newPage) => {
+  const page = Number(newPage) || 1;
+  if(page !== currentPage.value) {
+    getGames(page);
+  }
+})
 
 </script>
 
