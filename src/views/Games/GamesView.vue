@@ -60,6 +60,18 @@ const confirmDelete = async () => {
     await deleteGame(selectedGame.value.id);
 
     // updates ui
+    // verifies edge case where by deleting a game,
+    // the page disappears
+    if(currentPage.value > totalPages.value && totalPages.value > 0) {
+      const lastPage = totalPages.value;
+      if(lastPage === 1) {
+        // doesn't show page=1 in url
+        router.push({ query: {} });
+      } else {
+        router.push({ query: { page: String(lastPage) } });
+      }
+    }
+
     await getGames(currentPage.value);
 
     success(GAME_STATUS.DELETED)
