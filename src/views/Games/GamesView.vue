@@ -38,7 +38,7 @@ onBeforeMount(async () => {
   // edge case where the page from the url is larger than
   // the actual amount of totalPages
   // example: /partidas?page=999
-  if(pageFromUrl > totalPages.value && totalPages.value > 0) {
+  if(pageFromUrl > totalPages.value) {
     const lastPage = totalPages.value;
     if(lastPage === 1) {
       router.replace({ query: {} });
@@ -76,8 +76,8 @@ const confirmDelete = async () => {
     // updates ui
     // verifies edge case where by deleting a game,
     // the page disappears
-    if(currentPage.value > totalPages.value && totalPages.value > 0) {
-      const lastPage = totalPages.value;
+    if(currentPage.value > totalPages.value) {
+      const lastPage = totalPages.value || 1;
       if(lastPage <= 1) {
         // doesn't show page=1 in url
         router.push({ query: {} });
