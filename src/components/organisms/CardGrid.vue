@@ -38,6 +38,7 @@ const emit = defineEmits<{
   'delete-player': [player: PlayerApiResponse],
   'add-game': [boardgame: CollectionsApiResponse],
   'delete-game': [game: GameApiResponse],
+  'edit-game': [game: GameApiResponse],
 }>();
 
 onBeforeMount(()=> {
@@ -71,6 +72,7 @@ onBeforeMount(()=> {
         <GameCard v-else-if="isGame(item)"
           :game="item"
           @delete-game="(game) => $emit('delete-game', game)"
+          @edit-game="(game) => $emit('edit-game', game)"
         />
       </v-col>
     </v-row>
