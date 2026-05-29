@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { onBeforeMount, ref, type Ref } from "vue";
+import { onBeforeMount, ref, type Ref, watch } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import { deleteGame } from "@/api/gameApiService";
 import { useGamesApi } from "@/composables/useGamesApi";
 import { useDocumentTitle } from "@/composables/useDocumentTitle";
@@ -16,6 +17,11 @@ import AppSnackbar from "@/components/molecules/AppSnackbar.vue";
 
 defineOptions({ name: "GamesView" });
 
+const route = useRoute();
+const router = useRouter();
+// flag to only have watch active after initial load
+let initialized = false;
+
 useDocumentTitle(DOCUMENT_TITLES.GAMES);
 
 const { loading, gamesList, errorGetGames, currentPage, totalPages, itemsPerPage, getGames } = useGamesApi();
@@ -26,14 +32,32 @@ const isDeleteDialogVisible: Ref<boolean> = ref(false);
 const selectedGame: Ref<GameApiResponse | null> = ref(null);
 
 onBeforeMount(async () => {
-  await getGames();
-  console.log(gamesList.value);
-  console.log(errorGetGames.value);
-  console.log(totalPages.value);
+  const pageFromUrl = parseInt(String((route.query.page))) || 1;
+  await getGames(pageFromUrl);
+
+  // edge case where the page from the url is larger than
+  // the actual amount of totalPages
+  // example: /partidas?page=999
+  if(pageFromUrl > totalPages.value) {
+    const lastPage = totalPages.value;
+    if(lastPage === 1) {
+      router.replace({ query: {} });
+    } else {
+      router.replace({ query: { page: String(lastPage) }});
+    }
+  }
+
+  initialized = true;
 })
 
-const onPageChange = async () => {
-  await getGames();
+// page is coming from v-pagination
+const onPageChange = async (page: number) => {
+  if(page === 1) {
+    router.push({ query: {} });
+  } else {
+    router.push({ query: { page: String(page) }});
+  }
+  await getGames(page);
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -47,9 +71,21 @@ const confirmDelete = async () => {
 
   try {
     await deleteGame(selectedGame.value.id);
+    await getGames(currentPage.value);
 
     // updates ui
-    await getGames();
+    // verifies edge case where by deleting a game,
+    // the page disappears
+    if(currentPage.value > totalPages.value) {
+      const lastPage = totalPages.value || 1;
+      if(lastPage <= 1) {
+        // doesn't show page=1 in url
+        router.push({ query: {} });
+      } else {
+        router.push({ query: { page: String(lastPage) } });
+      }
+      await getGames(lastPage);
+    }
 
     success(GAME_STATUS.DELETED)
   } catch (err) {
@@ -65,6 +101,16 @@ const cancelDelete = () => {
   selectedGame.value = null;
   isDeleteDialogVisible.value = false;
 }
+
+watch(() => route.query.page, (newPage) => {
+  // doesn't run until first load
+  if(!initialized) return;
+
+  const page = parseInt(String(newPage)) || 1;
+  if(page !== currentPage.value) {
+    getGames(page);
+  }
+})
 
 </script>
 
