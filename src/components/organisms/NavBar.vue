@@ -42,7 +42,6 @@ defineExpose({ drawer });
         <div class="d-flex align-center">
           <!-- Desktop links: visible >=1024px -->
           <div v-if="isDesktop" class="nav-links" data-testid="desktop-nav-links">
-<<<<<<< HEAD
             <NavigationLink :to="{ name: 'BoardGames' }">
               {{ NAVIGATION_TEXT.BOARDGAMES }}
             </NavigationLink>
@@ -54,31 +53,23 @@ defineExpose({ drawer });
             </NavigationLink>
             <ThemeToggler class="theme-toggler-desktop" icon-size="var(--font-size-lg)"/>
             <span v-if="!loading && user" class="username">{{ user.username }}</span>
+            <span v-else-if="isLoggedIn" class="username">...</span>
+            <v-btn v-if="isLoggedIn" variant="text" size="small" @click="handleLogout" title="Cerrar sesión" class="logout-btn">
+              <FontAwesomeIcon :icon="faRightFromBracket" />
+            </v-btn>
             <a v-else-if="!loading && !user" href="/login" class="username">Entrar</a>
-=======
-            <NavigationLink :to="{ name: 'BoardGames' }">Ludoteca</NavigationLink>
-            <NavigationLink :to="{ name: 'Players' }">Jugadores</NavigationLink>
-            <NavigationLink :to="{ name: 'Games' }">Partidas</NavigationLink>
-<ThemeToggler class="theme-toggler-desktop" icon-size="var(--font-size-lg)"/>
-          <span v-if="!loading && user" class="username">{{ user.username }}</span>
-          <span v-else-if="isLoggedIn" class="username">...</span>
-          <v-btn v-if="isLoggedIn" variant="text" size="small" @click="handleLogout" title="Cerrar sesión" class="logout-btn">
-            <FontAwesomeIcon :icon="faRightFromBracket" />
-          </v-btn>
-          <a v-else-if="!loading && !user" href="/login" class="username">Entrar</a>
->>>>>>> c0662e8 (Agrego funcion y boton de logout)
           </div>
 
           <!-- Mobile / Tablet toggle: visible <1025px -->
           <div v-if="!isDesktop" class="nav-drawer-icons" data-testid="nav-drawer-icons">
-<ThemeToggler class="show-mobile" icon-size="var(--font-size-lg)" />
-          <span v-if="!loading && user" class="username show-mobile">{{ user.username }}</span>
-          <span v-else-if="isLoggedIn" class="username show-mobile">...</span>
-<v-btn v-if="isLoggedIn" variant="text" size="small" @click="handleLogout" title="Cerrar sesión" class="show-mobile logout-btn">
-            <FontAwesomeIcon :icon="faRightFromBracket" />
-          </v-btn>
-          <a v-else-if="!loading && !user" href="/login" class="username show-mobile">Entrar</a>
-          <v-btn icon class="show-mobile" @click="drawer = !drawer" data-testid="mobile-toggler">
+            <ThemeToggler class="show-mobile" icon-size="var(--font-size-lg)" />
+            <span v-if="!loading && user" class="username show-mobile">{{ user.username }}</span>
+            <span v-else-if="isLoggedIn" class="username show-mobile">...</span>
+            <v-btn v-if="isLoggedIn" variant="text" size="small" @click="handleLogout" title="Cerrar sesión" class="show-mobile logout-btn">
+              <FontAwesomeIcon :icon="faRightFromBracket" />
+            </v-btn>
+            <a v-else-if="!loading && !user" href="/login" class="username show-mobile">Entrar</a>
+            <v-btn icon class="show-mobile" @click="drawer = !drawer" data-testid="mobile-toggler">
               <FontAwesomeIcon :icon="faBars" color="on-surface" />
             </v-btn>
           </div>
@@ -171,7 +162,7 @@ defineExpose({ drawer });
   display: flex;
   flex-direction: column;
   gap: var(--font-size-md);
-  padding: var(--font-size-sm);
+  padding: var(--font-size-sm); 
 }
 
 .logout-btn {
@@ -183,4 +174,3 @@ defineExpose({ drawer });
   color: rgb(var(--v-theme-error));
 }
 </style>
-
