@@ -14,6 +14,7 @@ import CardGrid from "@/components/organisms/CardGrid.vue";
 import LoadingRow from "@/components/molecules/LoadingRow.vue";
 import AppButton from "@/components/atoms/buttons/AppButton.vue";
 import AppSnackbar from "@/components/molecules/AppSnackbar.vue";
+import EditGameDialog from "@/components/organisms/EditGameDialog.vue";
 
 defineOptions({ name: "GamesView" });
 
@@ -200,6 +201,11 @@ watch(() => route.query.page, (newPage) => {
         </template>
       </v-card>
     </v-dialog>
+
+    <EditGameDialog
+      v-model="isDeleteDialogVisible"
+      :game="selectedGame"
+    />
   </v-container>
 </template>
 

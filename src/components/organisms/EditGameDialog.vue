@@ -8,6 +8,7 @@ import { useGamesApi } from '@/composables/useGamesApi';
 import { onBeforeMount, ref, type Ref, watch } from 'vue';
 import LoadingRow from '@/components/molecules/LoadingRow.vue';
 import { PlayerApiResponse } from '../../types/domain/playerApi';
+import { GameApiResponse } from '../../types/domain/gamesApi';
 import { object, string, date, array, boolean } from "yup";
 import { toTypedSchema } from "@vee-validate/yup";
 import { useField, useForm, useFieldArray } from "vee-validate";
@@ -18,7 +19,7 @@ import AppButton from '@/components/atoms/buttons/AppButton.vue';
 
 const props =  defineProps<{
   modelValue: boolean,
-  boardgame: CollectionsApiResponse | null,
+  game: GameApiResponse | null,
 }>();
 defineOptions({ name: "EditGameDialog" });
 
@@ -37,8 +38,8 @@ const errorCount: Ref<number> = ref(0);
 const savingGame: Ref<boolean> = ref(false);
 
 const validationSchema = () => {
-  const minPlayer = props.boardgame?.min_players ?? 1;
-  const maxPlayer = props.boardgame?.max_players ?? 9;
+  const minPlayer = props.game?.min_players ?? 1;
+  const maxPlayer = props.game?.max_players ?? 9;
 
   const maxDate = new Date();
   maxDate.setHours(0, 0, 0, 0);
@@ -54,8 +55,8 @@ const validationSchema = () => {
           is_winner: boolean().required(),
           is_registered: boolean().default(false),
         }))
-        .min(minPlayer, AddGameDialogText.validationErrors.playersMin(props.boardgame.min_players))
-        .max(maxPlayer, AddGameDialogText.validationErrors.playersMax(props.boardgame.max_players))
+        .min(minPlayer, AddGameDialogText.validationErrors.playersMin(props.game.min_players))
+        .max(maxPlayer, AddGameDialogText.validationErrors.playersMax(props.game.max_players))
       ,
       winner: object({
         player_id: string().required(),
@@ -207,7 +208,7 @@ const onSubmit = handleSubmit(async (values) => {
 };
 
 const payload: CreateGameRequest = {
-  boardgame_id: props.boardgame.id,
+  boardgame_id: props.game.boardgame_id,
   // NO ENTIENDO DONDE ESTÁ LA COLLECTION_ID
   // está hardcodeado en GamesView
   collection_id: 'b6acc73a-6b7a-4c67-937a-e1a6169f173f',
@@ -281,7 +282,7 @@ const payload: CreateGameRequest = {
             </v-card-title>
             <v-card-subtitle>
               <DetailText>
-                {{ boardgame.name }}
+                {{ game.boardgame_name }}
               </DetailText>
             </v-card-subtitle>
           </v-card-item>
