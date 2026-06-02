@@ -11,10 +11,13 @@ import DisplayTitle from "@/components/atoms/typography/DisplayTitle.vue";
 import { GENERAL_UI_TEXT } from "@/constants/generalText";
 import { useDocumentTitle } from "@/composables/useDocumentTitle";
 import { DOCUMENT_TITLES } from "@/constants/documentTitles";
+import { getColection } from "@/api/collectionApiService";
 
 defineOptions({ name: "BoardGamesView" });
 
 useDocumentTitle(DOCUMENT_TITLES.BOARDGAMES);
+
+const testCollectionSola = ref(null);
 
 // const isSavedSnackBarVisible: Ref<boolean> = ref(false);
 // const savedSnackBarColor: Ref<string> = ref("");
@@ -41,6 +44,8 @@ const handleSaveError = (message: string) => {
 onBeforeMount(async () => {
   await fetchCollections();
   console.log(collection.value);
+  testCollectionSola.value = await getColection("492d002e-76e3-4e72-a0ce-b739a4f4f86c");
+  console.log(testCollectionSola.value);
 })
 
 </script>
