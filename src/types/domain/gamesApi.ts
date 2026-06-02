@@ -24,7 +24,7 @@ export interface GamesListResponse {
 export interface PlayerInGame {
   player_id: string,
   is_winner: boolean,
-  player_name: string,
+  player_name?: string,
   is_registered?: boolean,
 }
 
