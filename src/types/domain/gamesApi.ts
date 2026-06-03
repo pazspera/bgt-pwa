@@ -1,3 +1,5 @@
+import { CollectionsApiResponse } from "./collectionsApi";
+
 export interface GameApiResponse {
   id: string,
   boardgame_id: string,
@@ -48,4 +50,9 @@ export interface CreatedGameResponse {
   duration: string,
   created_at: string,
   updated_at: string,
+}
+
+export interface EditGameInfo {
+  boardgame: CollectionsApiResponse,
+  game: GameApiResponse,
 }

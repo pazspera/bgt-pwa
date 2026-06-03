@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import type { GameApiResponse } from '../../types/domain/gamesApi';
+import type { GameApiResponse, EditGameInfo } from '../../types/domain/gamesApi';
 import { formatDate } from '@/utils/formatters';
 import { GAME_CARD_TEXT } from '@/constants/ui_text/GameCard';
 import { useCollectionsApi } from '@/composables/useCollectionsApi';
@@ -22,7 +22,7 @@ const { fetchBoardgame, boardgame } = useCollectionsApi();
 
 const emit = defineEmits<{
   'delete-game': [game: GameApiResponse],
-  'edit-game': [game: GameApiResponse],
+  'edit-game': [game: EditGameInfo],
 }>();
 
 const handleDeleteGame = () => {
@@ -36,7 +36,14 @@ const handleEditGame = async () => {
   console.log(props.game)
   await fetchBoardgame(props.game.boardgame_id);
   console.log(boardgame.value);
-  emit('edit-game', props.game);
+
+  const editGamePayload: EditGameInfo = {
+    boardgame: boardgame.value,
+    game: props.game
+  }
+
+  console.log(editGamePayload);
+  emit('edit-game', editGamePayload);
 }
 
 const showDetails = ref(false);
@@ -64,7 +71,7 @@ const getWinner = () => {
           {{ game.boardgame_name }}
         </CardHeading>
       </v-card-title>
-  
+
       <v-card-subtitle v-if="game.start_date" class="game-card-date ps-2">
         <DetailText>
           {{ formatDate(game.start_date) }}

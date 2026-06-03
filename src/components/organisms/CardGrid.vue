@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { PlayerApiResponse } from '../../types/domain/playerApi';
 import { CollectionsApiResponse } from '../../types/domain/collectionsApi';
-import { GameApiResponse } from '../../types/domain/gamesApi';
+import { GameApiResponse, EditGameInfo } from '../../types/domain/gamesApi';
 import { onBeforeMount } from 'vue';
 import PlayerCard from '@/components/molecules/PlayerCard.vue';
 import BoardgameCard from '@/components/molecules/BoardgameCard.vue';
@@ -38,7 +38,7 @@ const emit = defineEmits<{
   'delete-player': [player: PlayerApiResponse],
   'add-game': [boardgame: CollectionsApiResponse],
   'delete-game': [game: GameApiResponse],
-  'edit-game': [game: GameApiResponse],
+  'edit-game': [game: EditGameInfo],
 }>();
 
 onBeforeMount(()=> {

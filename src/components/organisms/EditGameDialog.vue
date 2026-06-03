@@ -12,14 +12,14 @@ import { GameApiResponse } from '../../types/domain/gamesApi';
 import { object, string, date, array, boolean } from "yup";
 import { toTypedSchema } from "@vee-validate/yup";
 import { useField, useForm, useFieldArray } from "vee-validate";
-import type { PlayerInGame, CreateGameRequest } from '../../types/domain/gamesApi';
+import type { PlayerInGame, CreateGameRequest, EditGameInfo } from '../../types/domain/gamesApi';
 import BlockHeading from '@/components/atoms/typography/BlockHeading.vue';
 import DetailText from '@/components/atoms/typography/DetailText.vue';
 import AppButton from '@/components/atoms/buttons/AppButton.vue';
 
 const props =  defineProps<{
   modelValue: boolean,
-  game: GameApiResponse | null,
+  game: EditGameInfo | null,
 }>();
 defineOptions({ name: "EditGameDialog" });
 
@@ -38,8 +38,8 @@ const errorCount: Ref<number> = ref(0);
 const savingGame: Ref<boolean> = ref(false);
 
 const validationSchema = () => {
-  const minPlayer = props.game?.min_players ?? 1;
-  const maxPlayer = props.game?.max_players ?? 9;
+  const minPlayer = props.game.boardgame?.min_players ?? 1;
+  const maxPlayer = props.game.boardgame?.max_players ?? 9;
 
   const maxDate = new Date();
   maxDate.setHours(0, 0, 0, 0);
@@ -55,8 +55,8 @@ const validationSchema = () => {
           is_winner: boolean().required(),
           is_registered: boolean().default(false),
         }))
-        .min(minPlayer, AddGameDialogText.validationErrors.playersMin(props.game.min_players))
-        .max(maxPlayer, AddGameDialogText.validationErrors.playersMax(props.game.max_players))
+        .min(minPlayer, AddGameDialogText.validationErrors.playersMin(props.game.boardgame.min_players))
+        .max(maxPlayer, AddGameDialogText.validationErrors.playersMax(props.game.boardgame.max_players))
       ,
       winner: object({
         player_id: string().required(),
@@ -95,11 +95,11 @@ const { fields, push, remove } = useFieldArray<PlayerInGame>('players');
 
 // WATCH FOR PLAYERS SELECT
 // watch sincronizes the selection in the input with vee-validate
-// We're using selectedPlayers, not the v-model of players 
+// We're using selectedPlayers, not the v-model of players
 // It would always show the min_players error since players doesn't
 // show when a player was added, that's on selectedPlayers
-// The watch saves the player added in selectedPlayers using the 
-// format defined in validationSchema 
+// The watch saves the player added in selectedPlayers using the
+// format defined in validationSchema
 watch(selectedPlayers, (newPlayers) => {
   // cleans current array in vee-validate
   // if a player is added and deleted, the array has to be repopulated from scratch
@@ -160,7 +160,7 @@ const closeDialog = () => {
   emit("update:modelValue", false);
 }
 
-/* 
+/*
   To avoid an infinite loop of retry messages, we tell the user
   to retry fetchPlayers one time. If it fails again, the error
   message instructs the user to reload the page.
@@ -208,7 +208,7 @@ const onSubmit = handleSubmit(async (values) => {
 };
 
 const payload: CreateGameRequest = {
-  boardgame_id: props.game.boardgame_id,
+  boardgame_id: props.game.game.boardgame_id,
   // NO ENTIENDO DONDE ESTÁ LA COLLECTION_ID
   // está hardcodeado en GamesView
   collection_id: 'b6acc73a-6b7a-4c67-937a-e1a6169f173f',
@@ -282,11 +282,11 @@ const payload: CreateGameRequest = {
             </v-card-title>
             <v-card-subtitle>
               <DetailText>
-                {{ game.boardgame_name }}
+                {{ game.game.boardgame_name }}
               </DetailText>
             </v-card-subtitle>
           </v-card-item>
-           
+
           <v-card-text>
             <v-form>
               <v-row>
@@ -306,7 +306,7 @@ const payload: CreateGameRequest = {
                 <v-col
                   cols="12"
                   sm="6"
-                  md="4"  
+                  md="4"
                 >
                   <v-select
                     chips
@@ -359,7 +359,7 @@ const payload: CreateGameRequest = {
               </v-row>
             </v-form>
           </v-card-text>
-  
+
           <v-card-actions class="dialog-actions mt-3">
             <AppButton
               class="dialog-button"

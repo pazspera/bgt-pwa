@@ -5,7 +5,7 @@ import { deleteGame } from "@/api/gameApiService";
 import { useGamesApi } from "@/composables/useGamesApi";
 import { useDocumentTitle } from "@/composables/useDocumentTitle";
 import { useAppSnackbar } from "@/composables/useAppSnackbar";
-import { GameApiResponse } from "@/types/domain/gamesApi";
+import { GameApiResponse, EditGameInfo } from "@/types/domain/gamesApi";
 import { GENERAL_UI_TEXT } from "@/constants/generalText";
 import { DOCUMENT_TITLES } from "@/constants/documentTitles";
 import { CONFIRM_DELETE_GAME, GAME_STATUS } from "@/constants/ui_feedback/games";
@@ -30,7 +30,9 @@ const { loading, gamesList, errorGetGames, currentPage, totalPages, itemsPerPage
 const { isSnackbarVisible, message, color, timeout, hide, error, success } = useAppSnackbar();
 
 const isDeleteDialogVisible: Ref<boolean> = ref(false);
-const selectedGame: Ref<GameApiResponse | null> = ref(null);
+const selectedDeleteGame: Ref<GameApiResponse | null> = ref(null);
+const isEditDialogVisible: Ref<boolean> = ref(false);
+const selectedEditGame: Ref<EditGameInfo | null> = ref(null);
 
 onBeforeMount(async () => {
   const pageFromUrl = parseInt(String((route.query.page))) || 1;
@@ -63,15 +65,19 @@ const onPageChange = async (page: number) => {
 }
 
 const handleDeleteGame = (game: GameApiResponse) => {
-  selectedGame.value = game;
+  selectedDeleteGame.value = game;
   isDeleteDialogVisible.value = true;
 }
 
+const handleEditGame = (editInfo: EditGameInfo) => {
+  
+}
+
 const confirmDelete = async () => {
-  if(!selectedGame.value) return;
+  if(!selectedDeleteGame.value) return;
 
   try {
-    await deleteGame(selectedGame.value.id);
+    await deleteGame(selectedDeleteGame.value.id);
     await getGames(currentPage.value);
 
     // updates ui
@@ -94,12 +100,12 @@ const confirmDelete = async () => {
     console.log(GAME_STATUS.ERROR.DELETE);
   } finally {
     isDeleteDialogVisible.value = false;
-    selectedGame.value = null;
+    selectedDeleteGame.value = null;
   }
 }
 
 const cancelDelete = () => {
-  selectedGame.value = null;
+  selectedDeleteGame.value = null;
   isDeleteDialogVisible.value = false;
 }
 
@@ -138,6 +144,7 @@ watch(() => route.query.page, (newPage) => {
       :data="gamesList.data"
       type="game"
       @delete-game="handleDeleteGame"
+      @edit-game="handleEditGame"
     ></CardGrid>
 
     <!-- no games to show -->
@@ -203,8 +210,8 @@ watch(() => route.query.page, (newPage) => {
     </v-dialog>
 
     <EditGameDialog
-      v-model="isDeleteDialogVisible"
-      :game="selectedGame"
+      v-model="isEditDialogVisible"
+      :game="selectedEditGame"
     />
   </v-container>
 </template>
