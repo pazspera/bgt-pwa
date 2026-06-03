@@ -24,7 +24,7 @@ const testCollectionSola = ref(null);
 const isAddGameDialogOpen: Ref<boolean> = ref(false);
 const selectedBoardgame: Ref<CollectionsApiResponse | null> = ref(null);
 
-const { collection, totalBoardgames, loading: loadingList, errorFetchCollections, fetchCollections } = useCollectionsApi();
+const { collection, totalBoardgames, loading: loadingList, errorFetchCollections, boardgame, fetchCollections, fetchBoardgame } = useCollectionsApi();
 const { isSnackbarVisible, message, color, timeout, hide, success, error } = useAppSnackbar();
 
 const handleAddGame = (boardgame: CollectionsApiResponse) => {
@@ -43,6 +43,8 @@ const handleSaveError = (message: string) => {
 onBeforeMount(async () => {
   await fetchCollections();
   console.log(collection.value);
+  await fetchBoardgame("492d002e-76e3-4e72-a0ce-b739a4f4f86c");
+  console.log(boardgame.value);
 })
 
 </script>

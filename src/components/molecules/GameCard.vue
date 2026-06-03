@@ -3,8 +3,9 @@ import { ref } from "vue";
 import type { GameApiResponse } from '../../types/domain/gamesApi';
 import { formatDate } from '@/utils/formatters';
 import { GAME_CARD_TEXT } from '@/constants/ui_text/GameCard';
-import { faTrophy, faChevronDown, faChevronUp, } from '@fortawesome/free-solid-svg-icons';
+import { useCollectionsApi } from '@/composables/useCollectionsApi';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { faTrophy, faChevronDown, faChevronUp, } from '@fortawesome/free-solid-svg-icons';
 import CardHeading from '@/components/atoms/typography/CardHeading.vue';
 import MinorHeading from '@/components/atoms/typography/MinorHeading.vue';
 import EditButton from '@/components/atoms/buttons/EditButton.vue';
@@ -17,6 +18,8 @@ const props = defineProps<{
   game: GameApiResponse
 }>();
 
+const { fetchBoardgame, boardgame } = useCollectionsApi();
+
 const emit = defineEmits<{
   'delete-game': [game: GameApiResponse],
   'edit-game': [game: GameApiResponse],
@@ -28,9 +31,11 @@ const handleDeleteGame = () => {
   emit('delete-game', props.game);
 }
 
-const handleEditGame = () => {
+const handleEditGame = async () => {
   console.log("emit handleEditGame");
   console.log(props.game)
+  await fetchBoardgame(props.game.boardgame_id);
+  console.log(boardgame.value);
   emit('edit-game', props.game);
 }
 
