@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import type { GameApiResponse } from '../../types/domain/gamesApi';
 import { ref } from "vue";
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import type { GameApiResponse } from '../../types/domain/gamesApi';
+import { formatDate } from '@/utils/formatters';
+import { GAME_CARD_TEXT } from '@/constants/ui_text/GameCard';
 import { faTrophy, faChevronDown, faChevronUp, } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import CardHeading from '@/components/atoms/typography/CardHeading.vue';
 import MinorHeading from '@/components/atoms/typography/MinorHeading.vue';
 import EditButton from '@/components/atoms/buttons/EditButton.vue';
 import DeleteButton from '@/components/atoms/buttons/DeleteButton.vue';
 import DetailText from '@/components/atoms/typography/DetailText.vue';
-import { formatDate } from '@/utils/formatters';
-import { GAME_CARD_TEXT } from '@/constants/ui_text/GameCard';
 
 defineOptions({ name: "GameCard" });
 

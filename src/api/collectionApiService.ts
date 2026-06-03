@@ -28,7 +28,7 @@ export async function getBoardgame(boardgameId: string) {
     }
 
     // no estoy llamando a la propiedad games pero me devuelve solo eso
-    const data: CollectionsListResponse = await response.json();
+    const data: CollectionsApiResponse = await response.json();
     return data;
   } catch (err) {
     throw new Error(API_ERROR_MESSAGES.UNKNOWN_ERROR(err?.message));
