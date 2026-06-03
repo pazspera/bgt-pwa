@@ -19,9 +19,9 @@ export async function getCollections() {
   }
 }
 
-export async function getColection(id: string) {
+export async function getBoardgame(boardgameId: string) {
   try {
-    const response = await fetch(`${API_BASE_URL}v1/collections/${id}`, { method: "GET" });
+    const response = await fetch(`${API_BASE_URL}v1/boardgames/${boardgameId}`, { method: "GET" });
 
      if(!response.ok) {
       throw new Error(API_ERROR_MESSAGES.GET_COLLECTION_FAILED(response.status));
