@@ -57,7 +57,7 @@ defineExpose({ drawer });
             <v-btn v-if="isLoggedIn" variant="text" size="small" @click="handleLogout" title="Cerrar sesión" class="logout-btn">
               <FontAwesomeIcon :icon="faRightFromBracket" />
             </v-btn>
-            <a v-else-if="!loading && !user" href="/login" class="username">Entrar</a>
+            <a v-else href="/login" class="username">Entrar</a>
           </div>
 
           <!-- Mobile / Tablet toggle: visible <1025px -->
@@ -68,7 +68,7 @@ defineExpose({ drawer });
             <v-btn v-if="isLoggedIn" variant="text" size="small" @click="handleLogout" title="Cerrar sesión" class="show-mobile logout-btn">
               <FontAwesomeIcon :icon="faRightFromBracket" />
             </v-btn>
-            <a v-else-if="!loading && !user" href="/login" class="username show-mobile">Entrar</a>
+            <a v-else href="/login" class="username show-mobile">Entrar</a>
             <v-btn icon class="show-mobile" @click="drawer = !drawer" data-testid="mobile-toggler">
               <FontAwesomeIcon :icon="faBars" color="on-surface" />
             </v-btn>
