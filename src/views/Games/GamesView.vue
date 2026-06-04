@@ -74,6 +74,16 @@ const handleEditGame = (editInfo: EditGameInfo) => {
   isEditDialogVisible.value = true;
 }
 
+// EditGameDialog is rendered conditionally on selectedEditGame
+// once the dialog is closed, isEditDialogVisible is false
+// has to be null to make sure if the user tries to edit a
+// new game, props.game is updated
+watch(isEditDialogVisible, (visible) => {
+  if(!visible) {
+    selectedEditGame.value = null;
+  }
+})
+
 const confirmDelete = async () => {
   if(!selectedDeleteGame.value) return;
 
