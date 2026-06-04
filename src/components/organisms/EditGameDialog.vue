@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { AddGameDialogText } from '@/constants/ui_text/AddGameDialog';
+import { EditGameDialogText } from '@/constants/ui_text/EditGameDialog';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faFloppyDisk } from "@fortawesome/free-solid-svg-icons";
 import { CollectionsApiResponse } from '../../types/domain/collectionsApi';
@@ -47,16 +47,16 @@ const validationSchema = () => {
   return toTypedSchema(
     object({
       date: date()
-        .required(AddGameDialogText.validationErrors.dateRequired)
-        .max(maxDate, AddGameDialogText.validationErrors.dateMax),
+        .required(EditGameDialogText.validationErrors.dateRequired)
+        .max(maxDate, EditGameDialogText.validationErrors.dateMax),
       players: array()
         .of(object({
           player_id: string().required(),
           is_winner: boolean().required(),
           is_registered: boolean().default(false),
         }))
-        .min(minPlayer, AddGameDialogText.validationErrors.playersMin(props.game.boardgame?.min_players))
-        .max(maxPlayer, AddGameDialogText.validationErrors.playersMax(props.game.boardgame?.max_players))
+        .min(minPlayer, EditGameDialogText.validationErrors.playersMin(props.game.boardgame?.min_players))
+        .max(maxPlayer, EditGameDialogText.validationErrors.playersMax(props.game.boardgame?.max_players))
       ,
       winner: object({
         player_id: string().required(),
@@ -64,11 +64,11 @@ const validationSchema = () => {
         is_registered: boolean().default(false)
       })
         .nullable()
-        .required(AddGameDialogText.validationErrors.winnerRequired)
+        .required(EditGameDialogText.validationErrors.winnerRequired)
       ,
       notes: string()
         .ensure()
-        .max(500, AddGameDialogText.validationErrors.notesMax)
+        .max(500, EditGameDialogText.validationErrors.notesMax)
     })
   )
 }
@@ -291,11 +291,11 @@ const onSubmit = handleSubmit(async (values) => {
               <v-col cols="12">
                 <v-alert
                   color="error"
-                  :title="errorCount === 1 ? AddGameDialogText.errors.failedLoadTitleFirst : AddGameDialogText.errors.failedLoadTitleSecond"
+                  :title="errorCount === 1 ? EditGameDialogText.errors.failedLoadTitleFirst : EditGameDialogText.errors.failedLoadTitleSecond"
                   class="error-container"
                 >
                   <div>
-                      <span class="mt-4">{{ errorCount === 1 ? AddGameDialogText.errors.loadFirstTry : AddGameDialogText.errors.loadSecondTry }}</span>
+                      <span class="mt-4">{{ errorCount === 1 ? EditGameDialogText.errors.loadFirstTry : EditGameDialogText.errors.loadSecondTry }}</span>
                   </div>
                   <template #append>
                     <v-btn
@@ -304,7 +304,7 @@ const onSubmit = handleSubmit(async (values) => {
                       size="small"
                       @click="handleReloadOnError"
                     >
-                      {{ errorCount === 1 ? AddGameDialogText.buttons.retryFirstTry : AddGameDialogText.buttons.retrySecondTry }}
+                      {{ errorCount === 1 ? EditGameDialogText.buttons.retryFirstTry : EditGameDialogText.buttons.retrySecondTry }}
                     </v-btn>
                   </template>
                 </v-alert>
@@ -317,7 +317,7 @@ const onSubmit = handleSubmit(async (values) => {
           <v-card-item class="mb-4" >
             <v-card-title class="dialog-title">
               <BlockHeading>
-                {{ AddGameDialogText.title }}
+                {{ EditGameDialogText.title }}
               </BlockHeading>
             </v-card-title>
             <v-card-subtitle>
@@ -335,7 +335,7 @@ const onSubmit = handleSubmit(async (values) => {
                   md="4"
                 >
                   <v-date-input
-                    :label="AddGameDialogText.labels.selectDate"
+                    :label="EditGameDialogText.labels.selectDate"
                     v-model="dateValue"
                     :error-messages="dateError"
                     prepend-icon=""
@@ -350,8 +350,8 @@ const onSubmit = handleSubmit(async (values) => {
                 >
                   <v-select
                     chips
-                    :label="AddGameDialogText.labels.selectPlayers"
-                    :hint="selectedPlayers.length === 0 ? AddGameDialogText.hints.selectPlayers : ''"
+                    :label="EditGameDialogText.labels.selectPlayers"
+                    :hint="selectedPlayers.length === 0 ? EditGameDialogText.hints.selectPlayers : ''"
                     v-model="selectedPlayers"
                     :error-messages="selectedPlayers.length > 0 || submitCount > 0 ? formErrors.players : ''"
                     :items="players"
@@ -377,7 +377,7 @@ const onSubmit = handleSubmit(async (values) => {
                     v-model="gameWinner"
                     :error-messages="selectedPlayers.length > 0 && (winnerMeta.touched || submitCount > 0) ? winnerError : ''"
                     :disabled="selectedPlayers.length === 0"
-                    :label="AddGameDialogText.labels.selectWinner"
+                    :label="EditGameDialogText.labels.selectWinner"
                     :items="selectedPlayers"
                     item-title="name"
                     item-value="id"
@@ -391,7 +391,7 @@ const onSubmit = handleSubmit(async (values) => {
                     variant="outlined"
                     v-model="notesValue"
                     :error-messages="notesError"
-                    :label="AddGameDialogText.labels.notes"
+                    :label="EditGameDialogText.labels.notes"
                     no-resize
                     max-rows="3"
                   ></v-textarea>
@@ -410,7 +410,7 @@ const onSubmit = handleSubmit(async (values) => {
               density="default"
               :loading="savingGame"
               :icon="faFloppyDisk"
-              :label="AddGameDialogText.buttons.save"
+              :label="EditGameDialogText.buttons.save"
             />
             <AppButton
               class="dialog-button"
@@ -418,7 +418,7 @@ const onSubmit = handleSubmit(async (values) => {
               variant="text"
               density="default"
               @click="closeDialog"
-              :label="AddGameDialogText.buttons.cancel"
+              :label="EditGameDialogText.buttons.cancel"
             />
           </v-card-actions>
         </div>
