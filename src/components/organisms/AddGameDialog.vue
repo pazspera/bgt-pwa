@@ -197,28 +197,28 @@ const onSubmit = handleSubmit(async (values) => {
     }))
 
     const formatLocalISODate = (date: Date) => {
-  const offset = -date.getTimezoneOffset();
-  const sign = offset >= 0 ? '+' : '-';
-  const absOffset = Math.abs(offset);
-  const hours = String(Math.floor(absOffset / 60)).padStart(2, '0');
-  const minutes = String(absOffset % 60).padStart(2, '0');
-  const isoDate = date.toISOString().slice(0, 19);
-  return `${isoDate}${sign}${hours}:${minutes}`;
-};
+      const offset = -date.getTimezoneOffset();
+      const sign = offset >= 0 ? '+' : '-';
+      const absOffset = Math.abs(offset);
+      const hours = String(Math.floor(absOffset / 60)).padStart(2, '0');
+      const minutes = String(absOffset % 60).padStart(2, '0');
+      const isoDate = date.toISOString().slice(0, 19);
+      return `${isoDate}${sign}${hours}:${minutes}`;
+    };
 
-const payload: CreateGameRequest = {
-  boardgame_id: props.boardgame.id,
-  // NO ENTIENDO DONDE ESTÁ LA COLLECTION_ID
-  // está hardcodeado en GamesView
-  collection_id: 'b6acc73a-6b7a-4c67-937a-e1a6169f173f',
-  player_group_id: null,
-  start_date: formatLocalISODate(values.date),
-  end_date: formatLocalISODate(new Date(values.date.getTime() + 3600000)),
-  notes: values.notes,
-  players: mappedPlayers,
-};
+    const payload: CreateGameRequest = {
+      boardgame_id: props.boardgame.id,
+      // NO ENTIENDO DONDE ESTÁ LA COLLECTION_ID
+      // está hardcodeado en GamesView
+      collection_id: 'b6acc73a-6b7a-4c67-937a-e1a6169f173f',
+      player_group_id: null,
+      start_date: formatLocalISODate(values.date),
+      end_date: formatLocalISODate(new Date(values.date.getTime() + 3600000)),
+      notes: values.notes,
+      players: mappedPlayers,
+    };
     console.log(payload)
-    
+
     await saveGame(payload);
 
     emit("success", "¡La partida fue guardada exitosamente!");
