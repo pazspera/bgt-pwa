@@ -19,7 +19,9 @@ const { checkHealth, statusMessage } = useCheckDbHealth();
 const { isSnackbarVisible, message, color, timeout, hide, success, error } = useAppSnackbar();
 
 onMounted(async ()=> {
+  console.log('[App] onMounted, calling waitForUser');
   await waitForUser();
+  console.log('[App] waitForUser complete, user:', user.value);
 
   const healthOk = await checkHealth();
   if(healthOk) {
