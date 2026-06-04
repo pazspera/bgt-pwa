@@ -70,7 +70,8 @@ const handleDeleteGame = (game: GameApiResponse) => {
 }
 
 const handleEditGame = (editInfo: EditGameInfo) => {
-  
+  selectedEditGame.value = editInfo;
+  isEditDialogVisible.value = true;
 }
 
 const confirmDelete = async () => {
@@ -210,6 +211,7 @@ watch(() => route.query.page, (newPage) => {
     </v-dialog>
 
     <EditGameDialog
+      v-if="selectedEditGame"
       v-model="isEditDialogVisible"
       :game="selectedEditGame"
     />
