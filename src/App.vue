@@ -7,22 +7,16 @@ import { onMounted, watch } from "vue";
 import { useServerTime } from "@/composables/useServerTime";
 import { useCheckDbHealth } from "@/composables/useCheckDbHealth";
 import { useAppSnackbar } from "@/composables/useAppSnackbar";
-import { useCurrentUser } from "@/composables/useCurrentUser";
 
 defineOptions({ name: "App" });
 
 const { width } = useWindowSize();
-const { waitForUser } = useCurrentUser();
 
 const { getSyncedDate, timeOffset } = useServerTime();
 const { checkHealth, statusMessage } = useCheckDbHealth();
 const { isSnackbarVisible, message, color, timeout, hide, success, error } = useAppSnackbar();
 
 onMounted(async ()=> {
-  console.log('[App] onMounted, calling waitForUser');
-  await waitForUser();
-  console.log('[App] waitForUser complete, user:', user.value);
-
   const healthOk = await checkHealth();
   if(healthOk) {
     success(statusMessage.value);
