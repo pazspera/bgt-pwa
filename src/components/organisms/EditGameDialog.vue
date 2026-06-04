@@ -17,9 +17,9 @@ import BlockHeading from '@/components/atoms/typography/BlockHeading.vue';
 import DetailText from '@/components/atoms/typography/DetailText.vue';
 import AppButton from '@/components/atoms/buttons/AppButton.vue';
 
-const props =  defineProps<{
+const props = defineProps<{
   modelValue: boolean,
-  game: EditGameInfo | null,
+  game: EditGameInfo,
 }>();
 defineOptions({ name: "EditGameDialog" });
 
@@ -55,8 +55,8 @@ const validationSchema = () => {
           is_winner: boolean().required(),
           is_registered: boolean().default(false),
         }))
-        .min(minPlayer, AddGameDialogText.validationErrors.playersMin(props.game.boardgame.min_players))
-        .max(maxPlayer, AddGameDialogText.validationErrors.playersMax(props.game.boardgame.max_players))
+        .min(minPlayer, AddGameDialogText.validationErrors.playersMin(props.game.boardgame?.min_players))
+        .max(maxPlayer, AddGameDialogText.validationErrors.playersMax(props.game.boardgame?.max_players))
       ,
       winner: object({
         player_id: string().required(),
