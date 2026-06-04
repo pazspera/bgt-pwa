@@ -88,21 +88,44 @@ const { handleSubmit, resetForm, errors: formErrors, submitCount, setFieldValue 
   validateOnMount: false,
 })
 
-// WATCH to load initial values to component
-watch(()=> props.game, (newGame) => {
-  if(!newGame) return;
-
+const loadExistingGame = (newGame: EditGameInfo) => {
   resetForm({
     values: {
       date: newGame.game.start_date
-        ? new Date(newGame.game.start_date)
-        : new Date(),
+      ? new Date(newGame.game.start_date)
+      : new Date(),
       players: newGame.game.players ?? [],
       winner: newGame.game.players?.find(p => p.is_winner) ?? null,
       notes: newGame.game.notes ?? "",
     }
   })
+
+  if (players.value.length > 0) {
+    const gamePlayerIds = newGame.game.players.map(p => p.player_id);
+    const matchingPlayers = players.value.filter(p => gamePlayerIds.includes(p.id));
+    selectedPlayers.value = matchingPlayers;
+    gameWinner.value = matchingPlayers.find(p =>
+      newGame.game.players.some(gp => gp.player_id === p.id && gp.is_winner)
+    ) ?? null;
+  }
+}
+
+// WATCH to load initial values to component
+watch(()=> props.game, (newGame) => {
+loadExistingGame(newGame);
 }, { immediate: true });
+
+// WATCH to load selectedPlayers and gameWinner after fetchPlayers completes
+watch(players, (loadedPlayers) => {
+if (loadedPlayers.length > 0 && props.game) {
+  const gamePlayerIds = props.game.game.players.map(p => p.player_id);
+  const matchingPlayers = loadedPlayers.filter(p => gamePlayerIds.includes(p.id));
+  selectedPlayers.value = matchingPlayers;
+  gameWinner.value = matchingPlayers.find(p =>
+    props.game.game.players.some(gp => gp.player_id === p.id && gp.is_winner)
+  ) ?? null;
+}
+});
 
 
 const { value: dateValue, errorMessage: dateError } = useField<Date>('date');
