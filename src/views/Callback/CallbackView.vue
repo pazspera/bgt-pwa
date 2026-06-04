@@ -24,6 +24,7 @@ onMounted(async () => {
   try {
     const tokens = await handleCallback();
     authStore.setTokens(tokens);
+    window.dispatchEvent(new CustomEvent('auth-tokens-set'));
 
     console.log('isAuthenticated:', authStore.isAuthenticated);
 

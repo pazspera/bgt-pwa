@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, watch } from 'vue';
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faBars, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { useBreakpoints } from '@vueuse/core';
@@ -20,11 +20,31 @@ const isDesktop = breakpoints.greaterOrEqual("desktop");
 
 const { user, loading, reload } = useCurrentUser();
 
-const isLoggedIn = computed(() => !!localStorage.getItem('access_token'));
+const token = ref(localStorage.getItem('access_token'));
+
+window.addEventListener('storage', (e) => {
+  if (e.key === 'access_token') {
+    token.value = e.newValue;
+  }
+});
+
+watch(token, (newToken) => {
+  if (newToken) {
+    reload();
+  }
+});
 
 onMounted(() => {
-  reload();
+  if (token.value) {
+    reload();
+  }
+
+  window.addEventListener('auth-tokens-set', () => {
+    reload();
+  });
 })
+
+const isLoggedIn = computed(() => !!localStorage.getItem('access_token'));
 
 async function handleLogout() {
   await logout();
