@@ -12,7 +12,7 @@ import { useCurrentUser } from "@/composables/useCurrentUser";
 defineOptions({ name: "App" });
 
 const { width } = useWindowSize();
-const { waitForUser, loading: userLoading } = useCurrentUser();
+const { waitForUser } = useCurrentUser();
 
 const { getSyncedDate, timeOffset } = useServerTime();
 const { checkHealth, statusMessage } = useCheckDbHealth();
@@ -39,7 +39,7 @@ watch(timeOffset, (newVal)=> {
 
 <template>
   <v-app>
-    <NavBar v-if="width > 768 && !userLoading" />
+    <NavBar v-if="width > 768" />
     <v-main>
       <v-container class="container-padding">
         <router-view />
