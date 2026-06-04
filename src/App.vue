@@ -3,21 +3,25 @@ import BottomNavigation from "@/components/organisms/BottomNavigation.vue";
 import NavBar from "@/components/organisms/NavBar.vue";
 import { useWindowSize } from "@vueuse/core";
 import AppSnackbar from "@/components/molecules/AppSnackbar.vue";
-import { onMounted, ref, type Ref, watch } from "vue";
+import { onMounted, watch } from "vue";
 import { useServerTime } from "@/composables/useServerTime";
 import { useCheckDbHealth } from "@/composables/useCheckDbHealth";
 import { useAppSnackbar } from "@/composables/useAppSnackbar";
+import { useCurrentUser } from "@/composables/useCurrentUser";
 
 defineOptions({ name: "App" });
 
 const { width } = useWindowSize();
+const { waitForUser, loading: userLoading } = useCurrentUser();
 
 const { getSyncedDate, timeOffset } = useServerTime();
 const { checkHealth, statusMessage } = useCheckDbHealth();
 const { isSnackbarVisible, message, color, timeout, hide, success, error } = useAppSnackbar();
 
 onMounted(async ()=> {
-  const healthOk = await checkHealth(); 
+  await waitForUser();
+
+  const healthOk = await checkHealth();
   if(healthOk) {
     success(statusMessage.value);
     getSyncedDate();
@@ -35,7 +39,7 @@ watch(timeOffset, (newVal)=> {
 
 <template>
   <v-app>
-    <NavBar v-if="width > 768" />
+    <NavBar v-if="width > 768 && !userLoading" />
     <v-main>
       <v-container class="container-padding">
         <router-view />

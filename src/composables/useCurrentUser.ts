@@ -1,32 +1,44 @@
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 import { apiClient } from "@/utils/apiClient";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-export function useCurrentUser() {
-  const user = ref(null);
-  const loading = ref(true);
+const user = ref<any>(null);
+const loading = ref(true);
+let loadPromise: Promise<void> | null = null;
 
-  async function load() {
-    loading.value = true;
-    try {
-      const res = await apiClient(`${API_BASE_URL}v1/users/me`, {
-        method: "GET",
-        headers: { "Accept": "application/json" },
-      });
-            if (!res.ok) {
-                user.value = null;
-            } else {
-                user.value = await res.json();
-            }
-        } catch (e) {
-            user.value = null;
-        } finally {
-            loading.value = false;
-        }
+async function doLoad() {
+  loading.value = true;
+  try {
+    const res = await apiClient(`${API_BASE_URL}v1/users/me`, {
+      method: "GET",
+      headers: { "Accept": "application/json" },
+    });
+    if (res.ok) {
+      user.value = await res.json();
+    } else {
+      user.value = null;
     }
+  } catch {
+    user.value = null;
+  } finally {
+    loading.value = false;
+  }
+}
 
-    onMounted(load);
+async function waitForUser() {
+  if (!loading.value && user.value !== null) return;
+  if (!loadPromise) {
+    loadPromise = doLoad();
+  }
+  await loadPromise;
+}
 
-    return { user, loading, reload: load };
+function reload() {
+  loadPromise = doLoad();
+  return loadPromise;
+}
+
+export function useCurrentUser() {
+  return { user, loading, reload, waitForUser };
 }
