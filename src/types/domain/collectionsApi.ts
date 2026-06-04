@@ -19,5 +19,5 @@ export interface CollectionsListResponse {
   is_primary: boolean,
   created_at: string,
   updated_at: string,
-  games: CollectionsApiResponse[],
+  games: CollectionsApiResponse[] | null,
 }

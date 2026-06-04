@@ -14,8 +14,9 @@ export function useCollectionsApi() {
 
     try {
       const fetchedCollection: CollectionsListResponse = await CollectionApiService.getCollections();
-      totalBoardgames.value = fetchedCollection.games.length;
-      collection.value = fetchedCollection.games;
+      const games = fetchedCollection.games ?? [];
+      totalBoardgames.value = games.length;
+      collection.value = games;
     } catch (err) {
       errorFetchCollections.value = err.message;
     } finally { 
