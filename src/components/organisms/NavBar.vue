@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, watch } from 'vue';
+import { ref } from 'vue';
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faBars, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { useBreakpoints } from '@vueuse/core';
@@ -7,7 +7,7 @@ import NavigationLink from '@/components/atoms/typography/NavigationLink.vue';
 import ThemeToggler from '@/components/molecules/ThemeToggler.vue';
 import Logo from '@/components/atoms/Logo.vue';
 import { NAVIGATION_TEXT } from '@/constants/navigationText';
-import { useCurrentUser } from '@/composables/useCurrentUser';
+import { useAuthStore } from '@/stores/AuthStore';
 import { logout } from '@/utils/auth';
 
 const drawer = ref(false);
@@ -18,33 +18,7 @@ const breakpoints = useBreakpoints({
 })
 const isDesktop = breakpoints.greaterOrEqual("desktop");
 
-const { user, loading, reload } = useCurrentUser();
-
-const token = ref(localStorage.getItem('access_token'));
-
-window.addEventListener('storage', (e) => {
-  if (e.key === 'access_token') {
-    token.value = e.newValue;
-  }
-});
-
-watch(token, (newToken) => {
-  if (newToken) {
-    reload();
-  }
-});
-
-onMounted(() => {
-  if (token.value) {
-    reload();
-  }
-
-  window.addEventListener('auth-tokens-set', () => {
-    reload();
-  });
-})
-
-const isLoggedIn = computed(() => !!localStorage.getItem('access_token'));
+const authStore = useAuthStore();
 
 async function handleLogout() {
   await logout();
@@ -76,9 +50,9 @@ defineExpose({ drawer });
               {{ NAVIGATION_TEXT.GAMES }}
             </NavigationLink>
             <ThemeToggler class="theme-toggler-desktop" icon-size="var(--font-size-lg)"/>
-            <span v-if="!loading && user" class="username">{{ user.username }}</span>
-            <span v-else-if="isLoggedIn" class="username">...</span>
-            <v-btn v-if="isLoggedIn" variant="text" size="small" @click="handleLogout" title="Cerrar sesión" class="logout-btn">
+            <span v-if="authStore.user" class="username">{{ authStore.user.username }}</span>
+            <span v-else-if="authStore.isAuthenticated" class="username">...</span>
+            <v-btn v-if="authStore.isAuthenticated" variant="text" size="small" @click="handleLogout" title="Cerrar sesión" class="logout-btn">
               <FontAwesomeIcon :icon="faRightFromBracket" />
             </v-btn>
           </div>
@@ -86,9 +60,9 @@ defineExpose({ drawer });
           <!-- Mobile / Tablet toggle: visible <1025px -->
           <div v-if="!isDesktop" class="nav-drawer-icons" data-testid="nav-drawer-icons">
             <ThemeToggler class="show-mobile" icon-size="var(--font-size-lg)" />
-            <span v-if="!loading && user" class="username show-mobile">{{ user.username }}</span>
-            <span v-else-if="isLoggedIn" class="username show-mobile">...</span>
-            <v-btn v-if="isLoggedIn" variant="text" size="small" @click="handleLogout" title="Cerrar sesión" class="show-mobile logout-btn">
+            <span v-if="authStore.user" class="username show-mobile">{{ authStore.user.username }}</span>
+            <span v-else-if="authStore.isAuthenticated" class="username show-mobile">...</span>
+            <v-btn v-if="authStore.isAuthenticated" variant="text" size="small" @click="handleLogout" title="Cerrar sesión" class="show-mobile logout-btn">
               <FontAwesomeIcon :icon="faRightFromBracket" />
             </v-btn>
             <v-btn icon class="show-mobile" @click="drawer = !drawer" data-testid="mobile-toggler">

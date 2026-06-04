@@ -7,6 +7,7 @@ import { mockViewportForVueUse } from "@/tests/utils/mockViewportForVueUse";
 import { expectNavigationLinks } from "@/tests/utils/expectNavigationLinks";
 import { NavigationLinkStub } from "@/tests/utils/stubNavigationLink";
 import { VAppBar, VNavigationDrawer, VBtn, VRow, VContainer, VList, VTooltip, VChip } from "vuetify/components";
+import { createPinia, setActivePinia } from "pinia";
 import NavBar from "./NavBar.vue";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 
@@ -14,18 +15,20 @@ import { faBars } from "@fortawesome/free-solid-svg-icons";
 const vuetify = createVuetifyForTest({ VAppBar, VNavigationDrawer, VBtn, VRow, VContainer, VList, VTooltip, VChip });
 const faBarsText = faBars.iconName;
 
+const pinia = createPinia();
+
 // Data to verify NavigationLinks
 const expectedTo = [
   { name: "BoardGames" },
   { name: "Players" },
   { name: "Games" },
 ];
-const expectedText = ["Ludoteca", "Jugadores", "Partidas"]; 
+const expectedText = ["Ludoteca", "Jugadores", "Partidas"];
 
 const mountNavbar = () => {
   return mount(NavBar, {
     global: {
-      plugins: [vuetify],
+      plugins: [vuetify, pinia],
       stubs: {
         "v-app-bar": {
           template: `
@@ -48,6 +51,7 @@ const mountNavbar = () => {
 }
 
 const setupNavbarTest = (viewportWidth = 1200) => {
+  setActivePinia(pinia);
   mockViewportForVueUse(viewportWidth);
   const wrapper = mountNavbar();
   const vAppBar = wrapper.find('[data-testid="app-bar"]');

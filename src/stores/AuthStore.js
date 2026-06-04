@@ -7,6 +7,7 @@ export const useAuthStore = defineStore('auth', () => {
   const refreshToken = ref(localStorage.getItem('refresh_token') || null);
   const idToken = ref(localStorage.getItem('id_token') || null);
   const tokenExpiry = ref(parseInt(localStorage.getItem('token_expiry') || '0'));
+  const user = ref(null);
 
   const isAuthenticated = computed(
     () => !!accessToken.value && Date.now() < tokenExpiry.value
@@ -24,11 +25,16 @@ export const useAuthStore = defineStore('auth', () => {
     localStorage.setItem('token_expiry', String(tokenExpiry.value));
   }
 
+  function setUser(userData) {
+    user.value = userData;
+  }
+
   function clearTokens() {
     accessToken.value = null;
     refreshToken.value = null;
     idToken.value = null;
     tokenExpiry.value = 0;
+    user.value = null;
 
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
@@ -73,8 +79,10 @@ export const useAuthStore = defineStore('auth', () => {
     refreshToken,
     idToken,
     tokenExpiry,
+    user,
     isAuthenticated,
     setTokens,
+    setUser,
     clearTokens,
     refreshAccessToken,
     logout,
